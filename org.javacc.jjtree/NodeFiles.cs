@@ -123,7 +123,7 @@ internal sealed class NodeFiles
 			ex = x;
 		}
 		IOException @this = ex;
-		string message = (@this);
+		string message = (@this.Message);
 		
 		throw new System.Exception(message);
 	}
@@ -171,7 +171,7 @@ internal sealed class NodeFiles
 			string[] strarr = new string[7] { "MULTI", "NODE_USES_PARSER", "VISITOR", "TRACK_TOKENS", "NODE_PREFIX", "NODE_EXTENDS", "NODE_FACTORY" };
 			OutputFile outputFile = new OutputFile(file, "4.1", strarr);
 			outputFile.setToolName("JJTree");
-			nodesGenerated.Add(file.getName());
+			nodesGenerated.Add(file.Name);
 			if (outputFile.needToWrite)
 			{
 				if (string.Equals(P_1, "Node"))
