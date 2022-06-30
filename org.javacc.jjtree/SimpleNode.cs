@@ -80,7 +80,7 @@ public class SimpleNode: Node
 		else if (i >= (nint)children.LongLength)
 		{
 			Node[] dest = new Node[i + 1];
-			ByteCodeHelper.arraycopy(children, 0, dest, 0, children.Length);
+			Array.Copy(children, 0, dest, 0, children.Length);
 			children = dest;
 		}
 		children[i] = n;

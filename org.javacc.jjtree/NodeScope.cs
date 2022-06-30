@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Text;
 using org.javacc.parser;
 namespace org.javacc.jjtree;
@@ -146,7 +147,7 @@ public class NodeScope
 		P_0.WriteLine();
 		var hashtable = new Hashtable();
 		findThrown(hashtable, P_2);
-		Enumeration enumeration = hashtable.elements();
+		var enumeration = hashtable.GetEnumerator();
 		insertCatchBlocks(P_0, enumeration, P_1);
 		P_0.WriteLine(new StringBuilder().Append(P_1).Append("} finally {").ToString());
 		if (usesCloseNodeVar())
@@ -256,7 +257,7 @@ public class NodeScope
 	}
 
 	
-	private void insertCatchBlocks(IO P_0, Enumeration P_1, string P_2)
+	private void insertCatchBlocks(IO P_0, IEnumerator P_1, string P_2)
 	{
 		if (P_1.hasMoreElements())
 		{

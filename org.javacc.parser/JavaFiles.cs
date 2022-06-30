@@ -797,14 +797,14 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  public JavaCharStream(java.io.Stream dstream, String encoding, int startline,");
 			printWriter.WriteLine("  int startcolumn, int buffersize) throws java.io.UnsupportedEncodingException");
 			printWriter.WriteLine("  {");
-			printWriter.WriteLine("     this(encoding == null ? new java.io.InputStreamReader(dstream) : new java.io.InputStreamReader(dstream, encoding), startline, startcolumn, buffersize);");
+			printWriter.WriteLine("     this(encoding == null ? new java.io.StreamReader(dstream) : new java.io.StreamReader(dstream, encoding), startline, startcolumn, buffersize);");
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("/** Constructor. */");
 			printWriter.WriteLine("  public JavaCharStream(java.io.Stream dstream, int startline,");
 			printWriter.WriteLine("  int startcolumn, int buffersize)");
 			printWriter.WriteLine("  {");
-			printWriter.WriteLine("     this(new java.io.InputStreamReader(dstream), startline, startcolumn, 4096);");
+			printWriter.WriteLine("     this(new java.io.StreamReader(dstream), startline, startcolumn, 4096);");
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("/** Constructor. */");
@@ -837,14 +837,14 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  public void ReInit(java.io.Stream dstream, String encoding, int startline,");
 			printWriter.WriteLine("  int startcolumn, int buffersize) throws java.io.UnsupportedEncodingException");
 			printWriter.WriteLine("  {");
-			printWriter.WriteLine("     ReInit(encoding == null ? new java.io.InputStreamReader(dstream) : new java.io.InputStreamReader(dstream, encoding), startline, startcolumn, buffersize);");
+			printWriter.WriteLine("     ReInit(encoding == null ? new java.io.StreamReader(dstream) : new java.io.StreamReader(dstream, encoding), startline, startcolumn, buffersize);");
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("/** Reinitialise. */");
 			printWriter.WriteLine("  public void ReInit(java.io.Stream dstream, int startline,");
 			printWriter.WriteLine("  int startcolumn, int buffersize)");
 			printWriter.WriteLine("  {");
-			printWriter.WriteLine("     ReInit(new java.io.InputStreamReader(dstream), startline, startcolumn, buffersize);");
+			printWriter.WriteLine("     ReInit(new java.io.StreamReader(dstream), startline, startcolumn, buffersize);");
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("/** Reinitialise. */");
 			printWriter.WriteLine("  public void ReInit(java.io.Stream dstream, String encoding, int startline,");
@@ -966,7 +966,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		}
 		catch (IOException x)
 		{
-			ex = ByteCodeHelper.MapException<IOException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 		}
 		IOException obj = ex;
 		Console.Error.WriteLine(new StringBuilder().Append("Failed to create JavaCharStream ").Append(obj).ToString());
@@ -1402,14 +1402,14 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  public SimpleCharStream(java.io.Stream dstream, String encoding, int startline,");
 			printWriter.WriteLine("  int startcolumn, int buffersize) throws java.io.UnsupportedEncodingException");
 			printWriter.WriteLine("  {");
-			printWriter.WriteLine("     this(encoding == null ? new java.io.InputStreamReader(dstream) : new java.io.InputStreamReader(dstream, encoding), startline, startcolumn, buffersize);");
+			printWriter.WriteLine("     this(encoding == null ? new java.io.StreamReader(dstream) : new java.io.StreamReader(dstream, encoding), startline, startcolumn, buffersize);");
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** Constructor. */");
 			printWriter.WriteLine("  public SimpleCharStream(java.io.Stream dstream, int startline,");
 			printWriter.WriteLine("  int startcolumn, int buffersize)");
 			printWriter.WriteLine("  {");
-			printWriter.WriteLine("     this(new java.io.InputStreamReader(dstream), startline, startcolumn, buffersize);");
+			printWriter.WriteLine("     this(new java.io.StreamReader(dstream), startline, startcolumn, buffersize);");
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** Constructor. */");
@@ -1442,14 +1442,14 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  public void ReInit(java.io.Stream dstream, String encoding, int startline,");
 			printWriter.WriteLine("                          int startcolumn, int buffersize) throws java.io.UnsupportedEncodingException");
 			printWriter.WriteLine("  {");
-			printWriter.WriteLine("     ReInit(encoding == null ? new java.io.InputStreamReader(dstream) : new java.io.InputStreamReader(dstream, encoding), startline, startcolumn, buffersize);");
+			printWriter.WriteLine("     ReInit(encoding == null ? new java.io.StreamReader(dstream) : new java.io.StreamReader(dstream, encoding), startline, startcolumn, buffersize);");
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** Reinitialise. */");
 			printWriter.WriteLine("  public void ReInit(java.io.Stream dstream, int startline,");
 			printWriter.WriteLine("                          int startcolumn, int buffersize)");
 			printWriter.WriteLine("  {");
-			printWriter.WriteLine("     ReInit(new java.io.InputStreamReader(dstream), startline, startcolumn, buffersize);");
+			printWriter.WriteLine("     ReInit(new java.io.StreamReader(dstream), startline, startcolumn, buffersize);");
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** Reinitialise. */");
@@ -1570,7 +1570,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		}
 		catch (IOException x)
 		{
-			ex = ByteCodeHelper.MapException<IOException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 		}
 		IOException obj = ex;
 		Console.Error.WriteLine(new StringBuilder().Append("Failed to create SimpleCharStream ").Append(obj).ToString());
@@ -1724,7 +1724,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		}
 		catch (IOException x)
 		{
-			ex = ByteCodeHelper.MapException<IOException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 		}
 		IOException obj = ex;
 		Console.Error.WriteLine(new StringBuilder().Append("Failed to create CharStream ").Append(obj).ToString());
@@ -1967,7 +1967,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		}
 		catch (IOException x)
 		{
-			ex = ByteCodeHelper.MapException<IOException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 		}
 		IOException obj = ex;
 		Console.Error.WriteLine(new StringBuilder().Append("Failed to create ParseException ").Append(obj).ToString());
@@ -2153,7 +2153,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		}
 		catch (IOException x)
 		{
-			ex = ByteCodeHelper.MapException<IOException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 		}
 		IOException obj = ex;
 		Console.Error.WriteLine(new StringBuilder().Append("Failed to create TokenMgrError ").Append(obj).ToString());
@@ -2330,7 +2330,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		}
 		catch (IOException x)
 		{
-			ex = ByteCodeHelper.MapException<IOException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 		}
 		IOException obj = ex;
 		Console.Error.WriteLine(new StringBuilder().Append("Failed to create Token ").Append(obj).ToString());
@@ -2391,7 +2391,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		}
 		catch (IOException x)
 		{
-			ex = ByteCodeHelper.MapException<IOException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 		}
 		IOException obj = ex;
 		Console.Error.WriteLine(new StringBuilder().Append("Failed to create TokenManager ").Append(obj).ToString());

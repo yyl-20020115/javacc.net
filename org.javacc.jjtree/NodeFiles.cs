@@ -10,7 +10,7 @@ namespace org.javacc.jjtree;
 internal sealed class NodeFiles
 {
 	internal const string nodeVersion = "4.1";
-	internal static HashSet<Node> nodesGenerated;
+	internal static HashSet<Node> nodesGenerated = new();
 
 	internal static string nodeConstants()
 	{
@@ -24,7 +24,8 @@ internal sealed class NodeFiles
 	{
 		string str = nodeConstants();
 		
-		File f = new File(JJTreeOptions.getJJTreeOutputDirectory(), new StringBuilder().Append(str).Append(".java").ToString());
+		FileInfo f = new FileInfo(
+			Path.Combine(JJTreeOptions.getJJTreeOutputDirectory().DirectoryName, new StringBuilder().Append(str).Append(".java").ToString()));
 		IOException ex;
 		try
 		{
@@ -59,7 +60,7 @@ internal sealed class NodeFiles
 		}
 		catch (IOException x)
 		{
-			ex = ByteCodeHelper.MapException<IOException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 		}
 		IOException @this = ex;
 		string message = (@this.Message);
@@ -76,7 +77,7 @@ internal sealed class NodeFiles
 		}
 		string str = visitorClass();
 		
-		File f = new File(JJTreeOptions.getJJTreeOutputDirectory(), new StringBuilder().Append(str).Append(".java").ToString());
+		FileInfo f = new FileInfo(JJTreeOptions.getJJTreeOutputDirectory(), new StringBuilder().Append(str).Append(".java").ToString());
 		IOException ex;
 		try
 		{
@@ -119,7 +120,7 @@ internal sealed class NodeFiles
 		}
 		catch (IOException x)
 		{
-			ex = ByteCodeHelper.MapException<IOException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 		}
 		IOException @this = ex;
 		string message = (@this);
@@ -191,10 +192,10 @@ internal sealed class NodeFiles
 		}
 		catch (IOException x)
 		{
-			ex = ByteCodeHelper.MapException<IOException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 		}
 		IOException @this = ex;
-		string message = (@this);
+		string message = (@this.Message);
 		
 		throw new System.Exception(message);
 	}

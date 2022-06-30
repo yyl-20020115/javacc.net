@@ -57,6 +57,10 @@ public class OutputFile
 		public virtual void Write(int P_0)
 		{
 		}
+		public override void Close()
+        {
+
+        }
 	}
 
 
@@ -168,7 +172,7 @@ public class OutputFile
 	}
 
 
-	public virtual void close()
+	public virtual void Close()
 	{
 		if (pw != null)
 		{

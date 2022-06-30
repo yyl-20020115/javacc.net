@@ -792,11 +792,11 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			ostr.WriteLine("    for (int i = 0; i < jj_expentries.Count; i++) {");
 			if (!string.Equals(Options.getJdkVersion(), "1.5"))
 			{
-				ostr.WriteLine("      exptokseq[i] = (int[])jj_expentries.get(i);");
+				ostr.WriteLine("      exptokseq[i] = (int[])jj_expentries[i];");
 			}
 			else
 			{
-				ostr.WriteLine("      exptokseq[i] = jj_expentries.get(i);");
+				ostr.WriteLine("      exptokseq[i] = jj_expentries[i];");
 			}
 			ostr.WriteLine("    }");
 			ostr.WriteLine("    return new ParseException(token, exptokseq, tokenImage);");

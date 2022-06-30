@@ -1,11 +1,7 @@
-
-
 using System.IO;
-using System.Text;
 using org.javacc.parser;
 
 namespace org.javacc.jjtree;
-
 
 internal class JJTreeOptions : Options
 {

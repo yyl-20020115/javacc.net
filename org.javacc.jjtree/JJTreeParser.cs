@@ -6,6 +6,7 @@ using System.Text;
 
 using org.javacc.parser;
 using System.Collections.Generic;
+using System.Collections;
 
 namespace org.javacc.jjtree;
 
@@ -27,24 +28,17 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		}
 	}
 
-		
+
 	internal class LookaheadSuccess : System.Exception
 	{
-		
-		internal LookaheadSuccess(_1 P_0)
-			: this()
-		{
-		}
 
-		
+
 		private LookaheadSuccess()
 		{
 		}
 
-		
-		[PermissionSet(SecurityAction.Demand, XML = "<PermissionSet class=\"System.Security.PermissionSet\"\r\nversion=\"1\">\r\n<IPermission class=\"System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089\"\r\nversion=\"1\"\r\nFlags=\"SerializationFormatter\"/>\r\n</PermissionSet>\r\n")]
-		protected LookaheadSuccess(SerializationInfo P_0, StreamingContext P_1)
-			: base(P_0, P_1)
+
+		protected LookaheadSuccess(SerializationInfo P_0, StreamingContext P_1) : base(P_0, P_1)
 		{
 		}
 	}
@@ -96,7 +90,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	
 	private LookaheadSuccess jj_ls;
 
-	private List jj_expentries;
+	private ArrayList jj_expentries;
 
 	private int[] jj_expentry;
 
@@ -183,13 +177,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					}
 					catch (System.Exception x)
 					{
-						ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+						ex =x;
 						goto end_IL_001c;
 					}
 				}
 				catch (System.Exception x2)
 				{
-					ex2 = ByteCodeHelper.MapException<System.Exception>(x2, ByteCodeHelper.MapFlags.None);
+					ex2 = x2;
 					goto IL_012b;
 				}
 				if (num2 != 0)
@@ -202,7 +196,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x3)
 			{
-				ex3 = ByteCodeHelper.MapException<System.Exception>(x3, ByteCodeHelper.MapFlags.None);
+				ex3 = x3;
 				goto IL_0137;
 			}
 		}
@@ -236,24 +230,24 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					{
 						jjtree.popNode();
 					}
-					if (ex5 is RuntimeException)
+					if (ex5 is System.Exception)
 					{
-						throw new System.Exception((RuntimeException)ex5);
+						throw new System.Exception((System.Exception)ex5);
 					}
 					if (ex5 is ParseException)
 					{
 						throw new System.Exception((ParseException)ex5);
 					}
-					throw new System.Exception((Error)ex5);
+					throw new System.Exception(ex5);
 				}
 				catch (System.Exception x4)
 				{
-					ex4 = ByteCodeHelper.MapException<System.Exception>(x4, ByteCodeHelper.MapFlags.None);
+					ex4 = x4;
 				}
 			}
 			catch (System.Exception x5)
 			{
-				ex6 = ByteCodeHelper.MapException<System.Exception>(x5, ByteCodeHelper.MapFlags.None);
+				ex6 = x5;
 				goto IL_01d4;
 			}
 		}
@@ -301,13 +295,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					}
 					catch (System.Exception x6)
 					{
-						ex9 = ByteCodeHelper.MapException<System.Exception>(x6, ByteCodeHelper.MapFlags.None);
+						ex9 = x6;
 						goto end_IL_022d;
 					}
 				}
 				catch (System.Exception x7)
 				{
-					ex10 = ByteCodeHelper.MapException<System.Exception>(x7, ByteCodeHelper.MapFlags.None);
+					ex10 = x7;
 					goto IL_03d1;
 				}
 				if (num3 != 0)
@@ -320,7 +314,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x8)
 			{
-				ex11 = ByteCodeHelper.MapException<System.Exception>(x8, ByteCodeHelper.MapFlags.None);
+				ex11 = x8;
 				goto IL_03dd;
 			}
 		}
@@ -354,24 +348,24 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					{
 						jjtree.popNode();
 					}
-					if (ex13 is RuntimeException)
+					if (ex13 is System.Exception)
 					{
-						throw new System.Exception((RuntimeException)ex13);
+						throw new System.Exception((System.Exception)ex13);
 					}
 					if (ex13 is ParseException)
 					{
 						throw new System.Exception((ParseException)ex13);
 					}
-					throw new System.Exception((Error)ex13);
+					throw new System.Exception((System.Exception)ex13);
 				}
 				catch (System.Exception x9)
 				{
-					ex12 = ByteCodeHelper.MapException<System.Exception>(x9, ByteCodeHelper.MapFlags.None);
+					ex12 = x9;
 				}
 			}
 			catch (System.Exception x10)
 			{
-				ex14 = ByteCodeHelper.MapException<System.Exception>(x10, ByteCodeHelper.MapFlags.None);
+				ex14 = x10;
 				goto IL_047d;
 			}
 		}
@@ -400,7 +394,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x11)
 			{
-				ex16 = ByteCodeHelper.MapException<System.Exception>(x11, ByteCodeHelper.MapFlags.None);
+				ex16 = x11;
 				goto IL_0506;
 			}
 		}
@@ -443,7 +437,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x12)
 			{
-				ex17 = ByteCodeHelper.MapException<System.Exception>(x12, ByteCodeHelper.MapFlags.None);
+				ex17 = x12;
 			}
 		}
 		catch
@@ -593,7 +587,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x)
 			{
-				ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+				ex =x;
 				goto IL_00d1;
 			}
 		}
@@ -872,7 +866,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x)
 			{
-				ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+				ex =x;
 				goto IL_01e5;
 			}
 		}
@@ -1099,13 +1093,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					}
 					catch (System.Exception x)
 					{
-						ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+						ex =x;
 						goto end_IL_001e;
 					}
 				}
 				catch (System.Exception x2)
 				{
-					ex2 = ByteCodeHelper.MapException<System.Exception>(x2, ByteCodeHelper.MapFlags.None);
+					ex2 = x2;
 					goto IL_0445;
 				}
 				if (num2 != 0)
@@ -1118,7 +1112,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x3)
 			{
-				ex3 = ByteCodeHelper.MapException<System.Exception>(x3, ByteCodeHelper.MapFlags.None);
+				ex3 = x3;
 				goto IL_0451;
 			}
 		}
@@ -1164,12 +1158,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x4)
 				{
-					ex4 = ByteCodeHelper.MapException<System.Exception>(x4, ByteCodeHelper.MapFlags.None);
+					ex4 = x4;
 				}
 			}
 			catch (System.Exception x5)
 			{
-				ex6 = ByteCodeHelper.MapException<System.Exception>(x5, ByteCodeHelper.MapFlags.None);
+				ex6 = x5;
 				goto IL_04f1;
 			}
 		}
@@ -1202,7 +1196,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x6)
 			{
-				ex9 = ByteCodeHelper.MapException<System.Exception>(x6, ByteCodeHelper.MapFlags.None);
+				ex9 = x6;
 				goto IL_05a6;
 			}
 		}
@@ -1242,7 +1236,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x7)
 			{
-				ex10 = ByteCodeHelper.MapException<System.Exception>(x7, ByteCodeHelper.MapFlags.None);
+				ex10 = x7;
 			}
 		}
 		catch
@@ -1367,7 +1361,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x)
 			{
-				ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+				ex =x;
 				goto IL_020e;
 			}
 		}
@@ -1441,7 +1435,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x)
 			{
-				ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+				ex =x;
 				goto IL_005c;
 			}
 		}
@@ -1641,13 +1635,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					}
 					catch (System.Exception x)
 					{
-						ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+						ex =x;
 						goto end_IL_001e;
 					}
 				}
 				catch (System.Exception x2)
 				{
-					ex2 = ByteCodeHelper.MapException<System.Exception>(x2, ByteCodeHelper.MapFlags.None);
+					ex2 = x2;
 					goto IL_044f;
 				}
 				if (num2 != 0)
@@ -1660,7 +1654,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x3)
 			{
-				ex3 = ByteCodeHelper.MapException<System.Exception>(x3, ByteCodeHelper.MapFlags.None);
+				ex3 = x3;
 				goto IL_045b;
 			}
 		}
@@ -1706,12 +1700,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x4)
 				{
-					ex4 = ByteCodeHelper.MapException<System.Exception>(x4, ByteCodeHelper.MapFlags.None);
+					ex4 = x4;
 				}
 			}
 			catch (System.Exception x5)
 			{
-				ex6 = ByteCodeHelper.MapException<System.Exception>(x5, ByteCodeHelper.MapFlags.None);
+				ex6 = x5;
 				goto IL_04fb;
 			}
 		}
@@ -1759,13 +1753,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					}
 					catch (System.Exception x6)
 					{
-						ex9 = ByteCodeHelper.MapException<System.Exception>(x6, ByteCodeHelper.MapFlags.None);
+						ex9 = x6;
 						goto end_IL_0557;
 					}
 				}
 				catch (System.Exception x7)
 				{
-					ex10 = ByteCodeHelper.MapException<System.Exception>(x7, ByteCodeHelper.MapFlags.None);
+					ex10 = x7;
 					goto IL_061c;
 				}
 				if (num3 != 0)
@@ -1778,7 +1772,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x8)
 			{
-				ex11 = ByteCodeHelper.MapException<System.Exception>(x8, ByteCodeHelper.MapFlags.None);
+				ex11 = x8;
 				goto IL_0628;
 			}
 		}
@@ -1824,12 +1818,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x9)
 				{
-					ex12 = ByteCodeHelper.MapException<System.Exception>(x9, ByteCodeHelper.MapFlags.None);
+					ex12 = x9;
 				}
 			}
 			catch (System.Exception x10)
 			{
-				ex14 = ByteCodeHelper.MapException<System.Exception>(x10, ByteCodeHelper.MapFlags.None);
+				ex14 = x10;
 				goto IL_06c8;
 			}
 		}
@@ -1862,7 +1856,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x11)
 			{
-				ex16 = ByteCodeHelper.MapException<System.Exception>(x11, ByteCodeHelper.MapFlags.None);
+				ex16 = x11;
 				goto IL_077d;
 			}
 		}
@@ -1905,7 +1899,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x12)
 			{
-				ex17 = ByteCodeHelper.MapException<System.Exception>(x12, ByteCodeHelper.MapFlags.None);
+				ex17 = x12;
 			}
 		}
 		catch
@@ -2207,7 +2201,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x)
 			{
-				ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+				ex =x;
 				goto IL_01ea;
 			}
 		}
@@ -2362,7 +2356,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x)
 			{
-				ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+				ex =x;
 				goto IL_00d3;
 			}
 		}
@@ -2514,7 +2508,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x)
 			{
-				ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+				ex =x;
 				goto IL_00cb;
 			}
 		}
@@ -2647,7 +2641,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x)
 				{
-					ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+					ex =x;
 					goto IL_0070;
 				}
 			}
@@ -2706,7 +2700,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x2)
 				{
-					ex2 = ByteCodeHelper.MapException<System.Exception>(x2, ByteCodeHelper.MapFlags.None);
+					ex2 = x2;
 					goto IL_0213;
 				}
 			}
@@ -2745,7 +2739,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x3)
 				{
-					ex3 = ByteCodeHelper.MapException<System.Exception>(x3, ByteCodeHelper.MapFlags.None);
+					ex3 = x3;
 					goto IL_032a;
 				}
 			}
@@ -3016,13 +3010,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						}
 						catch (System.Exception x)
 						{
-							ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+							ex =x;
 							goto IL_00f4;
 						}
 					}
 					catch (System.Exception x2)
 					{
-						ex2 = ByteCodeHelper.MapException<System.Exception>(x2, ByteCodeHelper.MapFlags.None);
+						ex2 = x2;
 						goto IL_00f8;
 					}
 					if (num2 != 0)
@@ -3035,7 +3029,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x3)
 			{
-				ex3 = ByteCodeHelper.MapException<System.Exception>(x3, ByteCodeHelper.MapFlags.None);
+				ex3 = x3;
 				goto IL_0104;
 			}
 		}
@@ -3058,7 +3052,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x4)
 			{
-				ex4 = ByteCodeHelper.MapException<System.Exception>(x4, ByteCodeHelper.MapFlags.None);
+				ex4 = x4;
 				goto IL_025d;
 			}
 		}
@@ -3121,13 +3115,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						}
 						catch (System.Exception x5)
 						{
-							ex7 = ByteCodeHelper.MapException<System.Exception>(x5, ByteCodeHelper.MapFlags.None);
+							ex7 = x5;
 							goto end_IL_0264;
 						}
 					}
 					catch (System.Exception x6)
 					{
-						ex8 = ByteCodeHelper.MapException<System.Exception>(x6, ByteCodeHelper.MapFlags.None);
+						ex8 = x6;
 						goto IL_0390;
 					}
 					if (num2 != 0)
@@ -3140,7 +3134,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x7)
 				{
-					ex9 = ByteCodeHelper.MapException<System.Exception>(x7, ByteCodeHelper.MapFlags.None);
+					ex9 = x7;
 					goto IL_039c;
 				}
 			}
@@ -3186,12 +3180,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					}
 					catch (System.Exception x8)
 					{
-						ex10 = ByteCodeHelper.MapException<System.Exception>(x8, ByteCodeHelper.MapFlags.None);
+						ex10 = x8;
 					}
 				}
 				catch (System.Exception x9)
 				{
-					ex12 = ByteCodeHelper.MapException<System.Exception>(x9, ByteCodeHelper.MapFlags.None);
+					ex12 = x9;
 					goto IL_0449;
 				}
 			}
@@ -3224,7 +3218,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x10)
 				{
-					ex14 = ByteCodeHelper.MapException<System.Exception>(x10, ByteCodeHelper.MapFlags.None);
+					ex14 = x10;
 				}
 			}
 			catch
@@ -3261,7 +3255,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x11)
 				{
-					ex16 = ByteCodeHelper.MapException<System.Exception>(x11, ByteCodeHelper.MapFlags.None);
+					ex16 = x11;
 					goto IL_0503;
 				}
 			}
@@ -3341,7 +3335,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x12)
 			{
-				ex20 = ByteCodeHelper.MapException<System.Exception>(x12, ByteCodeHelper.MapFlags.None);
+				ex20 = x12;
 			}
 		}
 		catch
@@ -3496,7 +3490,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x5)
 				{
-					ex5 = ByteCodeHelper.MapException<System.Exception>(x5, ByteCodeHelper.MapFlags.None);
+					ex5 = x5;
 					goto IL_00aa;
 				}
 			}
@@ -3529,7 +3523,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x4)
 				{
-					ex4 = ByteCodeHelper.MapException<System.Exception>(x4, ByteCodeHelper.MapFlags.None);
+					ex4 = x4;
 					goto IL_0196;
 				}
 			}
@@ -3564,7 +3558,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x8)
 				{
-					ex12 = ByteCodeHelper.MapException<System.Exception>(x8, ByteCodeHelper.MapFlags.None);
+					ex12 = x8;
 					goto IL_02a2;
 				}
 			}
@@ -3619,7 +3613,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x11)
 				{
-					ex15 = ByteCodeHelper.MapException<System.Exception>(x11, ByteCodeHelper.MapFlags.None);
+					ex15 = x11;
 					goto IL_0465;
 				}
 			}
@@ -3686,13 +3680,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 									}
 									catch (System.Exception x)
 									{
-										ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+										ex =x;
 										goto IL_06a2;
 									}
 								}
 								catch (System.Exception x2)
 								{
-									ex2 = ByteCodeHelper.MapException<System.Exception>(x2, ByteCodeHelper.MapFlags.None);
+									ex2 = x2;
 									goto IL_06a6;
 								}
 								if (num2 != 0)
@@ -3707,7 +3701,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						}
 						catch (System.Exception x3)
 						{
-							ex3 = ByteCodeHelper.MapException<System.Exception>(x3, ByteCodeHelper.MapFlags.None);
+							ex3 = x3;
 							goto IL_06b2;
 						}
 					}
@@ -3927,12 +3921,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					}
 					catch (System.Exception x6)
 					{
-						ex9 = ByteCodeHelper.MapException<System.Exception>(x6, ByteCodeHelper.MapFlags.None);
+						ex9 = x6;
 					}
 				}
 				catch (System.Exception x7)
 				{
-					ex11 = ByteCodeHelper.MapException<System.Exception>(x7, ByteCodeHelper.MapFlags.None);
+					ex11 = x7;
 					goto IL_0762;
 				}
 			}
@@ -3965,7 +3959,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x9)
 				{
-					ex13 = ByteCodeHelper.MapException<System.Exception>(x9, ByteCodeHelper.MapFlags.None);
+					ex13 = x9;
 				}
 			}
 			catch
@@ -4029,7 +4023,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x10)
 				{
-					ex17 = ByteCodeHelper.MapException<System.Exception>(x10, ByteCodeHelper.MapFlags.None);
+					ex17 = x10;
 				}
 			}
 			catch
@@ -4270,7 +4264,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x)
 			{
-				ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+				ex =x;
 				goto IL_0059;
 			}
 		}
@@ -4440,7 +4434,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x)
 			{
-				ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+				ex =x;
 				goto IL_009b;
 			}
 		}
@@ -4565,7 +4559,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x)
 			{
-				ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+				ex =x;
 				goto IL_00c1;
 			}
 		}
@@ -4646,7 +4640,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x)
 				{
-					ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+					ex =x;
 					goto IL_00a7;
 				}
 			}
@@ -4681,7 +4675,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x2)
 				{
-					ex2 = ByteCodeHelper.MapException<System.Exception>(x2, ByteCodeHelper.MapFlags.None);
+					ex2 = x2;
 					goto IL_01a6;
 				}
 			}
@@ -4989,7 +4983,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x)
 			{
-				ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+				ex =x;
 				goto IL_010f;
 			}
 		}
@@ -5070,7 +5064,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x)
 			{
-				ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+				ex =x;
 				goto IL_008e;
 			}
 		}
@@ -15262,7 +15256,6 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			ex = ByteCodeHelper.MapException<UnsupportedEncodingException>(x, ByteCodeHelper.MapFlags.NoRemapping);
 			goto IL_008e;
 		}
-		JJTreeParserTokenManager.___003Cclinit_003E();
 		token_source = new JJTreeParserTokenManager(jj_input_stream);
 		token = new Token();
 		this.m_jj_ntk = -1;

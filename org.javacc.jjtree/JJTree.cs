@@ -115,7 +115,7 @@ public class JJTree
 		try
 		{
 			p("(type \"jjtree\" with no arguments for help)");
-			text = strarr[(nint)strarr.LongLength - 1];
+			text = strarr[strarr.Length - 1];
 			if (Options.isOption(text))
 			{
 				p(new StringBuilder().Append("Last argument \"").Append(text).Append("\" is not a filename")
@@ -190,7 +190,7 @@ public class JJTree
 			}
 			catch (JJTreeIOException x)
 			{
-				ex = ByteCodeHelper.MapException<JJTreeIOException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+				ex = x;
 				goto IL_01b2;
 			}
 		}
@@ -217,30 +217,30 @@ public class JJTree
 					JJTreeParser jJTreeParser = new JJTreeParser(io.getIn());
 					jJTreeParser.javacc_input();
 					aSTGrammar = (ASTGrammar)jJTreeParser.jjtree.rootNode();
-					if (java.lang.Boolean.getBoolean("jjtree-dump"))
-					{
-						aSTGrammar.dump(" ");
-					}
+					//if (java.lang.Boolean.getBoolean("jjtree-dump"))
+					//{
+					//	aSTGrammar.dump(" ");
+					//}
 					try
 					{
 						io.setOutput();
 					}
 					catch (JJTreeIOException x2)
 					{
-						ex2 = ByteCodeHelper.MapException<JJTreeIOException>(x2, ByteCodeHelper.MapFlags.NoRemapping);
+						ex2 = x2;
 						goto IL_02e1;
 					}
 				}
 				catch (ParseException x3)
 				{
-					ex3 = ByteCodeHelper.MapException<ParseException>(x3, ByteCodeHelper.MapFlags.NoRemapping);
+					ex3 = x3;
 					goto IL_02ea;
 				}
 			}
 			catch (System.Exception x4)
-			{
-				System.Exception ex4 = ByteCodeHelper.MapException<System.Exception>(x4, ByteCodeHelper.MapFlags.None);
-				if (ex4 == null)
+			{				
+				System.Exception ex4 = x4; 
+				; if (ex4 == null)
 				{
 					throw;
 				}
@@ -271,13 +271,13 @@ public class JJTree
 				}
 				catch (ParseException x5)
 				{
-					ex6 = ByteCodeHelper.MapException<ParseException>(x5, ByteCodeHelper.MapFlags.NoRemapping);
+					ex6 = x5;
 					goto IL_03f7;
 				}
 			}
 			catch (System.Exception x6)
 			{
-				System.Exception ex7 = ByteCodeHelper.MapException<System.Exception>(x6, ByteCodeHelper.MapFlags.None);
+				System.Exception ex7 =x6;
 				if (ex7 == null)
 				{
 					throw;
@@ -394,13 +394,13 @@ public class JJTree
 				}
 				catch (ParseException x7)
 				{
-					ex12 = ByteCodeHelper.MapException<ParseException>(x7, ByteCodeHelper.MapFlags.NoRemapping);
+					ex12 =x7;
 					goto IL_035a;
 				}
 			}
 			catch (System.Exception x8)
 			{
-				System.Exception ex16 = ByteCodeHelper.MapException<System.Exception>(x8, ByteCodeHelper.MapFlags.None);
+				System.Exception ex16 = x8;
 				if (ex16 == null)
 				{
 					throw;

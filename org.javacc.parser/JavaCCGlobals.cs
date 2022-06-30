@@ -75,10 +75,10 @@ public class JavaCCGlobals
 		int i;
 		for (i = 0; i < l.Count - 1; i++)
 		{
-			str2 = new StringBuilder().Append(str2).Append((string)l.get(i)).Append("&")
+			str2 = new StringBuilder().Append(str2).Append((string)l[i]).Append("&")
 				.ToString();
 		}
-		str2 = new StringBuilder().Append(str2).Append((string)l.get(i)).Append(":")
+		str2 = new StringBuilder().Append(str2).Append((string)l[i]).Append(":")
 			.ToString();
 		if (str2.Length > 200)
 		{

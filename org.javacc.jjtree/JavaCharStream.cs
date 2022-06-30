@@ -298,7 +298,7 @@ public class JavaCharStream
 		try
 		{
 			int num2;
-			if ((num2 = inputStream.read(nextCharBuf, maxNextCharInd, 4096 - maxNextCharInd)) == -1)
+			if ((num2 = inputStream.Read(nextCharBuf, maxNextCharInd, 4096 - maxNextCharInd)) == -1)
 			{
 				inputStream.Close();
 
@@ -309,7 +309,7 @@ public class JavaCharStream
 		}
 		catch (IOException x)
 		{
-			ex = ByteCodeHelper.MapException<IOException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 		}
 		IOException ex2 = ex;
 		if (bufpos != 0)
@@ -360,7 +360,7 @@ public class JavaCharStream
 		}
 		catch (System.Exception x)
 		{
-			ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+			ex =x;
 			goto IL_01ca;
 		}
 		int num = bufsize + 2048;
@@ -370,7 +370,7 @@ public class JavaCharStream
 		return;
 	IL_01ca:
 		System.Exception @this = ex;
-		string message = Throwable.instancehelper_getMessage(@this);
+		string message = @this.Message;
 
 		throw new System.Exception(message);
 	}
@@ -574,26 +574,26 @@ public class JavaCharStream
 
 
 	public JavaCharStream(Stream @is, string str, int i1, int i2, int i3)
-	: this((str != null) ? new InputStreamReader(@is, str) : new InputStreamReader(@is), i1, i2, i3)
+	: this((str != null) ? new StreamReader(@is, str) : new StreamReader(@is), i1, i2, i3)
 	{
 	}
 
 
 	public JavaCharStream(Stream @is, int i1, int i2, int i3)
-		: this(new InputStreamReader(@is), i1, i2, 4096)
+		: this(new StreamReader(@is), i1, i2, 4096)
 	{
 	}
 
 
 	public virtual void ReInit(Stream @is, string str, int i1, int i2, int i3)
 	{
-		ReInit((str != null) ? new InputStreamReader(@is, str) : new InputStreamReader(@is), i1, i2, i3);
+		ReInit((str != null) ? new StreamReader(@is, str) : new StreamReader(@is), i1, i2, i3);
 	}
 
 
 	public virtual void ReInit(Stream @is, int i1, int i2, int i3)
 	{
-		ReInit(new InputStreamReader(@is), i1, i2, i3);
+		ReInit(new StreamReader(@is), i1, i2, i3);
 	}
 
 	protected internal virtual void setTabSize(int i)

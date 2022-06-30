@@ -1,11 +1,9 @@
 using System;
-
 using System.IO;
 using System.Text;
 using org.javacc.parser;
 
 namespace org.javacc.jjtree;
-
 
 public class IO 
 {
@@ -55,20 +53,20 @@ public class IO
 		string text = JJTreeOptions.getOutputFile();
 		if (string.Equals(text, ""))
 		{
-			int num = java.lang.String.instancehelper_lastIndexOf(P_0, File.separatorChar);
+			int num = (P_0.LastIndexOf(Path.DirectorySeparatorChar));
 			if (num >= 0)
 			{
-				P_0 = java.lang.String.instancehelper_substring(P_0, num + 1);
+				P_0 = P_0.Substring(num + 1);
 			}
-			int num2 = java.lang.String.instancehelper_lastIndexOf(P_0, 46);
+			int num2 = (P_0.LastIndexOf((char) 46));
 			if (num2 == -1)
 			{
 				text = new StringBuilder().Append(P_0).Append(".jj").ToString();
 			}
 			else
 			{
-				string @this = java.lang.String.instancehelper_substring(P_0, num2);
-				text = ((!string.Equals(@this, ".jj")) ? new StringBuilder().Append(java.lang.String.instancehelper_substring(P_0, 0, num2)).Append(".jj").ToString() : new StringBuilder().Append(P_0).Append(".jj").ToString());
+				string @this = P_0.Substring(num2);
+				text = ((!string.Equals(@this, ".jj")) ? new StringBuilder().Append((P_0.Substring( 0, num2))).Append(".jj").ToString() : new StringBuilder().Append(P_0).Append(".jj").ToString());
 			}
 		}
 		return text;
@@ -78,8 +76,8 @@ public class IO
 	internal IO()
 	{
 		ifn = "<uninitialized input>";
-		msg = Console;
-		err = java.lang.System.err;
+		msg = Console.Out;
+		err = Console.Error;
 	}
 
 	internal virtual string getInputFileName()
@@ -111,18 +109,18 @@ public class IO
 		}
 		if (msg != null)
 		{
-			msg.flush();
+			msg.Flush();
 		}
 		if (err != null)
 		{
-			err.flush();
+			err.Flush();
 		}
 	}
 
 	
 		internal virtual void setInput(string P_0)
 	{
-		NullPointerException ex2;
+		NullReferenceException ex2;
 		IOException ex5;
 		try
 		{
@@ -132,7 +130,7 @@ public class IO
 				{
 					try
 					{
-						File file = new File(P_0);
+						FileInfo file = new FileInfo(P_0);
 						if (!file.Exists)
 						{
 							string text = new StringBuilder().Append("File ").Append(P_0).Append(" not found.")
@@ -158,7 +156,7 @@ public class IO
 					}
 					catch (System.Exception x)
 					{
-						NullPointerException ex = ByteCodeHelper.MapException<NullPointerException>(x, ByteCodeHelper.MapFlags.None);
+						NullReferenceException ex = ByteCodeHelper.MapException<NullPointerException>(x, ByteCodeHelper.MapFlags.None);
 						if (ex == null)
 						{
 							throw;
@@ -166,7 +164,7 @@ public class IO
 						ex2 = ex;
 					}
 				}
-				catch (SecurityException)
+				catch (System.Exception)
 				{
 					goto IL_00de;
 				}
@@ -178,16 +176,16 @@ public class IO
 		}
 		catch (IOException x2)
 		{
-			ex5 = ByteCodeHelper.MapException<IOException>(x2, ByteCodeHelper.MapFlags.NoRemapping);
+			ex5 = x2;
 			goto IL_00e4;
 		}
-		NullPointerException @this = ex2;
-		string text4 = (@this);
+		NullReferenceException @this = ex2;
+		string text4 = (@this.Message);
 		//
 		throw new JJTreeIOException(text4);
 		IL_00e4:
 		IOException this2 = ex5;
-		string text5 = (this2);
+		string text5 = (this2.Message);
 		//
 		throw new JJTreeIOException(text5);
 		IL_00e1:
@@ -210,9 +208,9 @@ public class IO
 		{
 			JavaCCGlobals.createOutputDir(JJTreeOptions.getJJTreeOutputDirectory());
 			//
-			File file = new File(JJTreeOptions.getJJTreeOutputDirectory(), create_output_file_name(ifn));
+			FileInfo file = new FileInfo(JJTreeOptions.getJJTreeOutputDirectory(), create_output_file_name(ifn));
 			ofn = file.ToString();
-			@out = new TextWriter(new FileWriter(file));
+			@out = new StringWriter(file.FullName);
 			return;
 		}
 		catch (IOException)

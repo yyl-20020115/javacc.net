@@ -24,7 +24,8 @@ internal sealed class JJTreeState
 	internal static void generateTreeState_java()
 	{
 		
-		File f = new File(JJTreeOptions.getJJTreeOutputDirectory(), new StringBuilder().Append(nameState()).Append(".java").ToString());
+		FileInfo f = new FileInfo(
+			Path.Combine(JJTreeOptions.getJJTreeOutputDirectory().DirectoryName, new StringBuilder().Append(nameState()).Append(".java").ToString()));
 		IOException ex;
 		try
 		{
@@ -37,10 +38,10 @@ internal sealed class JJTreeState
 		}
 		catch (IOException x)
 		{
-			ex = ByteCodeHelper.MapException<IOException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 		}
 		IOException @this = ex;
-		string message = (@this);
+		string message = (@this.Message);
 		
 		throw new System.Exception(message);
 	}

@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+
 namespace org.javacc.parser;
 
 public class TokenProduction
@@ -22,7 +24,7 @@ public class TokenProduction
 
 	public int kind;
 
-	public ArrayList respecs;
+	public List<RegExprSpec> respecs = new();
 
 	public bool isExplicit;
 
@@ -37,7 +39,6 @@ public class TokenProduction
 
     public TokenProduction()
 	{
-		respecs = new ArrayList();
 		isExplicit = true;
 		ignoreCase = false;
 	}

@@ -39,8 +39,7 @@ public class JJDoc : JJDocGlobals
 					text = new StringBuilder().Append(text).Append(" [IGNORE_CASE]").ToString();
 				}
 				text = new StringBuilder().Append(text).Append(" : {\n").ToString();
-				Enumeration enumeration2 = tokenProduction.respecs.elements();
-				while (enumeration2.hasMoreElements())
+				foreach(var regExprSpec in tokenProduction.respecs)
 				{
 					RegExprSpec regExprSpec = (RegExprSpec)enumeration2.nextElement();
 					text = new StringBuilder().Append(text).Append(emitRE(regExprSpec.rexp)).ToString();
@@ -474,9 +473,4 @@ public class JJDoc : JJDocGlobals
 		JJDocGlobals.generator.DocumentEnd();
 	}
 
-	
-	static JJDoc()
-	{
-		JJDocGlobals.___003Cclinit_003E();
-	}
 }

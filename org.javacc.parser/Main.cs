@@ -44,9 +44,9 @@ public static class EntryPoint
 			return 1;
 		}
 		Console.WriteLine("(type \"javacc\" with no arguments for help)");
-		if (Options.isOption(strarr[(nint)strarr.LongLength - 1]))
+		if (Options.isOption(strarr[strarr.Length - 1]))
 		{
-			Console.WriteLine(new StringBuilder().Append("Last argument \"").Append(strarr[(nint)strarr.LongLength - 1]).Append("\" is not a filename.")
+			Console.WriteLine(new StringBuilder().Append("Last argument \"").Append(strarr[strarr.Length - 1]).Append("\" is not a filename.")
 				.ToString());
 			return 1;
 		}
@@ -66,21 +66,21 @@ public static class EntryPoint
 			try
 			{
 
-				FileInfo file = new FileInfo(strarr[(nint)strarr.LongLength - 1]);
+				FileInfo file = new FileInfo(strarr[strarr.Length - 1]);
 				if (!file.Exists)
 				{
-					Console.WriteLine(new StringBuilder().Append("File ").Append(strarr[(nint)strarr.LongLength - 1]).Append(" not found.")
+					Console.WriteLine(new StringBuilder().Append("File ").Append(strarr[strarr.Length - 1]).Append(" not found.")
 						.ToString());
 					return 1;
 				}
-				DirectoryInfo di = new DirectoryInfo(strarr[(nint)strarr.LongLength - 1]);
+				DirectoryInfo di = new DirectoryInfo(strarr[strarr.Length - 1]);
 				if (di.Exists)
 				{
-					Console.WriteLine(new StringBuilder().Append(strarr[(nint)strarr.LongLength - 1]).Append(" is a directory. Please use a valid file name.").ToString());
+					Console.WriteLine(new StringBuilder().Append(strarr[strarr.Length - 1]).Append(" is a directory. Please use a valid file name.").ToString());
 					return 1;
 				}
 				JavaCCParser.___003Cclinit_003E();
-				javaCCParser = new JavaCCParser(new StreamReader(strarr[(nint)strarr.LongLength - 1]));
+				javaCCParser = new JavaCCParser(new StreamReader(strarr[strarr.Length - 1]));
 			}
 			catch (Exception)
 			{
@@ -96,11 +96,11 @@ public static class EntryPoint
 		{
 			try
 			{
-				Console.WriteLine(new StringBuilder().Append("Reading from file ").Append(strarr[(nint)strarr.LongLength - 1]).Append(" . . .")
+				Console.WriteLine(new StringBuilder().Append("Reading from file ").Append(strarr[strarr.Length - 1]).Append(" . . .")
 					.ToString());
-				JavaCCGlobals.fileName = (JavaCCGlobals.origFileName = strarr[(nint)strarr.LongLength - 1]);
-				JavaCCGlobals.jjtreeGenerated = JavaCCGlobals.isGeneratedBy("JJTree", strarr[(nint)strarr.LongLength - 1]);
-				JavaCCGlobals.toolNames = JavaCCGlobals.getToolNames(strarr[(nint)strarr.LongLength - 1]);
+				JavaCCGlobals.fileName = (JavaCCGlobals.origFileName = strarr[strarr.Length - 1]);
+				JavaCCGlobals.jjtreeGenerated = JavaCCGlobals.isGeneratedBy("JJTree", strarr[strarr.Length - 1]);
+				JavaCCGlobals.toolNames = JavaCCGlobals.getToolNames(strarr[strarr.Length - 1]);
 				javaCCParser.javacc_input();
 				JavaCCGlobals.createOutputDir(Options.getOutputDirectory());
 				if (Options.getUnicodeInput())
@@ -156,12 +156,12 @@ public static class EntryPoint
 		return 1;
 	IL_0180:
 
-		Console.WriteLine(new StringBuilder().Append("File ").Append(strarr[(nint)strarr.LongLength - 1]).Append(" not found.")
+		Console.WriteLine(new StringBuilder().Append("File ").Append(strarr[strarr.Length - 1]).Append(" not found.")
 			.ToString());
 		return 1;
 	IL_017d:
 
-		Console.WriteLine(new StringBuilder().Append("Security violation while trying to open ").Append(strarr[(nint)strarr.LongLength - 1]).ToString());
+		Console.WriteLine(new StringBuilder().Append("Security violation while trying to open ").Append(strarr[strarr.Length - 1]).ToString());
 		return 1;
 	}
 

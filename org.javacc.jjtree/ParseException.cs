@@ -20,14 +20,14 @@ public class ParseException : System.Exception
 
 	protected internal string eol;
 
-	
+
 	public ParseException()
 	{
 		eol = Environment.NewLine;// java.lang.System.getProperty("line.separator", "\n");
 		specialConstructor = false;
 	}
 
-	
+
 	public ParseException(Token t, int[][] iarr, string[] strarr)
 		: base("")
 	{
@@ -38,7 +38,7 @@ public class ParseException : System.Exception
 		tokenImage = strarr;
 	}
 
-	
+
 	protected internal virtual string add_escapes(string str)
 	{
 		StringBuilder stringBuilder = new StringBuilder();
@@ -46,32 +46,32 @@ public class ParseException : System.Exception
 		{
 			switch (str[i])
 			{
-			case '\b':
-				stringBuilder.Append("\\b");
-				continue;
-			case '\t':
-				stringBuilder.Append("\\t");
-				continue;
-			case '\n':
-				stringBuilder.Append("\\n");
-				continue;
-			case '\f':
-				stringBuilder.Append("\\f");
-				continue;
-			case '\r':
-				stringBuilder.Append("\\r");
-				continue;
-			case '"':
-				stringBuilder.Append("\\\"");
-				continue;
-			case '\'':
-				stringBuilder.Append("\\'");
-				continue;
-			case '\\':
-				stringBuilder.Append("\\\\");
-				continue;
-			case '\0':
-				continue;
+				case '\b':
+					stringBuilder.Append("\\b");
+					continue;
+				case '\t':
+					stringBuilder.Append("\\t");
+					continue;
+				case '\n':
+					stringBuilder.Append("\\n");
+					continue;
+				case '\f':
+					stringBuilder.Append("\\f");
+					continue;
+				case '\r':
+					stringBuilder.Append("\\r");
+					continue;
+				case '"':
+					stringBuilder.Append("\\\"");
+					continue;
+				case '\'':
+					stringBuilder.Append("\\'");
+					continue;
+				case '\\':
+					stringBuilder.Append("\\\\");
+					continue;
+				case '\0':
+					continue;
 			}
 			int num;
 			if ((num = str[i]) < 32 || num > 126)
@@ -86,11 +86,11 @@ public class ParseException : System.Exception
 			}
 		}
 		string result = stringBuilder.ToString();
-		
+
 		return result;
 	}
 
-	
+
 	public ParseException(string str)
 		: base(str)
 	{
@@ -98,7 +98,7 @@ public class ParseException : System.Exception
 		specialConstructor = false;
 	}
 
-	
+
 	public override string Message
 	{
 		get
@@ -160,10 +160,9 @@ public class ParseException : System.Exception
 		}
 	}
 
-	
-	[PermissionSet(SecurityAction.Demand, XML = "<PermissionSet class=\"System.Security.PermissionSet\"\r\nversion=\"1\">\r\n<IPermission class=\"System.Security.Permissions.SecurityPermission, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089\"\r\nversion=\"1\"\r\nFlags=\"SerializationFormatter\"/>\r\n</PermissionSet>\r\n")]
+
 	protected ParseException(SerializationInfo P_0, StreamingContext P_1)
-		: base(P_0, P_1)
+	: base(P_0, P_1)
 	{
 	}
 }

@@ -25,12 +25,6 @@ internal class JJTreeGlobals
 	internal static Hashtable productions;
 
 	
-	
-	public static void ___003Cclinit_003E()
-	{
-	}
-
-	
 	public static bool isOptionJJTreeOnly(string P_0)
 	{
 		bool result = jjtreeOptions.Contains((P_0.ToUpper()));

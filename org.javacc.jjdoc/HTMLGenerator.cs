@@ -54,7 +54,7 @@ public class HTMLGenerator : TextGenerator, Generator
 	{
 		if (this.id_map.TryGetValue(str, out var text))
 		{
-			StringBuilder stringBuilder = new StringBuilder().Append("prod");
+			var stringBuilder = new StringBuilder().Append("prod");
 			int num = id;
 			id = num + 1;
 			text = stringBuilder.Append(num).ToString();

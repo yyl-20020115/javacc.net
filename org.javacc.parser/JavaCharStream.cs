@@ -382,7 +382,7 @@ public class JavaCharStream
 		}
 		catch (IOException x)
 		{
-			ex = ByteCodeHelper.MapException<IOException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 		}
 		IOException ex2 = ex;
 		if (bufpos != 0)
@@ -433,7 +433,7 @@ public class JavaCharStream
 		}
 		catch (System.Exception x)
 		{
-			ex = ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.None);
+			ex =x;
 			goto IL_01ca;
 		}
 		int num = bufsize + 2048;
@@ -443,7 +443,7 @@ public class JavaCharStream
 		return;
 	IL_01ca:
 		System.Exception @this = ex;
-		string message = @this.Message;// Throwable.instancehelper_getMessage(@this);
+		string message = @this.Message;// @this.Message;
 
 		throw new System.Exception(message);
 	}

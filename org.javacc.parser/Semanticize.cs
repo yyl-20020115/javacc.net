@@ -889,7 +889,7 @@ public class Semanticize : JavaCCGlobals
 			if ((nint)P_0.leIndex == (nint)P_0.leftExpansions.LongLength)
 			{
 				NormalProduction[] array = new NormalProduction[P_0.leIndex * 2];
-				ByteCodeHelper.arraycopy(P_0.leftExpansions, 0, array, 0, P_0.leIndex);
+				Array.Copy(P_0.leftExpansions, 0, array, 0, P_0.leIndex);
 				P_0.leftExpansions = array;
 			}
 			NormalProduction[] leftExpansions = P_0.leftExpansions;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.IO;
 using System.Text;
@@ -72,7 +73,7 @@ public class ParseEngine : JavaCCGlobals
 			Choice choice = (Choice)P_0;
 			for (int i = 0; i < choice.choices.Count; i++)
 			{
-				if (javaCodeCheck((Expansion)choice.choices.get(i)))
+				if (javaCodeCheck((Expansion)choice.choices[i]))
 				{
 					return true;
 				}
@@ -218,7 +219,7 @@ public class ParseEngine : JavaCCGlobals
 	internal static string phase1ExpansionGen(Expansion P_0)
 	{
 		string text = "";
-		Token t = null;
+		Token t;
 		if (P_0 is RegularExpression)
 		{
 			RegularExpression regularExpression = (RegularExpression)P_0;
@@ -226,10 +227,8 @@ public class ParseEngine : JavaCCGlobals
 			if (regularExpression.lhsTokens.Count != 0)
 			{
 				JavaCCGlobals.printTokenSetup((Token)regularExpression.lhsTokens[0]);
-				Enumeration enumeration = regularExpression.lhsTokens.elements();
-				while (enumeration.hasMoreElements())
+				foreach(t in regularExpression.lhsTokens)
 				{
-					t = (Token)enumeration.nextElement();
 					text = new StringBuilder().Append(text).Append(JavaCCGlobals.printToken(t)).ToString();
 				}
 				text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTrailingComments(t)).ToString();
@@ -241,7 +240,7 @@ public class ParseEngine : JavaCCGlobals
 			{
 				Hashtable hashtable = JavaCCGlobals.names_of_tokens;
 				;
-				object obj = hashtable.get(new int(regularExpression.ordinal));
+				object obj = hashtable.get((regularExpression.ordinal));
 				text = ((obj == null) ? new StringBuilder().Append(text).Append("jj_consume_token(").Append(regularExpression.ordinal)
 					.Append(str)
 					.ToString() : new StringBuilder().Append(text).Append("jj_consume_token(").Append((string)obj)
@@ -261,11 +260,8 @@ public class ParseEngine : JavaCCGlobals
 			text = new StringBuilder().Append(text).Append("\n").ToString();
 			if (nonTerminal.lhsTokens.Count != 0)
 			{
-				JavaCCGlobals.printTokenSetup((Token)nonTerminal.lhsTokens[0]);
-				Enumeration enumeration = nonTerminal.lhsTokens.elements();
-				while (enumeration.hasMoreElements())
+				foreach(Token t in nonTerminal.lhsTokens)
 				{
-					t = (Token)enumeration.nextElement();
 					text = new StringBuilder().Append(text).Append(JavaCCGlobals.printToken(t)).ToString();
 				}
 				text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTrailingComments(t)).ToString();
@@ -1303,7 +1299,7 @@ public class ParseEngine : JavaCCGlobals
 		for (int i = 0; i < (nint)P_0.LongLength; i++)
 		{
 			Console.Error.WriteLine(new StringBuilder().Append("Lookahead: ").Append(i).ToString());
-			Console.Error.WriteLine(P_0[i].dump(0, new HashSet()));
+			Console.Error.WriteLine(P_0[i].dump(0, new()));
 			Console.Error.WriteLine();
 		}
 	}
