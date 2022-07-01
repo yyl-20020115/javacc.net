@@ -64,7 +64,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		string text = new StringBuilder().Append("/* ").Append(JavaCCGlobals.getIdString("JavaCC", P_0)).Append(" Version ")
 			.ToString();
 		
-		File file = new File(Options.getOutputDirectory(), replaceBackslash(P_0));
+		var file = new FileInfo(Path.Combine( Options.getOutputDirectory().FullName, replaceBackslash(P_0)));
 		if (!file.Exists)
 		{
 			try
@@ -72,7 +72,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 				string s = String.instancehelper_replaceAll("4.1d1", "[^0-9.]+.*", "");
 				return Double.parseDouble(s);
 			}
-			catch (NumberFormatException)
+			catch (System.FormatException)
 			{
 			}
 			

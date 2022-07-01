@@ -1,7 +1,6 @@
+using javacc.net;
 using System;
-
-
-
+using System.Collections;
 using System.IO;
 using System.Text;
 
@@ -38,12 +37,6 @@ public class RStringLiteral : RegularExpression
 	internal static Hashtable[] statesForPos;
 
 	private static bool boilerPlateDumped;
-
-	
-	
-	public new static void ___003Cclinit_003E()
-	{
-	}
 
 	
 	public RStringLiteral(Token t, string str)
@@ -575,7 +568,7 @@ public class RStringLiteral : RegularExpression
 				}
 				if (i != 0 && Options.getDebugTokenManager())
 				{
-					P_0.WriteLine(new StringBuilder().Append("   if (jjmatchedKind != 0 && jjmatchedKind != 0x").Append(int.toHexString(int.MaxValue)).Append(")")
+					P_0.WriteLine(new StringBuilder().Append("   if (jjmatchedKind != 0 && jjmatchedKind != 0x").Append(Utils.ToString(int.MaxValue,16)).Append(")")
 						.ToString());
 					P_0.WriteLine("      debugStream.WriteLine(\"   Currently matched the first \" + (jjmatchedPos + 1) + \" characters as a \" + tokenImage[jjmatchedKind] + \" token.\");");
 					P_0.WriteLine("   debugStream.WriteLine(\"   Possible string literal matches : { \"");
@@ -624,7 +617,7 @@ public class RStringLiteral : RegularExpression
 					}
 					if (i != 0 && Options.getDebugTokenManager())
 					{
-						P_0.WriteLine(new StringBuilder().Append("      if (jjmatchedKind != 0 && jjmatchedKind != 0x").Append(int.toHexString(int.MaxValue)).Append(")")
+						P_0.WriteLine(new StringBuilder().Append("      if (jjmatchedKind != 0 && jjmatchedKind != 0x").Append(Utils.ToString(int.MaxValue,16)).Append(")")
 							.ToString());
 						P_0.WriteLine("         debugStream.WriteLine(\"   Currently matched the first \" + (jjmatchedPos + 1) + \" characters as a \" + tokenImage[jjmatchedKind] + \" token.\");");
 					}

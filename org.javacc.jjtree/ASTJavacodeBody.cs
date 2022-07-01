@@ -4,11 +4,8 @@ namespace org.javacc.jjtree;
 public class ASTJavacodeBody : JJTreeNode
 {
 	internal NodeScope node_scope;
-
 	internal ASTJavacodeBody(int P_0)
-		: base(P_0)
-	{
-	}
+		: base(P_0) { }
 
 
 	public override void Write(IO io)
@@ -18,16 +15,16 @@ public class ASTJavacodeBody : JJTreeNode
 			base.Write(io);
 			return;
 		}
-		Token firstToken = getFirstToken();
+		Token firstToken = FirstToken;
 		string text = "";
 		for (int i = 4; i < firstToken.beginColumn; i++)
 		{
-			text = new StringBuilder().Append(text).Append(" ").ToString();
+			text += " ";
 		}
-		JJTreeNode.openJJTreeComment(io, node_scope.getNodeDescriptorText());
+		JJTreeNode.OpenJJTreeComment(io, node_scope.getNodeDescriptorText());
 		io.WriteLine();
 		node_scope.insertOpenNodeCode(io, text);
-		node_scope.tryTokenSequence(io, text, firstToken, getLastToken());
+		node_scope.tryTokenSequence(io, text, firstToken, LastToken);
 	}
 
 

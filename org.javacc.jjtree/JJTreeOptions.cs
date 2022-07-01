@@ -5,187 +5,100 @@ namespace org.javacc.jjtree;
 
 internal class JJTreeOptions : Options
 {
-	
-	public static bool getMulti()
-	{
-		bool result = Options.booleanValue("MULTI");
-		
-		return result;
-	}
 
-	
-	public static string getNodePrefix()
-	{
-		string result = Options.stringValue("NODE_PREFIX");
-		
-		return result;
-	}
+    public static bool Multi => Options.BooleanValue("MULTI");
 
-	
-	public static string getOutputFile()
-	{
-		string result = Options.stringValue("OUTPUT_FILE");
-		
-		return result;
-	}
+    public static string NodePrefix => Options.StringValue("NODE_PREFIX");
 
-	
-	public static FileInfo getJJTreeOutputDirectory()
+
+    public static string OutputFile => Options.StringValue("OUTPUT_FILE");
+
+
+    public static FileInfo JJTreeOutputDirectory
+    {
+        get
+        {
+            var text = Options.StringValue("JJTREE_OUTPUT_DIRECTORY");
+
+            return string.Equals("", text) ? Options.getOutputDirectory() : new FileInfo(text);
+        }
+    }
+
+    public static bool Visitor => Options.BooleanValue("VISITOR");
+
+
+    public static string VisitorDataType => Options.StringValue("VISITOR_DATA_TYPE");
+
+
+    public static string VisitorException => Options.StringValue("VISITOR_EXCEPTION");
+
+
+    public static string JdkVersion => Options.StringValue("JDK_VERSION");
+
+
+    public static bool NodeDefaultVoid => Options.BooleanValue("NODE_DEFAULT_VOID");
+
+
+    public static bool NodeScopeHook => Options.BooleanValue("NODE_SCOPE_HOOK");
+
+
+    public static string NodeFactory => Options.StringValue("NODE_FACTORY");
+
+
+    public static bool NodeUsesParser => Options.BooleanValue("NODE_USES_PARSER");
+
+
+    public static bool BuildNodeFiles => Options.BooleanValue("BUILD_NODE_FILES");
+
+
+    public static bool TrackTokens => Options.BooleanValue("TRACK_TOKENS");
+
+
+    public static string NodeExtends => Options.StringValue("NODE_EXTENDS");
+
+
+    public static string NodeClass => Options.StringValue("NODE_CLASS");
+
+
+    public static string NodePackage => Options.StringValue("NODE_PACKAGE");
+
+	public static void Validate()
 	{
-		string text = Options.stringValue("JJTREE_OUTPUT_DIRECTORY");
-		
-		if (string.Equals("", text))
+		if (!Visitor)
 		{
-			return Options.getOutputDirectory();
-		}
-		return new FileInfo(text);
-	}
-
-	
-	public static void validate()
-	{
-		if (!getVisitor())
-		{
-			if ((getVisitorDataType().Length) > 0)
+			if ((VisitorDataType.Length) > 0)
 			{
 				JavaCCErrors.Warning("VISITOR_DATA_TYPE option will be ignored since VISITOR is false");
 			}
-			if ((getVisitorException().Length) > 0)
+			if ((VisitorException.Length) > 0)
 			{
 				JavaCCErrors.Warning("VISITOR_EXCEPTION option will be ignored since VISITOR is false");
 			}
 		}
 	}
 
-	
-	public new static void init()
+
+	public new static void Init()
 	{
-		Options.init();
-		Options.optionValues.Add("JDK_VERSION", "1.4");
-		Options.optionValues.Add("MULTI", false);
-		Options.optionValues.Add("NODE_DEFAULT_VOID", false);
-		Options.optionValues.Add("NODE_SCOPE_HOOK", false);
-		Options.optionValues.Add("NODE_USES_PARSER", false);
-		Options.optionValues.Add("BUILD_NODE_FILES", true);
-		Options.optionValues.Add("VISITOR", false);
-		Options.optionValues.Add("TRACK_TOKENS", false);
-		Options.optionValues.Add("NODE_PREFIX", "AST");
-		Options.optionValues.Add("NODE_PACKAGE", "");
-		Options.optionValues.Add("NODE_EXTENDS", "");
-		Options.optionValues.Add("NODE_CLASS", "");
-		Options.optionValues.Add("NODE_FACTORY", "");
-		Options.optionValues.Add("OUTPUT_FILE", "");
-		Options.optionValues.Add("VISITOR_DATA_TYPE", "");
-		Options.optionValues.Add("VISITOR_EXCEPTION", "");
-		Options.optionValues.Add("JJTREE_OUTPUT_DIRECTORY", "");
+		Options.Init();
+		Options.OptionValues.Add("JDK_VERSION", "1.4");
+		Options.OptionValues.Add("MULTI", false);
+		Options.OptionValues.Add("NODE_DEFAULT_VOID", false);
+		Options.OptionValues.Add("NODE_SCOPE_HOOK", false);
+		Options.OptionValues.Add("NODE_USES_PARSER", false);
+		Options.OptionValues.Add("BUILD_NODE_FILES", true);
+		Options.OptionValues.Add("VISITOR", false);
+		Options.OptionValues.Add("TRACK_TOKENS", false);
+		Options.OptionValues.Add("NODE_PREFIX", "AST");
+		Options.OptionValues.Add("NODE_PACKAGE", "");
+		Options.OptionValues.Add("NODE_EXTENDS", "");
+		Options.OptionValues.Add("NODE_CLASS", "");
+		Options.OptionValues.Add("NODE_FACTORY", "");
+		Options.OptionValues.Add("OUTPUT_FILE", "");
+		Options.OptionValues.Add("VISITOR_DATA_TYPE", "");
+		Options.OptionValues.Add("VISITOR_EXCEPTION", "");
+		Options.OptionValues.Add("JJTREE_OUTPUT_DIRECTORY", "");
 	}
 
-	
-	public static bool getVisitor()
-	{
-		bool result = Options.booleanValue("VISITOR");
-		
-		return result;
-	}
 
-	
-	public static string getVisitorDataType()
-	{
-		string result = Options.stringValue("VISITOR_DATA_TYPE");
-		
-		return result;
-	}
-
-	
-	public static string getVisitorException()
-	{
-		string result = Options.stringValue("VISITOR_EXCEPTION");
-		
-		return result;
-	}
-
-	
-	protected internal JJTreeOptions()
-	{
-	}
-
-	
-	public new static string getJdkVersion()
-	{
-		string result = Options.stringValue("JDK_VERSION");
-		
-		return result;
-	}
-
-	
-	public static bool getNodeDefaultVoid()
-	{
-		bool result = Options.booleanValue("NODE_DEFAULT_VOID");
-		
-		return result;
-	}
-
-	
-	public static bool getNodeScopeHook()
-	{
-		bool result = Options.booleanValue("NODE_SCOPE_HOOK");
-		
-		return result;
-	}
-
-	
-	public static string getNodeFactory()
-	{
-		string result = Options.stringValue("NODE_FACTORY");
-		
-		return result;
-	}
-
-	
-	public static bool getNodeUsesParser()
-	{
-		bool result = Options.booleanValue("NODE_USES_PARSER");
-		
-		return result;
-	}
-
-	
-	public static bool getBuildNodeFiles()
-	{
-		bool result = Options.booleanValue("BUILD_NODE_FILES");
-		
-		return result;
-	}
-
-	
-	public static bool getTrackTokens()
-	{
-		bool result = Options.booleanValue("TRACK_TOKENS");
-		
-		return result;
-	}
-
-	
-	public static string getNodeExtends()
-	{
-		string result = Options.stringValue("NODE_EXTENDS");
-		
-		return result;
-	}
-
-	
-	public static string getNodeClass()
-	{
-		string result = Options.stringValue("NODE_CLASS");
-		
-		return result;
-	}
-
-	
-	public static string getNodePackage()
-	{
-		string result = Options.stringValue("NODE_PACKAGE");
-		
-		return result;
-	}
 }

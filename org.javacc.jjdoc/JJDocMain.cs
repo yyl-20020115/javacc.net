@@ -17,7 +17,7 @@ public sealed class JJDocMain : JJDocGlobals
 	{
 		//Discarded unreachable code: IL_02fd
 		EntryPoint.reInitAll();
-		JJDocOptions.init();
+		JJDocOptions.Init();
 		JavaCCGlobals.bannerLine("Documentation Generator", "0.1.4");
 		
 		if (strarr.Length == 0)

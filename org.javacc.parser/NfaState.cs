@@ -370,11 +370,11 @@ public class NfaState
 				.ToString());
 		}
 		pw.WriteLine("   //int j; // not used");
-		pw.WriteLine(new StringBuilder().Append("   int kind = 0x").Append(int.toHexString(int.MaxValue)).Append(";")
+		pw.WriteLine(new StringBuilder().Append("   int kind = 0x").Append(Utils.ToString(int.MaxValue,16)).Append(";")
 			.ToString());
 		pw.WriteLine("   for (;;)");
 		pw.WriteLine("   {");
-		pw.WriteLine(new StringBuilder().Append("      if (++jjround == 0x").Append(int.toHexString(int.MaxValue)).Append(")")
+		pw.WriteLine(new StringBuilder().Append("      if (++jjround == 0x").Append(Utils.ToString(int.MaxValue,16)).Append(")")
 			.ToString());
 		pw.WriteLine("         ReInitRounds();");
 		pw.WriteLine("      if (curChar < 64)");
@@ -389,18 +389,18 @@ public class NfaState
 		pw.WriteLine("      {");
 		DumpCharAndRangeMoves(pw);
 		pw.WriteLine("      }");
-		pw.WriteLine(new StringBuilder().Append("      if (kind != 0x").Append(int.toHexString(int.MaxValue)).Append(")")
+		pw.WriteLine(new StringBuilder().Append("      if (kind != 0x").Append(Utils.ToString(int.MaxValue,16)).Append(")")
 			.ToString());
 		pw.WriteLine("      {");
 		pw.WriteLine("         jjmatchedKind = kind;");
 		pw.WriteLine("         jjmatchedPos = curPos;");
-		pw.WriteLine(new StringBuilder().Append("         kind = 0x").Append(int.toHexString(int.MaxValue)).Append(";")
+		pw.WriteLine(new StringBuilder().Append("         kind = 0x").Append(Utils.ToString(int.MaxValue,16)).Append(";")
 			.ToString());
 		pw.WriteLine("      }");
 		pw.WriteLine("      ++curPos;");
 		if (Options.getDebugTokenManager())
 		{
-			pw.WriteLine(new StringBuilder().Append("      if (jjmatchedKind != 0 && jjmatchedKind != 0x").Append(int.toHexString(int.MaxValue)).Append(")")
+			pw.WriteLine(new StringBuilder().Append("      if (jjmatchedKind != 0 && jjmatchedKind != 0x").Append(Utils.ToString(int.MaxValue,16)).Append(")")
 				.ToString());
 			pw.WriteLine("         debugStream.WriteLine(\"   Currently matched the first \" + (jjmatchedPos + 1) + \" characters as a \" + tokenImage[jjmatchedKind] + \" token.\");");
 		}
@@ -2292,7 +2292,7 @@ public class NfaState
 			{
 				do
 				{
-					if (!AllBitsSet((string)allBitVectors.elementAt(nonAsciiMoveIndices[i - 2])))
+					if (!AllBitsSet((string)allBitVectors[(nonAsciiMoveIndices[i - 2])]))
 					{
 						P_0.WriteLine(new StringBuilder().Append("         if ((jjbitVec").Append(nonAsciiMoveIndices[i - 2]).Append("[i1] & l1) != 0L)")
 							.ToString());

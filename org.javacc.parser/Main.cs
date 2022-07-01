@@ -16,7 +16,7 @@ public static class EntryPoint
 		Expansion.ReInit();
 		JavaCCErrors.ReInit();
 		JavaCCGlobals.reInit();
-		Options.init();
+		Options.Init();
 		JavaCCParserInternals.reInit();
 		RStringLiteral.reInit();
 		JavaFiles.reInit();

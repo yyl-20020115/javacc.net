@@ -41,7 +41,6 @@ public class JJDoc : JJDocGlobals
 				text = new StringBuilder().Append(text).Append(" : {\n").ToString();
 				foreach(var regExprSpec in tokenProduction.respecs)
 				{
-					RegExprSpec regExprSpec = (RegExprSpec)enumeration2.nextElement();
 					text = new StringBuilder().Append(text).Append(emitRE(regExprSpec.rexp)).ToString();
 					if (regExprSpec.nsTok != null)
 					{
@@ -49,10 +48,7 @@ public class JJDoc : JJDocGlobals
 							.ToString();
 					}
 					text = new StringBuilder().Append(text).Append("\n").ToString();
-					if (enumeration2.hasMoreElements())
-					{
 						text = new StringBuilder().Append(text).Append("| ").ToString();
-					}
 				}
 				text = new StringBuilder().Append(text).Append("}\n\n").ToString();
 			}
@@ -185,17 +181,17 @@ public class JJDoc : JJDocGlobals
 				{
 					text = new StringBuilder().Append(text).Append("\"").ToString();
 					char[] value = new char[1] { ((SingleCharacter)obj).ch };
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.add_escapes(String.newhelper(value))).ToString();
+					text = new StringBuilder().Append(text).Append(JavaCCGlobals.add_escapes(new string(value))).ToString();
 					text = new StringBuilder().Append(text).Append("\"").ToString();
 				}
 				else if (obj is CharacterRange)
 				{
 					text = new StringBuilder().Append(text).Append("\"").ToString();
 					char[] value = new char[1] { ((CharacterRange)obj).left };
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.add_escapes(String.newhelper(value))).ToString();
+					text = new StringBuilder().Append(text).Append(JavaCCGlobals.add_escapes(new string(value))).ToString();
 					text = new StringBuilder().Append(text).Append("\"-\"").ToString();
 					value[0] = ((CharacterRange)obj).right;
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.add_escapes(String.newhelper(value))).ToString();
+					text = new StringBuilder().Append(text).Append(JavaCCGlobals.add_escapes(new string(value))).ToString();
 					text = new StringBuilder().Append(text).Append("\"").ToString();
 				}
 				else

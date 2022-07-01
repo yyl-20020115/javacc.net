@@ -3,40 +3,23 @@ namespace org.javacc.jjtree;
 
 public class JJTreeNode : SimpleNode
 {
-	private int myOrdinal;
-
+	private int ordinal = 0;
 	private Token first;
-
 	private Token last;
-
-	private bool whitingOut;
-
+	private bool whitingOut = false;
 
 	public JJTreeNode(int i)
 		: base(i)
 	{
 		whitingOut = false;
 	}
+    public virtual int Ordinal { get => this.ordinal; set => this.ordinal = value; }
+    public virtual Token LastToken { get => last; set => last = value; }
+    public virtual Token FirstToken { get => first; set => first = value; }
 
-	public virtual void setOrdinal(int i)
+    protected internal virtual void Write(Token t, IO io)
 	{
-		myOrdinal = i;
-	}
-
-	public virtual Token getLastToken()
-	{
-		return last;
-	}
-
-	public virtual Token getFirstToken()
-	{
-		return first;
-	}
-
-
-	protected internal virtual void Write(Token t, IO io)
-	{
-		Token token = t.specialToken;
+		var token = t.specialToken;
 		if (token != null)
 		{
 			while (token.specialToken != null)
@@ -45,14 +28,14 @@ public class JJTreeNode : SimpleNode
 			}
 			while (token != null)
 			{
-				io.Write(TokenUtils.addUnicodeEscapes(translateImage(token)));
+				io.Write(TokenUtils.AddUnicodeEscapes(TranslateImage(token)));
 				token = token.next;
 			}
 		}
-		NodeScope enclosingNodeScope = NodeScope.getEnclosingNodeScope(this);
+		var enclosingNodeScope = NodeScope.getEnclosingNodeScope(this);
 		if (enclosingNodeScope == null)
 		{
-			io.Write(TokenUtils.addUnicodeEscapes(translateImage(t)));
+			io.Write(TokenUtils.AddUnicodeEscapes(TranslateImage(t)));
 			return;
 		}
 		if (string.Equals(t.image, "jjtThis"))
@@ -85,99 +68,72 @@ public class JJTreeNode : SimpleNode
 		}
 		else
 		{
-			io.Write(TokenUtils.addUnicodeEscapes(translateImage(t)));
+			io.Write(TokenUtils.AddUnicodeEscapes(TranslateImage(t)));
 		}
 	}
 
-
 	public virtual void Write(IO io)
 	{
-		if (getLastToken().next == getFirstToken())
+		if (LastToken.next == FirstToken)
 		{
 			return;
 		}
-		Token firstToken = getFirstToken();
-		Token token = new Token();
+		var firstToken = FirstToken;
+		var token = new Token();
 		token.next = firstToken;
 		for (int i = 0; i < jjtGetNumChildren(); i++)
 		{
-			JJTreeNode jJTreeNode = (JJTreeNode)jjtGetChild(i);
+			var jJTreeNode = (JJTreeNode)jjtGetChild(i);
 			while (true)
 			{
 				token = token.next;
-				if (token == jJTreeNode.getFirstToken())
+				if (token == jJTreeNode.FirstToken)
 				{
 					break;
 				}
 				Write(token, io);
 			}
 			jJTreeNode.Write(io);
-			token = jJTreeNode.getLastToken();
+			token = jJTreeNode.LastToken;
 		}
-		while (token != getLastToken())
+		while (token != LastToken)
 		{
 			token = token.next;
 			Write(token, io);
 		}
 	}
 
-	internal virtual string translateImage(Token P_0)
-	{
-		return P_0.image;
-	}
+    internal virtual string TranslateImage(Token P_0) => P_0.image;
 
 
-	internal virtual string getIndentation(JJTreeNode P_0, int P_1)
+    internal virtual string getIndentation(JJTreeNode P_0, int P_1)
 	{
-		string text = "";
-		for (int i = P_1 + 1; i < P_0.getFirstToken().beginColumn; i++)
+		var text = "";
+		for (int i = P_1 + 1; i < P_0.FirstToken.beginColumn; i++)
 		{
-			text = new StringBuilder().Append(text).Append(" ").ToString();
+			text += " "; 
 		}
 		return text;
 	}
 
 
 	public JJTreeNode(JJTreeParser jjtp, int i)
-		: this(i)
-	{
-	}
+		: this(i) { }
 
 
-	public static Node jjtCreate(int i)
-	{
-		JJTreeNode result = new JJTreeNode(i);
+    public static Node jjtCreate(int i) => new JJTreeNode(i);
 
-		return result;
-	}
-
-
-	public override void jjtAddChild(Node n, int i)
+    public override void jjtAddChild(Node n, int i)
 	{
 		base.jjtAddChild(n, i);
-		((JJTreeNode)n).setOrdinal(i);
+		((JJTreeNode)n).Ordinal = i;
 	}
 
-	public virtual int getOrdinal()
-	{
-		return myOrdinal;
-	}
+    public virtual int Ordinal1 => ordinal;
 
-	public virtual void setFirstToken(Token t)
+    internal virtual string WhiteOut(Token P_0)
 	{
-		first = t;
-	}
-
-	public virtual void setLastToken(Token t)
-	{
-		last = t;
-	}
-
-
-	internal virtual string whiteOut(Token P_0)
-	{
-		;
-		StringBuilder stringBuilder = new StringBuilder(P_0.image.Length);
+		var stringBuilder = new StringBuilder(P_0.image.Length);
 		for (int i = 0; i < P_0.image.Length; i++)
 		{
 			int num = P_0.image[i];
@@ -190,18 +146,15 @@ public class JJTreeNode : SimpleNode
 				stringBuilder.Append((char)num);
 			}
 		}
-		string result = stringBuilder.ToString();
-
-		return result;
+		return stringBuilder.ToString();
 	}
 
 
-	internal static void openJJTreeComment(IO P_0, string P_1)
+	internal static void OpenJJTreeComment(IO P_0, string P_1)
 	{
 		if (P_1 != null)
 		{
-			P_0.Write(new StringBuilder().Append("/*@bgen(jjtree) ").Append(P_1).Append(" */")
-				.ToString());
+			P_0.Write(("/*@bgen(jjtree) ")+(P_1)+(" */"));
 		}
 		else
 		{
@@ -210,35 +163,14 @@ public class JJTreeNode : SimpleNode
 	}
 
 
-	internal static void closeJJTreeComment(IO P_0)
-	{
-		P_0.Write("/*@egen*/");
-	}
+    internal static void CloseJJTreeComment(IO P_0) => P_0.Write("/*@egen*/");
 
 
-	internal virtual string getIndentation(JJTreeNode P_0)
-	{
-		string indentation = getIndentation(P_0, 0);
-
-		return indentation;
-	}
+    internal virtual string GetIndentation(JJTreeNode P_0) => getIndentation(P_0, 0);
 
 
-	public void Write(object P_0)
-	{
-		Write((IO)P_0);
-	}
-
-
-	protected internal void _003Cnonvirtual_003E0(object P_0)
-	{
-		Write((IO)P_0);
-	}
-
-
-	protected internal void Write(Token P_0, object P_1)
+    protected internal void Write(Token P_0, object P_1)
 	{
 		Write(P_0, (IO)P_1);
 	}
-
 }

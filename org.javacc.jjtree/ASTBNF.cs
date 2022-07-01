@@ -1,4 +1,3 @@
-using System.Text;
 namespace org.javacc.jjtree;
 
 public class ASTBNF : ASTProduction
@@ -12,12 +11,6 @@ public class ASTBNF : ASTProduction
 		throws_list.Add("RuntimeException");
 	}
 
-	
-	public override string ToString()
-	{
-		string result = new StringBuilder().Append(base.ToString()).Append(": ").Append(name)
-			.ToString();
-		
-		return result;
-	}
+
+    public override string ToString() => base.ToString() + ": " + (name);
 }

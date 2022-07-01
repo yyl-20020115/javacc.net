@@ -481,14 +481,14 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		case 80:
 		{
 			int value2 = IntegerLiteral();
-			Options.setInputFileOption(token, getToken(0), image, new int(value2));
+			Options.setInputFileOption(token, getToken(0), image, (value2));
 			break;
 		}
 		case 44:
 		case 75:
 		{
 			int value = (BooleanLiteral() ? 1 : 0);
-			Options.setInputFileOption(token, getToken(0), image, new java.lang.Boolean((byte)value != 0));
+			Options.setInputFileOption(token, getToken(0), image, ((byte)value != 0));
 			break;
 		}
 		case 90:
@@ -12416,10 +12416,8 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 			jj_2_rtns[i] = new JJCalls();
 		}
 		return;
-		IL_001e:
-		UnsupportedEncodingException cause = ex;
-		
-		throw new RuntimeException(cause);
+		IL_001e:		
+		throw new RuntimeException(ex);
 	}
 
 	

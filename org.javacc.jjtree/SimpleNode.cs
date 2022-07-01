@@ -28,9 +28,7 @@ public class SimpleNode: Node
 	
 	public virtual string ToString(string str)
 	{
-		string result = new StringBuilder().Append(str).Append(ToString()).ToString();
-		
-		return result;
+		return new StringBuilder().Append(str).Append(ToString()).ToString();
 	}
 
 	

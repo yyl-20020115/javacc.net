@@ -166,13 +166,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						jjtree.closeNodeScope(aSTCompilationUnit, b: true);
 						num2 = 0;
 						jjtreeCloseNodeScope(aSTCompilationUnit);
-						if (string.Equals(JJTreeOptions.getNodePackage(), ""))
+						if (string.Equals(JJTreeOptions.NodePackage, ""))
 						{
 							JJTreeGlobals.nodePackageName = JJTreeGlobals.packageName;
 						}
 						else
 						{
-							JJTreeGlobals.nodePackageName = JJTreeOptions.getNodePackage();
+							JJTreeGlobals.nodePackageName = JJTreeOptions.NodePackage;
 						}
 					}
 					catch (System.Exception x)
@@ -552,7 +552,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	
 	internal virtual void jjtreeOpenNodeScope(Node P_0)
 	{
-		((JJTreeNode)P_0).setFirstToken(getToken(1));
+		((JJTreeNode)P_0).FirstToken = getToken(1);
 	}
 
 	
@@ -720,7 +720,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	
 	internal virtual void jjtreeCloseNodeScope(Node P_0)
 	{
-		((JJTreeNode)P_0).setLastToken(getToken(0));
+		((JJTreeNode)P_0).LastToken = getToken(0);
 	}
 
 	
@@ -837,7 +837,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					string image = token.image;
 					;
 					Options.setInputFileOption(obj, obj2, image, (token2.image));
-					aSTOptionBinding.initialize(token.image, token2.image);
+					aSTOptionBinding.Initialize(token.image, token2.image);
 					break;
 				}
 				case 39:
@@ -845,7 +845,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				{
 					Token token2 = BooleanLiteral();
 					Options.setInputFileOption(token, token2, token.image, (token2.image));
-					aSTOptionBinding.initialize(token.image, token2.image);
+					aSTOptionBinding.Initialize(token.image, token2.image);
 					break;
 				}
 				case 84:
@@ -853,7 +853,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					Token token2 = StringLiteral();
 					string text = TokenUtils.remove_escapes_and_quotes(token2, token2.image);
 					Options.setInputFileOption(token, token2, token.image, text);
-					aSTOptionBinding.initialize(token.image, text);
+					aSTOptionBinding.Initialize(token.image, text);
 					break;
 				}
 				default:
@@ -2196,7 +2196,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				jjtree.closeNodeScope(aSTNodeDescriptor, b: true);
 				num = 0;
 				jjtreeCloseNodeScope(aSTNodeDescriptor);
-				aSTNodeDescriptor.setNodeIdValue();
+				aSTNodeDescriptor.SetNodeId();
 				result = aSTNodeDescriptor;
 			}
 			catch (System.Exception x)
@@ -3841,7 +3841,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						break;
 					}
 					}
-					((JJTreeNode)jjtree.peekNode()).setFirstToken(firstToken);
+					((JJTreeNode)jjtree.peekNode()).FirstToken = firstToken;
 					break;
 				}
 				jj_la1[33] = jj_gen;
@@ -4863,7 +4863,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				break;
 			}
 			}
-			((JJTreeNode)jjtree.peekNode()).setFirstToken(firstToken);
+			((JJTreeNode)jjtree.peekNode()).FirstToken = firstToken;
 			break;
 		}
 		default:

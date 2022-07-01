@@ -5,16 +5,14 @@ namespace org.javacc.jjdoc;
 public class JJDocGlobals : JavaCCGlobals
 {
 	public static string input_file;
-
 	public static string output_file;
-
 	public static Generator generator;
 	
 	public static Generator GetGenerator()
 	{
 		if (generator == null)
 		{
-			if (JJDocOptions.getText())
+			if (JJDocOptions.Text)
 			{
 				generator = new TextGenerator();
 			}
@@ -23,7 +21,7 @@ public class JJDocGlobals : JavaCCGlobals
 				generator = new HTMLGenerator();
 			}
 		}
-		else if (JJDocOptions.getText())
+		else if (JJDocOptions.Text)
 		{
 			if (generator is HTMLGenerator)
 			{

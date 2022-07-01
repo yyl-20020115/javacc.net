@@ -11,30 +11,28 @@ public class HTMLGenerator : TextGenerator, Generator
 	
 	public override void Write(string str)
 	{
-		ostr.Write(str);
+		writer.Write(str);
 	}
 
-	
-	private void WriteLine(string P_0)
+	private void WriteLine(string str)
 	{
-		Write(new StringBuilder().Append(P_0).Append("\n").ToString());
+		writer.WriteLine(str);
 	}
 
 	
 	public override void ProductionStart(NormalProduction np)
 	{
-		if (!JJDocOptions.getOneTable())
+		if (!JJDocOptions.OneTable)
 		{
 			WriteLine("");
 			WriteLine("<TABLE ALIGN=CENTER>");
-			WriteLine(new StringBuilder().Append("<CAPTION><STRONG>").Append(np.lhs).Append("</STRONG></CAPTION>")
-				.ToString());
+			WriteLine(("<CAPTION><STRONG>")+(np.lhs)+("</STRONG></CAPTION>"));
 		}
 		WriteLine("<TR>");
-		WriteLine(new StringBuilder().Append("<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME=\"").Append(get_id(np.lhs)).Append("\">")
-			.Append(np.lhs)
-			.Append("</A></TD>")
-			.ToString());
+		WriteLine(("<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME=\"")+(get_id(np.lhs))+("\">")
+			+(np.lhs)
+			+("</A></TD>")
+			);
 		WriteLine("<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>");
 		Write("<TD ALIGN=LEFT VALIGN=BASELINE>");
 	}
@@ -42,39 +40,38 @@ public class HTMLGenerator : TextGenerator, Generator
 	
 	public override void ProductionEnd(NormalProduction np)
 	{
-		if (!JJDocOptions.getOneTable())
+		if (!JJDocOptions.OneTable)
 		{
 			WriteLine("</TABLE>");
 			WriteLine("<HR>");
 		}
 	}
 
-	
 	protected internal virtual string get_id(string str)
 	{
 		if (this.id_map.TryGetValue(str, out var text))
 		{
-			var stringBuilder = new StringBuilder().Append("prod");
 			int num = id;
 			id = num + 1;
-			text = stringBuilder.Append(num).ToString();
+			text = ("prod" + num);
 			id_map.Add(str, text);
 		}
 		return text;
 	}
-
 	
-	public HTMLGenerator()
-	{
-	}
-
+	public HTMLGenerator() { }
 	
 	public override void Text(string str)
 	{
-		string str2 = "";
+		var str2 = "";
 		for (int i = 0; i < str.Length; i++)
 		{
-			str2 = ((str[i] != '<') ? ((str[i] != '>') ? ((str[i] != '&') ? new StringBuilder().Append(str2).Append(str[i]).ToString() : new StringBuilder().Append(str2).Append("&amp;").ToString()) : new StringBuilder().Append(str2).Append("&gt;").ToString()) : new StringBuilder().Append(str2).Append("&lt;").ToString());
+			str2 = ((str[i] != '<') ? ((str[i] != '>') ? ((str[i] != '&') 
+				? (str2)+(str[i])
+				: (str2) + ("&amp;"))
+				: (str2) + ("&gt;")) 
+				: (str2) + ("&lt;"))
+				;
 		}
 		Write(str2);
 	}
@@ -82,18 +79,26 @@ public class HTMLGenerator : TextGenerator, Generator
 	
 	public override void DocumentStart()
 	{
-		ostr = create_output_stream();
+		writer = CreateOutputStream();
 		WriteLine("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2//EN\">");
 		WriteLine("<HTML>");
 		WriteLine("<HEAD>");
-		if (!string.Equals("", JJDocOptions.getCSS()))
+		if (!string.Equals("", JJDocOptions.CSS))
 		{
-			WriteLine(new StringBuilder().Append("<LINK REL=\"stylesheet\" type=\"text/css\" href=\"").Append(JJDocOptions.getCSS()).Append("\"/>")
+			WriteLine(
+				new StringBuilder()
+				.Append("<LINK REL=\"stylesheet\" type=\"text/css\" href=\"")
+				.Append(JJDocOptions.CSS)
+				.Append("\"/>")
 				.ToString());
 		}
 		if (JJDocGlobals.input_file != null)
 		{
-			WriteLine(new StringBuilder().Append("<TITLE>BNF for ").Append(JJDocGlobals.input_file).Append("</TITLE>")
+			WriteLine(
+				new StringBuilder()
+				.Append("<TITLE>BNF for ")
+				.Append(JJDocGlobals.input_file)
+				.Append("</TITLE>")
 				.ToString());
 		}
 		else
@@ -102,16 +107,19 @@ public class HTMLGenerator : TextGenerator, Generator
 		}
 		WriteLine("</HEAD>");
 		WriteLine("<BODY>");
-		WriteLine(new StringBuilder().Append("<H1 ALIGN=CENTER>BNF for ").Append(JJDocGlobals.input_file).Append("</H1>")
+		WriteLine(
+			new StringBuilder()
+			.Append("<H1 ALIGN=CENTER>BNF for ")
+			.Append(JJDocGlobals.input_file)
+			.Append("</H1>")
 			.ToString());
 	}
-
 	
 	public override void DocumentEnd()
 	{
 		WriteLine("</BODY>");
 		WriteLine("</HTML>");
-		ostr.Close();
+		this.writer.Close();
 	}
 
 	
@@ -126,7 +134,6 @@ public class HTMLGenerator : TextGenerator, Generator
 		WriteLine("  </TD>");
 		WriteLine(" </TR>");
 	}
-
 	
 	public override void TokenStart(TokenProduction tp)
 	{
@@ -148,34 +155,30 @@ public class HTMLGenerator : TextGenerator, Generator
 	public override void NonterminalsStart()
 	{
 		WriteLine("<H2 ALIGN=CENTER>NON-TERMINALS</H2>");
-		if (JJDocOptions.getOneTable())
+		if (JJDocOptions.OneTable)
 		{
 			WriteLine("<TABLE>");
 		}
 	}
 
-	
 	public override void NonterminalsEnd()
 	{
-		if (JJDocOptions.getOneTable())
+		if (JJDocOptions.OneTable)
 		{
 			WriteLine("</TABLE>");
 		}
 	}
 
-	
 	public override void TokensStart()
 	{
 		WriteLine("<H2 ALIGN=CENTER>TOKENS</H2>");
 		WriteLine("<TABLE>");
 	}
 
-	
 	public override void TokensEnd()
 	{
 		WriteLine("</TABLE>");
 	}
-
 	
 	public override void Javacode(JavaCodeProduction jcp)
 	{
@@ -183,7 +186,6 @@ public class HTMLGenerator : TextGenerator, Generator
 		WriteLine("<I>java code</I></TD></TR>");
 		ProductionEnd(jcp);
 	}
-
 	
 	public override void ExpansionStart(Expansion e, bool b)
 	{
@@ -195,18 +197,20 @@ public class HTMLGenerator : TextGenerator, Generator
 			Write("<TD ALIGN=LEFT VALIGN=BASELINE>");
 		}
 	}
-
 	
 	public override void ExpansionEnd(Expansion e, bool b)
 	{
 		WriteLine("</TD>");
 		WriteLine("</TR>");
 	}
-
 	
 	public override void NonTerminalStart(NonTerminal nt)
 	{
-		Write(new StringBuilder().Append("<A HREF=\"#").Append(get_id(nt.name)).Append("\">")
+		Write(
+			new StringBuilder()
+			.Append("<A HREF=\"#")
+			.Append(get_id(nt.name))
+			.Append("\">")
 			.ToString());
 	}
 

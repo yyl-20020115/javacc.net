@@ -7,7 +7,7 @@ namespace org.javacc.jjtree;
 public sealed class TokenUtils
 {
 	
-	internal static string addUnicodeEscapes(string P_0)
+	internal static string AddUnicodeEscapes(string P_0)
 	{
 		;
 		var stringBuilder = new StringBuilder(P_0.Length);
@@ -30,9 +30,9 @@ public sealed class TokenUtils
 	}
 
 	
-	internal static bool hasTokens(JJTreeNode P_0)
+	internal static bool HasTokens(JJTreeNode P_0)
 	{
-		if (P_0.getLastToken().next == P_0.getFirstToken())
+		if (P_0.LastToken.next == P_0.FirstToken)
 		{
 			return false;
 		}
@@ -42,7 +42,7 @@ public sealed class TokenUtils
 	
 	internal static void Write(Token P_0, IO P_1, string P_2, string P_3)
 	{
-		Token token = P_0.specialToken;
+		var token = P_0.specialToken;
 		if (token != null)
 		{
 			while (token.specialToken != null)
@@ -51,7 +51,7 @@ public sealed class TokenUtils
 			}
 			while (token != null)
 			{
-				P_1.Write(addUnicodeEscapes(token.image));
+				P_1.Write(AddUnicodeEscapes(token.image));
 				token = token.next;
 			}
 		}
@@ -60,7 +60,7 @@ public sealed class TokenUtils
 		{
 			text = P_3;
 		}
-		P_1.Write(addUnicodeEscapes(text));
+		P_1.Write(AddUnicodeEscapes(text));
 	}
 
 	
@@ -212,10 +212,6 @@ public sealed class TokenUtils
 		return P_0 - 97 + 10;
 	}
 
-	
-	private TokenUtils()
-	{
-	}
 	
 	internal static void Write(Token P_0, IO P_1)
 	{

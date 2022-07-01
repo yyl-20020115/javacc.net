@@ -3,50 +3,17 @@ namespace org.javacc.jjdoc;
 
 public class JJDocOptions : Options
 {
-	
-	public static string getOutputFile()
+    public static string OutputFile => Options.StringValue("OUTPUT_FILE");
+    public static bool Text => Options.BooleanValue("TEXT");
+    public static string CSS => Options.StringValue("CSS");
+    public static bool OneTable => Options.BooleanValue("ONE_TABLE");
+    public new static void Init()
 	{
-		string result = Options.stringValue("OUTPUT_FILE");
-		
-		return result;
+		Options.Init();
+		Options.OptionValues.Add("ONE_TABLE", true);
+		Options.OptionValues.Add("TEXT", false);
+		Options.OptionValues.Add("OUTPUT_FILE", "");
+		Options.OptionValues.Add("CSS", "");
 	}
 
-	
-	public static bool getText()
-	{
-		bool result = Options.booleanValue("TEXT");
-		
-		return result;
-	}
-
-	
-	public static string getCSS()
-	{
-		string result = Options.stringValue("CSS");
-		
-		return result;
-	}
-
-	
-	public static bool getOneTable()
-	{
-		bool result = Options.booleanValue("ONE_TABLE");
-		
-		return result;
-	}
-
-	
-	public new static void init()
-	{
-		Options.init();
-		Options.optionValues.Add("ONE_TABLE", true);
-		Options.optionValues.Add("TEXT", false);
-		Options.optionValues.Add("OUTPUT_FILE", "");
-		Options.optionValues.Add("CSS", "");
-	}
-
-	
-	protected internal JJDocOptions()
-	{
-	}
 }

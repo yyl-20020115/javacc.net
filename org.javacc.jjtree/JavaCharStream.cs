@@ -4,7 +4,6 @@ using System.Text;
 
 namespace org.javacc.jjtree;
 
-
 public class JavaCharStream
 {
 	public const bool staticFlag = false;
@@ -208,11 +207,11 @@ public class JavaCharStream
 	{
 		if (bufpos >= tokenBegin)
 		{
-			string result = java.lang.String.newhelper(buffer, tokenBegin, bufpos - tokenBegin + 1);
+			string result = new string(buffer, tokenBegin, bufpos - tokenBegin + 1);
 
 			return result;
 		}
-		string result2 = new StringBuilder().Append(java.lang.String.newhelper(buffer, tokenBegin, bufsize - tokenBegin)).Append(java.lang.String.newhelper(buffer, 0, bufpos + 1)).ToString();
+		string result2 = new StringBuilder().Append(new string(buffer, tokenBegin, bufsize - tokenBegin)).Append(new string(buffer, 0, bufpos + 1)).ToString();
 
 		return result2;
 	}
@@ -322,7 +321,7 @@ public class JavaCharStream
 			bufline[bufpos] = line;
 			bufcolumn[bufpos] = column;
 		}
-		throw new System.Exception(ex2);
+		throw (ex2);
 	}
 
 
@@ -574,7 +573,7 @@ public class JavaCharStream
 
 
 	public JavaCharStream(Stream @is, string str, int i1, int i2, int i3)
-	: this((str != null) ? new StreamReader(@is, str) : new StreamReader(@is), i1, i2, i3)
+	: this((str != null) ? new StreamReader(@is) : new StreamReader(@is), i1, i2, i3)
 	{
 	}
 
@@ -587,7 +586,7 @@ public class JavaCharStream
 
 	public virtual void ReInit(Stream @is, string str, int i1, int i2, int i3)
 	{
-		ReInit((str != null) ? new StreamReader(@is, str) : new StreamReader(@is), i1, i2, i3);
+		ReInit((str != null) ? new StreamReader(@is) : new StreamReader(@is), i1, i2, i3);
 	}
 
 
@@ -606,13 +605,11 @@ public class JavaCharStream
 		return tabSize;
 	}
 
-	[Obsolete]
 	public virtual int getColumn()
 	{
 		return bufcolumn[bufpos];
 	}
 
-	[Obsolete]
 	public virtual int getLine()
 	{
 		return bufline[bufpos];

@@ -12,8 +12,8 @@ public class ASTLHS : JJTreeNode
 	public override void Write(IO io)
 	{
 		NodeScope enclosingNodeScope = NodeScope.getEnclosingNodeScope(this);
-		Token firstToken = getFirstToken();
-		Token lastToken = getLastToken();
+		Token firstToken = FirstToken;
+		Token lastToken = LastToken;
 		for (Token token = firstToken; token != lastToken.next; token = token.next)
 		{
 			TokenUtils.Write(token, io, "jjtThis", enclosingNodeScope.getNodeVariable());

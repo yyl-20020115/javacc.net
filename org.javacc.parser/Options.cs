@@ -8,23 +8,13 @@ namespace org.javacc.parser;
 
 public class Options
 {
-	protected internal static Dictionary<string,object> optionValues;
-
+	protected internal static Dictionary<string,object> OptionValues = new();
 	private static HashSet<string> cmdLineSetting;
-
 	private static HashSet<string> inputFileSetting;
-
-	internal static Type class_0024java_0024lang_0024Boolean;
-
-	
-	//private static CallerID ___003CcallerID_003E;
-
 	
 	public static bool getStatic()
 	{
-		bool result = booleanValue("STATIC");
-		
-		return result;
+		return BooleanValue("STATIC");
 	}
 
 	
@@ -45,7 +35,7 @@ public class Options
 		if (num3 < 0)
 		{
 			text = String.instancehelper_toUpperCase(@this);
-			if (optionValues.ContainsKey(text))
+			if (OptionValues.ContainsKey(text))
 			{
 				obj = true;
 			}
@@ -101,13 +91,13 @@ public class Options
 		}
 		goto IL_01c9;
 		IL_01c9:
-		if (!optionValues.ContainsKey(text))
+		if (!OptionValues.ContainsKey(text))
 		{
 			Console.WriteLine(new StringBuilder().Append("Warning: Bad option \"").Append(str).Append("\" will be ignored.")
 				.ToString());
 			return;
 		}
-		object this2 = optionValues.get(text);
+		object this2 = OptionValues.get(text);
 		if (Object.instancehelper_getClass(obj) != Object.instancehelper_getClass(this2))
 		{
 			Console.WriteLine(new StringBuilder().Append("Warning: Bad option value in \"").Append(str).Append("\" will be ignored.")
@@ -121,12 +111,12 @@ public class Options
 			return;
 		}
 		obj = upgradeValue(text, obj);
-		optionValues.Add(text, obj);
+		OptionValues.Add(text, obj);
 		cmdLineSetting.Add(text);
 	}
 
 	
-	internal static Class class_0024(string P_0)
+	internal static Type class_0024(string P_0)
 	{
 		//Discarded unreachable code: IL_000d
 		java.lang.ClassNotFoundException ex;
@@ -145,9 +135,10 @@ public class Options
 	
 	public static object upgradeValue(string str, object obj)
 	{
-		if (String.instancehelper_equalsIgnoreCase(str, "NODE_FACTORY") && Object.instancehelper_getClass(obj) == ((class_0024java_0024lang_0024Boolean != null) ? class_0024java_0024lang_0024Boolean : (class_0024java_0024lang_0024Boolean = class_0024("java.lang.Boolean"))))
+		if (String.instancehelper_equalsIgnoreCase(str, "NODE_FACTORY") && Object.instancehelper_getClass(obj) == ((class_0024java_0024lang_0024Boolean != null) ? 
+			class_0024java_0024lang_0024Boolean : (class_0024java_0024lang_0024Boolean = class_0024("java.lang.Boolean"))))
 		{
-			obj = ((!((Boolean)obj).booleanValue()) ? "" : "*");
+			obj = ((!(obj.booleanValue()) ? "" : "*");
 		}
 		return obj;
 	}
@@ -155,118 +146,100 @@ public class Options
 	
 	public static bool getDebugLookahead()
 	{
-		bool result = booleanValue("DEBUG_LOOKAHEAD");
-		
-		return result;
+		return BooleanValue("DEBUG_LOOKAHEAD");
 	}
 
 	
 	public static bool getDebugParser()
 	{
-		bool result = booleanValue("DEBUG_PARSER");
-		
-		return result;
+		return BooleanValue("DEBUG_PARSER");
 	}
 
 	
-	protected internal static int intValue(string str)
+	protected internal static int IntValue(string str)
 	{
-		int result = ((int)optionValues.get(str)).intValue();
-		
-		return result;
+		return  ((int)OptionValues.get(str)).intValue();
 	}
 
 	
-	protected internal static bool booleanValue(string str)
+	protected internal static bool BooleanValue(string str)
 	{
-		bool result = ((Boolean)optionValues.get(str)).booleanValue();
-		
-		return result;
+		return (OptionValues.get(str)).booleanValue();
 	}
 
 	
-	protected internal static string stringValue(string str)
+	protected internal static string StringValue(string str)
 	{
-		return (string)optionValues.get(str);
+		return (string)OptionValues.get(str);
 	}
 
 	
 	public static string getJdkVersion()
 	{
-		string result = stringValue("JDK_VERSION");
-		
-		return result;
+		return StringValue("JDK_VERSION");
 	}
 
-	
-	protected internal Options()
+	public static void Init()
 	{
-	}
-
-	
-	public static void init()
-	{
-		optionValues = new HashMap();
-		cmdLineSetting = new HashSet();
-		inputFileSetting = new HashSet();
-		optionValues.Add("LOOKAHEAD", new int(1));
-		optionValues.Add("CHOICE_AMBIGUITY_CHECK", new int(2));
-		optionValues.Add("OTHER_AMBIGUITY_CHECK", new int(1));
-		optionValues.Add("STATIC", true);
-		optionValues.Add("DEBUG_PARSER", false);
-		optionValues.Add("DEBUG_LOOKAHEAD", false);
-		optionValues.Add("DEBUG_TOKEN_MANAGER", false);
-		optionValues.Add("ERROR_REPORTING", true);
-		optionValues.Add("JAVA_UNICODE_ESCAPE", false);
-		optionValues.Add("UNICODE_INPUT", false);
-		optionValues.Add("IGNORE_CASE", false);
-		optionValues.Add("USER_TOKEN_MANAGER", false);
-		optionValues.Add("USER_CHAR_STREAM", false);
-		optionValues.Add("BUILD_PARSER", true);
-		optionValues.Add("BUILD_TOKEN_MANAGER", true);
-		optionValues.Add("TOKEN_MANAGER_USES_PARSER", false);
-		optionValues.Add("SANITY_CHECK", true);
-		optionValues.Add("FORCE_LA_CHECK", false);
-		optionValues.Add("COMMON_TOKEN_ACTION", false);
-		optionValues.Add("CACHE_TOKENS", false);
-		optionValues.Add("KEEP_LINE_COLUMN", true);
-		optionValues.Add("OUTPUT_DIRECTORY", ".");
-		optionValues.Add("JDK_VERSION", "1.4");
-		optionValues.Add("TOKEN_EXTENDS", "");
-		optionValues.Add("TOKEN_FACTORY", "");
+		OptionValues = new();
+		cmdLineSetting = new();
+		inputFileSetting = new();
+		OptionValues.Add("LOOKAHEAD", (1));
+		OptionValues.Add("CHOICE_AMBIGUITY_CHECK", (2));
+		OptionValues.Add("OTHER_AMBIGUITY_CHECK", (1));
+		OptionValues.Add("STATIC", true);
+		OptionValues.Add("DEBUG_PARSER", false);
+		OptionValues.Add("DEBUG_LOOKAHEAD", false);
+		OptionValues.Add("DEBUG_TOKEN_MANAGER", false);
+		OptionValues.Add("ERROR_REPORTING", true);
+		OptionValues.Add("JAVA_UNICODE_ESCAPE", false);
+		OptionValues.Add("UNICODE_INPUT", false);
+		OptionValues.Add("IGNORE_CASE", false);
+		OptionValues.Add("USER_TOKEN_MANAGER", false);
+		OptionValues.Add("USER_CHAR_STREAM", false);
+		OptionValues.Add("BUILD_PARSER", true);
+		OptionValues.Add("BUILD_TOKEN_MANAGER", true);
+		OptionValues.Add("TOKEN_MANAGER_USES_PARSER", false);
+		OptionValues.Add("SANITY_CHECK", true);
+		OptionValues.Add("FORCE_LA_CHECK", false);
+		OptionValues.Add("COMMON_TOKEN_ACTION", false);
+		OptionValues.Add("CACHE_TOKENS", false);
+		OptionValues.Add("KEEP_LINE_COLUMN", true);
+		OptionValues.Add("OUTPUT_DIRECTORY", ".");
+		OptionValues.Add("JDK_VERSION", "1.4");
+		OptionValues.Add("TOKEN_EXTENDS", "");
+		OptionValues.Add("TOKEN_FACTORY", "");
 	}
 
 	
 	public static string getOptionsString(string[] strarr)
 	{
-		StringBuilder stringBuilder = new StringBuilder();
+		var stringBuilder = new StringBuilder();
 		for (int i = 0; i < (nint)strarr.LongLength; i++)
 		{
 			string text = strarr[i];
 			stringBuilder.Append(text);
 			stringBuilder.Append('=');
-			stringBuilder.Append(optionValues.get(text));
+			stringBuilder.Append(OptionValues.get(text));
 			if (i != (nint)strarr.LongLength - 1)
 			{
 				stringBuilder.Append(',');
 			}
 		}
-		string result = stringBuilder.ToString();
-		
-		return result;
+		return stringBuilder.ToString();
 	}
 
 	
 	public static void setInputFileOption(object obj1, object obj2, string str, object obj3)
 	{
-		string text = String.instancehelper_toUpperCase(str);
-		if (!optionValues.ContainsKey(text))
+		string text = str.ToUpper();
+		if (!OptionValues.ContainsKey(text))
 		{
 			JavaCCErrors.Warning(obj1, new StringBuilder().Append("Bad option name \"").Append(str).Append("\".  Option setting will be ignored.")
 				.ToString());
 			return;
 		}
-		object obj4 = optionValues.get(text);
+		object obj4 = OptionValues.get(text);
 		obj3 = upgradeValue(str, obj3);
 		if (obj4 != null)
 		{
@@ -294,7 +267,7 @@ public class Options
 				return;
 			}
 		}
-		optionValues.Add(text, obj3);
+		OptionValues.Add(text, obj3);
 		inputFileSetting.Add(text);
 	}
 
@@ -307,195 +280,141 @@ public class Options
 			{
 				JavaCCErrors.Warning("True setting of option DEBUG_LOOKAHEAD overrides false setting of option DEBUG_PARSER.");
 			}
-			optionValues.Add("DEBUG_PARSER", true);
+			OptionValues.Add("DEBUG_PARSER", true);
 		}
 	}
 
 	
 	public static int getLookahead()
 	{
-		int result = intValue("LOOKAHEAD");
-		
-		return result;
+		return IntValue("LOOKAHEAD");
 	}
 
 	
 	public static int getChoiceAmbiguityCheck()
 	{
-		int result = intValue("CHOICE_AMBIGUITY_CHECK");
-		
-		return result;
+		return IntValue("CHOICE_AMBIGUITY_CHECK");
 	}
 
 	
 	public static int getOtherAmbiguityCheck()
 	{
-		int result = intValue("OTHER_AMBIGUITY_CHECK");
-		
-		return result;
+		return IntValue("OTHER_AMBIGUITY_CHECK");
 	}
 
 	
 	public static bool getDebugTokenManager()
 	{
-		bool result = booleanValue("DEBUG_TOKEN_MANAGER");
-		
-		return result;
+		return BooleanValue("DEBUG_TOKEN_MANAGER");
 	}
 
 	
 	public static bool getErrorReporting()
 	{
-		bool result = booleanValue("ERROR_REPORTING");
-		
-		return result;
+		return BooleanValue("ERROR_REPORTING");
 	}
 
 	
 	public static bool getJavaUnicodeEscape()
 	{
-		bool result = booleanValue("JAVA_UNICODE_ESCAPE");
-		
-		return result;
+		return BooleanValue("JAVA_UNICODE_ESCAPE");
 	}
 
 	
 	public static bool getUnicodeInput()
 	{
-		bool result = booleanValue("UNICODE_INPUT");
-		
-		return result;
+		return BooleanValue("UNICODE_INPUT");
 	}
 
 	
 	public static bool getIgnoreCase()
 	{
-		bool result = booleanValue("IGNORE_CASE");
-		
-		return result;
+		return BooleanValue("IGNORE_CASE");
 	}
 
 	
 	public static bool getUserTokenManager()
 	{
-		bool result = booleanValue("USER_TOKEN_MANAGER");
-		
-		return result;
+		return BooleanValue("USER_TOKEN_MANAGER");
 	}
 
 	
 	public static bool getUserCharStream()
 	{
-		bool result = booleanValue("USER_CHAR_STREAM");
-		
-		return result;
+		return BooleanValue("USER_CHAR_STREAM");
 	}
 
 	
 	public static bool getBuildParser()
 	{
-		bool result = booleanValue("BUILD_PARSER");
-		
-		return result;
+		return BooleanValue("BUILD_PARSER");
 	}
 
 	
 	public static bool getBuildTokenManager()
 	{
-		bool result = booleanValue("BUILD_TOKEN_MANAGER");
-		
-		return result;
+		return BooleanValue("BUILD_TOKEN_MANAGER");
 	}
 
 	
 	public static bool getTokenManagerUsesParser()
 	{
-		bool result = booleanValue("TOKEN_MANAGER_USES_PARSER");
-		
-		return result;
+		return BooleanValue("TOKEN_MANAGER_USES_PARSER");
 	}
 
 	
 	public static bool getSanityCheck()
 	{
-		bool result = booleanValue("SANITY_CHECK");
-		
-		return result;
+		return BooleanValue("SANITY_CHECK");
 	}
 
 	
 	public static bool getForceLaCheck()
 	{
-		bool result = booleanValue("FORCE_LA_CHECK");
-		
-		return result;
+		return BooleanValue("FORCE_LA_CHECK");
 	}
 
 	
 	public static bool getCommonTokenAction()
 	{
-		bool result = booleanValue("COMMON_TOKEN_ACTION");
-		
-		return result;
+		return BooleanValue("COMMON_TOKEN_ACTION");
 	}
 
 	
 	public static bool getCacheTokens()
 	{
-		bool result = booleanValue("CACHE_TOKENS");
-		
-		return result;
+		return BooleanValue("CACHE_TOKENS");
 	}
 
 	
 	public static bool getKeepLineColumn()
 	{
-		bool result = booleanValue("KEEP_LINE_COLUMN");
-		
-		return result;
+		return BooleanValue("KEEP_LINE_COLUMN");
 	}
 
 	
 	public static string getTokenExtends()
 	{
-		string result = stringValue("TOKEN_EXTENDS");
-		
-		return result;
+		return StringValue("TOKEN_EXTENDS");
 	}
 
 	
 	public static string getTokenFactory()
 	{
-		string result = stringValue("TOKEN_FACTORY");
-		
-		return result;
+		return StringValue("TOKEN_FACTORY");
 	}
 
 	
 	public static FileInfo getOutputDirectory()
 	{
 
-		FileInfo result = new FileInfo(stringValue("OUTPUT_DIRECTORY"));
-		
-		return result;
+		return new FileInfo(StringValue("OUTPUT_DIRECTORY"));
 	}
 
 	
-	public static string stringBufOrBuild()
+	public static string getStringBufOrBuild()
 	{
-		if (string.Equals(getJdkVersion(), "1.5") || string.Equals(getJdkVersion(), "1.6"))
-		{
-			return "StringBuilder";
-		}
-		return "StringBuilder";
-	}
+		return nameof(StringBuilder);
 
-	static CallerID ___003CGetCallerID_003E()
-	{
-		if (___003CcallerID_003E == null)
-		{
-			___003CcallerID_003E = new ___003CCallerID_003E();
-		}
-		return ___003CcallerID_003E;
 	}
 }

@@ -5,7 +5,7 @@ namespace org.javacc.jjtree;
 
 public class ASTNodeDescriptor : JJTreeNode
 {
-	private bool faked;
+	private bool faked = false;
 	internal static ArrayList nodeIds;
 	internal static ArrayList nodeNames;
 	internal static Hashtable nodeSeen;
@@ -13,33 +13,35 @@ public class ASTNodeDescriptor : JJTreeNode
 	internal bool isGT;
 	internal ASTNodeDescriptorExpression expression;
 
-	
-	internal virtual string getDescriptor()
-	{
-		if (expression == null)
-		{
-			return name;
-		}
-		string result = new StringBuilder().Append("#").Append(name).Append("(")
-			.Append((!isGT) ? "" : ">")
-			.Append(expression_text())
-			.Append(")")
-			.ToString();
-		
-		return result;
-	}
 
-	
-	internal ASTNodeDescriptor(int P_0)
+    internal virtual string Descriptor
+    {
+        get
+        {
+            if (expression == null)
+            {
+                return name;
+            }
+            string result = new StringBuilder().Append("#").Append(name).Append("(")
+                .Append((!isGT) ? "" : ">")
+                .Append(expression_text())
+                .Append(")")
+                .ToString();
+
+            return result;
+        }
+    }
+
+    internal ASTNodeDescriptor(int P_0)
 		: base(P_0)
 	{
 		faked = false;
 	}
 
-	
-	internal virtual void setNodeIdValue()
+
+	internal virtual void SetNodeId()
 	{
-		string nodeId = getNodeId();
+		string nodeId = GetNodeId();
 		if (!nodeSeen.ContainsKey(nodeId))
 		{
 			nodeSeen.Add(nodeId, nodeId);
@@ -48,28 +50,25 @@ public class ASTNodeDescriptor : JJTreeNode
 		}
 	}
 
-	
-	internal virtual string getNodeId()
+
+	internal virtual string GetNodeId()
 	{
-		string result = new StringBuilder().Append("JJT").Append(name.ToUpper().Replace('.', '_')).ToString();
-		
-		return result;
+		return $"JJT{name.ToUpper().Replace('.', '_')}";
 	}
 
-	
 	private string expression_text()
 	{
-		if (string.Equals(expression.getFirstToken().image, ")") && string.Equals(expression.getLastToken().image, "("))
+		if (string.Equals(expression.FirstToken.image, ")") && string.Equals(expression.LastToken.image, "("))
 		{
 			return "true";
 		}
 		string text = "";
-		Token token = expression.getFirstToken();
+		Token token = expression.FirstToken;
 		while (true)
 		{
 			text = new StringBuilder().Append(text).Append(" ").Append(token.image)
 				.ToString();
-			if (token == expression.getLastToken())
+			if (token == expression.LastToken)
 			{
 				break;
 			}
@@ -83,31 +82,20 @@ public class ASTNodeDescriptor : JJTreeNode
 	{
 		ASTNodeDescriptor aSTNodeDescriptor = new ASTNodeDescriptor(39);
 		aSTNodeDescriptor.name = P_0;
-		aSTNodeDescriptor.setNodeIdValue();
+		aSTNodeDescriptor.SetNodeId();
 		aSTNodeDescriptor.faked = true;
 		return aSTNodeDescriptor;
 	}
 
-	internal static ArrayList getNodeIds()
-	{
-		return nodeIds;
-	}
+    internal static ArrayList NodeIds => nodeIds;
 
-	internal static ArrayList getNodeNames()
-	{
-		return nodeNames;
-	}
+    internal static ArrayList NodeNames => nodeNames;
 
-	
-	internal virtual bool isVoid()
-	{
-		bool result = string.Equals(name, "void");
-		
-		return result;
-	}
 
-	
-	public override string ToString()
+    internal virtual bool IsVoid => string.Equals(name, "void");
+
+
+    public override string ToString()
 	{
 		if (faked)
 		{
@@ -124,31 +112,22 @@ public class ASTNodeDescriptor : JJTreeNode
 	
 	internal virtual string getNodeType()
 	{
-		if (JJTreeOptions.getMulti())
+		if (JJTreeOptions.Multi)
 		{
-			string result = new StringBuilder().Append(JJTreeOptions.getNodePrefix()).Append(name).ToString();
+			string result = new StringBuilder().Append(JJTreeOptions.NodePrefix).Append(name).ToString();
 			
 			return result;
 		}
 		return "SimpleNode";
 	}
 
-	internal virtual string getNodeName()
-	{
-		return name;
-	}
+    internal virtual string getNodeName() => name;
 
-	
-	internal virtual string openNode(string P_0)
-	{
-		string result = new StringBuilder().Append("jjtree.openNodeScope(").Append(P_0).Append(");")
-			.ToString();
-		
-		return result;
-	}
 
-	
-	internal virtual string closeNode(string P_0)
+    internal virtual string openNode(string P_0) => "jjtree.openNodeScope(" + (P_0) + (");");
+
+
+    internal virtual string closeNode(string P_0)
 	{
 		if (expression == null)
 		{
@@ -175,11 +154,9 @@ public class ASTNodeDescriptor : JJTreeNode
 	}
 
 	
-	internal override string translateImage(Token P_0)
+	internal override string TranslateImage(Token P_0)
 	{
-		string result = whiteOut(P_0);
-		
-		return result;
+		return WhiteOut(P_0);
 	}
 
 	static ASTNodeDescriptor()

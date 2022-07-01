@@ -62,11 +62,6 @@ internal class JJTreeGlobals
 		jjtreeOptions.Add("VISITOR_DATA_TYPE");
 	}
 
-	
-	internal JJTreeGlobals()
-	{
-	}
-
 	static JJTreeGlobals()
 	{
 		initialize();

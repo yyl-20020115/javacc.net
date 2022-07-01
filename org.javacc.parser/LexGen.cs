@@ -1,3 +1,5 @@
+using javacc.net;
+using System;
 using System.Collections;
 using System.IO;
 using System.Text;
@@ -477,7 +479,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			.ToString());
 		if (hasMoreActions || hasSkipActions || hasTokenActions)
 		{
-			ostr.WriteLine(new StringBuilder().Append(staticString).Append(Options.stringBufOrBuild()).Append(" image;")
+			ostr.WriteLine(new StringBuilder().Append(staticString).Append(Options.getStringBufOrBuild()).Append(" image;")
 				.ToString());
 			ostr.WriteLine(new StringBuilder().Append(staticString).Append("int jjimageLen;").ToString());
 			ostr.WriteLine(new StringBuilder().Append(staticString).Append("int lengthOfMatch;").ToString());
@@ -817,7 +819,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			}
 			else
 			{
-				ostr.WriteLine(new StringBuilder().Append(str).Append("jjmatchedKind = 0x").Append(int.toHexString(int.MaxValue))
+				ostr.WriteLine(new StringBuilder().Append(str).Append("jjmatchedKind = 0x").Append(Utils.ToString(int.MaxValue,16))
 					.Append(";")
 					.ToString());
 				ostr.WriteLine(new StringBuilder().Append(str).Append("jjmatchedPos = 0;").ToString());
@@ -872,13 +874,13 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		}
 		else if (maxLexStates == 0)
 		{
-			ostr.WriteLine(new StringBuilder().Append("       jjmatchedKind = 0x").Append(int.toHexString(int.MaxValue)).Append(";")
+			ostr.WriteLine(new StringBuilder().Append("       jjmatchedKind = 0x").Append(Utils.ToString(int.MaxValue,16)).Append(";")
 				.ToString());
 		}
 		str = ((maxLexStates <= 1) ? "" : "  ");
 		if (maxLexStates > 0)
 		{
-			ostr.WriteLine(new StringBuilder().Append(str).Append("   if (jjmatchedKind != 0x").Append(int.toHexString(int.MaxValue))
+			ostr.WriteLine(new StringBuilder().Append(str).Append("   if (jjmatchedKind != 0x").Append(Utils.ToString(int.MaxValue,16))
 				.Append(")")
 				.ToString());
 			ostr.WriteLine(new StringBuilder().Append(str).Append("   {").ToString());
@@ -997,7 +999,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 						ostr.WriteLine(new StringBuilder().Append(str).Append("      curLexState = jjnewLexState[jjmatchedKind];").ToString());
 					}
 					ostr.WriteLine(new StringBuilder().Append(str).Append("      curPos = 0;").ToString());
-					ostr.WriteLine(new StringBuilder().Append(str).Append("      jjmatchedKind = 0x").Append(int.toHexString(int.MaxValue))
+					ostr.WriteLine(new StringBuilder().Append(str).Append("      jjmatchedKind = 0x").Append(Utils.ToString(int.MaxValue,16))
 						.Append(";")
 						.ToString());
 					ostr.WriteLine(new StringBuilder().Append(str).Append("      try {").ToString());
@@ -1147,7 +1149,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			if ((action = actions[i]) != null && action.action_tokens.Count != 0)
 			{
 				ostr.WriteLine("         if (image == null)");
-				ostr.WriteLine(new StringBuilder().Append("            image = new ").Append(Options.stringBufOrBuild()).Append("();")
+				ostr.WriteLine(new StringBuilder().Append("            image = new ").Append(Options.getStringBufOrBuild()).Append("();")
 					.ToString());
 				ostr.Write("         image.append");
 				if (RStringLiteral.allImages[i] != null)
@@ -1223,7 +1225,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			if ((action = actions[i]) != null && action.action_tokens.Count != 0)
 			{
 				ostr.WriteLine("         if (image == null)");
-				ostr.WriteLine(new StringBuilder().Append("            image = new ").Append(Options.stringBufOrBuild()).Append("();")
+				ostr.WriteLine(new StringBuilder().Append("            image = new ").Append(Options.getStringBufOrBuild()).Append("();")
 					.ToString());
 				ostr.Write("         image.append");
 				if (RStringLiteral.allImages[i] != null)
@@ -1303,7 +1305,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				else
 				{
 					ostr.WriteLine("        if (image == null)");
-					ostr.WriteLine(new StringBuilder().Append("            image = new ").Append(Options.stringBufOrBuild()).Append("();")
+					ostr.WriteLine(new StringBuilder().Append("            image = new ").Append(Options.getStringBufOrBuild()).Append("();")
 						.ToString());
 					ostr.Write("        image.append");
 					if (RStringLiteral.allImages[i] != null)
@@ -1400,7 +1402,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				TokenProduction tokenProduction = (TokenProduction)vector2[i];
 				int kind = tokenProduction.kind;
 				int num2 = (tokenProduction.ignoreCase ? 1 : 0);
-				ArrayList respecs = tokenProduction.respecs;
+				var respecs = tokenProduction.respecs;
 				if (i == 0)
 				{
 					num = num2;

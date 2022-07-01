@@ -25,14 +25,14 @@ internal sealed class NodeFiles
 		string str = nodeConstants();
 		
 		FileInfo f = new FileInfo(
-			Path.Combine(JJTreeOptions.getJJTreeOutputDirectory().DirectoryName, new StringBuilder().Append(str).Append(".java").ToString()));
+			Path.Combine(JJTreeOptions.JJTreeOutputDirectory.DirectoryName, new StringBuilder().Append(str).Append(".java").ToString()));
 		IOException ex;
 		try
 		{
 			OutputFile outputFile = new OutputFile(f);
 			TextWriter printWriter = outputFile.getPrintWriter();
-			ArrayList nodeIds = ASTNodeDescriptor.getNodeIds();
-			ArrayList nodeNames = ASTNodeDescriptor.getNodeNames();
+			ArrayList nodeIds = ASTNodeDescriptor.NodeIds;
+			ArrayList nodeNames = ASTNodeDescriptor.NodeNames;
 			generatePrologue(printWriter);
 			printWriter.WriteLine(new StringBuilder().Append("public interface ").Append(str).ToString());
 			printWriter.WriteLine("{");
@@ -71,40 +71,41 @@ internal sealed class NodeFiles
 	
 	internal static void generateVisitor_java()
 	{
-		if (!JJTreeOptions.getVisitor())
+		if (!JJTreeOptions.Visitor)
 		{
 			return;
 		}
-		string str = visitorClass();
+		var str = visitorClass();
 		
-		FileInfo f = new FileInfo(JJTreeOptions.getJJTreeOutputDirectory(), new StringBuilder().Append(str).Append(".java").ToString());
+		var f = new FileInfo(Path.Combine(JJTreeOptions.JJTreeOutputDirectory.FullName, 
+			(str)+(".java")));
 		IOException ex;
 		try
 		{
 			OutputFile outputFile = new OutputFile(f);
 			TextWriter printWriter = outputFile.getPrintWriter();
-			ArrayList nodeNames = ASTNodeDescriptor.getNodeNames();
+			ArrayList nodeNames = ASTNodeDescriptor.NodeNames;
 			generatePrologue(printWriter);
 			printWriter.WriteLine(new StringBuilder().Append("public interface ").Append(str).ToString());
 			printWriter.WriteLine("{");
 			string str2 = mergeVisitorException();
 			string str3 = "Object";
-			if (!string.Equals(JJTreeOptions.getVisitorDataType(), ""))
+			if (!string.Equals(JJTreeOptions.VisitorDataType, ""))
 			{
-				str3 = JJTreeOptions.getVisitorDataType();
+				str3 = JJTreeOptions.VisitorDataType;
 			}
 			printWriter.WriteLine(new StringBuilder().Append("  public Object visit(SimpleNode node, ").Append(str3).Append(" data)")
 				.Append(str2)
 				.Append(";")
 				.ToString());
-			if (JJTreeOptions.getMulti())
+			if (JJTreeOptions.Multi)
 			{
 				for (int i = 0; i < nodeNames.Count; i++)
 				{
 					string text = (string)nodeNames[i];
 					if (!string.Equals(text, "void"))
 					{
-						string str4 = new StringBuilder().Append(JJTreeOptions.getNodePrefix()).Append(text).ToString();
+						string str4 = new StringBuilder().Append(JJTreeOptions.NodePrefix).Append(text).ToString();
 						printWriter.WriteLine(new StringBuilder().Append("  public Object visit(").Append(str4).Append(" node, ")
 							.Append(str3)
 							.Append(" data)")
@@ -149,7 +150,9 @@ internal sealed class NodeFiles
 	internal static void ensure(IO P_0, string P_1)
 	{
 		
-		File file = new File(JJTreeOptions.getJJTreeOutputDirectory(), new StringBuilder().Append(P_1).Append(".java").ToString());
+		var file = new FileInfo(
+			Path.Combine(
+				JJTreeOptions.JJTreeOutputDirectory.FullName, (P_1)+(".java")));
 		if (!string.Equals(P_1, "Node"))
 		{
 			if (string.Equals(P_1, "SimpleNode"))
@@ -161,7 +164,8 @@ internal sealed class NodeFiles
 				ensure(P_0, "SimpleNode");
 			}
 		}
-		if ((!string.Equals(P_1, "Node") && !JJTreeOptions.getBuildNodeFiles()) || (file.Exists && nodesGenerated.Contains(file.getName())))
+		if ((!string.Equals(P_1, "Node") && !JJTreeOptions.BuildNodeFiles) 
+			|| (file.Exists && nodesGenerated.Contains(file.FullName)))
 		{
 			return;
 		}
@@ -171,7 +175,7 @@ internal sealed class NodeFiles
 			string[] strarr = new string[7] { "MULTI", "NODE_USES_PARSER", "VISITOR", "TRACK_TOKENS", "NODE_PREFIX", "NODE_EXTENDS", "NODE_FACTORY" };
 			OutputFile outputFile = new OutputFile(file, "4.1", strarr);
 			outputFile.setToolName("JJTree");
-			nodesGenerated.Add(file.Name);
+			nodesGenerated.Add(file.FullName);
 			if (outputFile.needToWrite)
 			{
 				if (string.Equals(P_1, "Node"))
@@ -234,12 +238,12 @@ internal sealed class NodeFiles
 		printWriter.WriteLine("");
 		printWriter.WriteLine("  /** Return the number of children the node has. */");
 		printWriter.WriteLine("  public int jjtGetNumChildren();");
-		if (JJTreeOptions.getVisitor())
+		if (JJTreeOptions.Visitor)
 		{
 			string str = "Object";
-			if (!string.Equals(JJTreeOptions.getVisitorDataType(), ""))
+			if (!string.Equals(JJTreeOptions.VisitorDataType, ""))
 			{
-				str = JJTreeOptions.getVisitorDataType();
+				str = JJTreeOptions.VisitorDataType;
 			}
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** Accept the visitor. **/");
@@ -260,9 +264,9 @@ internal sealed class NodeFiles
 		TextWriter printWriter = P_0.getPrintWriter();
 		generatePrologue(printWriter);
 		printWriter.Write("public class SimpleNode");
-		if (!string.Equals(JJTreeOptions.getNodeExtends(), ""))
+		if (!string.Equals(JJTreeOptions.NodeExtends, ""))
 		{
-			printWriter.Write(new StringBuilder().Append(" extends ").Append(JJTreeOptions.getNodeExtends()).ToString());
+			printWriter.Write(new StringBuilder().Append(" extends ").Append(JJTreeOptions.NodeExtends).ToString());
 		}
 		printWriter.WriteLine(" implements Node {");
 		printWriter.WriteLine("  protected Node parent;");
@@ -271,7 +275,7 @@ internal sealed class NodeFiles
 		printWriter.WriteLine("  protected Object value;");
 		printWriter.WriteLine(new StringBuilder().Append("  protected ").Append(JJTreeGlobals.parserName).Append(" parser;")
 			.ToString());
-		if (JJTreeOptions.getTrackTokens())
+		if (JJTreeOptions.TrackTokens)
 		{
 			printWriter.WriteLine("  protected Token firstToken;");
 			printWriter.WriteLine("  protected Token lastToken;");
@@ -287,7 +291,7 @@ internal sealed class NodeFiles
 		printWriter.WriteLine("    parser = p;");
 		printWriter.WriteLine("  }");
 		printWriter.WriteLine("");
-		if ((JJTreeOptions.getNodeFactory().Length) > 0)
+		if ((JJTreeOptions.NodeFactory.Length) > 0)
 		{
 			printWriter.WriteLine("  public static Node jjtCreate(int id) {");
 			printWriter.WriteLine("    return new SimpleNode(id);");
@@ -330,7 +334,7 @@ internal sealed class NodeFiles
 		printWriter.WriteLine("  public void jjtSetValue(Object value) { this.value = value; }");
 		printWriter.WriteLine("  public Object jjtGetValue() { return value; }");
 		printWriter.WriteLine("");
-		if (JJTreeOptions.getTrackTokens())
+		if (JJTreeOptions.TrackTokens)
 		{
 			printWriter.WriteLine("  public Token jjtGetFirstToken() { return firstToken; }");
 			printWriter.WriteLine("  public void jjtSetFirstToken(Token token) { this.firstToken = token; }");
@@ -338,13 +342,13 @@ internal sealed class NodeFiles
 			printWriter.WriteLine("  public void jjtSetLastToken(Token token) { this.lastToken = token; }");
 			printWriter.WriteLine("");
 		}
-		if (JJTreeOptions.getVisitor())
+		if (JJTreeOptions.Visitor)
 		{
 			string str = mergeVisitorException();
 			string str2 = "Object";
-			if (!string.Equals(JJTreeOptions.getVisitorDataType(), ""))
+			if (!string.Equals(JJTreeOptions.VisitorDataType, ""))
 			{
-				str2 = JJTreeOptions.getVisitorDataType();
+				str2 = JJTreeOptions.VisitorDataType;
 			}
 			printWriter.WriteLine("  /** Accept the visitor. **/");
 			printWriter.WriteLine(new StringBuilder().Append("  public Object jjtAccept(").Append(visitorClass()).Append(" visitor, ")
@@ -405,10 +409,10 @@ internal sealed class NodeFiles
 	{
 		TextWriter printWriter = P_0.getPrintWriter();
 		generatePrologue(printWriter);
-		if ((JJTreeOptions.getNodeClass().Length) > 0)
+		if ((JJTreeOptions.NodeClass.Length) > 0)
 		{
 			printWriter.WriteLine(new StringBuilder().Append("public class ").Append(P_1).Append(" extends ")
-				.Append(JJTreeOptions.getNodeClass())
+				.Append(JJTreeOptions.NodeClass)
 				.Append("{")
 				.ToString());
 		}
@@ -429,7 +433,7 @@ internal sealed class NodeFiles
 		printWriter.WriteLine("    super(p, id);");
 		printWriter.WriteLine("  }");
 		printWriter.WriteLine();
-		if ((JJTreeOptions.getNodeFactory().Length) > 0)
+		if ((JJTreeOptions.NodeFactory.Length) > 0)
 		{
 			printWriter.WriteLine("  public static Node jjtCreate(int id) {");
 			printWriter.WriteLine(new StringBuilder().Append("      return new ").Append(P_1).Append("(id);")
@@ -442,12 +446,12 @@ internal sealed class NodeFiles
 				.ToString());
 			printWriter.WriteLine("  }");
 		}
-		if (JJTreeOptions.getVisitor())
+		if (JJTreeOptions.Visitor)
 		{
 			string str = "Object";
-			if (!string.Equals(JJTreeOptions.getVisitorDataType(), ""))
+			if (!string.Equals(JJTreeOptions.VisitorDataType, ""))
 			{
-				str = JJTreeOptions.getVisitorDataType();
+				str = JJTreeOptions.VisitorDataType;
 			}
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** Accept the visitor. **/");
@@ -475,7 +479,7 @@ internal sealed class NodeFiles
 	
 	private static string mergeVisitorException()
 	{
-		string text = JJTreeOptions.getVisitorException();
+		string text = JJTreeOptions.VisitorException;
 		if (!string.Equals("", text))
 		{
 			text = new StringBuilder().Append(" throws ").Append(text).ToString();

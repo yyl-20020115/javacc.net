@@ -102,7 +102,7 @@ public class JavaCCGlobals
 			if (num < 32 || num > 126)
 			{
 				string @this = new StringBuilder().Append("0000").Append(Utils.ToString(num, 16)).ToString();
-				text = new StringBuilder().Append(text).Append("\\u").Append(java.lang.String.instancehelper_substring(@this, @this.Length - 4, @this.Length))
+				text = new StringBuilder().Append(text).Append("\\u").Append(@this.Substring(@this.Length - 4, @this.Length))
 					.ToString();
 			}
 			else
@@ -131,7 +131,7 @@ public class JavaCCGlobals
 					while ((num2 = fileReader.Read(array, num, (int)((nint)array.LongLength - num))) != -1 && (nint)(num += num2) != (nint)array.LongLength)
 					{
 					}
-					result = makeToolNameVector(java.lang.String.newhelper(array, 0, num));
+					result = makeToolNameVector(new string(array, 0, num));
 				}
 				catch (FileNotFoundException)
 				{
@@ -154,10 +154,6 @@ public class JavaCCGlobals
 				}
 				catch (System.Exception x)
 				{
-					if (ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.Unused) == null)
-					{
-						throw;
-					}
 					goto IL_0064;
 				}
 			}
@@ -176,10 +172,6 @@ public class JavaCCGlobals
 			}
 			catch (System.Exception x2)
 			{
-				if (ByteCodeHelper.MapException<System.Exception>(x2, ByteCodeHelper.MapFlags.Unused) == null)
-				{
-					throw;
-				}
 			}
 			
 		}
@@ -191,7 +183,7 @@ public class JavaCCGlobals
 		{
 			if (num > 0)
 			{
-				result2 = makeToolNameVector(java.lang.String.newhelper(array, 0, num));
+				result2 = makeToolNameVector(new string(array, 0, num));
 				goto IL_010b;
 			}
 		}
@@ -206,10 +198,6 @@ public class JavaCCGlobals
 				}
 				catch (System.Exception x3)
 				{
-					if (ByteCodeHelper.MapException<System.Exception>(x3, ByteCodeHelper.MapFlags.Unused) == null)
-					{
-						throw;
-					}
 					goto IL_0100;
 				}
 			}
@@ -227,10 +215,6 @@ public class JavaCCGlobals
 			}
 			catch (System.Exception x4)
 			{
-				if (ByteCodeHelper.MapException<System.Exception>(x4, ByteCodeHelper.MapFlags.Unused) == null)
-				{
-					throw;
-				}
 				goto IL_014a;
 			}
 		}
@@ -253,10 +237,6 @@ public class JavaCCGlobals
 			}
 			catch (System.Exception x5)
 			{
-				if (ByteCodeHelper.MapException<System.Exception>(x5, ByteCodeHelper.MapFlags.Unused) == null)
-				{
-					throw;
-				}
 			}
 			
 		}
@@ -271,10 +251,6 @@ public class JavaCCGlobals
 			}
 			catch (System.Exception x6)
 			{
-				if (ByteCodeHelper.MapException<System.Exception>(x6, ByteCodeHelper.MapFlags.Unused) == null)
-				{
-					throw;
-				}
 				goto IL_00b9;
 			}
 		}
@@ -285,39 +261,39 @@ public class JavaCCGlobals
 	private static ArrayList makeToolNameVector(string P_0)
 	{
 		ArrayList vector = new ArrayList();
-		int num = java.lang.String.instancehelper_indexOf(P_0, 10);
+		int num = P_0.IndexOf((char)10);
 		if (num == -1)
 		{
 			num = 1000;
 		}
-		int num2 = java.lang.String.instancehelper_indexOf(P_0, 13);
+		int num2 = P_0.IndexOf((char)13);
 		if (num2 == -1)
 		{
 			num2 = 1000;
 		}
 		int num3 = ((num >= num2) ? num2 : num);
-		string @this = ((num3 != 1000) ? java.lang.String.instancehelper_substring(P_0, 0, num3) : P_0);
-		if (java.lang.String.instancehelper_indexOf(@this, 58) == -1)
+		string @this = ((num3 != 1000) ? P_0.Substring(0, num3) : P_0);
+		if (@this.IndexOf((char)58) == -1)
 		{
 			return vector;
 		}
-		@this = java.lang.String.instancehelper_substring(@this, java.lang.String.instancehelper_indexOf(@this, 58) + 1);
-		if (java.lang.String.instancehelper_indexOf(@this, 58) == -1)
+		@this = @this.Substring(@this.IndexOf((char) 58) + 1);
+		if (@this.IndexOf((char) 58) == -1)
 		{
 			return vector;
 		}
-		@this = java.lang.String.instancehelper_substring(@this, 0, java.lang.String.instancehelper_indexOf(@this, 58));
+		@this = @this.Substring(0, (@this.IndexOf((char) 58)));
 		_ = 0;
 		int num4 = 0;
 		int num5;
-		while (num4 < @this.Length && (num5 = java.lang.String.instancehelper_indexOf(@this, 38, num4)) != -1)
+		while (num4 < @this.Length && ((num5 = @this.IndexOf((char) 38, num4)) != -1))
 		{
-			vector.Add(java.lang.String.instancehelper_substring(@this, num4, num5));
+			vector.Add(@this.Substring( num4, num5));
 			num4 = num5 + 1;
 		}
 		if (num4 < @this.Length)
 		{
-			vector.Add(java.lang.String.instancehelper_substring(@this, num4));
+			vector.Add(@this.Substring(num4));
 		}
 		return vector;
 	}
@@ -346,7 +322,7 @@ public class JavaCCGlobals
 		}
 		cline = t.endLine;
 		ccol = t.endColumn + 1;
-		int num = java.lang.String.instancehelper_charAt(t.image, (t.image.Length) - 1);
+		int num = t.image[(t.image.Length) - 1];
 		if (num == 10 || num == 13)
 		{
 			cline++;
@@ -396,10 +372,12 @@ public class JavaCCGlobals
 			str = new StringBuilder().Append(str).Append(" ").ToString();
 			ccol++;
 		}
-		str = ((t.kind != 90 && t.kind != 89) ? new StringBuilder().Append(str).Append(t.image).ToString() : new StringBuilder().Append(str).Append(addUnicodeEscapes(t.image)).ToString());
+		str = ((t.kind != 90 && t.kind != 89)
+			? new StringBuilder().Append(str).Append(t.image).ToString()
+			: new StringBuilder().Append(str).Append(addUnicodeEscapes(t.image)).ToString());
 		cline = t.endLine;
 		ccol = t.endColumn + 1;
-		int num = java.lang.String.instancehelper_charAt(t.image, (t.image.Length) - 1);
+		int num = t.image[(t.image.Length) - 1];
 		if (num == 10 || num == 13)
 		{
 			cline++;
@@ -449,24 +427,25 @@ public class JavaCCGlobals
 	}
 
 	
-	public static void createOutputDir(File f)
+	public static void createOutputDir(FileInfo f)
 	{
 		if (!f.Exists)
 		{
 			JavaCCErrors.Warning(new StringBuilder().Append("Output directory \"").Append(f).Append("\" does not exist. Creating the directory.")
 				.ToString());
-			if (!f.mkdirs())
+			var d = Directory.CreateDirectory(f.FullName);
+			if (! d.Exists)
 			{
 				JavaCCErrors.Semantic_Error(new StringBuilder().Append("Cannot create the output directory : ").Append(f).ToString());
 				return;
 			}
 		}
-		if (!f.isDirectory())
+		if (!new DirectoryInfo(f.FullName).Exists)
 		{
 			JavaCCErrors.Semantic_Error(new StringBuilder().Append("\"").Append(f).Append(" is not a valid output directory.")
 				.ToString());
 		}
-		else if (!f.canWrite())
+		else if (f.IsReadOnly)
 		{
 			JavaCCErrors.Semantic_Error(new StringBuilder().Append("Cannot write to the output output directory : \"").Append(f).Append("\"")
 				.ToString());
@@ -533,7 +512,7 @@ public class JavaCCGlobals
 			default:
 			{
 				string @this = new StringBuilder().Append("0000").Append(Utils.ToString(num, 16)).ToString();
-				text = new StringBuilder().Append(text).Append("\\u").Append(java.lang.String.instancehelper_substring(@this, @this.Length - 4, @this.Length))
+				text = new StringBuilder().Append(text).Append("\\u").Append(@this.Substring(@this.Length - 4, @this.Length))
 					.ToString();
 				break;
 			}
@@ -746,7 +725,7 @@ public class JavaCCGlobals
 		cu_from_insertion_point_2 = new ArrayList();
 		bnfproductions = new ArrayList();
 		production_table = new Hashtable();
-		lexstate_S2I = new Hashtable();
+		lexstate_S2I = new ();
 		lexstate_I2S = new Hashtable();
 		token_mgr_decls = null;
 		rexprlist = new ArrayList();
@@ -772,7 +751,7 @@ public class JavaCCGlobals
 		cu_from_insertion_point_2 = new ArrayList();
 		bnfproductions = new ArrayList();
 		production_table = new Hashtable();
-		lexstate_S2I = new Hashtable();
+		lexstate_S2I = new ();
 		lexstate_I2S = new Hashtable();
 		rexprlist = new ArrayList();
 		named_tokens_table = new Hashtable();

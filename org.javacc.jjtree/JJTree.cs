@@ -9,73 +9,72 @@ public class JJTree
 {
 	private IO io;
 
-	
-	private void p(string P_0)
+	private void WriteLine(string P_0)
 	{
-		io.getMsg().WriteLine(P_0);
+		io.Msg.WriteLine(P_0);
 	}
 
 	
 	private void initializeOptions()
 	{
-		JJTreeOptions.init();
+		JJTreeOptions.Init();
 		JJTreeGlobals.initialize();
 	}
 
 	
 	private void help_message()
 	{
-		p("Usage:");
-		p("    jjtree option-settings inputfile");
-		p("");
-		p("\"option-settings\" is a sequence of settings separated by spaces.");
-		p("Each option setting must be of one of the following forms:");
-		p("");
-		p("    -optionname=value (e.g., -STATIC=false)");
-		p("    -optionname:value (e.g., -STATIC:false)");
-		p("    -optionname       (equivalent to -optionname=true.  e.g., -STATIC)");
-		p("    -NOoptionname     (equivalent to -optionname=false. e.g., -NOSTATIC)");
-		p("");
-		p("Option settings are not case-sensitive, so one can say \"-nOsTaTiC\" instead");
-		p("of \"-NOSTATIC\".  Option values must be appropriate for the corresponding");
-		p("option, and must be either an integer or a string value.");
-		p("");
-		p("The boolean valued options are:");
-		p("");
-		p("    STATIC                   (default true)");
-		p("    MULTI                    (default false)");
-		p("    NODE_DEFAULT_VOID        (default false)");
-		p("    NODE_SCOPE_HOOK          (default false)");
-		p("    NODE_USES_PARSER         (default false)");
-		p("    BUILD_NODE_FILES         (default true)");
-		p("    TRACK_TOKENS             (default false)");
-		p("    VISITOR                  (default false)");
-		p("");
-		p("The string valued options are:");
-		p("");
-		p("    JDK_VERSION              (default \"1.5\")");
-		p("    NODE_PREFIX              (default \"AST\")");
-		p("    NODE_PACKAGE             (default \"\")");
-		p("    NODE_EXTENDS             (default \"\")");
-		p("    NODE_FACTORY             (default \"\")");
-		p("    OUTPUT_FILE              (default remove input file suffix, Add .jj)");
-		p("    OUTPUT_DIRECTORY         (default \"\")");
-		p("    JJTREE_OUTPUT_DIRECTORY  (default value of OUTPUT_DIRECTORY option)");
-		p("    VISITOR_DATA_TYPE        (default \"\")");
-		p("    VISITOR_EXCEPTION        (default \"\")");
-		p("");
-		p("JJTree also accepts JavaCC options, which it inserts into the generated file.");
-		p("");
-		p("EXAMPLES:");
-		p("    jjtree -STATIC=false mygrammar.jjt");
-		p("");
-		p("ABOUT JJTree:");
-		p("    JJTree is a preprocessor for JavaCC that inserts actions into a");
-		p("    JavaCC grammar to build parse trees for the input.");
-		p("");
-		p("    For more information, see the online JJTree documentation at ");
-		p("    https://javacc.dev.java.net/doc/JJTree.html ");
-		p("");
+		WriteLine("Usage:");
+		WriteLine("    jjtree option-settings inputfile");
+		WriteLine("");
+		WriteLine("\"option-settings\" is a sequence of settings separated by spaces.");
+		WriteLine("Each option setting must be of one of the following forms:");
+		WriteLine("");
+		WriteLine("    -optionname=value (e.g., -STATIC=false)");
+		WriteLine("    -optionname:value (e.g., -STATIC:false)");
+		WriteLine("    -optionname       (equivalent to -optionname=true.  e.g., -STATIC)");
+		WriteLine("    -NOoptionname     (equivalent to -optionname=false. e.g., -NOSTATIC)");
+		WriteLine("");
+		WriteLine("Option settings are not case-sensitive, so one can say \"-nOsTaTiC\" instead");
+		WriteLine("of \"-NOSTATIC\".  Option values must be appropriate for the corresponding");
+		WriteLine("option, and must be either an integer or a string value.");
+		WriteLine("");
+		WriteLine("The boolean valued options are:");
+		WriteLine("");
+		WriteLine("    STATIC                   (default true)");
+		WriteLine("    MULTI                    (default false)");
+		WriteLine("    NODE_DEFAULT_VOID        (default false)");
+		WriteLine("    NODE_SCOPE_HOOK          (default false)");
+		WriteLine("    NODE_USES_PARSER         (default false)");
+		WriteLine("    BUILD_NODE_FILES         (default true)");
+		WriteLine("    TRACK_TOKENS             (default false)");
+		WriteLine("    VISITOR                  (default false)");
+		WriteLine("");
+		WriteLine("The string valued options are:");
+		WriteLine("");
+		WriteLine("    JDK_VERSION              (default \"1.5\")");
+		WriteLine("    NODE_PREFIX              (default \"AST\")");
+		WriteLine("    NODE_PACKAGE             (default \"\")");
+		WriteLine("    NODE_EXTENDS             (default \"\")");
+		WriteLine("    NODE_FACTORY             (default \"\")");
+		WriteLine("    OUTPUT_FILE              (default remove input file suffix, Add .jj)");
+		WriteLine("    OUTPUT_DIRECTORY         (default \"\")");
+		WriteLine("    JJTREE_OUTPUT_DIRECTORY  (default value of OUTPUT_DIRECTORY option)");
+		WriteLine("    VISITOR_DATA_TYPE        (default \"\")");
+		WriteLine("    VISITOR_EXCEPTION        (default \"\")");
+		WriteLine("");
+		WriteLine("JJTree also accepts JavaCC options, which it inserts into the generated file.");
+		WriteLine("");
+		WriteLine("EXAMPLES:");
+		WriteLine("    jjtree -STATIC=false mygrammar.jjt");
+		WriteLine("");
+		WriteLine("ABOUT JJTree:");
+		WriteLine("    JJTree is a preprocessor for JavaCC that inserts actions into a");
+		WriteLine("    JavaCC grammar to build parse trees for the input.");
+		WriteLine("");
+		WriteLine("    For more information, see the online JJTree documentation at ");
+		WriteLine("    https://javacc.dev.java.net/doc/JJTree.html ");
+		WriteLine("");
 	}
 
 	
@@ -98,7 +97,7 @@ public class JJTree
 			initializeOptions();
 			if (strarr.Length == 0)
 			{
-				p("");
+				WriteLine("");
 				help_message();
 				result = 1;
 				goto IL_0070;
@@ -107,18 +106,18 @@ public class JJTree
 		catch
 		{
 			//try-fault
-			io.closeAll();
+			io.CloseAll();
 			throw;
 		}
 		string text;
 		int result2;
 		try
 		{
-			p("(type \"jjtree\" with no arguments for help)");
+			WriteLine("(type \"jjtree\" with no arguments for help)");
 			text = strarr[strarr.Length - 1];
 			if (Options.isOption(text))
 			{
-				p(new StringBuilder().Append("Last argument \"").Append(text).Append("\" is not a filename")
+				WriteLine(new StringBuilder().Append("Last argument \"").Append(text).Append("\" is not a filename")
 					.ToString());
 				result2 = 1;
 				goto IL_00d9;
@@ -127,7 +126,7 @@ public class JJTree
 		catch
 		{
 			//try-fault
-			io.closeAll();
+			io.CloseAll();
 			throw;
 		}
 		try
@@ -137,7 +136,7 @@ public class JJTree
 		catch
 		{
 			//try-fault
-			io.closeAll();
+			io.CloseAll();
 			throw;
 		}
 		int result3;
@@ -149,7 +148,7 @@ public class JJTree
 				{
 					if (!Options.isOption(strarr[result2]))
 					{
-						p(new StringBuilder().Append("Argument \"").Append(strarr[result2]).Append("\" must be an option setting.")
+						WriteLine(new StringBuilder().Append("Argument \"").Append(strarr[result2]).Append("\" must be an option setting.")
 							.ToString());
 						result3 = 1;
 						goto IL_0153;
@@ -160,12 +159,12 @@ public class JJTree
 			catch
 			{
 				//try-fault
-				io.closeAll();
+				io.CloseAll();
 				throw;
 			}
 			break;
 			IL_0153:
-			io.closeAll();
+			io.CloseAll();
 			return result3;
 			IL_0160:
 			try
@@ -176,17 +175,17 @@ public class JJTree
 			catch
 			{
 				//try-fault
-				io.closeAll();
+				io.CloseAll();
 				throw;
 			}
 		}
 		JJTreeIOException ex;
 		try
 		{
-			JJTreeOptions.validate();
+			JJTreeOptions.Validate();
 			try
 			{
-				io.setInput(text);
+				io.SetInput(text);
 			}
 			catch (JJTreeIOException x)
 			{
@@ -197,7 +196,7 @@ public class JJTree
 		catch
 		{
 			//try-fault
-			io.closeAll();
+			io.CloseAll();
 			throw;
 		}
 		ASTGrammar aSTGrammar;
@@ -206,7 +205,7 @@ public class JJTree
 		JJTreeIOException ex2;
 		try
 		{
-			p(new StringBuilder().Append("Reading from file ").Append(io.getInputFileName()).Append(" . . .")
+			WriteLine(new StringBuilder().Append("Reading from file ").Append(io.InputFileName).Append(" . . .")
 				.ToString());
 			JJTreeGlobals.toolList = JavaCCGlobals.getToolNames(text);
 			JJTreeGlobals.toolList.Add("JJTree");
@@ -214,7 +213,7 @@ public class JJTree
 			{
 				try
 				{
-					JJTreeParser jJTreeParser = new JJTreeParser(io.getIn());
+					JJTreeParser jJTreeParser = new JJTreeParser(io.In);
 					jJTreeParser.javacc_input();
 					aSTGrammar = (ASTGrammar)jJTreeParser.jjtree.rootNode();
 					//if (java.lang.Boolean.getBoolean("jjtree-dump"))
@@ -223,7 +222,7 @@ public class JJTree
 					//}
 					try
 					{
-						io.setOutput();
+						io.SetOutput();
 					}
 					catch (JJTreeIOException x2)
 					{
@@ -251,7 +250,7 @@ public class JJTree
 		catch
 		{
 			//try-fault
-			io.closeAll();
+			io.CloseAll();
 			throw;
 		}
 		ParseException ex6;
@@ -263,11 +262,11 @@ public class JJTree
 				try
 				{
 					aSTGrammar.generate(io);
-					io.getOut().Close();
+					io.Out.Close();
 					NodeFiles.generateTreeConstants_java();
 					NodeFiles.generateVisitor_java();
 					JJTreeState.generateTreeState_java();
-					p(new StringBuilder().Append("Annotated grammar generated successfully in ").Append(io.getOutputFileName()).ToString());
+					WriteLine(new StringBuilder().Append("Annotated grammar generated successfully in ").Append(io.OutputFileName).ToString());
 				}
 				catch (ParseException x5)
 				{
@@ -289,7 +288,7 @@ public class JJTree
 		catch
 		{
 			//try-fault
-			io.closeAll();
+			io.CloseAll();
 			throw;
 		}
 		try
@@ -298,7 +297,7 @@ public class JJTree
 		}
 		finally
 		{
-			io.closeAll();
+			io.CloseAll();
 		}
 		IL_0361:
 		System.Exception ex9;
@@ -309,20 +308,20 @@ public class JJTree
 		try
 		{
 			System.Exception @this = ex11;
-			p(new StringBuilder().Append("Error parsing input: ").Append((@this)).ToString());
+			WriteLine(new StringBuilder().Append("Error parsing input: ").Append((@this)).ToString());
 			//Throwable.instancehelper_printStackTrace(@this, io.getMsg());
 			result3 = 1;
 		}
 		catch
 		{
 			//try-fault
-			io.closeAll();
+			io.CloseAll();
 			throw;
 		}
-		io.closeAll();
+		io.CloseAll();
 		return result3;
 		IL_0070:
-		io.closeAll();
+		io.CloseAll();
 		return result;
 		IL_035a:
 		ParseException ex12;
@@ -333,16 +332,16 @@ public class JJTree
 		try
 		{
 			ParseException this2 = ex14;
-			p(new StringBuilder().Append("Error parsing input: ").Append((this2)).ToString());
+			WriteLine(new StringBuilder().Append("Error parsing input: ").Append((this2)).ToString());
 			result3 = 1;
 		}
 		catch
 		{
 			//try-fault
-			io.closeAll();
+			io.CloseAll();
 			throw;
 		}
-		io.closeAll();
+		io.CloseAll();
 		return result3;
 		IL_02f1:
 		ex10 = ex5;
@@ -351,7 +350,7 @@ public class JJTree
 		ex13 = ex3;
 		goto IL_0404;
 		IL_00d9:
-		io.closeAll();
+		io.CloseAll();
 		return result2;
 		IL_03fb:
 		ex10 = ex8;
@@ -364,17 +363,17 @@ public class JJTree
 		try
 		{
 			JJTreeIOException this3 = ex2;
-			p(new StringBuilder().Append("Error setting input: ").Append(
+			WriteLine(new StringBuilder().Append("Error setting input: ").Append(
 				(this3.Message)).ToString());
 			result3 = 1;
 		}
 		catch
 		{
 			//try-fault
-			io.closeAll();
+			io.CloseAll();
 			throw;
 		}
-		io.closeAll();
+		io.CloseAll();
 		return result3;
 		IL_02e1:
 		JJTreeIOException ex15 = ex2;
@@ -388,7 +387,7 @@ public class JJTree
 				try
 				{
 					JJTreeIOException this4 = ex15;
-					p(new StringBuilder().Append("Error setting output: ").Append(
+					WriteLine(new StringBuilder().Append("Error setting output: ").Append(
 						(this4.Message)).ToString());
 					result4 = 1;
 				}
@@ -412,10 +411,10 @@ public class JJTree
 		catch
 		{
 			//try-fault
-			io.closeAll();
+			io.CloseAll();
 			throw;
 		}
-		io.closeAll();
+		io.CloseAll();
 		return result4;
 	}
 }

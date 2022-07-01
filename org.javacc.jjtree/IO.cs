@@ -5,52 +5,36 @@ using org.javacc.parser;
 
 namespace org.javacc.jjtree;
 
-public class IO 
+public class IO
 {
 	private string ifn;
-
 	private string ofn;
+	private TextReader reader;
+	private TextWriter writer;
+	private TextWriter message;
+	private TextWriter error;
 
-	private TextReader @in;
-
-	private TextWriter @out;
-
-	private TextWriter msg;
-
-	private TextWriter err;
-
-	
-	internal virtual void Write(string P_0)
+	internal virtual void Write(string text)
 	{
-		@out.Write(P_0);
+		writer.Write(text);
 	}
 
-	
 	internal virtual void WriteLine()
 	{
-		@out.WriteLine();
+		writer.WriteLine();
 	}
 
-	internal virtual TextWriter getOut()
-	{
-		return @out;
-	}
+	internal virtual TextWriter Out => writer;
 
-	internal virtual string getOutputFileName()
-	{
-		return ofn;
-	}
+	internal virtual string OutputFileName => ofn;
 
-	
-	internal virtual void WriteLine(string P_0)
-	{
-		@out.WriteLine(P_0);
-	}
 
-	
-	private string create_output_file_name(string P_0)
+	internal virtual void WriteLine(string text) => writer.WriteLine(text);
+
+
+	private string CreateOutputFileName(string P_0)
 	{
-		string text = JJTreeOptions.getOutputFile();
+		string text = JJTreeOptions.OutputFile;
 		if (string.Equals(text, ""))
 		{
 			int num = (P_0.LastIndexOf(Path.DirectorySeparatorChar));
@@ -58,7 +42,7 @@ public class IO
 			{
 				P_0 = P_0.Substring(num + 1);
 			}
-			int num2 = (P_0.LastIndexOf((char) 46));
+			int num2 = (P_0.LastIndexOf((char)46));
 			if (num2 == -1)
 			{
 				text = new StringBuilder().Append(P_0).Append(".jj").ToString();
@@ -66,59 +50,49 @@ public class IO
 			else
 			{
 				string @this = P_0.Substring(num2);
-				text = ((!string.Equals(@this, ".jj")) ? new StringBuilder().Append((P_0.Substring( 0, num2))).Append(".jj").ToString() : new StringBuilder().Append(P_0).Append(".jj").ToString());
+				text = (!string.Equals(@this, ".jj"))
+					? (P_0.Substring(0, num2) + (".jj"))
+					: P_0 + ".jj";
 			}
 		}
 		return text;
 	}
 
-	
+
 	internal IO()
 	{
 		ifn = "<uninitialized input>";
-		msg = Console.Out;
-		err = Console.Error;
+		message = Console.Out;
+		error = Console.Error;
 	}
 
-	internal virtual string getInputFileName()
-	{
-		return ifn;
-	}
+	internal virtual string InputFileName => ifn;
 
-	internal virtual TextReader getIn()
-	{
-		return @in;
-	}
+	internal virtual TextReader In => reader;
 
-	internal virtual TextWriter getMsg()
-	{
-		return msg;
-	}
+	internal virtual TextWriter Msg => message;
 
-	internal virtual TextWriter getErr()
-	{
-		return err;
-	}
+	internal virtual TextWriter Err => error;
 
-	
-	internal virtual void closeAll()
+
+	internal virtual void CloseAll()
 	{
-		if (@out != null)
+		if (writer != null)
 		{
-			@out.Close();
+			writer.Close();
 		}
-		if (msg != null)
+		if (message != null)
 		{
-			msg.Flush();
+			message.Flush();
 		}
-		if (err != null)
+		if (error != null)
 		{
-			err.Flush();
+			error.Flush();
 		}
 	}
 
-	
-		internal virtual void setInput(string P_0)
+
+	internal virtual void SetInput(string P_0)
 	{
 		NullReferenceException ex2;
 		IOException ex5;
@@ -138,7 +112,8 @@ public class IO
 							//
 							throw new JJTreeIOException(text);
 						}
-						if (file.isDirectory())
+						var d = new DirectoryInfo(P_0);
+						if (d.Exists)
 						{
 							string text2 = new StringBuilder().Append(P_0).Append(" is a directory. Please use a valid file name.").ToString();
 							//
@@ -150,13 +125,13 @@ public class IO
 							//
 							throw new JJTreeIOException(text3);
 						}
-						ifn = file.getPath();
-						@in = new FileReader(ifn);
+						ifn = file.FullName;
+						reader = new StreamReader(ifn);
 						return;
 					}
 					catch (System.Exception x)
 					{
-						NullReferenceException ex = ByteCodeHelper.MapException<NullPointerException>(x, ByteCodeHelper.MapFlags.None);
+						NullReferenceException ex = x as NullReferenceException;
 						if (ex == null)
 						{
 							throw;
@@ -183,40 +158,40 @@ public class IO
 		string text4 = (@this.Message);
 		//
 		throw new JJTreeIOException(text4);
-		IL_00e4:
+	IL_00e4:
 		IOException this2 = ex5;
 		string text5 = (this2.Message);
 		//
 		throw new JJTreeIOException(text5);
-		IL_00e1:
-		
+	IL_00e1:
+
 		string text6 = new StringBuilder().Append("File ").Append(P_0).Append(" not found.")
 			.ToString();
 		//
 		throw new JJTreeIOException(text6);
-		IL_00de:
-		
+	IL_00de:
+
 		string text7 = new StringBuilder().Append("Security violation while trying to open ").Append(P_0).ToString();
 		//
 		throw new JJTreeIOException(text7);
 	}
 
-	
-		internal virtual void setOutput()
+
+	internal virtual void SetOutput()
 	{
 		try
 		{
-			JavaCCGlobals.createOutputDir(JJTreeOptions.getJJTreeOutputDirectory());
+			JavaCCGlobals.createOutputDir(JJTreeOptions.JJTreeOutputDirectory);
 			//
-			FileInfo file = new FileInfo(JJTreeOptions.getJJTreeOutputDirectory(), create_output_file_name(ifn));
+			FileInfo file = new FileInfo(Path.Combine(JJTreeOptions.JJTreeOutputDirectory.FullName, CreateOutputFileName(ifn)));
 			ofn = file.ToString();
-			@out = new StringWriter(file.FullName);
+			writer = new StreamWriter(file.FullName);
 			return;
 		}
 		catch (IOException)
 		{
 		}
-		
+
 		string text = new StringBuilder().Append("Can't create output file ").Append(ofn).ToString();
 		//
 		throw new JJTreeIOException(text);

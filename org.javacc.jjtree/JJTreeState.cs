@@ -1,9 +1,7 @@
 using System.IO;
 using System.Text;
 using org.javacc.parser;
-
 namespace org.javacc.jjtree;
-
 
 internal sealed class JJTreeState
 {
@@ -12,11 +10,10 @@ internal sealed class JJTreeState
 	{
 		string str = ((!Options.getStatic()) ? "" : "static ");
 		P_0.WriteLine();
-		P_0.WriteLine(new StringBuilder().Append("  protected ").Append(str).Append(nameState())
-			.Append(" jjtree = new ")
-			.Append(nameState())
-			.Append("();")
-			.ToString());
+		P_0.WriteLine(("  protected ")+(str)+(nameState())
+			+(" jjtree = new ")
+			+(nameState())
+			+("();"));
 		P_0.WriteLine();
 	}
 
@@ -25,7 +22,8 @@ internal sealed class JJTreeState
 	{
 		
 		FileInfo f = new FileInfo(
-			Path.Combine(JJTreeOptions.getJJTreeOutputDirectory().DirectoryName, new StringBuilder().Append(nameState()).Append(".java").ToString()));
+			Path.Combine(JJTreeOptions.JJTreeOutputDirectory.FullName,
+				(nameState()+(".java"))));
 		IOException ex;
 		try
 		{
@@ -60,7 +58,7 @@ internal sealed class JJTreeState
 	{
 		P_0.WriteLine(new StringBuilder().Append("public class ").Append(nameState()).Append(" {")
 			.ToString());
-		if (!string.Equals(JJTreeOptions.getJdkVersion(), "1.5"))
+		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
 			P_0.WriteLine("  private java.util.List nodes;");
 		}
@@ -68,7 +66,7 @@ internal sealed class JJTreeState
 		{
 			P_0.WriteLine("  private java.util.List<Node> nodes;");
 		}
-		if (!string.Equals(JJTreeOptions.getJdkVersion(), "1.5"))
+		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
 			P_0.WriteLine("  private java.util.List marks;");
 		}
@@ -83,7 +81,7 @@ internal sealed class JJTreeState
 		P_0.WriteLine("");
 		P_0.WriteLine(new StringBuilder().Append("  public ").Append(nameState()).Append("() {")
 			.ToString());
-		if (!string.Equals(JJTreeOptions.getJdkVersion(), "1.5"))
+		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
 			P_0.WriteLine("    nodes = new java.util.ArrayList();");
 		}
@@ -91,7 +89,7 @@ internal sealed class JJTreeState
 		{
 			P_0.WriteLine("    nodes = new java.util.ArrayList<Node>();");
 		}
-		if (!string.Equals(JJTreeOptions.getJdkVersion(), "1.5"))
+		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
 			P_0.WriteLine("    marks = new java.util.ArrayList();");
 		}
@@ -122,7 +120,7 @@ internal sealed class JJTreeState
 		P_0.WriteLine("  /* Returns the root node of the AST.  It only makes sense to call");
 		P_0.WriteLine("     this after a successful parse. */");
 		P_0.WriteLine("  public Node rootNode() {");
-		if (!string.Equals(JJTreeOptions.getJdkVersion(), "1.5"))
+		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
 			P_0.WriteLine("    return (Node)nodes.get(0);");
 		}
@@ -142,7 +140,7 @@ internal sealed class JJTreeState
 		P_0.WriteLine("     stack.  */");
 		P_0.WriteLine("  public Node popNode() {");
 		P_0.WriteLine("    if (--sp < mk) {");
-		if (!string.Equals(JJTreeOptions.getJdkVersion(), "1.5"))
+		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
 			P_0.WriteLine("      mk = ((int)marks.remove(marks.Count-1)).intValue();");
 		}
@@ -151,7 +149,7 @@ internal sealed class JJTreeState
 			P_0.WriteLine("      mk = marks.remove(marks.Count-1);");
 		}
 		P_0.WriteLine("    }");
-		if (!string.Equals(JJTreeOptions.getJdkVersion(), "1.5"))
+		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
 			P_0.WriteLine("    return (Node)nodes.remove(nodes.Count-1);");
 		}
@@ -163,7 +161,7 @@ internal sealed class JJTreeState
 		P_0.WriteLine("");
 		P_0.WriteLine("  /* Returns the node currently on the top of the stack. */");
 		P_0.WriteLine("  public Node peekNode() {");
-		if (!string.Equals(JJTreeOptions.getJdkVersion(), "1.5"))
+		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
 			P_0.WriteLine("    return (Node)nodes.get(nodes.Count-1);");
 		}
@@ -184,7 +182,7 @@ internal sealed class JJTreeState
 		P_0.WriteLine("    while (sp > mk) {");
 		P_0.WriteLine("      popNode();");
 		P_0.WriteLine("    }");
-		if (!string.Equals(JJTreeOptions.getJdkVersion(), "1.5"))
+		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
 			P_0.WriteLine("    mk = ((int)marks.remove(marks.Count-1)).intValue();");
 		}
@@ -196,7 +194,7 @@ internal sealed class JJTreeState
 		P_0.WriteLine("");
 		P_0.WriteLine("");
 		P_0.WriteLine("  public void openNodeScope(Node n) {");
-		if (!string.Equals(JJTreeOptions.getJdkVersion(), "1.5"))
+		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
 			P_0.WriteLine("    marks.Add(new int(mk));");
 		}
@@ -214,7 +212,7 @@ internal sealed class JJTreeState
 		P_0.WriteLine("     made the children of the definite node.  Then the definite node");
 		P_0.WriteLine("     is pushed on to the stack. */");
 		P_0.WriteLine("  public void closeNodeScope(Node n, int num) {");
-		if (!string.Equals(JJTreeOptions.getJdkVersion(), "1.5"))
+		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
 			P_0.WriteLine("    mk = ((int)marks.remove(marks.Count-1)).intValue();");
 		}
@@ -241,7 +239,7 @@ internal sealed class JJTreeState
 		P_0.WriteLine("  public void closeNodeScope(Node n, boolean condition) {");
 		P_0.WriteLine("    if (condition) {");
 		P_0.WriteLine("      int a = nodeArity();");
-		if (!string.Equals(JJTreeOptions.getJdkVersion(), "1.5"))
+		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
 			P_0.WriteLine("      mk = ((int)marks.remove(marks.Count-1)).intValue();");
 		}
@@ -258,7 +256,7 @@ internal sealed class JJTreeState
 		P_0.WriteLine("      pushNode(n);");
 		P_0.WriteLine("      node_created = true;");
 		P_0.WriteLine("    } else {");
-		if (!string.Equals(JJTreeOptions.getJdkVersion(), "1.5"))
+		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
 			P_0.WriteLine("      mk = ((int)marks.remove(marks.Count-1)).intValue();");
 		}
@@ -272,8 +270,4 @@ internal sealed class JJTreeState
 		P_0.WriteLine("}");
 	}
 
-	
-	private JJTreeState()
-	{
-	}
 }
