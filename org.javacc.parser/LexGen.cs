@@ -564,11 +564,11 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		ostr.WriteLine((staticString)+("private void ReInitRounds()").ToString());
 		ostr.WriteLine("{");
 		ostr.WriteLine("   int i;");
-		ostr.WriteLine(("   jjround = 0x")+(int.toHexString(-2147483647))+(";")
+		ostr.WriteLine(("   jjround = 0x")+(Utils.ToHexString(-2147483647))+(";")
 			.ToString());
 		ostr.WriteLine(("   for (i = ")+(stateSetSize)+("; i-- > 0;)")
 			.ToString());
-		ostr.WriteLine(("      jjrounds[i] = 0x")+(int.toHexString(int.MinValue))+(";")
+		ostr.WriteLine(("      jjrounds[i] = 0x")+(Utils.ToHexString(int.MinValue))+(";")
 			.ToString());
 		ostr.WriteLine("}");
 		ostr.WriteLine("");

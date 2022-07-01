@@ -27,9 +27,9 @@ public class NfaState
 
 	internal static bool[] stateDone;
 
-	internal static ArrayList allStates;
+	internal static List<NfaState> allStates;
 
-	internal static ArrayList indexedAllStates;
+	internal static List<NfaState> indexedAllStates;
 
 	internal static ArrayList nonAsciiTableForMethod;
 
@@ -91,7 +91,7 @@ public class NfaState
 
 	internal bool isFinal;
 
-	public ArrayList loByteVec;
+	public List<int> loByteVec = new();
 
 	public int[] nonAsciiMoveIndices;
 
@@ -103,7 +103,7 @@ public class NfaState
 
 	private bool closureDone;
 
-	internal static ArrayList allBitVectors;
+	internal static List<string> allBitVectors =new();
 
 	internal static int[] tmpIndices;
 
@@ -685,7 +685,7 @@ public class NfaState
 	}
 
 	
-	internal static void InsertInOrder(ArrayList P_0, NfaState P_1)
+	internal static void InsertInOrder(List<Node> P_0, NfaState P_1)
 	{
 		int i;
 		for (i = 0; i < P_0.Count && ((NfaState)P_0[i]).id <= P_1.id; i++)
@@ -695,7 +695,7 @@ public class NfaState
 				return;
 			}
 		}
-		P_0.insertElementAt(P_1, i);
+		P_0.Insert(i, P_1);
 	}
 
 
@@ -1234,7 +1234,7 @@ public class NfaState
 		{
 			string message = ("JavaCC Bug: Please send mail to sankar@cs.stanford.edu; nameSet null for : ")+(P_0).ToString();
 			
-			throw new System.Exception(message);
+			throw (message);
 		}
 		if ((nint)array.LongLength == 1)
 		{
@@ -1511,7 +1511,7 @@ public class NfaState
 		{
 			if (loByteVec != null && loByteVec.Count > 1)
 			{
-				P_0.WriteLine(("                  if ((jjbitVec")+(((int)loByteVec.elementAt(1)).intValue())+("[i2")
+				P_0.WriteLine(("                  if ((jjbitVec") + (((int)loByteVec[1]).intValue())+("[i2")
 					+("] & l2) != 0L)")
 					.ToString());
 			}

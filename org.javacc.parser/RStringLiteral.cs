@@ -1059,7 +1059,7 @@ public class RStringLiteral : RegularExpression
 									.ToString();
 								continue;
 							}
-							string text = int.toHexString(java.lang.String.instancehelper_charAt(@this, j));
+							string text = Utils.ToHexString(java.lang.String.instancehelper_charAt(@this, j));
 							if (java.lang.String.instancehelper_length(text) == 3)
 							{
 								text = new StringBuilder().Append("0").Append(text).ToString();

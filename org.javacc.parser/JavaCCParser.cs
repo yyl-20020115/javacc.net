@@ -12356,8 +12356,8 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		jj_2_rtns = new JJCalls[48];
 		jj_rescan = false;
 		jj_gc = 0;
-		jj_ls = new LookaheadSuccess(null);
-		jj_expentries = new ArrayList();
+		jj_ls = new LookaheadSuccess();
+		jj_expentries = new ();
 		jj_kind = -1;
 		jj_lasttokens = new int[100];
 		UnsupportedEncodingException ex;

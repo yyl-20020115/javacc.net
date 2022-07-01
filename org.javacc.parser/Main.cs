@@ -14,7 +14,7 @@ public static class EntryPoint
 	public static void reInitAll()
 	{
 		Expansion.ReInit();
-		JavaCCErrors.ReInit();
+		//JavaCCErrors.ReInit();
 		JavaCCGlobals.reInit();
 		Options.Init();
 		JavaCCParserInternals.reInit();

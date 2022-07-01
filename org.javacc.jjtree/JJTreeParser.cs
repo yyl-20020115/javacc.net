@@ -230,15 +230,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					{
 						jjtree.PopNode();
 					}
-					if (ex5 is System.Exception)
-					{
-						throw new System.Exception((System.Exception)ex5);
-					}
-					if (ex5 is ParseException)
-					{
-						throw new System.Exception(ex5);
-					}
-					throw new System.Exception(ex5);
+					throw ex5;
 				}
 				catch (System.Exception x4)
 				{
@@ -350,13 +342,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					}
 					if (ex13 is System.Exception)
 					{
-						throw new System.Exception((System.Exception)ex13);
+						throw ((System.Exception)ex13);
 					}
 					if (ex13 is ParseException)
 					{
-						throw new System.Exception(ex13);
+						throw (ex13);
 					}
-					throw new System.Exception((System.Exception)ex13);
+					throw ((System.Exception)ex13);
 				}
 				catch (System.Exception x9)
 				{
@@ -433,7 +425,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					jjtree.CloseNodeScope(aSTCompilationUnit, b: true);
 					jjtreeCloseNodeScope(aSTCompilationUnit);
 				}
-				throw new System.Exception(ex18);
+				throw (ex18);
 			}
 			catch (System.Exception x12)
 			{
@@ -469,15 +461,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			{
 				jjtree.PopNode();
 			}
-			if (ex20 is RuntimeException)
-			{
-				throw new System.Exception(ex20);
-			}
-			if (ex20 is ParseException)
-			{
-				throw new System.Exception(ex20);
-			}
-			throw new System.Exception(ex20);
+			throw ex20;
 		}
 		catch
 		{
@@ -508,7 +492,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					jjtree.CloseNodeScope(aSTProductions, b: true);
 					jjtreeCloseNodeScope(aSTProductions);
 				}
-				throw new System.Exception(ex22);
+				throw (ex22);
 			}
 			catch (System.Exception x13)
 			{
@@ -623,13 +607,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex3 is RuntimeException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
 			if (ex3 is ParseException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
-			throw new System.Exception(ex3);
+			throw (ex3);
 		}
 		catch
 		{
@@ -683,7 +667,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		}
 		this.token = token;
 		jj_kind = P_0;
-		throw new System.Exception(generateParseException());
+		throw (generateParseException());
 	}
 
 	
@@ -902,13 +886,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex3 is RuntimeException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
 			if (ex3 is ParseException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
-			throw new System.Exception(ex3);
+			throw (ex3);
 		}
 		catch
 		{
@@ -1148,13 +1132,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					}
 					if (ex5 is RuntimeException)
 					{
-						throw new System.Exception(ex5);
+						throw (ex5);
 					}
 					if (ex5 is ParseException)
 					{
-						throw new System.Exception(ex5);
+						throw (ex5);
 					}
-					throw new System.Exception(ex5);
+					throw (ex5);
 				}
 				catch (System.Exception x4)
 				{
@@ -1232,7 +1216,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					jjtree.CloseNodeScope(aSTJavacodeBody, b: true);
 					jjtreeCloseNodeScope(aSTJavacodeBody);
 				}
-				throw new System.Exception(ex11);
+				throw (ex11);
 			}
 			catch (System.Exception x7)
 			{
@@ -1267,13 +1251,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex13 is RuntimeException)
 			{
-				throw new System.Exception(ex13);
+				throw (ex13);
 			}
 			if (ex13 is ParseException)
 			{
-				throw new System.Exception(ex13);
+				throw (ex13);
 			}
-			throw new System.Exception(ex13);
+			throw (ex13);
 		}
 		catch
 		{
@@ -1397,13 +1381,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex3 is RuntimeException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
 			if (ex3 is ParseException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
-			throw new System.Exception(ex3);
+			throw (ex3);
 		}
 		catch
 		{
@@ -1471,13 +1455,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex3 is RuntimeException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
 			if (ex3 is ParseException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
-			throw new System.Exception(ex3);
+			throw (ex3);
 		}
 		catch
 		{
@@ -1690,13 +1674,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					}
 					if (ex5 is RuntimeException)
 					{
-						throw new System.Exception(ex5);
+						throw (ex5);
 					}
 					if (ex5 is ParseException)
 					{
-						throw new System.Exception(ex5);
+						throw (ex5);
 					}
-					throw new System.Exception(ex5);
+					throw (ex5);
 				}
 				catch (System.Exception x4)
 				{
@@ -1808,13 +1792,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					}
 					if (ex13 is RuntimeException)
 					{
-						throw new System.Exception(ex13);
+						throw (ex13);
 					}
 					if (ex13 is ParseException)
 					{
-						throw new System.Exception(ex13);
+						throw (ex13);
 					}
-					throw new System.Exception(ex13);
+					throw (ex13);
 				}
 				catch (System.Exception x9)
 				{
@@ -1895,7 +1879,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					jjtree.CloseNodeScope(aSTBNFDeclaration, b: true);
 					jjtreeCloseNodeScope(aSTBNFDeclaration);
 				}
-				throw new System.Exception(ex18);
+				throw (ex18);
 			}
 			catch (System.Exception x12)
 			{
@@ -1933,13 +1917,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex20 is RuntimeException)
 			{
-				throw new System.Exception(ex20);
+				throw (ex20);
 			}
 			if (ex20 is ParseException)
 			{
-				throw new System.Exception(ex20);
+				throw (ex20);
 			}
-			throw new System.Exception(ex20);
+			throw (ex20);
 		}
 		catch
 		{
@@ -1970,7 +1954,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					jjtree.CloseNodeScope(aSTBNFNodeScope, b: true);
 					jjtreeCloseNodeScope(aSTBNFNodeScope);
 				}
-				throw new System.Exception(ex22);
+				throw (ex22);
 			}
 			catch (System.Exception x13)
 			{
@@ -2237,13 +2221,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex3 is RuntimeException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
 			if (ex3 is ParseException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
-			throw new System.Exception(ex3);
+			throw (ex3);
 		}
 		catch
 		{
@@ -2392,13 +2376,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex3 is RuntimeException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
 			if (ex3 is ParseException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
-			throw new System.Exception(ex3);
+			throw (ex3);
 		}
 		catch
 		{
@@ -2544,13 +2528,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex3 is RuntimeException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
 			if (ex3 is ParseException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
-			throw new System.Exception(ex3);
+			throw (ex3);
 		}
 		catch
 		{
@@ -2809,13 +2793,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex4 is RuntimeException)
 			{
-				throw new System.Exception(ex4);
+				throw (ex4);
 			}
 			if (ex4 is ParseException)
 			{
-				throw new System.Exception(ex4);
+				throw (ex4);
 			}
-			throw new System.Exception(ex4);
+			throw (ex4);
 		}
 		catch
 		{
@@ -2843,13 +2827,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex6 is RuntimeException)
 			{
-				throw new System.Exception(ex6);
+				throw (ex6);
 			}
 			if (ex6 is ParseException)
 			{
-				throw new System.Exception(ex6);
+				throw (ex6);
 			}
-			throw new System.Exception(ex6);
+			throw (ex6);
 		}
 		catch
 		{
@@ -2877,13 +2861,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex6 is RuntimeException)
 			{
-				throw new System.Exception(ex6);
+				throw (ex6);
 			}
 			if (ex6 is ParseException)
 			{
-				throw new System.Exception(ex6);
+				throw (ex6);
 			}
-			throw new System.Exception(ex6);
+			throw (ex6);
 		}
 		catch
 		{
@@ -3170,13 +3154,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						}
 						if (ex11 is RuntimeException)
 						{
-							throw new System.Exception(ex11);
+							throw (ex11);
 						}
 						if (ex11 is ParseException)
 						{
-							throw new System.Exception(ex11);
+							throw (ex11);
 						}
-						throw new System.Exception(ex11);
+						throw (ex11);
 					}
 					catch (System.Exception x8)
 					{
@@ -3214,7 +3198,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						jjtree.CloseNodeScope(aSTExpansionNodeScope, jjtree.NodeArity> 1);
 						jjtreeCloseNodeScope(aSTExpansionNodeScope);
 					}
-					throw new System.Exception(ex15);
+					throw (ex15);
 				}
 				catch (System.Exception x10)
 				{
@@ -3296,13 +3280,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex18 is RuntimeException)
 			{
-				throw new System.Exception(ex18);
+				throw (ex18);
 			}
 			if (ex18 is ParseException)
 			{
-				throw new System.Exception(ex18);
+				throw (ex18);
 			}
-			throw new System.Exception(ex18);
+			throw (ex18);
 		}
 		catch
 		{
@@ -3331,7 +3315,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					jjtree.CloseNodeScope(aSTBNFLookahead, b: true);
 					jjtreeCloseNodeScope(aSTBNFLookahead);
 				}
-				throw new System.Exception(ex21);
+				throw (ex21);
 			}
 			catch (System.Exception x12)
 			{
@@ -3372,13 +3356,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					}
 					if (ex11 is RuntimeException)
 					{
-						throw new System.Exception(ex11);
+						throw (ex11);
 					}
 					if (ex11 is ParseException)
 					{
-						throw new System.Exception(ex11);
+						throw (ex11);
 					}
-                    throw new System.Exception(ex11);
+                    throw (ex11);
 				}
 				catch (System.Exception x13)
 				{
@@ -3865,13 +3849,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				if (ex6 is RuntimeException)
 				{
-					throw new System.Exception(ex6);
+					throw (ex6);
 				}
 				if (ex6 is ParseException)
 				{
-					throw new System.Exception(ex6);
+					throw (ex6);
 				}
-				throw new System.Exception(ex6);
+				throw (ex6);
 			}
 			catch
 			{
@@ -3911,13 +3895,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						}
 						if (ex10 is RuntimeException)
 						{
-							throw new System.Exception(ex10);
+							throw (ex10);
 						}
 						if (ex10 is ParseException)
 						{
-							throw new System.Exception(ex10);
+							throw (ex10);
 						}
-						throw new System.Exception(ex10);
+						throw (ex10);
 					}
 					catch (System.Exception x6)
 					{
@@ -3955,7 +3939,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						jjtree.CloseNodeScope(aSTBNFNonTerminal, b: true);
 						jjtreeCloseNodeScope(aSTBNFNonTerminal);
 					}
-					throw new System.Exception(ex14);
+					throw (ex14);
 				}
 				catch (System.Exception x9)
 				{
@@ -3990,13 +3974,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				if (ex16 is RuntimeException)
 				{
-					throw new System.Exception(ex16);
+					throw (ex16);
 				}
 				if (ex16 is ParseException)
 				{
-					throw new System.Exception(ex16);
+					throw (ex16);
 				}
-				throw new System.Exception(ex16);
+				throw (ex16);
 			}
 			catch
 			{
@@ -4054,13 +4038,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				if (ex18 is RuntimeException)
 				{
-					throw new System.Exception(ex18);
+					throw (ex18);
 				}
 				if (ex18 is ParseException)
 				{
-					throw new System.Exception(ex18);
+					throw (ex18);
 				}
-				throw new System.Exception(ex18);
+				throw (ex18);
 			}
 			catch
 			{
@@ -4088,13 +4072,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				if (ex20 is RuntimeException)
 				{
-					throw new System.Exception(ex20);
+					throw (ex20);
 				}
 				if (ex20 is ParseException)
 				{
-					throw new System.Exception(ex20);
+					throw (ex20);
 				}
-				throw new System.Exception(ex20);
+				throw (ex20);
 			}
 			catch
 			{
@@ -4122,13 +4106,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				if (ex21 is RuntimeException)
 				{
-					throw new System.Exception(ex21);
+					throw (ex21);
 				}
 				if (ex21 is ParseException)
 				{
-					throw new System.Exception(ex21);
+					throw (ex21);
 				}
-				throw new System.Exception(ex21);
+				throw (ex21);
 			}
 			catch
 			{
@@ -4300,13 +4284,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex3 is RuntimeException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
 			if (ex3 is ParseException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
-			throw new System.Exception(ex3);
+			throw (ex3);
 		}
 		catch
 		{
@@ -4470,13 +4454,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex3 is RuntimeException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
 			if (ex3 is ParseException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
-			throw new System.Exception(ex3);
+			throw (ex3);
 		}
 		catch
 		{
@@ -4595,13 +4579,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex3 is RuntimeException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
 			if (ex3 is ParseException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
-			throw new System.Exception(ex3);
+			throw (ex3);
 		}
 		catch
 		{
@@ -4889,13 +4873,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				if (ex3 is RuntimeException)
 				{
-					throw new System.Exception(ex3);
+					throw (ex3);
 				}
 				if (ex3 is ParseException)
 				{
-					throw new System.Exception(ex3);
+					throw (ex3);
 				}
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
 			catch
 			{
@@ -4923,13 +4907,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				if (ex5 is RuntimeException)
 				{
-					throw new System.Exception(ex5);
+					throw (ex5);
 				}
 				if (ex5 is ParseException)
 				{
-					throw new System.Exception(ex5);
+					throw (ex5);
 				}
-				throw new System.Exception(ex5);
+				throw (ex5);
 			}
 			catch
 			{
@@ -5019,13 +5003,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex3 is RuntimeException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
 			if (ex3 is ParseException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
-			throw new System.Exception(ex3);
+			throw (ex3);
 		}
 		catch
 		{
@@ -5100,13 +5084,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			if (ex3 is RuntimeException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
 			if (ex3 is ParseException)
 			{
-				throw new System.Exception(ex3);
+				throw (ex3);
 			}
-			throw new System.Exception(ex3);
+			throw (ex3);
 		}
 		catch
 		{
@@ -10813,7 +10797,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		}
 		if (jj_la == 0 && jj_scanpos == jj_lastpos)
 		{
-			throw new System.Exception(jj_ls);
+			throw (jj_ls);
 		}
 		return false;
 	}
@@ -15242,7 +15226,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		jj_2_rtns = new JJCalls[47];
 		jj_rescan = false;
 		jj_gc = 0;
-		jj_ls = new LookaheadSuccess(null);
+		jj_ls = new LookaheadSuccess();
 		jj_expentries = new ArrayList();
 		jj_kind = -1;
 		jj_lasttokens = new int[100];
@@ -15855,7 +15839,7 @@ ex=x;
 		jj_2_rtns = new JJCalls[47];
 		jj_rescan = false;
 		jj_gc = 0;
-		jj_ls = new LookaheadSuccess(null);
+		jj_ls = new LookaheadSuccess();
 		jj_expentries = new ArrayList();
 		jj_kind = -1;
 		jj_lasttokens = new int[100];
