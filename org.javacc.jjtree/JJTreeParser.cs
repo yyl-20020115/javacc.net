@@ -2121,7 +2121,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		{
 			jj_consume_token(93);
 			string str = JavaIdentifier();
-			text = new StringBuilder().Append(text).Append(".").Append(str)
+			text = (text)+(".")+(str)
 				.ToString();
 		}
 		return text;

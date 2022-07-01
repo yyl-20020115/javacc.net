@@ -266,9 +266,9 @@ public class JavaCharStream
 		return (char)num5;
 	IL_01d9:
 
-		string message = new StringBuilder().Append("Invalid escape character at line ").Append(line).Append(" column ")
-			.Append(column)
-			.Append(".")
+		string message = ("Invalid escape character at line ")+(line)+(" column ")
+			+(column)
+			+(".")
 			.ToString();
 
 		throw new System.Exception(message);
@@ -283,8 +283,8 @@ public class JavaCharStream
 
 			return result;
 		}
-		string result2 = new StringBuilder().Append(
-			new string(buffer, tokenBegin, bufsize - tokenBegin)).Append(
+		string result2 = (
+			new string(buffer, tokenBegin, bufsize - tokenBegin))+(
 			new string(buffer, 0, bufpos + 1)).ToString();
 
 		return result2;
@@ -348,7 +348,7 @@ public class JavaCharStream
 		char[] array = new char[i];
 		if (bufpos + 1 >= i)
 		{
-			System.Copy(buffer, bufpos - i + 1, array, 0, i);
+			Array.Copy(buffer, bufpos - i + 1, array, 0, i);
 		}
 		else
 		{
@@ -395,7 +395,7 @@ public class JavaCharStream
 			bufline[bufpos] = line;
 			bufcolumn[bufpos] = column;
 		}
-		throw new System.Exception(ex2);
+		throw (ex2);
 	}
 
 
@@ -422,7 +422,7 @@ public class JavaCharStream
 			}
 			else
 			{
-				System.Copy(buffer, tokenBegin, dest, 0, bufsize - tokenBegin);
+				Array.Copy(buffer, tokenBegin, dest, 0, bufsize - tokenBegin);
 				buffer = dest;
 				Array.Copy(bufline, tokenBegin, dest2, 0, bufsize - tokenBegin);
 				bufline = dest2;
@@ -662,7 +662,7 @@ public class JavaCharStream
 
 	public virtual void ReInit(Stream @is, string str, int i1, int i2, int i3)
 	{
-		ReInit((str != null) ? new StreamReader(@is, str) : new StreamReader(@is), i1, i2, i3);
+		ReInit((str != null) ? new StreamReader(@is) : new StreamReader(@is), i1, i2, i3);
 	}
 
 

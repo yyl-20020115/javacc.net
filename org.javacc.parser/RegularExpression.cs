@@ -38,7 +38,7 @@ public abstract class RegularExpression : Expansion
 	{
 		var stringBuilder = base.Dump(i, s);
 		s.Add(this);
-		stringBuilder.Append(' ').Append(label);
+		stringBuilder+(' ')+(label);
 		return stringBuilder;
 	}
 

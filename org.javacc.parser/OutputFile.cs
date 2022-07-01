@@ -93,7 +93,7 @@ public class OutputFile
 			{
 			}
 
-			Console.Error.WriteLine(new StringBuilder().Append("Could not close ").Append(this_00240.file.getAbsolutePath()).ToString());
+			Console.Error.WriteLine(("Could not close ")+(this_00240.file.getAbsolutePath()).ToString());
 		}
 	}
 
@@ -146,13 +146,13 @@ public class OutputFile
 			dos = new DigestOutputStream(new BufferedOutputStream(new FileOutputStream(file)), instance);
 			pw = new TrapClosePrintWriter(this, dos);
 			string str = ((compatibleVersion != null) ? compatibleVersion : "4.1d1");
-			pw.WriteLine(new StringBuilder().Append("/* ").Append(JavaCCGlobals.getIdString(toolName, file.getName())).Append(" Version ")
-				.Append(str)
-				.Append(" */")
+			pw.WriteLine(("/* ")+(JavaCCGlobals.getIdString(toolName, file.getName()))+(" Version ")
+				+(str)
+				+(" */")
 				.ToString());
 			if (options != null)
 			{
-				pw.WriteLine(new StringBuilder().Append("/* JavaCCOptions:").Append(Options.getOptionsString(options)).Append(" */")
+				pw.WriteLine(("/* JavaCCOptions:")+(Options.getOptionsString(options))+(" */")
 					.ToString());
 			}
 		}
@@ -167,7 +167,7 @@ public class OutputFile
 	{
 		if (pw != null)
 		{
-			pw.WriteLine(new StringBuilder().Append("/* JavaCC - OriginalChecksum=").Append(getMD5sum()).Append(" (do not edit this line) */")
+			pw.WriteLine(("/* JavaCC - OriginalChecksum=")+(getMD5sum())+(" (do not edit this line) */")
 				.ToString());
 			pw.ClosePrintWriter();
 		}
@@ -236,14 +236,14 @@ public class OutputFile
 			}
 			else
 			{
-				Console.WriteLine(new StringBuilder().Append("File \"").Append(f.getName()).Append("\" is being rebuilt.")
+				Console.WriteLine(("File \"")+(f.getName())+("\" is being rebuilt.")
 					.ToString());
 				needToWrite = true;
 			}
 		}
 		else
 		{
-			Console.WriteLine(new StringBuilder().Append("File \"").Append(f.getName()).Append("\" does not exist.  Will create one.")
+			Console.WriteLine(("File \"")+(f.getName())+("\" does not exist.  Will create one.")
 				.ToString());
 			needToWrite = true;
 		}
@@ -266,7 +266,7 @@ public class OutputFile
 		for (int i = 0; i < (nint)P_0.LongLength; i++)
 		{
 			int num = P_0[i];
-			stringBuilder.Append(HEX_DIGITS[(num & 0xF0) >> 4]).Append(HEX_DIGITS[num & 0xF]);
+			stringBuilder+(HEX_DIGITS[(num & 0xF0) >> 4])+(HEX_DIGITS[num & 0xF]);
 		}
 		string result = stringBuilder.ToString();
 
@@ -276,7 +276,7 @@ public class OutputFile
 
 	private void CheckVersion(FileInfo info, string name)
 	{
-		string text = new StringBuilder().Append("/* ").Append(JavaCCGlobals.getIdString(toolName, info.getName())).Append(" Version ")
+		string text = ("/* ")+(JavaCCGlobals.getIdString(toolName, info.getName()))+(" Version ")
 			.ToString();
 		try
 		{
@@ -291,7 +291,7 @@ public class OutputFile
 						string text2 = String.instancehelper_replaceAll(String.instancehelper_replaceFirst(text, ".* Version ", ""), " \\*/", "");
 						if ((object)text2 != name)
 						{
-							JavaCCErrors.Warning(new StringBuilder().Append(info.getName()).Append(": File is obsolete.  Please rename or delete this file so").Append(" that a new one can be generated for you.")
+							JavaCCErrors.Warning((info.getName())+(": File is obsolete.  Please rename or delete this file so")+(" that a new one can be generated for you.")
 								.ToString());
 						}
 						break;
@@ -308,7 +308,7 @@ public class OutputFile
 			goto IL_00b7;
 		}
 
-		JavaCCErrors.Semantic_Error(new StringBuilder().Append("Could not open file ").Append(info.getName()).Append(" for writing.")
+		JavaCCErrors.Semantic_Error(("Could not open file ")+(info.getName())+(" for writing.")
 			.ToString());
 
 		throw new System.Exception();
@@ -335,7 +335,7 @@ public class OutputFile
 						//object obj = (s.___003Cref_003E = optionsString);
 						if (!String.instancehelper_contains(@this, s))
 						{
-							JavaCCErrors.Warning(new StringBuilder().Append(P_0.getName()).Append(": Generated using incompatible options. Please rename or delete this file so").Append(" that a new one can be generated for you.")
+							JavaCCErrors.Warning((P_0.getName())+(": Generated using incompatible options. Please rename or delete this file so")+(" that a new one can be generated for you.")
 								.ToString());
 						}
 						break;
@@ -352,7 +352,7 @@ public class OutputFile
 			goto IL_0082;
 		}
 
-		JavaCCErrors.Semantic_Error(new StringBuilder().Append("Could not open file ").Append(P_0.getName()).Append(" for writing.")
+		JavaCCErrors.Semantic_Error(("Could not open file ")+(P_0.getName())+(" for writing.")
 			.ToString());
 
 		throw new System.Exception();

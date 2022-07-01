@@ -85,20 +85,20 @@ public class HTMLGenerator : TextGenerator, Generator
 		if (!string.Equals("", JJDocOptions.CSS))
 		{
 			WriteLine(
-				new StringBuilder()
-				.Append("<LINK REL=\"stylesheet\" type=\"text/css\" href=\"")
-				.Append(JJDocOptions.CSS)
-				.Append("\"/>")
+				
+				("<LINK REL=\"stylesheet\" type=\"text/css\" href=\"")
+				+(JJDocOptions.CSS)
+				+("\"/>")
 				.ToString());
 		}
 		if (JJDocGlobals.input_file != null)
 		{
 			WriteLine(
 				new StringBuilder()
-				.Append("<TITLE>BNF for ")
-				.Append(JJDocGlobals.input_file)
-				.Append("</TITLE>")
-				.ToString());
+				+("<TITLE>BNF for ")
+				+(JJDocGlobals.input_file)
+				+("</TITLE>")
+				);
 		}
 		else
 		{
@@ -107,11 +107,11 @@ public class HTMLGenerator : TextGenerator, Generator
 		WriteLine("</HEAD>");
 		WriteLine("<BODY>");
 		WriteLine(
-			new StringBuilder()
-			.Append("<H1 ALIGN=CENTER>BNF for ")
-			.Append(JJDocGlobals.input_file)
-			.Append("</H1>")
-			.ToString());
+			
+			("<H1 ALIGN=CENTER>BNF for ")
+			+(JJDocGlobals.input_file)
+			+("</H1>")
+			);
 	}
 	
 	public override void DocumentEnd()
@@ -206,11 +206,10 @@ public class HTMLGenerator : TextGenerator, Generator
 	public override void NonTerminalStart(NonTerminal nt)
 	{
 		Write(
-			new StringBuilder()
-			.Append("<A HREF=\"#")
-			.Append(get_id(nt.name))
-			.Append("\">")
-			.ToString());
+			("<A HREF=\"#")
+			+(get_id(nt.name))
+			+("\">")
+			);
 	}
 
 	

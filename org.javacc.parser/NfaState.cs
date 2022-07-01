@@ -333,9 +333,9 @@ public class NfaState
 			FixStateSets();
 		}
 		kinds[LexGen.lexStateIndex] = array;
-		pw.WriteLine(new StringBuilder().Append((!Options.getStatic()) ? "" : "static ").Append("private int ").Append("jjMoveNfa")
-			.Append(LexGen.lexStateSuffix)
-			.Append("(int startState, int curPos)")
+		pw.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private int ")+("jjMoveNfa")
+			+(LexGen.lexStateSuffix)
+			+("(int startState, int curPos)")
 			.ToString());
 		pw.WriteLine("{");
 		if (generatedStates == 0)
@@ -356,7 +356,7 @@ public class NfaState
 		}
 		pw.WriteLine("   //int[] nextStates; // not used");
 		pw.WriteLine("   int startsAt = 0;");
-		pw.WriteLine(new StringBuilder().Append("   jjnewStateCnt = ").Append(generatedStates).Append(";")
+		pw.WriteLine(("   jjnewStateCnt = ")+(generatedStates)+(";")
 			.ToString());
 		pw.WriteLine("   int i = 1;");
 		pw.WriteLine("   jjstateSet[0] = startState;");
@@ -366,17 +366,17 @@ public class NfaState
 		}
 		if (Options.getDebugTokenManager())
 		{
-			pw.WriteLine(new StringBuilder().Append("      debugStream.WriteLine(").Append((LexGen.maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ").Append("\"Current character : \" + ")
-				.Append("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
-				.Append("at line \" + input_stream.getEndLine() + \" column \" + input_stream.getEndColumn());")
+			pw.WriteLine(("      debugStream.WriteLine(")+((LexGen.maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ")+("\"Current character : \" + ")
+				+("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
+				+("at line \" + input_stream.getEndLine() + \" column \" + input_stream.getEndColumn());")
 				.ToString());
 		}
 		pw.WriteLine("   //int j; // not used");
-		pw.WriteLine(new StringBuilder().Append("   int kind = 0x").Append(Utils.ToString(int.MaxValue,16)).Append(";")
+		pw.WriteLine(("   int kind = 0x")+(Utils.ToString(int.MaxValue,16))+(";")
 			.ToString());
 		pw.WriteLine("   for (;;)");
 		pw.WriteLine("   {");
-		pw.WriteLine(new StringBuilder().Append("      if (++jjround == 0x").Append(Utils.ToString(int.MaxValue,16)).Append(")")
+		pw.WriteLine(("      if (++jjround == 0x")+(Utils.ToString(int.MaxValue,16))+(")")
 			.ToString());
 		pw.WriteLine("         ReInitRounds();");
 		pw.WriteLine("      if (curChar < 64)");
@@ -391,22 +391,22 @@ public class NfaState
 		pw.WriteLine("      {");
 		DumpCharAndRangeMoves(pw);
 		pw.WriteLine("      }");
-		pw.WriteLine(new StringBuilder().Append("      if (kind != 0x").Append(Utils.ToString(int.MaxValue,16)).Append(")")
+		pw.WriteLine(("      if (kind != 0x")+(Utils.ToString(int.MaxValue,16))+(")")
 			.ToString());
 		pw.WriteLine("      {");
 		pw.WriteLine("         jjmatchedKind = kind;");
 		pw.WriteLine("         jjmatchedPos = curPos;");
-		pw.WriteLine(new StringBuilder().Append("         kind = 0x").Append(Utils.ToString(int.MaxValue,16)).Append(";")
+		pw.WriteLine(("         kind = 0x")+(Utils.ToString(int.MaxValue,16))+(";")
 			.ToString());
 		pw.WriteLine("      }");
 		pw.WriteLine("      ++curPos;");
 		if (Options.getDebugTokenManager())
 		{
-			pw.WriteLine(new StringBuilder().Append("      if (jjmatchedKind != 0 && jjmatchedKind != 0x").Append(Utils.ToString(int.MaxValue,16)).Append(")")
+			pw.WriteLine(("      if (jjmatchedKind != 0 && jjmatchedKind != 0x")+(Utils.ToString(int.MaxValue,16))+(")")
 				.ToString());
 			pw.WriteLine("         debugStream.WriteLine(\"   Currently matched the first \" + (jjmatchedPos + 1) + \" characters as a \" + tokenImage[jjmatchedKind] + \" token.\");");
 		}
-		pw.WriteLine(new StringBuilder().Append("      if ((i = jjnewStateCnt) == (startsAt = ").Append(generatedStates).Append(" - (jjnewStateCnt = startsAt)))")
+		pw.WriteLine(("      if ((i = jjnewStateCnt) == (startsAt = ")+(generatedStates)+(" - (jjnewStateCnt = startsAt)))")
 			.ToString());
 		if (LexGen.mixed[LexGen.lexStateIndex])
 		{
@@ -431,9 +431,9 @@ public class NfaState
 		}
 		if (Options.getDebugTokenManager())
 		{
-			pw.WriteLine(new StringBuilder().Append("      debugStream.WriteLine(").Append((LexGen.maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ").Append("\"Current character : \" + ")
-				.Append("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
-				.Append("at line \" + input_stream.getEndLine() + \" column \" + input_stream.getEndColumn());")
+			pw.WriteLine(("      debugStream.WriteLine(")+((LexGen.maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ")+("\"Current character : \" + ")
+				+("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
+				+("at line \" + input_stream.getEndLine() + \" column \" + input_stream.getEndColumn());")
 				.ToString());
 		}
 		pw.WriteLine("   }");
@@ -479,7 +479,7 @@ public class NfaState
 				{
 					pw.Write("\n   ");
 				}
-				pw.Write(new StringBuilder().Append(array[j]).Append(", ").ToString());
+				pw.Write((array[j])+(", ").ToString());
 			}
 		}
 		pw.WriteLine("\n};");
@@ -548,7 +548,7 @@ public class NfaState
 	
 	internal static void PrintBoilerPlate(TextWriter P_0)
 	{
-		P_0.WriteLine(new StringBuilder().Append((!Options.getStatic()) ? "" : "static ").Append("private void ").Append("jjCheckNAdd(int state)")
+		P_0.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAdd(int state)")
 			.ToString());
 		P_0.WriteLine("{");
 		P_0.WriteLine("   if (jjrounds[state] != jjround)");
@@ -557,21 +557,21 @@ public class NfaState
 		P_0.WriteLine("      jjrounds[state] = jjround;");
 		P_0.WriteLine("   }");
 		P_0.WriteLine("}");
-		P_0.WriteLine(new StringBuilder().Append((!Options.getStatic()) ? "" : "static ").Append("private void ").Append("jjAddStates(int start, int end)")
+		P_0.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjAddStates(int start, int end)")
 			.ToString());
 		P_0.WriteLine("{");
 		P_0.WriteLine("   do {");
 		P_0.WriteLine("      jjstateSet[jjnewStateCnt++] = jjnextStates[start];");
 		P_0.WriteLine("   } while (start++ != end);");
 		P_0.WriteLine("}");
-		P_0.WriteLine(new StringBuilder().Append((!Options.getStatic()) ? "" : "static ").Append("private void ").Append("jjCheckNAddTwoStates(int state1, int state2)")
+		P_0.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAddTwoStates(int state1, int state2)")
 			.ToString());
 		P_0.WriteLine("{");
 		P_0.WriteLine("   jjCheckNAdd(state1);");
 		P_0.WriteLine("   jjCheckNAdd(state2);");
 		P_0.WriteLine("}");
 		P_0.WriteLine("");
-		P_0.WriteLine(new StringBuilder().Append((!Options.getStatic()) ? "" : "static ").Append("private void ").Append("jjCheckNAddStates(int start, int end)")
+		P_0.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAddStates(int start, int end)")
 			.ToString());
 		P_0.WriteLine("{");
 		P_0.WriteLine("   do {");
@@ -581,7 +581,7 @@ public class NfaState
 		P_0.WriteLine("");
 		if (jjCheckNAddStatesUnaryNeeded)
 		{
-			P_0.WriteLine(new StringBuilder().Append((!Options.getStatic()) ? "" : "static ").Append("private void ").Append("jjCheckNAddStates(int start)")
+			P_0.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAddStates(int start)")
 				.ToString());
 			P_0.WriteLine("{");
 			P_0.WriteLine("   jjCheckNAdd(jjnextStates[start]);");
@@ -954,7 +954,7 @@ public class NfaState
 					string text = "";
 					for (int j = 0; j < vector.Count; j++)
 					{
-						text = new StringBuilder().Append(text).Append(java.lang.String.valueOf(((NfaState)vector[j]).id)).Append(", ")
+						text = (text)+(java.lang.String.valueOf(((NfaState)vector[j]).id))+(", ")
 							.ToString();
 					}
 					if ((nfaState = (NfaState)equivStatesTable.get(text)) == null)
@@ -1058,7 +1058,7 @@ public class NfaState
 				((NfaState)indexedAllStates.elementAt(nfaState.stateName)).inNextOf++;
 				array[num] = nfaState.stateName;
 				stringBuilder = new StringBuilder();
-				epsilonMovesString = stringBuilder.Append(epsilonMovesString).Append(nfaState.stateName).Append(", ")
+				epsilonMovesString = stringBuilder+(epsilonMovesString)+(nfaState.stateName)+(", ")
 					.ToString();
 				int num2 = num;
 				num++;
@@ -1068,12 +1068,12 @@ public class NfaState
 					if (16 == -1 || num3 % 16 == 0)
 					{
 						stringBuilder = new StringBuilder();
-						epsilonMovesString = stringBuilder.Append(epsilonMovesString).Append("\n").ToString();
+						epsilonMovesString = stringBuilder+(epsilonMovesString)+("\n").ToString();
 					}
 				}
 			}
 			stringBuilder = new StringBuilder();
-			epsilonMovesString = stringBuilder.Append(epsilonMovesString).Append("};").ToString();
+			epsilonMovesString = stringBuilder+(epsilonMovesString)+("};").ToString();
 		}
 		usefulEpsilonMoves = num;
 		if (epsilonMovesString != null && allNextStates.get(epsilonMovesString) == null)
@@ -1232,7 +1232,7 @@ public class NfaState
 		}
 		if (array == null)
 		{
-			string message = new StringBuilder().Append("JavaCC Bug: Please send mail to sankar@cs.stanford.edu; nameSet null for : ").Append(P_0).ToString();
+			string message = ("JavaCC Bug: Please send mail to sankar@cs.stanford.edu; nameSet null for : ")+(P_0).ToString();
 			
 			throw new System.Exception(message);
 		}
@@ -1349,7 +1349,7 @@ public class NfaState
 		int num = 0;
 		while (num < (nint)P_0.LongLength)
 		{
-			str = new StringBuilder().Append(str).Append(P_0[num]).Append(", ")
+			str = (str)+(P_0[num])+(", ")
 				.ToString();
 			int num2 = num;
 			num++;
@@ -1358,11 +1358,11 @@ public class NfaState
 				int num3 = num;
 				if (16 == -1 || num3 % 16 == 0)
 				{
-					str = new StringBuilder().Append(str).Append("\n").ToString();
+					str = (str)+("\n").ToString();
 				}
 			}
 		}
-		str = new StringBuilder().Append(str).Append("};").ToString();
+		str = (str)+("};").ToString();
 		allNextStates.Add(str, P_0);
 		return str;
 	}
@@ -1405,16 +1405,16 @@ public class NfaState
 			int num2 = OnlyOneBitSet(asciiMoves[P_1]);
 			if (num2 != -1)
 			{
-				P_0.WriteLine(new StringBuilder().Append("                  ").Append((!P_2) ? "" : "else ").Append("if (curChar == ")
-					.Append(64 * P_1 + num2)
-					.Append(")")
+				P_0.WriteLine(("                  ")+((!P_2) ? "" : "else ")+("if (curChar == ")
+					+(64 * P_1 + num2)
+					+(")")
 					.ToString());
 			}
 			else
 			{
-				P_0.WriteLine(new StringBuilder().Append("                  ").Append((!P_2) ? "" : "else ").Append("if ((0x")
-					.Append(Long.toHexString(asciiMoves[P_1]))
-					.Append("L & l) != 0L)")
+				P_0.WriteLine(("                  ")+((!P_2) ? "" : "else ")+("if ((0x")
+					+(Utils.ToHexString(asciiMoves[P_1]))
+					+("L & l) != 0L)")
 					.ToString());
 			}
 			str = "   ";
@@ -1425,11 +1425,11 @@ public class NfaState
 			{
 				P_0.WriteLine("                  {");
 			}
-			P_0.WriteLine(new StringBuilder().Append(str).Append("                  if (kind > ").Append(kindToPrint)
-				.Append(")")
+			P_0.WriteLine((str)+("                  if (kind > ")+(kindToPrint)
+				+(")")
 				.ToString());
-			P_0.WriteLine(new StringBuilder().Append(str).Append("                     kind = ").Append(kindToPrint)
-				.Append(";")
+			P_0.WriteLine((str)+("                     kind = ")+(kindToPrint)
+				+(";")
 				.ToString());
 		}
 		if (next != null && next.usefulEpsilonMoves > 0)
@@ -1440,23 +1440,23 @@ public class NfaState
 				int i2 = array[0];
 				if (num != 0)
 				{
-					P_0.WriteLine(new StringBuilder().Append(str).Append("                  jjCheckNAdd(").Append(i2)
-						.Append(");")
+					P_0.WriteLine((str)+("                  jjCheckNAdd(")+(i2)
+						+(");")
 						.ToString());
 				}
 				else
 				{
-					P_0.WriteLine(new StringBuilder().Append(str).Append("                  jjstateSet[jjnewStateCnt++] = ").Append(i2)
-						.Append(";")
+					P_0.WriteLine((str)+("                  jjstateSet[jjnewStateCnt++] = ")+(i2)
+						+(";")
 						.ToString());
 				}
 			}
 			else if (next.usefulEpsilonMoves == 2 && num != 0)
 			{
-				P_0.WriteLine(new StringBuilder().Append(str).Append("                  jjCheckNAddTwoStates(").Append(array[0])
-					.Append(", ")
-					.Append(array[1])
-					.Append(");")
+				P_0.WriteLine((str)+("                  jjCheckNAddTwoStates(")+(array[0])
+					+(", ")
+					+(array[1])
+					+(");")
 					.ToString());
 			}
 			else
@@ -1465,11 +1465,11 @@ public class NfaState
 				int num3 = ((stateSetIndicesForUse[0] + 1 != stateSetIndicesForUse[1]) ? 1 : 0);
 				if (num != 0)
 				{
-					P_0.Write(new StringBuilder().Append(str).Append("                  jjCheckNAddStates(").Append(stateSetIndicesForUse[0])
+					P_0.Write((str)+("                  jjCheckNAddStates(")+(stateSetIndicesForUse[0])
 						.ToString());
 					if (num3 != 0)
 					{
-						P_0.Write(new StringBuilder().Append(", ").Append(stateSetIndicesForUse[1]).ToString());
+						P_0.Write((", ")+(stateSetIndicesForUse[1]).ToString());
 					}
 					else
 					{
@@ -1479,10 +1479,10 @@ public class NfaState
 				}
 				else
 				{
-					P_0.WriteLine(new StringBuilder().Append(str).Append("                  jjAddStates(").Append(stateSetIndicesForUse[0])
-						.Append(", ")
-						.Append(stateSetIndicesForUse[1])
-						.Append(");")
+					P_0.WriteLine((str)+("                  jjAddStates(")+(stateSetIndicesForUse[0])
+						+(", ")
+						+(stateSetIndicesForUse[1])
+						+(");")
 						.ToString());
 				}
 			}
@@ -1511,22 +1511,22 @@ public class NfaState
 		{
 			if (loByteVec != null && loByteVec.Count > 1)
 			{
-				P_0.WriteLine(new StringBuilder().Append("                  if ((jjbitVec").Append(((int)loByteVec.elementAt(1)).intValue()).Append("[i2")
-					.Append("] & l2) != 0L)")
+				P_0.WriteLine(("                  if ((jjbitVec")+(((int)loByteVec.elementAt(1)).intValue())+("[i2")
+					+("] & l2) != 0L)")
 					.ToString());
 			}
 		}
 		else
 		{
-			P_0.WriteLine(new StringBuilder().Append("                  if (jjCanMove_").Append(nonAsciiMethod).Append("(hiByte, i1, i2, l1, l2))")
+			P_0.WriteLine(("                  if (jjCanMove_")+(nonAsciiMethod)+("(hiByte, i1, i2, l1, l2))")
 				.ToString());
 		}
 		if (kindToPrint != int.MaxValue)
 		{
 			P_0.WriteLine("                  {");
-			P_0.WriteLine(new StringBuilder().Append("                     if (kind > ").Append(kindToPrint).Append(")")
+			P_0.WriteLine(("                     if (kind > ")+(kindToPrint)+(")")
 				.ToString());
-			P_0.WriteLine(new StringBuilder().Append("                        kind = ").Append(kindToPrint).Append(";")
+			P_0.WriteLine(("                        kind = ")+(kindToPrint)+(";")
 				.ToString());
 		}
 		if (next != null && next.usefulEpsilonMoves > 0)
@@ -1537,20 +1537,20 @@ public class NfaState
 				int i2 = array[0];
 				if (num != 0)
 				{
-					P_0.WriteLine(new StringBuilder().Append("                     jjCheckNAdd(").Append(i2).Append(");")
+					P_0.WriteLine(("                     jjCheckNAdd(")+(i2)+(");")
 						.ToString());
 				}
 				else
 				{
-					P_0.WriteLine(new StringBuilder().Append("                     jjstateSet[jjnewStateCnt++] = ").Append(i2).Append(";")
+					P_0.WriteLine(("                     jjstateSet[jjnewStateCnt++] = ")+(i2)+(";")
 						.ToString());
 				}
 			}
 			else if (next.usefulEpsilonMoves == 2 && num != 0)
 			{
-				P_0.WriteLine(new StringBuilder().Append("                     jjCheckNAddTwoStates(").Append(array[0]).Append(", ")
-					.Append(array[1])
-					.Append(");")
+				P_0.WriteLine(("                     jjCheckNAddTwoStates(")+(array[0])+(", ")
+					+(array[1])
+					+(");")
 					.ToString());
 			}
 			else
@@ -1559,10 +1559,10 @@ public class NfaState
 				int num2 = ((stateSetIndicesForUse[0] + 1 != stateSetIndicesForUse[1]) ? 1 : 0);
 				if (num != 0)
 				{
-					P_0.Write(new StringBuilder().Append("                     jjCheckNAddStates(").Append(stateSetIndicesForUse[0]).ToString());
+					P_0.Write(("                     jjCheckNAddStates(")+(stateSetIndicesForUse[0]).ToString());
 					if (num2 != 0)
 					{
-						P_0.Write(new StringBuilder().Append(", ").Append(stateSetIndicesForUse[1]).ToString());
+						P_0.Write((", ")+(stateSetIndicesForUse[1]).ToString());
 					}
 					else
 					{
@@ -1572,9 +1572,9 @@ public class NfaState
 				}
 				else
 				{
-					P_0.WriteLine(new StringBuilder().Append("                     jjAddStates(").Append(stateSetIndicesForUse[0]).Append(", ")
-						.Append(stateSetIndicesForUse[1])
-						.Append(");")
+					P_0.WriteLine(("                     jjAddStates(")+(stateSetIndicesForUse[0])+(", ")
+						+(stateSetIndicesForUse[1])
+						+(");")
 						.ToString());
 				}
 			}
@@ -1598,7 +1598,7 @@ public class NfaState
 		{
 			if (asciiMoves[P_1] != 0)
 			{
-				P_0.WriteLine(new StringBuilder().Append("               case ").Append(stateName).Append(":")
+				P_0.WriteLine(("               case ")+(stateName)+(":")
 					.ToString());
 				DumpAsciiMoveForCompositeState(P_0, P_1, false);
 				return "";
@@ -1606,12 +1606,12 @@ public class NfaState
 		}
 		else if (nonAsciiMethod != -1)
 		{
-			P_0.WriteLine(new StringBuilder().Append("               case ").Append(stateName).Append(":")
+			P_0.WriteLine(("               case ")+(stateName)+(":")
 				.ToString());
 			DumpNonAsciiMoveForCompositeState(P_0);
 			return "";
 		}
-		string result = new StringBuilder().Append("               case ").Append(stateName).Append(":\n")
+		string result = ("               case ")+(stateName)+(":\n")
 			.ToString();
 		
 		return result;
@@ -1639,7 +1639,7 @@ public class NfaState
 				if (!P_2[nfaState.stateName] && !nfaState.isComposite && asciiMoves[P_1] == nfaState.asciiMoves[P_1] && kindToPrint == nfaState.kindToPrint && ((object)next.epsilonMovesString == nfaState.next.epsilonMovesString || (next.epsilonMovesString != null && nfaState.next.epsilonMovesString != null && string.Equals(next.epsilonMovesString, nfaState.next.epsilonMovesString))))
 				{
 					P_2[nfaState.stateName] = true;
-					P_0.WriteLine(new StringBuilder().Append("               case ").Append(nfaState.stateName).Append(":")
+					P_0.WriteLine(("               case ")+(nfaState.stateName)+(":")
 						.ToString());
 				}
 			}
@@ -1651,22 +1651,22 @@ public class NfaState
 			str = "";
 			if (num2 == 0)
 			{
-				str = new StringBuilder().Append(" && kind > ").Append(kindToPrint).ToString();
+				str = (" && kind > ")+(kindToPrint).ToString();
 			}
 			if (i != -1)
 			{
-				P_0.WriteLine(new StringBuilder().Append("                  if (curChar == ").Append(64 * P_1 + i).Append(str)
-					.Append(")")
+				P_0.WriteLine(("                  if (curChar == ")+(64 * P_1 + i)+(str)
+					+(")")
 					.ToString());
 			}
 			else
 			{
-				P_0.WriteLine(new StringBuilder().Append("                  if ((0x").Append(Long.toHexString(asciiMoves[P_1])).Append("L & l) != 0L")
-					.Append(str)
-					.Append(")")
+				P_0.WriteLine(("                  if ((0x")+(Utils.ToHexString(asciiMoves[P_1]))+("L & l) != 0L")
+					+(str)
+					+(")")
 					.ToString());
 			}
-			P_0.WriteLine(new StringBuilder().Append("                     kind = ").Append(kindToPrint).Append(";")
+			P_0.WriteLine(("                     kind = ")+(kindToPrint)+(";")
 				.ToString());
 			if (num2 != 0)
 			{
@@ -1683,38 +1683,38 @@ public class NfaState
 		{
 			if (i != -1)
 			{
-				P_0.WriteLine(new StringBuilder().Append("                  if (curChar != ").Append(64 * P_1 + i).Append(")")
+				P_0.WriteLine(("                  if (curChar != ")+(64 * P_1 + i)+(")")
 					.ToString());
 				P_0.WriteLine("                     break;");
 			}
 			else if (asciiMoves[P_1] != -1)
 			{
-				P_0.WriteLine(new StringBuilder().Append("                  if ((0x").Append(Long.toHexString(asciiMoves[P_1])).Append("L & l) == 0L)")
+				P_0.WriteLine(("                  if ((0x")+(Utils.ToHexString(asciiMoves[P_1]))+("L & l) == 0L)")
 					.ToString());
 				P_0.WriteLine("                     break;");
 			}
 			if (num2 != 0)
 			{
-				P_0.WriteLine(new StringBuilder().Append("                  kind = ").Append(kindToPrint).Append(";")
+				P_0.WriteLine(("                  kind = ")+(kindToPrint)+(";")
 					.ToString());
 			}
 			else
 			{
-				P_0.WriteLine(new StringBuilder().Append("                  if (kind > ").Append(kindToPrint).Append(")")
+				P_0.WriteLine(("                  if (kind > ")+(kindToPrint)+(")")
 					.ToString());
-				P_0.WriteLine(new StringBuilder().Append("                     kind = ").Append(kindToPrint).Append(";")
+				P_0.WriteLine(("                     kind = ")+(kindToPrint)+(";")
 					.ToString());
 			}
 		}
 		else if (i != -1)
 		{
-			P_0.WriteLine(new StringBuilder().Append("                  if (curChar == ").Append(64 * P_1 + i).Append(")")
+			P_0.WriteLine(("                  if (curChar == ")+(64 * P_1 + i)+(")")
 				.ToString());
 			str = "   ";
 		}
 		else if (asciiMoves[P_1] != -1)
 		{
-			P_0.WriteLine(new StringBuilder().Append("                  if ((0x").Append(Long.toHexString(asciiMoves[P_1])).Append("L & l) != 0L)")
+			P_0.WriteLine(("                  if ((0x")+(Utils.ToHexString(asciiMoves[P_1]))+("L & l) != 0L)")
 				.ToString());
 			str = "   ";
 		}
@@ -1726,23 +1726,23 @@ public class NfaState
 				int i2 = array[0];
 				if (num != 0)
 				{
-					P_0.WriteLine(new StringBuilder().Append(str).Append("                  jjCheckNAdd(").Append(i2)
-						.Append(");")
+					P_0.WriteLine((str)+("                  jjCheckNAdd(")+(i2)
+						+(");")
 						.ToString());
 				}
 				else
 				{
-					P_0.WriteLine(new StringBuilder().Append(str).Append("                  jjstateSet[jjnewStateCnt++] = ").Append(i2)
-						.Append(";")
+					P_0.WriteLine((str)+("                  jjstateSet[jjnewStateCnt++] = ")+(i2)
+						+(";")
 						.ToString());
 				}
 			}
 			else if (next.usefulEpsilonMoves == 2 && num != 0)
 			{
-				P_0.WriteLine(new StringBuilder().Append(str).Append("                  jjCheckNAddTwoStates(").Append(array[0])
-					.Append(", ")
-					.Append(array[1])
-					.Append(");")
+				P_0.WriteLine((str)+("                  jjCheckNAddTwoStates(")+(array[0])
+					+(", ")
+					+(array[1])
+					+(");")
 					.ToString());
 			}
 			else
@@ -1751,11 +1751,11 @@ public class NfaState
 				int num3 = ((stateSetIndicesForUse[0] + 1 != stateSetIndicesForUse[1]) ? 1 : 0);
 				if (num != 0)
 				{
-					P_0.Write(new StringBuilder().Append(str).Append("                  jjCheckNAddStates(").Append(stateSetIndicesForUse[0])
+					P_0.Write((str)+("                  jjCheckNAddStates(")+(stateSetIndicesForUse[0])
 						.ToString());
 					if (num3 != 0)
 					{
-						P_0.Write(new StringBuilder().Append(", ").Append(stateSetIndicesForUse[1]).ToString());
+						P_0.Write((", ")+(stateSetIndicesForUse[1]).ToString());
 					}
 					else
 					{
@@ -1765,10 +1765,10 @@ public class NfaState
 				}
 				else
 				{
-					P_0.WriteLine(new StringBuilder().Append(str).Append("                  jjAddStates(").Append(stateSetIndicesForUse[0])
-						.Append(", ")
-						.Append(stateSetIndicesForUse[1])
-						.Append(");")
+					P_0.WriteLine((str)+("                  jjAddStates(")+(stateSetIndicesForUse[0])
+						+(", ")
+						+(stateSetIndicesForUse[1])
+						+(");")
 						.ToString());
 				}
 			}
@@ -1965,11 +1965,11 @@ public class NfaState
 			{
 				P_0.Write(text);
 			}
-			P_0.WriteLine(new StringBuilder().Append("               case ").Append(StateNameForComposite(P_1)).Append(":")
+			P_0.WriteLine(("               case ")+(StateNameForComposite(P_1))+(":")
 				.ToString());
 			if (!P_3[nfaState.stateName] && num2 == 0 && nfaState.inNextOf > 1)
 			{
-				P_0.WriteLine(new StringBuilder().Append("               case ").Append(nfaState.stateName).Append(":")
+				P_0.WriteLine(("               case ")+(nfaState.stateName)+(":")
 					.ToString());
 			}
 			P_3[nfaState.stateName] = true;
@@ -1982,7 +1982,7 @@ public class NfaState
 			P_0.Write(text);
 		}
 		int num4 = StateNameForComposite(P_1);
-		P_0.WriteLine(new StringBuilder().Append("               case ").Append(num4).Append(":")
+		P_0.WriteLine(("               case ")+(num4)+(":")
 			.ToString());
 		if (num4 < generatedStates)
 		{
@@ -2028,7 +2028,7 @@ public class NfaState
 				if (!P_1[nfaState.stateName] && !nfaState.isComposite && nonAsciiMethod == nfaState.nonAsciiMethod && kindToPrint == nfaState.kindToPrint && ((object)next.epsilonMovesString == nfaState.next.epsilonMovesString || (next.epsilonMovesString != null && nfaState.next.epsilonMovesString != null && string.Equals(next.epsilonMovesString, nfaState.next.epsilonMovesString))))
 				{
 					P_1[nfaState.stateName] = true;
-					P_0.WriteLine(new StringBuilder().Append("               case ").Append(nfaState.stateName).Append(":")
+					P_0.WriteLine(("               case ")+(nfaState.stateName)+(":")
 						.ToString());
 				}
 			}
@@ -2036,26 +2036,26 @@ public class NfaState
 		string str;
 		if (next == null || next.usefulEpsilonMoves <= 0)
 		{
-			str = new StringBuilder().Append(" && kind > ").Append(kindToPrint).ToString();
+			str = (" && kind > ")+(kindToPrint).ToString();
 			if (!Options.getJavaUnicodeEscape() && !unicodeWarningGiven)
 			{
 				if (loByteVec != null && loByteVec.Count > 1)
 				{
-					P_0.WriteLine(new StringBuilder().Append("                  if ((jjbitVec").Append(((int)loByteVec.elementAt(1)).intValue()).Append("[i2")
-						.Append("] & l2) != 0L")
-						.Append(str)
-						.Append(")")
+					P_0.WriteLine(("                  if ((jjbitVec")+(((int)loByteVec.elementAt(1)).intValue())+("[i2")
+						+("] & l2) != 0L")
+						+(str)
+						+(")")
 						.ToString());
 				}
 			}
 			else
 			{
-				P_0.WriteLine(new StringBuilder().Append("                  if (jjCanMove_").Append(nonAsciiMethod).Append("(hiByte, i1, i2, l1, l2)")
-					.Append(str)
-					.Append(")")
+				P_0.WriteLine(("                  if (jjCanMove_")+(nonAsciiMethod)+("(hiByte, i1, i2, l1, l2)")
+					+(str)
+					+(")")
 					.ToString());
 			}
-			P_0.WriteLine(new StringBuilder().Append("                     kind = ").Append(kindToPrint).Append(";")
+			P_0.WriteLine(("                     kind = ")+(kindToPrint)+(";")
 				.ToString());
 			P_0.WriteLine("                  break;");
 			return;
@@ -2067,21 +2067,21 @@ public class NfaState
 			{
 				if (loByteVec != null && loByteVec.Count > 1)
 				{
-					P_0.WriteLine(new StringBuilder().Append("                  if ((jjbitVec").Append(((int)loByteVec.elementAt(1)).intValue()).Append("[i2")
-						.Append("] & l2) == 0L)")
+					P_0.WriteLine(("                  if ((jjbitVec")+(((int)loByteVec.elementAt(1)).intValue())+("[i2")
+						+("] & l2) == 0L)")
 						.ToString());
 					P_0.WriteLine("                     break;");
 				}
 			}
 			else
 			{
-				P_0.WriteLine(new StringBuilder().Append("                  if (!jjCanMove_").Append(nonAsciiMethod).Append("(hiByte, i1, i2, l1, l2))")
+				P_0.WriteLine(("                  if (!jjCanMove_")+(nonAsciiMethod)+("(hiByte, i1, i2, l1, l2))")
 					.ToString());
 				P_0.WriteLine("                     break;");
 			}
-			P_0.WriteLine(new StringBuilder().Append("                  if (kind > ").Append(kindToPrint).Append(")")
+			P_0.WriteLine(("                  if (kind > ")+(kindToPrint)+(")")
 				.ToString());
-			P_0.WriteLine(new StringBuilder().Append("                     kind = ").Append(kindToPrint).Append(";")
+			P_0.WriteLine(("                     kind = ")+(kindToPrint)+(";")
 				.ToString());
 			str = "";
 		}
@@ -2089,14 +2089,14 @@ public class NfaState
 		{
 			if (loByteVec != null && loByteVec.Count > 1)
 			{
-				P_0.WriteLine(new StringBuilder().Append("                  if ((jjbitVec").Append(((int)loByteVec.elementAt(1)).intValue()).Append("[i2")
-					.Append("] & l2) != 0L)")
+				P_0.WriteLine(("                  if ((jjbitVec")+(((int)loByteVec.elementAt(1)).intValue())+("[i2")
+					+("] & l2) != 0L)")
 					.ToString());
 			}
 		}
 		else
 		{
-			P_0.WriteLine(new StringBuilder().Append("                  if (jjCanMove_").Append(nonAsciiMethod).Append("(hiByte, i1, i2, l1, l2))")
+			P_0.WriteLine(("                  if (jjCanMove_")+(nonAsciiMethod)+("(hiByte, i1, i2, l1, l2))")
 				.ToString());
 		}
 		if (next != null && next.usefulEpsilonMoves > 0)
@@ -2107,23 +2107,23 @@ public class NfaState
 				int i2 = array[0];
 				if (num != 0)
 				{
-					P_0.WriteLine(new StringBuilder().Append(str).Append("                  jjCheckNAdd(").Append(i2)
-						.Append(");")
+					P_0.WriteLine((str)+("                  jjCheckNAdd(")+(i2)
+						+(");")
 						.ToString());
 				}
 				else
 				{
-					P_0.WriteLine(new StringBuilder().Append(str).Append("                  jjstateSet[jjnewStateCnt++] = ").Append(i2)
-						.Append(";")
+					P_0.WriteLine((str)+("                  jjstateSet[jjnewStateCnt++] = ")+(i2)
+						+(";")
 						.ToString());
 				}
 			}
 			else if (next.usefulEpsilonMoves == 2 && num != 0)
 			{
-				P_0.WriteLine(new StringBuilder().Append(str).Append("                  jjCheckNAddTwoStates(").Append(array[0])
-					.Append(", ")
-					.Append(array[1])
-					.Append(");")
+				P_0.WriteLine((str)+("                  jjCheckNAddTwoStates(")+(array[0])
+					+(", ")
+					+(array[1])
+					+(");")
 					.ToString());
 			}
 			else
@@ -2132,11 +2132,11 @@ public class NfaState
 				int num2 = ((stateSetIndicesForUse[0] + 1 != stateSetIndicesForUse[1]) ? 1 : 0);
 				if (num != 0)
 				{
-					P_0.Write(new StringBuilder().Append(str).Append("                  jjCheckNAddStates(").Append(stateSetIndicesForUse[0])
+					P_0.Write((str)+("                  jjCheckNAddStates(")+(stateSetIndicesForUse[0])
 						.ToString());
 					if (num2 != 0)
 					{
-						P_0.Write(new StringBuilder().Append(", ").Append(stateSetIndicesForUse[1]).ToString());
+						P_0.Write((", ")+(stateSetIndicesForUse[1]).ToString());
 					}
 					else
 					{
@@ -2146,10 +2146,10 @@ public class NfaState
 				}
 				else
 				{
-					P_0.WriteLine(new StringBuilder().Append(str).Append("                  jjAddStates(").Append(stateSetIndicesForUse[0])
-						.Append(", ")
-						.Append(stateSetIndicesForUse[1])
-						.Append(");")
+					P_0.WriteLine((str)+("                  jjAddStates(")+(stateSetIndicesForUse[0])
+						+(", ")
+						+(stateSetIndicesForUse[1])
+						+(");")
 						.ToString());
 				}
 			}
@@ -2214,11 +2214,11 @@ public class NfaState
 			{
 				P_0.Write(text);
 			}
-			P_0.WriteLine(new StringBuilder().Append("               case ").Append(StateNameForComposite(P_1)).Append(":")
+			P_0.WriteLine(("               case ")+(StateNameForComposite(P_1))+(":")
 				.ToString());
 			if (!P_2[nfaState.stateName] && num2 == 0 && nfaState.inNextOf > 1)
 			{
-				P_0.WriteLine(new StringBuilder().Append("               case ").Append(nfaState.stateName).Append(":")
+				P_0.WriteLine(("               case ")+(nfaState.stateName)+(":")
 					.ToString());
 			}
 			P_2[nfaState.stateName] = true;
@@ -2231,7 +2231,7 @@ public class NfaState
 			P_0.Write(text);
 		}
 		int num4 = StateNameForComposite(P_1);
-		P_0.WriteLine(new StringBuilder().Append("               case ").Append(num4).Append(":")
+		P_0.WriteLine(("               case ")+(num4)+(":")
 			.ToString());
 		if (num4 < generatedStates)
 		{
@@ -2262,7 +2262,7 @@ public class NfaState
 	
 	internal virtual void DumpNonAsciiMoveMethod(TextWriter P_0)
 	{
-		P_0.WriteLine(new StringBuilder().Append("private static final boolean jjCanMove_").Append(nonAsciiMethod).Append("(int hiByte, int i1, int i2, long l1, long l2)")
+		P_0.WriteLine(("private static final boolean jjCanMove_")+(nonAsciiMethod)+("(int hiByte, int i1, int i2, long l1, long l2)")
 			.ToString());
 		P_0.WriteLine("{");
 		P_0.WriteLine("   switch(hiByte)");
@@ -2271,12 +2271,12 @@ public class NfaState
 		{
 			for (int i = 0; i < loByteVec.Count; i += 2)
 			{
-				P_0.WriteLine(new StringBuilder().Append("      case ").Append(((int)loByteVec[i]).intValue()).Append(":")
+				P_0.WriteLine(("      case ")+(((int)loByteVec[i]).intValue())+(":")
 					.ToString());
 				if (!AllBitsSet((string)allBitVectors.elementAt(((int)loByteVec.elementAt(i + 1)).intValue())))
 				{
-					P_0.WriteLine(new StringBuilder().Append("         return ((jjbitVec").Append(((int)loByteVec.elementAt(i + 1)).intValue()).Append("[i2")
-						.Append("] & l2) != 0L);")
+					P_0.WriteLine(("         return ((jjbitVec")+(((int)loByteVec.elementAt(i + 1)).intValue())+("[i2")
+						+("] & l2) != 0L);")
 						.ToString());
 				}
 				else
@@ -2296,12 +2296,12 @@ public class NfaState
 				{
 					if (!AllBitsSet((string)allBitVectors[(nonAsciiMoveIndices[i - 2])]))
 					{
-						P_0.WriteLine(new StringBuilder().Append("         if ((jjbitVec").Append(nonAsciiMoveIndices[i - 2]).Append("[i1] & l1) != 0L)")
+						P_0.WriteLine(("         if ((jjbitVec")+(nonAsciiMoveIndices[i - 2])+("[i1] & l1) != 0L)")
 							.ToString());
 					}
 					if (!AllBitsSet((string)allBitVectors.elementAt(nonAsciiMoveIndices[i - 1])))
 					{
-						P_0.WriteLine(new StringBuilder().Append("            if ((jjbitVec").Append(nonAsciiMoveIndices[i - 1]).Append("[i2] & l2) == 0L)")
+						P_0.WriteLine(("            if ((jjbitVec")+(nonAsciiMoveIndices[i - 1])+("[i2] & l2) == 0L)")
 							.ToString());
 						P_0.WriteLine("               return false;");
 						P_0.WriteLine("            else");
@@ -2488,16 +2488,16 @@ public class NfaState
 			{
 				continue;
 			}
-			string text = new StringBuilder().Append("{\n   0x").Append(Long.toHexString(array8[0])).Append("L, ")
-				.Append("0x")
-				.Append(Long.toHexString(array8[1]))
-				.Append("L, ")
-				.Append("0x")
-				.Append(Long.toHexString(array8[2]))
-				.Append("L, ")
-				.Append("0x")
-				.Append(Long.toHexString(array8[3]))
-				.Append("L\n};")
+			string text = ("{\n   0x")+(Utils.ToHexString(array8[0]))+("L, ")
+				+("0x")
+				+(Utils.ToHexString(array8[1]))
+				+("L, ")
+				+("0x")
+				+(Utils.ToHexString(array8[2]))
+				+("L, ")
+				+("0x")
+				+(Utils.ToHexString(array8[3]))
+				+("L\n};")
 				.ToString();
 			int integer;
 			if ((integer = (int)lohiByteTab.get(text)) == null)
@@ -2505,8 +2505,8 @@ public class NfaState
 				allBitVectors.Add(text);
 				if (!AllBitsSet(text))
 				{
-					P_0.WriteLine(new StringBuilder().Append("static final long[] jjbitVec").Append(lohiByteCnt).Append(" = ")
-						.Append(text)
+					P_0.WriteLine(("static final long[] jjbitVec")+(lohiByteCnt)+(" = ")
+						+(text)
 						.ToString());
 				}
 				Hashtable hashtable = lohiByteTab;
@@ -2518,24 +2518,24 @@ public class NfaState
 			int num33 = num;
 			num++;
 			array15[num33] = integer.intValue();
-			text = new StringBuilder().Append("{\n   0x").Append(Long.toHexString(array2[i][0])).Append("L, ")
-				.Append("0x")
-				.Append(Long.toHexString(array2[i][1]))
-				.Append("L, ")
-				.Append("0x")
-				.Append(Long.toHexString(array2[i][2]))
-				.Append("L, ")
-				.Append("0x")
-				.Append(Long.toHexString(array2[i][3]))
-				.Append("L\n};")
+			text = ("{\n   0x")+(Utils.ToHexString(array2[i][0]))+("L, ")
+				+("0x")
+				+(Utils.ToHexString(array2[i][1]))
+				+("L, ")
+				+("0x")
+				+(Utils.ToHexString(array2[i][2]))
+				+("L, ")
+				+("0x")
+				+(Utils.ToHexString(array2[i][3]))
+				+("L\n};")
 				.ToString();
 			if ((integer = (int)lohiByteTab.get(text)) == null)
 			{
 				allBitVectors.Add(text);
 				if (!AllBitsSet(text))
 				{
-					P_0.WriteLine(new StringBuilder().Append("static final long[] jjbitVec").Append(lohiByteCnt).Append(" = ")
-						.Append(text)
+					P_0.WriteLine(("static final long[] jjbitVec")+(lohiByteCnt)+(" = ")
+						+(text)
 						.ToString());
 				}
 				Hashtable hashtable2 = lohiByteTab;
@@ -2558,16 +2558,16 @@ public class NfaState
 				array2[i] = null;
 				continue;
 			}
-			string text2 = new StringBuilder().Append("{\n   0x").Append(Long.toHexString(array2[i][0])).Append("L, ")
-				.Append("0x")
-				.Append(Long.toHexString(array2[i][1]))
-				.Append("L, ")
-				.Append("0x")
-				.Append(Long.toHexString(array2[i][2]))
-				.Append("L, ")
-				.Append("0x")
-				.Append(Long.toHexString(array2[i][3]))
-				.Append("L\n};")
+			string text2 = ("{\n   0x")+(Utils.ToHexString(array2[i][0]))+("L, ")
+				+("0x")
+				+(Utils.ToHexString(array2[i][1]))
+				+("L, ")
+				+("0x")
+				+(Utils.ToHexString(array2[i][2]))
+				+("L, ")
+				+("0x")
+				+(Utils.ToHexString(array2[i][3]))
+				+("L\n};")
 				.ToString();
 			int obj9;
 			if ((obj9 = (int)lohiByteTab.get(text2)) == null)
@@ -2575,8 +2575,8 @@ public class NfaState
 				allBitVectors.Add(text2);
 				if (!AllBitsSet(text2))
 				{
-					P_0.WriteLine(new StringBuilder().Append("static final long[] jjbitVec").Append(lohiByteCnt).Append(" = ")
-						.Append(text2)
+					P_0.WriteLine(("static final long[] jjbitVec")+(lohiByteCnt)+(" = ")
+						+(text2)
 						.ToString());
 				}
 				Hashtable hashtable3 = lohiByteTab;
@@ -2670,7 +2670,7 @@ public class NfaState
 					P_0.Write(text);
 				}
 				array[nfaState.stateName] = true;
-				P_0.WriteLine(new StringBuilder().Append("               case ").Append(nfaState.stateName).Append(":")
+				P_0.WriteLine(("               case ")+(nfaState.stateName)+(":")
 					.ToString());
 				nfaState.DumpAsciiMove(P_0, P_1, array);
 			}
@@ -2721,7 +2721,7 @@ public class NfaState
 					pw.Write(text);
 				}
 				array[nfaState.stateName] = true;
-				pw.WriteLine(new StringBuilder().Append("               case ").Append(nfaState.stateName).Append(":")
+				pw.WriteLine(("               case ")+(nfaState.stateName)+(":")
 					.ToString());
 				nfaState.DumpNonAsciiMove(pw, array);
 			}
@@ -2754,14 +2754,14 @@ public class NfaState
 				int[] array = statesForState[i][j];
 				if (array == null)
 				{
-					pw.WriteLine(new StringBuilder().Append("   { ").Append(j).Append(" }, ")
+					pw.WriteLine(("   { ")+(j)+(" }, ")
 						.ToString());
 					continue;
 				}
 				pw.Write("   { ");
 				for (int k = 0; k < (nint)array.LongLength; k++)
 				{
-					pw.Write(new StringBuilder().Append(array[k]).Append(", ").ToString());
+					pw.Write((array[k])+(", ").ToString());
 				}
 				pw.WriteLine("},");
 			}
@@ -2904,7 +2904,7 @@ public class NfaState
 		while (num < P_0.Count)
 		{
 			int num2;
-			str = new StringBuilder().Append(str).Append(num2 = ((NfaState)P_0[num]).stateName).Append(", ")
+			str = (str)+(num2 = ((NfaState)P_0[num]).stateName)+(", ")
 				.ToString();
 			array[num] = num2;
 			int num3 = num;
@@ -2914,11 +2914,11 @@ public class NfaState
 				int num4 = num;
 				if (16 == -1 || num4 % 16 == 0)
 				{
-					str = new StringBuilder().Append(str).Append("\n").ToString();
+					str = (str)+("\n").ToString();
 				}
 			}
 		}
-		str = new StringBuilder().Append(str).Append("};").ToString();
+		str = (str)+("};").ToString();
 		allNextStates.Add(str, array);
 		return str;
 	}

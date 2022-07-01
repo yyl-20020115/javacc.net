@@ -223,51 +223,51 @@ public class ParseEngine : JavaCCGlobals
 		if (P_0 is RegularExpression)
 		{
 			RegularExpression regularExpression = (RegularExpression)P_0;
-			text = new StringBuilder().Append(text).Append("\n").ToString();
+			text = (text)+("\n").ToString();
 			if (regularExpression.lhsTokens.Count != 0)
 			{
 				JavaCCGlobals.printTokenSetup((Token)regularExpression.lhsTokens[0]);
 				foreach(t in regularExpression.lhsTokens)
 				{
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.printToken(t)).ToString();
+					text = (text)+(JavaCCGlobals.printToken(t)).ToString();
 				}
-				text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTrailingComments(t)).ToString();
-				text = new StringBuilder().Append(text).Append(" = ").ToString();
+				text = (text)+(JavaCCGlobals.printTrailingComments(t)).ToString();
+				text = (text)+(" = ").ToString();
 			}
-			string str = ((regularExpression.rhsToken != null) ? new StringBuilder().Append(").").Append(regularExpression.rhsToken.image).Append(";")
+			string str = ((regularExpression.rhsToken != null) ? (").")+(regularExpression.rhsToken.image)+(";")
 				.ToString() : ");");
 			if (string.Equals(regularExpression.label, ""))
 			{
 				Hashtable hashtable = JavaCCGlobals.names_of_tokens;
 				;
 				object obj = hashtable.get((regularExpression.ordinal));
-				text = ((obj == null) ? new StringBuilder().Append(text).Append("jj_consume_token(").Append(regularExpression.ordinal)
-					.Append(str)
-					.ToString() : new StringBuilder().Append(text).Append("jj_consume_token(").Append((string)obj)
-					.Append(str)
+				text = ((obj == null) ? (text)+("jj_consume_token(")+(regularExpression.ordinal)
+					+(str)
+					.ToString() : (text)+("jj_consume_token(")+((string)obj)
+					+(str)
 					.ToString());
 			}
 			else
 			{
-				text = new StringBuilder().Append(text).Append("jj_consume_token(").Append(regularExpression.label)
-					.Append(str)
+				text = (text)+("jj_consume_token(")+(regularExpression.label)
+					+(str)
 					.ToString();
 			}
 		}
 		else if (P_0 is NonTerminal)
 		{
 			NonTerminal nonTerminal = (NonTerminal)P_0;
-			text = new StringBuilder().Append(text).Append("\n").ToString();
+			text = (text)+("\n").ToString();
 			if (nonTerminal.lhsTokens.Count != 0)
 			{
 				foreach(Token t in nonTerminal.lhsTokens)
 				{
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.printToken(t)).ToString();
+					text = (text)+(JavaCCGlobals.printToken(t)).ToString();
 				}
-				text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTrailingComments(t)).ToString();
-				text = new StringBuilder().Append(text).Append(" = ").ToString();
+				text = (text)+(JavaCCGlobals.printTrailingComments(t)).ToString();
+				text = (text)+(" = ").ToString();
 			}
-			text = new StringBuilder().Append(text).Append(nonTerminal.name).Append("(")
+			text = (text)+(nonTerminal.name)+("(")
 				.ToString();
 			if (nonTerminal.argument_tokens.Count != 0)
 			{
@@ -276,16 +276,16 @@ public class ParseEngine : JavaCCGlobals
 				while (enumeration.hasMoreElements())
 				{
 					t = (Token)enumeration.nextElement();
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.printToken(t)).ToString();
+					text = (text)+(JavaCCGlobals.printToken(t)).ToString();
 				}
-				text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTrailingComments(t)).ToString();
+				text = (text)+(JavaCCGlobals.printTrailingComments(t)).ToString();
 			}
-			text = new StringBuilder().Append(text).Append(");").ToString();
+			text = (text)+(");").ToString();
 		}
 		else if (P_0 is Action)
 		{
 			Action action = (Action)P_0;
-			text = new StringBuilder().Append(text).Append("\u0003\n").ToString();
+			text = (text)+("\u0003\n").ToString();
 			if (action.action_tokens.Count != 0)
 			{
 				JavaCCGlobals.printTokenSetup((Token)action.action_tokens[0]);
@@ -294,11 +294,11 @@ public class ParseEngine : JavaCCGlobals
 				while (enumeration.hasMoreElements())
 				{
 					t = (Token)enumeration.nextElement();
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.printToken(t)).ToString();
+					text = (text)+(JavaCCGlobals.printToken(t)).ToString();
 				}
-				text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTrailingComments(t)).ToString();
+				text = (text)+(JavaCCGlobals.printTrailingComments(t)).ToString();
 			}
-			text = new StringBuilder().Append(text).Append("\u0004").ToString();
+			text = (text)+("\u0004").ToString();
 		}
 		else if (P_0 is Choice)
 		{
@@ -319,7 +319,7 @@ public class ParseEngine : JavaCCGlobals
 			Sequence sequence2 = (Sequence)P_0;
 			for (int j = 1; j < sequence2.units.Count; j++)
 			{
-				text = new StringBuilder().Append(text).Append(phase1ExpansionGen((Expansion)sequence2.units[j])).ToString();
+				text = (text)+(phase1ExpansionGen((Expansion)sequence2.units[j])).ToString();
 			}
 		}
 		else if (P_0 is OneOrMore)
@@ -337,22 +337,22 @@ public class ParseEngine : JavaCCGlobals
 				lookahead.amount = Options.getLookahead();
 				lookahead.la_expansion = expansion;
 			}
-			text = new StringBuilder().Append(text).Append("\n").ToString();
+			text = (text)+("\n").ToString();
 			int i2 = ++gensymindex;
-			text = new StringBuilder().Append(text).Append("label_").Append(i2)
-				.Append(":\n")
+			text = (text)+("label_")+(i2)
+				+(":\n")
 				.ToString();
-			text = new StringBuilder().Append(text).Append("while (true) {\u0001").ToString();
-			text = new StringBuilder().Append(text).Append(phase1ExpansionGen(expansion)).ToString();
+			text = (text)+("while (true) {\u0001").ToString();
+			text = (text)+(phase1ExpansionGen(expansion)).ToString();
 			Lookahead[] array = new Lookahead[1] { lookahead };
 			string[] array2 = new string[2]
 			{
 				"\n;",
-				new StringBuilder().Append("\nbreak label_").Append(i2).Append(";")
+				("\nbreak label_")+(i2)+(";")
 					.ToString()
 			};
-			text = new StringBuilder().Append(text).Append(buildLookaheadChecker(array, array2)).ToString();
-			text = new StringBuilder().Append(text).Append("\u0002\n}").ToString();
+			text = (text)+(buildLookaheadChecker(array, array2)).ToString();
+			text = (text)+("\u0002\n}").ToString();
 		}
 		else if (P_0 is ZeroOrMore)
 		{
@@ -369,22 +369,22 @@ public class ParseEngine : JavaCCGlobals
 				lookahead.amount = Options.getLookahead();
 				lookahead.la_expansion = expansion;
 			}
-			text = new StringBuilder().Append(text).Append("\n").ToString();
+			text = (text)+("\n").ToString();
 			int i2 = ++gensymindex;
-			text = new StringBuilder().Append(text).Append("label_").Append(i2)
-				.Append(":\n")
+			text = (text)+("label_")+(i2)
+				+(":\n")
 				.ToString();
-			text = new StringBuilder().Append(text).Append("while (true) {\u0001").ToString();
+			text = (text)+("while (true) {\u0001").ToString();
 			Lookahead[] array = new Lookahead[1] { lookahead };
 			string[] array2 = new string[2]
 			{
 				"\n;",
-				new StringBuilder().Append("\nbreak label_").Append(i2).Append(";")
+				("\nbreak label_")+(i2)+(";")
 					.ToString()
 			};
-			text = new StringBuilder().Append(text).Append(buildLookaheadChecker(array, array2)).ToString();
-			text = new StringBuilder().Append(text).Append(phase1ExpansionGen(expansion)).ToString();
-			text = new StringBuilder().Append(text).Append("\u0002\n}").ToString();
+			text = (text)+(buildLookaheadChecker(array, array2)).ToString();
+			text = (text)+(phase1ExpansionGen(expansion)).ToString();
+			text = (text)+("\u0002\n}").ToString();
 		}
 		else if (P_0 is ZeroOrOne)
 		{
@@ -407,19 +407,19 @@ public class ParseEngine : JavaCCGlobals
 				phase1ExpansionGen(expansion),
 				"\n;"
 			};
-			text = new StringBuilder().Append(text).Append(buildLookaheadChecker(array, array2)).ToString();
+			text = (text)+(buildLookaheadChecker(array, array2)).ToString();
 		}
 		else if (P_0 is TryBlock)
 		{
 			TryBlock tryBlock = (TryBlock)P_0;
 			Expansion expansion = tryBlock.exp;
-			text = new StringBuilder().Append(text).Append("\n").ToString();
-			text = new StringBuilder().Append(text).Append("try {\u0001").ToString();
-			text = new StringBuilder().Append(text).Append(phase1ExpansionGen(expansion)).ToString();
-			text = new StringBuilder().Append(text).Append("\u0002\n}").ToString();
+			text = (text)+("\n").ToString();
+			text = (text)+("try {\u0001").ToString();
+			text = (text)+(phase1ExpansionGen(expansion)).ToString();
+			text = (text)+("\u0002\n}").ToString();
 			for (int i2 = 0; i2 < tryBlock.catchblks.Count; i2++)
 			{
-				text = new StringBuilder().Append(text).Append(" catch (").ToString();
+				text = (text)+(" catch (").ToString();
 				ArrayList vector = (ArrayList)tryBlock.types[i2];
 				if (vector.Count != 0)
 				{
@@ -428,16 +428,16 @@ public class ParseEngine : JavaCCGlobals
 					while (enumeration2.hasMoreElements())
 					{
 						t = (Token)enumeration2.nextElement();
-						text = new StringBuilder().Append(text).Append(JavaCCGlobals.printToken(t)).ToString();
+						text = (text)+(JavaCCGlobals.printToken(t)).ToString();
 					}
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTrailingComments(t)).ToString();
+					text = (text)+(JavaCCGlobals.printTrailingComments(t)).ToString();
 				}
 				text += " ";
 				t = (Token)tryBlock.ids[i2];
 				JavaCCGlobals.printTokenSetup(t);
-				text = new StringBuilder().Append(text).Append(JavaCCGlobals.printToken(t)).ToString();
-				text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTrailingComments(t)).ToString();
-				text = new StringBuilder().Append(text).Append(") {\u0003\n").ToString();
+				text = (text)+(JavaCCGlobals.printToken(t)).ToString();
+				text = (text)+(JavaCCGlobals.printTrailingComments(t)).ToString();
+				text = (text)+(") {\u0003\n").ToString();
 				vector = (ArrayList)tryBlock.catchblks[i2];
 				if (vector.Count != 0)
 				{
@@ -447,15 +447,15 @@ public class ParseEngine : JavaCCGlobals
 					while (enumeration2.hasMoreElements())
 					{
 						t = (Token)enumeration2.nextElement();
-						text = new StringBuilder().Append(text).Append(JavaCCGlobals.printToken(t)).ToString();
+						text = (text)+(JavaCCGlobals.printToken(t)).ToString();
 					}
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTrailingComments(t)).ToString();
+					text = (text)+(JavaCCGlobals.printTrailingComments(t)).ToString();
 				}
-				text = new StringBuilder().Append(text).Append("\u0004\n}").ToString();
+				text = (text)+("\u0004\n}").ToString();
 			}
 			if (tryBlock.finallyblk != null)
 			{
-				text = new StringBuilder().Append(text).Append(" finally {\u0003\n").ToString();
+				text = (text)+(" finally {\u0003\n").ToString();
 				if (tryBlock.finallyblk.Count != 0)
 				{
 					JavaCCGlobals.printTokenSetup((Token)tryBlock.finallyblk[0]);
@@ -464,11 +464,11 @@ public class ParseEngine : JavaCCGlobals
 					while (enumeration3.hasMoreElements())
 					{
 						t = (Token)enumeration3.nextElement();
-						text = new StringBuilder().Append(text).Append(JavaCCGlobals.printToken(t)).ToString();
+						text = (text)+(JavaCCGlobals.printToken(t)).ToString();
 					}
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTrailingComments(t)).ToString();
+					text = (text)+(JavaCCGlobals.printTrailingComments(t)).ToString();
 				}
-				text = new StringBuilder().Append(text).Append("\u0004\n}").ToString();
+				text = (text)+("\u0004\n}").ToString();
 			}
 		}
 		return text;
@@ -543,23 +543,23 @@ public class ParseEngine : JavaCCGlobals
 				switch (num)
 				{
 				case 0:
-					text = new StringBuilder().Append(text).Append("\nif (").ToString();
+					text = (text)+("\nif (").ToString();
 					num2++;
 					break;
 				case 1:
-					text = new StringBuilder().Append(text).Append("\u0002\n} else if (").ToString();
+					text = (text)+("\u0002\n} else if (").ToString();
 					break;
 				case 2:
-					text = new StringBuilder().Append(text).Append("\u0002\ndefault:\u0001").ToString();
+					text = (text)+("\u0002\ndefault:\u0001").ToString();
 					if (Options.getErrorReporting())
 					{
-						text = new StringBuilder().Append(text).Append("\njj_la1[").Append(JavaCCGlobals.maskindex)
-							.Append("] = jj_gen;")
+						text = (text)+("\njj_la1[")+(JavaCCGlobals.maskindex)
+							+("] = jj_gen;")
 							.ToString();
 						JavaCCGlobals.maskindex++;
 					}
 					JavaCCGlobals.maskVals.Add(array2);
-					text = new StringBuilder().Append(text).Append("\nif (").ToString();
+					text = (text)+("\nif (").ToString();
 					num2++;
 					break;
 				}
@@ -568,10 +568,10 @@ public class ParseEngine : JavaCCGlobals
 				while (enumeration.hasMoreElements())
 				{
 					t = (Token)enumeration.nextElement();
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.printToken(t)).ToString();
+					text = (text)+(JavaCCGlobals.printToken(t)).ToString();
 				}
-				text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTrailingComments(t)).ToString();
-				text = new StringBuilder().Append(text).Append(") {\u0001").Append(P_1[num4])
+				text = (text)+(JavaCCGlobals.printTrailingComments(t)).ToString();
+				text = (text)+(") {\u0001")+(P_1[num4])
 					.ToString();
 				num = 1;
 			}
@@ -595,10 +595,10 @@ public class ParseEngine : JavaCCGlobals
 						{
 							goto IL_0335;
 						}
-						text = new StringBuilder().Append(text).Append("\u0002\n} else {\u0001").ToString();
+						text = (text)+("\u0002\n} else {\u0001").ToString();
 					}
-					text = new StringBuilder().Append(text).Append("\nswitch (").ToString();
-					text = ((!Options.getCacheTokens()) ? new StringBuilder().Append(text).Append("(jj_ntk==-1)?jj_ntk():jj_ntk) {\u0001").ToString() : new StringBuilder().Append(text).Append("jj_nt.kind) {\u0001").ToString());
+					text = (text)+("\nswitch (").ToString();
+					text = ((!Options.getCacheTokens()) ? (text)+("(jj_ntk==-1)?jj_ntk():jj_ntk) {\u0001").ToString() : (text)+("jj_nt.kind) {\u0001").ToString());
 					for (int i = 0; i < JavaCCGlobals.tokenCount; i++)
 					{
 						array[i] = false;
@@ -623,7 +623,7 @@ public class ParseEngine : JavaCCGlobals
 				if (firstSet[i] && !array[i])
 				{
 					array[i] = true;
-					text = new StringBuilder().Append(text).Append("\u0002\ncase ").ToString();
+					text = (text)+("\u0002\ncase ").ToString();
 					int num6 = i / 32;
 					int num7 = i;
 					int num8 = ((32 != -1) ? (num7 % 32) : 0);
@@ -632,12 +632,12 @@ public class ParseEngine : JavaCCGlobals
 					int[] array4 = array3;
 					array4[num9] |= 1 << num8;
 					string text2 = (string)JavaCCGlobals.names_of_tokens.get(new int(i));
-					text = ((text2 != null) ? new StringBuilder().Append(text).Append(text2).ToString() : new StringBuilder().Append(text).Append(i).ToString());
-					text = new StringBuilder().Append(text).Append(":\u0001").ToString();
+					text = ((text2 != null) ? (text)+(text2).ToString() : (text)+(i).ToString());
+					text = (text)+(":\u0001").ToString();
 				}
 			}
-			text = new StringBuilder().Append(text).Append(P_1[num4]).ToString();
-			text = new StringBuilder().Append(text).Append("\nbreak;").ToString();
+			text = (text)+(P_1[num4]).ToString();
+			text = (text)+("\nbreak;").ToString();
 			num = 2;
 			goto IL_0463;
 			IL_0463:
@@ -646,48 +646,48 @@ public class ParseEngine : JavaCCGlobals
 				switch (num)
 				{
 				case 0:
-					text = new StringBuilder().Append(text).Append("\nif (").ToString();
+					text = (text)+("\nif (").ToString();
 					num2++;
 					break;
 				case 1:
-					text = new StringBuilder().Append(text).Append("\u0002\n} else if (").ToString();
+					text = (text)+("\u0002\n} else if (").ToString();
 					break;
 				case 2:
-					text = new StringBuilder().Append(text).Append("\u0002\ndefault:\u0001").ToString();
+					text = (text)+("\u0002\ndefault:\u0001").ToString();
 					if (Options.getErrorReporting())
 					{
-						text = new StringBuilder().Append(text).Append("\njj_la1[").Append(JavaCCGlobals.maskindex)
-							.Append("] = jj_gen;")
+						text = (text)+("\njj_la1[")+(JavaCCGlobals.maskindex)
+							+("] = jj_gen;")
 							.ToString();
 						JavaCCGlobals.maskindex++;
 					}
 					JavaCCGlobals.maskVals.Add(array2);
-					text = new StringBuilder().Append(text).Append("\nif (").ToString();
+					text = (text)+("\nif (").ToString();
 					num2++;
 					break;
 				}
 				JavaCCGlobals.jj2index++;
-				lookahead.la_expansion.internal_name = new StringBuilder().Append("_").Append(JavaCCGlobals.jj2index).ToString();
+				lookahead.la_expansion.internal_name = ("_")+(JavaCCGlobals.jj2index).ToString();
 				phase2list.Add(lookahead);
-				text = new StringBuilder().Append(text).Append("jj_2").Append(lookahead.la_expansion.internal_name)
-					.Append("(")
-					.Append(lookahead.amount)
-					.Append(")")
+				text = (text)+("jj_2")+(lookahead.la_expansion.internal_name)
+					+("(")
+					+(lookahead.amount)
+					+(")")
 					.ToString();
 				if (lookahead.action_tokens.Count != 0)
 				{
-					text = new StringBuilder().Append(text).Append(" && (").ToString();
+					text = (text)+(" && (").ToString();
 					JavaCCGlobals.printTokenSetup((Token)lookahead.action_tokens[0]);
 					Enumeration enumeration = lookahead.action_tokens.elements();
 					while (enumeration.hasMoreElements())
 					{
 						t = (Token)enumeration.nextElement();
-						text = new StringBuilder().Append(text).Append(JavaCCGlobals.printToken(t)).ToString();
+						text = (text)+(JavaCCGlobals.printToken(t)).ToString();
 					}
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTrailingComments(t)).ToString();
-					text = new StringBuilder().Append(text).Append(")").ToString();
+					text = (text)+(JavaCCGlobals.printTrailingComments(t)).ToString();
+					text = (text)+(")").ToString();
 				}
-				text = new StringBuilder().Append(text).Append(") {\u0001").Append(P_1[num4])
+				text = (text)+(") {\u0001")+(P_1[num4])
 					.ToString();
 				num = 1;
 			}
@@ -695,28 +695,28 @@ public class ParseEngine : JavaCCGlobals
 		switch (num)
 		{
 		case 0:
-			text = new StringBuilder().Append(text).Append(P_1[num4]).ToString();
+			text = (text)+(P_1[num4]).ToString();
 			break;
 		case 1:
-			text = new StringBuilder().Append(text).Append("\u0002\n} else {\u0001").Append(P_1[num4])
+			text = (text)+("\u0002\n} else {\u0001")+(P_1[num4])
 				.ToString();
 			break;
 		case 2:
-			text = new StringBuilder().Append(text).Append("\u0002\ndefault:\u0001").ToString();
+			text = (text)+("\u0002\ndefault:\u0001").ToString();
 			if (Options.getErrorReporting())
 			{
-				text = new StringBuilder().Append(text).Append("\njj_la1[").Append(JavaCCGlobals.maskindex)
-					.Append("] = jj_gen;")
+				text = (text)+("\njj_la1[")+(JavaCCGlobals.maskindex)
+					+("] = jj_gen;")
 					.ToString();
 				JavaCCGlobals.maskVals.Add(array2);
 				JavaCCGlobals.maskindex++;
 			}
-			text = new StringBuilder().Append(text).Append(P_1[num4]).ToString();
+			text = (text)+(P_1[num4]).ToString();
 			break;
 		}
 		for (int i = 0; i < num2; i++)
 		{
-			text = new StringBuilder().Append(text).Append("\u0002\n}").ToString();
+			text = (text)+("\u0002\n}").ToString();
 		}
 		return text;
 	}
@@ -748,12 +748,12 @@ public class ParseEngine : JavaCCGlobals
 			}
 			if (expansion is RegularExpression)
 			{
-				P_0.internal_name = new StringBuilder().Append("jj_scan_token(").Append(((RegularExpression)expansion).ordinal).Append(")")
+				P_0.internal_name = ("jj_scan_token(")+(((RegularExpression)expansion).ordinal)+(")")
 					.ToString();
 				return;
 			}
 			gensymindex++;
-			P_0.internal_name = new StringBuilder().Append("R_").Append(gensymindex).ToString();
+			P_0.internal_name = ("R_")+(gensymindex).ToString();
 		}
 		Phase3Data phase3Data = (Phase3Data)phase3table.get(P_0);
 		if (phase3Data == null || phase3Data.count < P_1.count)
@@ -840,22 +840,22 @@ public class ParseEngine : JavaCCGlobals
 		string str = ((!P_0) ? "false" : "true");
 		if (Options.getDebugLookahead() && jj3_expansion != null)
 		{
-			string str2 = new StringBuilder().Append("trace_return(\"").Append(((NormalProduction)jj3_expansion.parent).lhs).Append("(LOOKAHEAD ")
-				.Append((!P_0) ? "SUCCEEDED" : "FAILED")
-				.Append(")\");")
+			string str2 = ("trace_return(\"")+(((NormalProduction)jj3_expansion.parent).lhs)+("(LOOKAHEAD ")
+				+((!P_0) ? "SUCCEEDED" : "FAILED")
+				+(")\");")
 				.ToString();
 			if (Options.getErrorReporting())
 			{
-				str2 = new StringBuilder().Append("if (!jj_rescan) ").Append(str2).ToString();
+				str2 = ("if (!jj_rescan) ")+(str2).ToString();
 			}
-			string result = new StringBuilder().Append("{ ").Append(str2).Append(" return ")
-				.Append(str)
-				.Append("; }")
+			string result = ("{ ")+(str2)+(" return ")
+				+(str)
+				+("; }")
 				.ToString();
 			
 			return result;
 		}
-		string result2 = new StringBuilder().Append("return ").Append(str).Append(";")
+		string result2 = ("return ")+(str)+(";")
 			.ToString();
 		
 		return result2;
@@ -868,7 +868,7 @@ public class ParseEngine : JavaCCGlobals
 		{
 			return P_0.internal_name;
 		}
-		string result = new StringBuilder().Append("jj_3").Append(P_0.internal_name).Append("()")
+		string result = ("jj_3")+(P_0.internal_name)+("()")
 			.ToString();
 		
 		return result;
@@ -885,9 +885,9 @@ public class ParseEngine : JavaCCGlobals
 		}
 		if (!P_1)
 		{
-			ostr.WriteLine(new StringBuilder().Append("  ").Append(JavaCCGlobals.staticOpt()).Append("private boolean jj_3")
-				.Append(exp.internal_name)
-				.Append("() {")
+			ostr.WriteLine(("  ")+(JavaCCGlobals.staticOpt())+("private boolean jj_3")
+				+(exp.internal_name)
+				+("() {")
 				.ToString());
 			xsp_declared = false;
 			if (Options.getDebugLookahead() && exp.parent is NormalProduction)
@@ -897,7 +897,7 @@ public class ParseEngine : JavaCCGlobals
 				{
 					ostr.Write("if (!jj_rescan) ");
 				}
-				ostr.WriteLine(new StringBuilder().Append("trace_call(\"").Append(((NormalProduction)exp.parent).lhs).Append("(LOOKING AHEAD...)\");")
+				ostr.WriteLine(("trace_call(\"")+(((NormalProduction)exp.parent).lhs)+("(LOOKING AHEAD...)\");")
 					.ToString());
 				jj3_expansion = exp;
 			}
@@ -916,21 +916,21 @@ public class ParseEngine : JavaCCGlobals
 				object obj = hashtable.get(new int(regularExpression.ordinal));
 				if (obj != null)
 				{
-					ostr.WriteLine(new StringBuilder().Append("    if (jj_scan_token(").Append((string)obj).Append(")) ")
-						.Append(genReturn(true))
+					ostr.WriteLine(("    if (jj_scan_token(")+((string)obj)+(")) ")
+						+(genReturn(true))
 						.ToString());
 				}
 				else
 				{
-					ostr.WriteLine(new StringBuilder().Append("    if (jj_scan_token(").Append(regularExpression.ordinal).Append(")) ")
-						.Append(genReturn(true))
+					ostr.WriteLine(("    if (jj_scan_token(")+(regularExpression.ordinal)+(")) ")
+						+(genReturn(true))
 						.ToString());
 				}
 			}
 			else
 			{
-				ostr.WriteLine(new StringBuilder().Append("    if (jj_scan_token(").Append(regularExpression.label).Append(")) ")
-					.Append(genReturn(true))
+				ostr.WriteLine(("    if (jj_scan_token(")+(regularExpression.label)+(")) ")
+					+(genReturn(true))
 					.ToString());
 			}
 		}
@@ -940,14 +940,14 @@ public class ParseEngine : JavaCCGlobals
 			NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.production_table.get(nonTerminal.name);
 			if (normalProduction is JavaCodeProduction)
 			{
-				ostr.WriteLine(new StringBuilder().Append("    if (true) { jj_la = 0; jj_scanpos = jj_lastpos; ").Append(genReturn(false)).Append("}")
+				ostr.WriteLine(("    if (true) { jj_la = 0; jj_scanpos = jj_lastpos; ")+(genReturn(false))+("}")
 					.ToString());
 			}
 			else
 			{
 				Expansion expansion = normalProduction.Expansion;
-				ostr.WriteLine(new StringBuilder().Append("    if (").Append(genjj_3Call(expansion)).Append(") ")
-					.Append(genReturn(true))
+				ostr.WriteLine(("    if (")+(genjj_3Call(expansion))+(") ")
+					+(genReturn(true))
 					.ToString());
 			}
 		}
@@ -989,12 +989,12 @@ public class ParseEngine : JavaCCGlobals
 				}
 				if (i != choice.Choices.Count - 1)
 				{
-					ostr.WriteLine(new StringBuilder().Append(genjj_3Call(sequence)).Append(") {").ToString());
+					ostr.WriteLine((genjj_3Call(sequence))+(") {").ToString());
 					ostr.WriteLine("    jj_scanpos = xsp;");
 				}
 				else
 				{
-					ostr.WriteLine(new StringBuilder().Append(genjj_3Call(sequence)).Append(") ").Append(genReturn(true))
+					ostr.WriteLine((genjj_3Call(sequence))+(") ")+(genReturn(true))
 						.ToString());
 				}
 			}
@@ -1032,12 +1032,12 @@ public class ParseEngine : JavaCCGlobals
 			}
 			OneOrMore oneOrMore = (OneOrMore)exp;
 			Expansion expansion3 = oneOrMore.expansion;
-			ostr.WriteLine(new StringBuilder().Append("    if (").Append(genjj_3Call(expansion3)).Append(") ")
-				.Append(genReturn(true))
+			ostr.WriteLine(("    if (")+(genjj_3Call(expansion3))+(") ")
+				+(genReturn(true))
 				.ToString());
 			ostr.WriteLine("    while (true) {");
 			ostr.WriteLine("      xsp = jj_scanpos;");
-			ostr.WriteLine(new StringBuilder().Append("      if (").Append(genjj_3Call(expansion3)).Append(") { jj_scanpos = xsp; break; }")
+			ostr.WriteLine(("      if (")+(genjj_3Call(expansion3))+(") { jj_scanpos = xsp; break; }")
 				.ToString());
 			ostr.WriteLine("    }");
 		}
@@ -1052,7 +1052,7 @@ public class ParseEngine : JavaCCGlobals
 			Expansion expansion3 = zeroOrMore.expansion;
 			ostr.WriteLine("    while (true) {");
 			ostr.WriteLine("      xsp = jj_scanpos;");
-			ostr.WriteLine(new StringBuilder().Append("      if (").Append(genjj_3Call(expansion3)).Append(") { jj_scanpos = xsp; break; }")
+			ostr.WriteLine(("      if (")+(genjj_3Call(expansion3))+(") { jj_scanpos = xsp; break; }")
 				.ToString());
 			ostr.WriteLine("    }");
 		}
@@ -1066,12 +1066,12 @@ public class ParseEngine : JavaCCGlobals
 			ZeroOrOne zeroOrOne = (ZeroOrOne)exp;
 			Expansion expansion3 = zeroOrOne.expansion;
 			ostr.WriteLine("    xsp = jj_scanpos;");
-			ostr.WriteLine(new StringBuilder().Append("    if (").Append(genjj_3Call(expansion3)).Append(") jj_scanpos = xsp;")
+			ostr.WriteLine(("    if (")+(genjj_3Call(expansion3))+(") jj_scanpos = xsp;")
 				.ToString());
 		}
 		if (!P_1)
 		{
-			ostr.WriteLine(new StringBuilder().Append("    ").Append(genReturn(false)).ToString());
+			ostr.WriteLine(("    ")+(genReturn(false)).ToString());
 			ostr.WriteLine("  }");
 			ostr.WriteLine("");
 		}
@@ -1184,9 +1184,9 @@ public class ParseEngine : JavaCCGlobals
 		JavaCCGlobals.printTokenSetup(token);
 		JavaCCGlobals.ccol = 1;
 		JavaCCGlobals.printLeadingComments(token, ostr);
-		ostr.Write(new StringBuilder().Append("  ").Append(JavaCCGlobals.staticOpt()).Append("final ")
-			.Append((P_0.accessMod == null) ? "public" : P_0.accessMod)
-			.Append(" ")
+		ostr.Write(("  ")+(JavaCCGlobals.staticOpt())+("final ")
+			+((P_0.accessMod == null) ? "public" : P_0.accessMod)
+			+(" ")
 			.ToString());
 		JavaCCGlobals.cline = token.BeginLine;
 		JavaCCGlobals.ccol = token.BeginColumn;
@@ -1197,7 +1197,7 @@ public class ParseEngine : JavaCCGlobals
 			JavaCCGlobals.printToken(token, ostr);
 		}
 		JavaCCGlobals.printTrailingComments(token, ostr);
-		ostr.Write(new StringBuilder().Append(" ").Append(P_0.lhs).Append("(")
+		ostr.Write((" ")+(P_0.lhs)+("(")
 			.ToString());
 		Enumeration enumeration;
 		if (P_0.parameter_list_tokens.Count != 0)
@@ -1229,7 +1229,7 @@ public class ParseEngine : JavaCCGlobals
 		if (Options.getDebugParser())
 		{
 			ostr.WriteLine("");
-			ostr.WriteLine(new StringBuilder().Append("    trace_call(\"").Append(P_0.lhs).Append("\");")
+			ostr.WriteLine(("    trace_call(\"")+(P_0.lhs)+("\");")
 				.ToString());
 			ostr.Write("    try {");
 			indentamt = 6;
@@ -1256,7 +1256,7 @@ public class ParseEngine : JavaCCGlobals
 		if (Options.getDebugParser())
 		{
 			ostr.WriteLine("    } finally {");
-			ostr.WriteLine(new StringBuilder().Append("      trace_return(\"").Append(P_0.lhs).Append("\");")
+			ostr.WriteLine(("      trace_return(\"")+(P_0.lhs)+("\");")
 				.ToString());
 			ostr.WriteLine("    }");
 		}
@@ -1268,17 +1268,17 @@ public class ParseEngine : JavaCCGlobals
 	internal static void buildPhase2Routine(Lookahead P_0)
 	{
 		Expansion la_expansion = P_0.la_expansion;
-		ostr.WriteLine(new StringBuilder().Append("  ").Append(JavaCCGlobals.staticOpt()).Append("private boolean jj_2")
-			.Append(la_expansion.internal_name)
-			.Append("(int xla) {")
+		ostr.WriteLine(("  ")+(JavaCCGlobals.staticOpt())+("private boolean jj_2")
+			+(la_expansion.internal_name)
+			+("(int xla) {")
 			.ToString());
 		ostr.WriteLine("    jj_la = xla; jj_lastpos = jj_scanpos = token;");
-		ostr.WriteLine(new StringBuilder().Append("    try { return !jj_3").Append(la_expansion.internal_name).Append("(); }")
+		ostr.WriteLine(("    try { return !jj_3")+(la_expansion.internal_name)+("(); }")
 			.ToString());
 		ostr.WriteLine("    catch(LookaheadSuccess ls) { return true; }");
 		if (Options.getErrorReporting())
 		{
-			ostr.WriteLine(new StringBuilder().Append("    finally { jj_save(").Append(int.parseInt(String.instancehelper_substring(la_expansion.internal_name, 1)) - 1).Append(", xla); }")
+			ostr.WriteLine(("    finally { jj_save(")+(int.parseInt(String.instancehelper_substring(la_expansion.internal_name, 1)) - 1)+(", xla); }")
 				.ToString());
 		}
 		ostr.WriteLine("  }");
@@ -1298,7 +1298,7 @@ public class ParseEngine : JavaCCGlobals
 	{
 		for (int i = 0; i < (nint)P_0.LongLength; i++)
 		{
-			Console.Error.WriteLine(new StringBuilder().Append("Lookahead: ").Append(i).ToString());
+			Console.Error.WriteLine(("Lookahead: ")+(i).ToString());
 			Console.Error.WriteLine(P_0[i].Dump(0, new()));
 			Console.Error.WriteLine();
 		}
@@ -1321,7 +1321,7 @@ public class ParseEngine : JavaCCGlobals
 				JavaCCGlobals.printTokenSetup(token);
 				JavaCCGlobals.ccol = 1;
 				JavaCCGlobals.printLeadingComments(token, ostr);
-				ostr.Write(new StringBuilder().Append("  ").Append(JavaCCGlobals.staticOpt()).Append((normalProduction.accessMod == null) ? "" : new StringBuilder().Append(normalProduction.accessMod).Append(" ").ToString())
+				ostr.Write(("  ")+(JavaCCGlobals.staticOpt())+((normalProduction.accessMod == null) ? "" : (normalProduction.accessMod)+(" ").ToString())
 					.ToString());
 				JavaCCGlobals.cline = token.BeginLine;
 				JavaCCGlobals.ccol = token.BeginColumn;
@@ -1332,7 +1332,7 @@ public class ParseEngine : JavaCCGlobals
 					JavaCCGlobals.printToken(token, ostr);
 				}
 				JavaCCGlobals.printTrailingComments(token, ostr);
-				ostr.Write(new StringBuilder().Append(" ").Append(javaCodeProduction.lhs).Append("(")
+				ostr.Write((" ")+(javaCodeProduction.lhs)+("(")
 					.ToString());
 				if (javaCodeProduction.parameter_list_tokens.Count != 0)
 				{
@@ -1362,7 +1362,7 @@ public class ParseEngine : JavaCCGlobals
 				if (Options.getDebugParser())
 				{
 					ostr.WriteLine("");
-					ostr.WriteLine(new StringBuilder().Append("    trace_call(\"").Append(javaCodeProduction.lhs).Append("\");")
+					ostr.WriteLine(("    trace_call(\"")+(javaCodeProduction.lhs)+("\");")
 						.ToString());
 					ostr.Write("    try {");
 				}
@@ -1380,7 +1380,7 @@ public class ParseEngine : JavaCCGlobals
 				if (Options.getDebugParser())
 				{
 					ostr.WriteLine("    } finally {");
-					ostr.WriteLine(new StringBuilder().Append("      trace_return(\"").Append(javaCodeProduction.lhs).Append("\");")
+					ostr.WriteLine(("      trace_return(\"")+(javaCodeProduction.lhs)+("\");")
 						.ToString());
 					ostr.WriteLine("    }");
 				}

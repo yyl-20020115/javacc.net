@@ -46,7 +46,7 @@ public static class EntryPoint
 		Console.WriteLine("(type \"javacc\" with no arguments for help)");
 		if (Options.IsOption(strarr[strarr.Length - 1]))
 		{
-			Console.WriteLine(new StringBuilder().Append("Last argument \"").Append(strarr[strarr.Length - 1]).Append("\" is not a filename.")
+			Console.WriteLine(("Last argument \"")+(strarr[strarr.Length - 1])+("\" is not a filename.")
 				.ToString());
 			return 1;
 		}
@@ -54,7 +54,7 @@ public static class EntryPoint
 		{
 			if (!Options.IsOption(strarr[i]))
 			{
-				Console.WriteLine(new StringBuilder().Append("Argument \"").Append(strarr[i]).Append("\" must be an option setting.")
+				Console.WriteLine(("Argument \"")+(strarr[i])+("\" must be an option setting.")
 					.ToString());
 				return 1;
 			}
@@ -69,14 +69,14 @@ public static class EntryPoint
 				FileInfo file = new FileInfo(strarr[strarr.Length - 1]);
 				if (!file.Exists)
 				{
-					Console.WriteLine(new StringBuilder().Append("File ").Append(strarr[strarr.Length - 1]).Append(" not found.")
+					Console.WriteLine(("File ")+(strarr[strarr.Length - 1])+(" not found.")
 						.ToString());
 					return 1;
 				}
 				DirectoryInfo di = new DirectoryInfo(strarr[strarr.Length - 1]);
 				if (di.Exists)
 				{
-					Console.WriteLine(new StringBuilder().Append(strarr[strarr.Length - 1]).Append(" is a directory. Please use a valid file name.").ToString());
+					Console.WriteLine((strarr[strarr.Length - 1])+(" is a directory. Please use a valid file name.").ToString());
 					return 1;
 				}
 				javaCCParser = new JavaCCParser(new StreamReader(strarr[strarr.Length - 1]));
@@ -95,7 +95,7 @@ public static class EntryPoint
 		{
 			try
 			{
-				Console.WriteLine(new StringBuilder().Append("Reading from file ").Append(strarr[strarr.Length - 1]).Append(" . . .")
+				Console.WriteLine(("Reading from file ")+(strarr[strarr.Length - 1])+(" . . .")
 					.ToString());
 				JavaCCGlobals.fileName = (JavaCCGlobals.origFileName = strarr[strarr.Length - 1]);
 				JavaCCGlobals.jjtreeGenerated = JavaCCGlobals.isGeneratedBy("JJTree", strarr[strarr.Length - 1]);
@@ -119,14 +119,14 @@ public static class EntryPoint
 					}
 					else
 					{
-						Console.WriteLine(new StringBuilder().Append("Parser generated with 0 errors and ").Append(JavaCCErrors._Warning_Count).Append(" warnings.")
+						Console.WriteLine(("Parser generated with 0 errors and ")+(JavaCCErrors._Warning_Count)+(" warnings.")
 							.ToString());
 					}
 					return 0;
 				}
-				Console.WriteLine(new StringBuilder().Append("Detected ").Append(JavaCCErrors._Error_Count).Append(" errors and ")
-					.Append(JavaCCErrors._Warning_Count)
-					.Append(" warnings.")
+				Console.WriteLine(("Detected ")+(JavaCCErrors._Error_Count)+(" errors and ")
+					+(JavaCCErrors._Warning_Count)
+					+(" warnings.")
 					.ToString());
 				return (JavaCCErrors._Error_Count != 0) ? 1 : 0;
 			}
@@ -140,27 +140,27 @@ public static class EntryPoint
 			goto IL_0361;
 		}
 
-		Console.WriteLine(new StringBuilder().Append("Detected ").Append(JavaCCErrors._Error_Count).Append(" errors and ")
-			.Append(JavaCCErrors._Warning_Count)
-			.Append(" warnings.")
+		Console.WriteLine(("Detected ")+(JavaCCErrors._Error_Count)+(" errors and ")
+			+(JavaCCErrors._Warning_Count)
+			+(" warnings.")
 			.ToString());
 		return 1;
 	IL_0361:
 		ParseException @this = ex4;
 		Console.WriteLine((@this.ToString()));
-		Console.WriteLine(new StringBuilder().Append("Detected ").Append(JavaCCErrors._Error_Count + 1).Append(" errors and ")
-			.Append(JavaCCErrors._Warning_Count)
-			.Append(" warnings.")
+		Console.WriteLine(("Detected ")+(JavaCCErrors._Error_Count + 1)+(" errors and ")
+			+(JavaCCErrors._Warning_Count)
+			+(" warnings.")
 			.ToString());
 		return 1;
 	IL_0180:
 
-		Console.WriteLine(new StringBuilder().Append("File ").Append(strarr[strarr.Length - 1]).Append(" not found.")
+		Console.WriteLine(("File ")+(strarr[strarr.Length - 1])+(" not found.")
 			.ToString());
 		return 1;
 	IL_017d:
 
-		Console.WriteLine(new StringBuilder().Append("Security violation while trying to open ").Append(strarr[strarr.Length - 1]).ToString());
+		Console.WriteLine(("Security violation while trying to open ")+(strarr[strarr.Length - 1]).ToString());
 		return 1;
 	}
 

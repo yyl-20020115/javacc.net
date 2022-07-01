@@ -2991,7 +2991,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
 	{
 		if (i >= 5 || i < 0)
 		{
-			string str = new StringBuilder().Append("Error: Ignoring invalid lexical state : ").Append(i).Append(". State unchanged.")
+			string str = ("Error: Ignoring invalid lexical state : ")+(i)+(". State unchanged.")
 				.ToString();
 			
 			throw new TokenMgrError(str, 2);
@@ -3444,7 +3444,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
 			{
 				image = new StringBuilder();
 			}
-			image.Append(input_stream.GetSuffix(jjimageLen));
+				image.Append (input_stream.GetSuffix(jjimageLen));
 			jjimageLen = 0;
 			input_stream.backup(1);
 			break;

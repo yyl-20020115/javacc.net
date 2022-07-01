@@ -56,9 +56,9 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 	{
 		if (!string.Equals(str2, str1))
 		{
-			JavaCCErrors.Parse_Error(t, new StringBuilder().Append("Name ").Append(str2).Append(" must be the same as that used at PARSER_BEGIN (")
-				.Append(str1)
-				.Append(")")
+			JavaCCErrors.Parse_Error(t, ("Name ")+(str2)+(" must be the same as that used at PARSER_BEGIN (")
+				+(str1)
+				+(")")
 				.ToString());
 		}
 	}
@@ -141,7 +141,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 			{
 				if (string.Equals(tp.LexStates[i], tp.LexStates[j]))
 				{
-					JavaCCErrors.Parse_Error(tp, new StringBuilder().Append("Multiple occurrence of \"").Append(tp.LexStates[i]).Append("\" in lexical state list.")
+					JavaCCErrors.Parse_Error(tp, ("Multiple occurrence of \"")+(tp.LexStates[i])+("\" in lexical state list.")
 						.ToString());
 				}
 			}
@@ -199,7 +199,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 		{
 			if (str[num] != '\\')
 			{
-				text = new StringBuilder().Append(text).Append(str[num]).ToString();
+				text = (text)+(str[num]).ToString();
 				num++;
 				continue;
 			}
@@ -208,35 +208,35 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 			switch (num2)
 			{
 			case 98:
-				text = new StringBuilder().Append(text).Append('\b').ToString();
+				text = (text)+('\b').ToString();
 				num++;
 				continue;
 			case 116:
-				text = new StringBuilder().Append(text).Append('\t').ToString();
+				text = (text)+('\t').ToString();
 				num++;
 				continue;
 			case 110:
-				text = new StringBuilder().Append(text).Append('\n').ToString();
+				text = (text)+('\n').ToString();
 				num++;
 				continue;
 			case 102:
-				text = new StringBuilder().Append(text).Append('\f').ToString();
+				text = (text)+('\f').ToString();
 				num++;
 				continue;
 			case 114:
-				text = new StringBuilder().Append(text).Append('\r').ToString();
+				text = (text)+('\r').ToString();
 				num++;
 				continue;
 			case 34:
-				text = new StringBuilder().Append(text).Append('"').ToString();
+				text = (text)+('"').ToString();
 				num++;
 				continue;
 			case 39:
-				text = new StringBuilder().Append(text).Append('\'').ToString();
+				text = (text)+('\'').ToString();
 				num++;
 				continue;
 			case 92:
-				text = new StringBuilder().Append(text).Append('\\').ToString();
+				text = (text)+('\\').ToString();
 				num++;
 				continue;
 			case 48:
@@ -262,7 +262,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 						num++;
 					}
 				}
-				text = new StringBuilder().Append(text).Append((char)num3).ToString();
+				text = (text)+((char)num3).ToString();
 				continue;
 			}
 			}
@@ -294,16 +294,16 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 						}
 					}
 				}
-				JavaCCErrors.Parse_Error(t, new StringBuilder().Append("Encountered non-hex character '").Append((char)num2).Append("' at position ")
-					.Append(num)
-					.Append(" of string ")
-					.Append("- Unicode escape must have 4 hex digits after it.")
+				JavaCCErrors.Parse_Error(t, ("Encountered non-hex character '")+((char)num2)+("' at position ")
+					+(num)
+					+(" of string ")
+					+("- Unicode escape must have 4 hex digits after it.")
 					.ToString());
 				return text;
 			}
-			JavaCCErrors.Parse_Error(t, new StringBuilder().Append("Illegal escape sequence '\\").Append((char)num2).Append("' at position ")
-				.Append(num)
-				.Append(" of string.")
+			JavaCCErrors.Parse_Error(t, ("Illegal escape sequence '\\")+((char)num2)+("' at position ")
+				+(num)
+				+(" of string.")
 				.ToString());
 			return text;
 		}
@@ -333,9 +333,9 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 		}
 		if (str2[0] > str1[0])
 		{
-			JavaCCErrors.Parse_Error(t, new StringBuilder().Append("Right end of character range '").Append(str1).Append("' has a lower ordinal value than the left end of character range '")
-				.Append(str2)
-				.Append("'.")
+			JavaCCErrors.Parse_Error(t, ("Right end of character range '")+(str1)+("' has a lower ordinal value than the left end of character range '")
+				+(str2)
+				+("'.")
 				.ToString());
 			char result = str2[0];
 			

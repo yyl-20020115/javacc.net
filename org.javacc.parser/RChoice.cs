@@ -20,14 +20,14 @@ public class RChoice : RegularExpression
 			{
 				if (label != null)
 				{
-					JavaCCErrors.Warning(this, new StringBuilder().Append("Regular Expression choice : ").Append(regularExpression.label).Append(" can never be matched as : ")
-						.Append(label)
+					JavaCCErrors.Warning(this, ("Regular Expression choice : ")+(regularExpression.label)+(" can never be matched as : ")
+						+(label)
 						.ToString());
 				}
 				else
 				{
-					JavaCCErrors.Warning(this, new StringBuilder().Append("Regular Expression choice : ").Append(regularExpression.label).Append(" can never be matched as token of kind : ")
-						.Append(ordinal)
+					JavaCCErrors.Warning(this, ("Regular Expression choice : ")+(regularExpression.label)+(" can never be matched as token of kind : ")
+						+(ordinal)
 						.ToString());
 				}
 			}
@@ -62,7 +62,7 @@ public class RChoice : RegularExpression
 				{
 					((RCharacterList)regularExpression).RemoveNegation();
 				}
-				ArrayList descriptors = ((RCharacterList)regularExpression).descriptors;
+				var descriptors = ((RCharacterList)regularExpression).descriptors;
 				if (rCharacterList == null)
 				{
                     Choices[i]=(rCharacterList = new RCharacterList());

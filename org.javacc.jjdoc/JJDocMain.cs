@@ -27,7 +27,7 @@ public sealed class JJDocMain : JJDocGlobals
 		JJDocGlobals.info("(type \"jjdoc\" with no arguments for help)");
 		if (Options.IsOption(strarr[strarr.Length - 1]))
 		{
-			JJDocGlobals.error(new StringBuilder().Append("Last argument \"").Append(strarr[strarr.Length - 1]).Append("\" is not a filename or \"-\".  ")
+			JJDocGlobals.error(("Last argument \"")+(strarr[strarr.Length - 1])+("\" is not a filename or \"-\".  ")
 				.ToString());
 			return 1;
 		}
@@ -35,7 +35,7 @@ public sealed class JJDocMain : JJDocGlobals
 		{
 			if (!Options.IsOption(strarr[i]))
 			{
-				JJDocGlobals.error(new StringBuilder().Append("Argument \"").Append(strarr[i]).Append("\" must be an option setting.  ")
+				JJDocGlobals.error(("Argument \"")+(strarr[i])+("\" must be an option setting.  ")
 					.ToString());
 				return 1;
 			}
@@ -51,7 +51,7 @@ public sealed class JJDocMain : JJDocGlobals
 		}
 		else
 		{
-			JJDocGlobals.info(new StringBuilder().Append("Reading from file ").Append(strarr[strarr.Length - 1]).Append(" . . .")
+			JJDocGlobals.info(("Reading from file ")+(strarr[strarr.Length - 1])+(" . . .")
 				.ToString());
 			try
 			{
@@ -62,13 +62,13 @@ public sealed class JJDocMain : JJDocGlobals
 					FileInfo file = new FileInfo(path);
 					if (!file.Exists)
 					{
-						JJDocGlobals.error(new StringBuilder().Append("File ").Append(strarr[strarr.Length - 1]).Append(" not found.")
+						JJDocGlobals.error(("File ")+(strarr[strarr.Length - 1])+(" not found.")
 							.ToString());
 						return 1;
 					}
 					if (new DirectoryInfo(path).Exists)
 					{
-						JJDocGlobals.error(new StringBuilder().Append(strarr[strarr.Length - 1]).Append(" is a directory. Please use a valid file name.").ToString());
+						JJDocGlobals.error((strarr[strarr.Length - 1])+(" is a directory. Please use a valid file name.").ToString());
 						return 1;
 					}
 					JJDocGlobals.input_file = file.Name;
@@ -96,18 +96,18 @@ public sealed class JJDocMain : JJDocGlobals
 				{
 					if (JavaCCErrors._Warning_Count == 0)
 					{
-						JJDocGlobals.info(new StringBuilder().Append("Grammar documentation generated successfully in ").Append(JJDocGlobals.output_file).ToString());
+						JJDocGlobals.info(("Grammar documentation generated successfully in ")+(JJDocGlobals.output_file).ToString());
 					}
 					else
 					{
-						JJDocGlobals.info(new StringBuilder().Append("Grammar documentation generated with 0 errors and ").Append(JavaCCErrors._Warning_Count).Append(" warnings.")
+						JJDocGlobals.info(("Grammar documentation generated with 0 errors and ")+(JavaCCErrors._Warning_Count)+(" warnings.")
 							.ToString());
 					}
 					return 0;
 				}
-				JJDocGlobals.error(new StringBuilder().Append("Detected ").Append(JavaCCErrors._Error_Count).Append(" errors and ")
-					.Append(JavaCCErrors._Warning_Count)
-					.Append(" warnings.")
+				JJDocGlobals.error(("Detected ")+(JavaCCErrors._Error_Count)+(" errors and ")
+					+(JavaCCErrors._Warning_Count)
+					+(" warnings.")
 					.ToString());
 				return (JavaCCErrors._Error_Count != 0) ? 1 : 0;
 			}
@@ -123,27 +123,27 @@ public sealed class JJDocMain : JJDocGlobals
 		}
 		MetaParseException @this = ex3;
 		JJDocGlobals.error((@this.Message));
-		JJDocGlobals.error(new StringBuilder().Append("Detected ").Append(JavaCCErrors._Error_Count).Append(" errors and ")
-			.Append(JavaCCErrors._Warning_Count)
-			.Append(" warnings.")
+		JJDocGlobals.error(("Detected ")+(JavaCCErrors._Error_Count)+(" errors and ")
+			+(JavaCCErrors._Warning_Count)
+			+(" warnings.")
 			.ToString());
 		return 1;
 		IL_031e:
 		ParseException this2 = ex4;
 		JJDocGlobals.error((this2.Message));
-		JJDocGlobals.error(new StringBuilder().Append("Detected ").Append(JavaCCErrors._Error_Count + 1).Append(" errors and ")
-			.Append(JavaCCErrors._Warning_Count)
-			.Append(" warnings.")
+		JJDocGlobals.error(("Detected ")+(JavaCCErrors._Error_Count + 1)+(" errors and ")
+			+(JavaCCErrors._Warning_Count)
+			+(" warnings.")
 			.ToString());
 		return 1;
 		IL_01e0:
 		
-		JJDocGlobals.error(new StringBuilder().Append("File ").Append(strarr[strarr.Length - 1]).Append(" not found.")
+		JJDocGlobals.error(("File ")+(strarr[strarr.Length - 1])+(" not found.")
 			.ToString());
 		return 1;
 		IL_01dd:
 		
-		JJDocGlobals.error(new StringBuilder().Append("Security violation while trying to open ").Append(strarr[strarr.Length - 1]).ToString());
+		JJDocGlobals.error(("Security violation while trying to open ")+(strarr[strarr.Length - 1]).ToString());
 		return 1;
 	}
 

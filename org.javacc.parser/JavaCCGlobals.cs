@@ -72,10 +72,10 @@ public class JavaCCGlobals
 		int i;
 		for (i = 0; i < l.Count - 1; i++)
 		{
-			str2 = new StringBuilder().Append(str2).Append((string)l[i]).Append("&")
+			str2 = (str2)+((string)l[i])+("&")
 				.ToString();
 		}
-		str2 = new StringBuilder().Append(str2).Append((string)l[i]).Append(":")
+		str2 = (str2)+((string)l[i])+(":")
 			.ToString();
 		if (str2.Length > 200)
 		{
@@ -83,7 +83,7 @@ public class JavaCCGlobals
 			
 			throw new System.Exception();
 		}
-		string result = new StringBuilder().Append(str2).Append(" Do not edit this line. ").Append(addUnicodeEscapes(str))
+		string result = (str2)+(" Do not edit this line. ")+(addUnicodeEscapes(str))
 			.ToString();
 		
 		return result;
@@ -98,13 +98,13 @@ public class JavaCCGlobals
 			int num = str[i];
 			if (num < 32 || num > 126)
 			{
-				string @this = new StringBuilder().Append("0000").Append(Utils.ToString(num, 16)).ToString();
-				text = new StringBuilder().Append(text).Append("\\u").Append(@this.Substring(@this.Length - 4, @this.Length))
+				string @this = ("0000")+(Utils.ToString(num, 16)).ToString();
+				text = (text)+("\\u")+(@this.Substring(@this.Length - 4, @this.Length))
 					.ToString();
 			}
 			else
 			{
-				text = new StringBuilder().Append(text).Append((char)num).ToString();
+				text = (text)+((char)num).ToString();
 			}
 		}
 		return text;
@@ -342,12 +342,12 @@ public class JavaCCGlobals
 		}
 		while (token != null)
 		{
-			text = new StringBuilder().Append(text).Append(printTokenOnly(token)).ToString();
+			text = (text)+(printTokenOnly(token)).ToString();
 			token = token.next;
 		}
 		if (ccol != 1 && cline != t.BeginLine)
 		{
-			text = new StringBuilder().Append(text).Append("\n").ToString();
+			text = (text)+("\n").ToString();
 			cline++;
 			ccol = 1;
 		}
@@ -360,18 +360,18 @@ public class JavaCCGlobals
 		string str = "";
 		while (cline < t.BeginLine)
 		{
-			str = new StringBuilder().Append(str).Append("\n").ToString();
+			str = (str)+("\n").ToString();
 			ccol = 1;
 			cline++;
 		}
 		while (ccol < t.BeginColumn)
 		{
-			str = new StringBuilder().Append(str).Append(" ").ToString();
+			str = (str)+(" ").ToString();
 			ccol++;
 		}
 		str = ((t.kind != 90 && t.kind != 89)
-			? new StringBuilder().Append(str).Append(t.image).ToString()
-			: new StringBuilder().Append(str).Append(addUnicodeEscapes(t.image)).ToString());
+			? (str)+(t.image).ToString()
+			: (str)+(addUnicodeEscapes(t.image)).ToString());
 		cline = t.endLine;
 		ccol = t.endColumn + 1;
 		int num = t.image[(t.image.Length) - 1];
@@ -391,10 +391,10 @@ public class JavaCCGlobals
 	
 	public static void bannerLine(string str1, string str2)
 	{
-		Console.Write(new StringBuilder().Append("Java Compiler Compiler Version 4.1d1 (").Append(str1).ToString());
+		Console.Write(("Java Compiler Compiler Version 4.1d1 (")+(str1).ToString());
 		if (!string.Equals(str2, ""))
 		{
-			Console.Write(new StringBuilder().Append(" Version ").Append(str2).ToString());
+			Console.Write((" Version ")+(str2).ToString());
 		}
 		Console.WriteLine(")");
 	}
@@ -428,23 +428,23 @@ public class JavaCCGlobals
 	{
 		if (!f.Exists)
 		{
-			JavaCCErrors.Warning(new StringBuilder().Append("Output directory \"").Append(f).Append("\" does not exist. Creating the directory.")
+			JavaCCErrors.Warning(("Output directory \"")+(f)+("\" does not exist. Creating the directory.")
 				.ToString());
 			var d = Directory.CreateDirectory(f.FullName);
 			if (! d.Exists)
 			{
-				JavaCCErrors.Semantic_Error(new StringBuilder().Append("Cannot create the output directory : ").Append(f).ToString());
+				JavaCCErrors.Semantic_Error(("Cannot create the output directory : ")+(f).ToString());
 				return;
 			}
 		}
 		if (!new DirectoryInfo(f.FullName).Exists)
 		{
-			JavaCCErrors.Semantic_Error(new StringBuilder().Append("\"").Append(f).Append(" is not a valid output directory.")
+			JavaCCErrors.Semantic_Error(("\"")+(f)+(" is not a valid output directory.")
 				.ToString());
 		}
 		else if (f.IsReadOnly)
 		{
-			JavaCCErrors.Semantic_Error(new StringBuilder().Append("Cannot write to the output output directory : \"").Append(f).Append("\"")
+			JavaCCErrors.Semantic_Error(("Cannot write to the output output directory : \"")+(f)+("\"")
 				.ToString());
 		}
 	}
@@ -468,48 +468,48 @@ public class JavaCCGlobals
 			int num = str[i];
 			if (num == 8)
 			{
-				text = new StringBuilder().Append(text).Append("\\b").ToString();
+				text = (text)+("\\b").ToString();
 				continue;
 			}
 			if (num == 9)
 			{
-				text = new StringBuilder().Append(text).Append("\\t").ToString();
+				text = (text)+("\\t").ToString();
 				continue;
 			}
 			if (num == 10)
 			{
-				text = new StringBuilder().Append(text).Append("\\n").ToString();
+				text = (text)+("\\n").ToString();
 				continue;
 			}
 			if (num == 12)
 			{
-				text = new StringBuilder().Append(text).Append("\\f").ToString();
+				text = (text)+("\\f").ToString();
 				continue;
 			}
 			if (num == 13)
 			{
-				text = new StringBuilder().Append(text).Append("\\r").ToString();
+				text = (text)+("\\r").ToString();
 				continue;
 			}
 			if (num == 34)
 			{
-				text = new StringBuilder().Append(text).Append("\\\"").ToString();
+				text = (text)+("\\\"").ToString();
 				continue;
 			}
 			if (num == 39)
 			{
-				text = new StringBuilder().Append(text).Append("\\'").ToString();
+				text = (text)+("\\'").ToString();
 				continue;
 			}
 			switch (num)
 			{
 			case 92:
-				text = new StringBuilder().Append(text).Append("\\\\").ToString();
+				text = (text)+("\\\\").ToString();
 				break;
 			default:
 			{
-				string @this = new StringBuilder().Append("0000").Append(Utils.ToString(num, 16)).ToString();
-				text = new StringBuilder().Append(text).Append("\\u").Append(@this.Substring(@this.Length - 4, @this.Length))
+				string @this = ("0000")+(Utils.ToString(num, 16)).ToString();
+				text = (text)+("\\u")+(@this.Substring(@this.Length - 4, @this.Length))
 					.ToString();
 				break;
 			}
@@ -607,7 +607,7 @@ public class JavaCCGlobals
 			case 124:
 			case 125:
 			case 126:
-				text = new StringBuilder().Append(text).Append((char)num).ToString();
+				text = (text)+((char)num).ToString();
 				break;
 			}
 		}
@@ -690,11 +690,11 @@ public class JavaCCGlobals
 			}
 			while (token != null)
 			{
-				str = new StringBuilder().Append(str).Append(printTokenOnly(token)).ToString();
+				str = (str)+(printTokenOnly(token)).ToString();
 				token = token.next;
 			}
 		}
-		return new StringBuilder().Append(str).Append(printTokenOnly(t)).ToString();
+		return (str)+(printTokenOnly(t)).ToString();
 	}
 
 	
