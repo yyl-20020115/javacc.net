@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using org.javacc.parser;
 namespace org.javacc.jjtree;
 
@@ -145,28 +146,29 @@ public class NodeScope
 	}
 
 	
-	internal virtual void tryTokenSequence(IO io, string P_1, Token P_2, Token P_3)
+	internal virtual void tryTokenSequence(IO io, string text, Token t1, Token t2)
 	{
-		io.WriteLine((P_1)+("try {"));
+		io.WriteLine((text)+("try {"));
 		JJTreeNode.CloseJJTreeComment(io);
-		for (Token token = P_2; token != P_3.Next; token = token.Next)
+		for (Token token = t1; token != t2.Next; token = token.Next)
 		{
 			TokenUtils.Write(token, io, "jjtThis", NodeVar);
 		}
 		JJTreeNode.OpenJJTreeComment(io, null);
 		io.WriteLine();
+
 		Enumeration enumeration = Production.ThrowsList.elements();
-		insertCatchBlocks(io, enumeration, P_1);
-		io.WriteLine((P_1)+("} finally {"));
+		insertCatchBlocks(io, enumeration, text);
+		io.WriteLine((text)+("} finally {"));
 		if (usesCloseNodeVar())
 		{
-			io.WriteLine((P_1)+("  if (")+(ClosedVar)
+			io.WriteLine((text)+("  if (")+(ClosedVar)
 				+(") {")
 				);
-			insertCloseNodeCode(io, (P_1)+("    "), true);
-			io.WriteLine((P_1)+("  }"));
+			insertCloseNodeCode(io, (text)+("    "), true);
+			io.WriteLine((text)+("  }"));
 		}
-		io.WriteLine((P_1)+("}"));
+		io.WriteLine((text)+("}"));
 		JJTreeNode.CloseJJTreeComment(io);
 	}
 
@@ -231,44 +233,44 @@ public class NodeScope
 	}
 
 	
-	private void insertCatchBlocks(IO P_0, IEnumerator P_1, string P_2)
+	private void insertCatchBlocks(IO io, IEnumerable<string> P_1, string P_2)
 	{
 		if (P_1.hasMoreElements())
 		{
-			P_0.WriteLine((P_2)+("} catch (Throwable ")+(ExceptionVar)
+			io.WriteLine((P_2)+("} catch (Throwable ")+(ExceptionVar)
 				+(") {")
 				);
 			if (usesCloseNodeVar())
 			{
-				P_0.WriteLine((P_2)+("  if (")+(ClosedVar)
+				io.WriteLine((P_2)+("  if (")+(ClosedVar)
 					+(") {")
 					);
-				P_0.WriteLine((P_2)+("    jjtree.clearNodeScope(")+(NodeVar)
+				io.WriteLine((P_2)+("    jjtree.clearNodeScope(")+(NodeVar)
 					+(");")
 					);
-				P_0.WriteLine((P_2)+("    ")+(ClosedVar)
+				io.WriteLine((P_2)+("    ")+(ClosedVar)
 					+(" = false;")
 					);
-				P_0.WriteLine((P_2)+("  } else {"));
-				P_0.WriteLine((P_2)+("    jjtree.popNode();"));
-				P_0.WriteLine((P_2)+("  }"));
+				io.WriteLine((P_2)+("  } else {"));
+				io.WriteLine((P_2)+("    jjtree.popNode();"));
+				io.WriteLine((P_2)+("  }"));
 			}
 			while (P_1.hasMoreElements())
 			{
 				string str = (string)P_1.nextElement();
-				P_0.WriteLine((P_2)+("  if (")+(ExceptionVar)
+				io.WriteLine((P_2)+("  if (")+(ExceptionVar)
 					+(" instanceof ")
 					+(str)
 					+(") {")
 					);
-				P_0.WriteLine((P_2)+("    throw (")+(str)
+				io.WriteLine((P_2)+("    throw (")+(str)
 					+(")")
 					+(ExceptionVar)
 					+(";")
 					);
-				P_0.WriteLine((P_2)+("  }"));
+				io.WriteLine((P_2)+("  }"));
 			}
-			P_0.WriteLine((P_2)+("  throw ")+(ExceptionVar)
+			io.WriteLine((P_2)+("  throw ")+(ExceptionVar)
 				+(";")
 				);
 		}
@@ -280,7 +282,7 @@ public class NodeScope
 		if (P_1 is ASTBNFNonTerminal)
 		{
 			string image = P_1.FirstToken.Image;
-			ASTProduction aSTProduction = (ASTProduction)JJTreeGlobals.productions.get(image);
+			ASTProduction aSTProduction = (ASTProduction)JJTreeGlobals.Productions.get(image);
 			if (aSTProduction != null)
 			{
 				Enumeration enumeration = aSTProduction.ThrowsList.elements();

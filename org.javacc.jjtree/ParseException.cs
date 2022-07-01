@@ -34,9 +34,9 @@ public class ParseException : System.Exception
 	}
 
 
-	protected internal virtual string add_escapes(string str)
+	protected internal virtual string AddEscapes(string str)
 	{
-		StringBuilder stringBuilder = new StringBuilder();
+		var stringBuilder = new StringBuilder();
 		for (int i = 0; i < str.Length; i++)
 		{
 			switch (str[i])
@@ -80,9 +80,8 @@ public class ParseException : System.Exception
 				stringBuilder.Append((char)num);
 			}
 		}
-		string result = stringBuilder.ToString();
+		return stringBuilder.ToString();
 
-		return result;
 	}
 
 
@@ -135,7 +134,7 @@ public class ParseException : System.Exception
 				}
 				str += tokenImage[next.Kind];
 				str +=" \"";
-				str +=add_escapes(next.Image);
+				str +=AddEscapes(next.Image);
 				str +=" \"";
 				next = next.Next;
 			}

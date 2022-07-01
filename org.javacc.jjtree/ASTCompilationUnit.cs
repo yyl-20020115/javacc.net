@@ -7,14 +7,14 @@ public class ASTCompilationUnit : JJTreeNode
 		var token = FirstToken;
 		while (true)
 		{
-			if (token == JJTreeGlobals.parserImports 
-				&& !string.Equals(JJTreeGlobals.nodePackageName, "") 
-				&& !string.Equals(JJTreeGlobals.nodePackageName, JJTreeGlobals.packageName))
+			if (token == JJTreeGlobals.ParserImports 
+				&& !string.Equals(JJTreeGlobals.NodePackageName, "") 
+				&& !string.Equals(JJTreeGlobals.NodePackageName, JJTreeGlobals.PackageName))
 			{
 				io.Out.WriteLine("");
-				io.Out.WriteLine("import "+JJTreeGlobals.nodePackageName+(".*;"));
+				io.Out.WriteLine("import "+JJTreeGlobals.NodePackageName+(".*;"));
 			}
-			if (token == JJTreeGlobals.parserImplements)
+			if (token == JJTreeGlobals.ParserImplements)
 			{
 				if (string.Equals(token.Image, "implements"))
 				{
@@ -35,10 +35,10 @@ public class ASTCompilationUnit : JJTreeNode
 			{
 				Write(token, io);
 			}
-			if (token == JJTreeGlobals.parserClassBodyStart)
+			if (token == JJTreeGlobals.ParserClassBodyStart)
 			{
 				JJTreeNode.OpenJJTreeComment(io, null);
-				JJTreeState.insertParserMembers(io);
+				JJTreeState.InsertParserMembers(io);
 				JJTreeNode.CloseJJTreeComment(io);
 			}
 			if (token == LastToken) break;

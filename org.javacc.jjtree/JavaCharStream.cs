@@ -1,24 +1,23 @@
 using System;
 using System.IO;
-using System.Text;
 
 namespace org.javacc.jjtree;
 
 public class JavaCharStream
 {
-	public const bool staticFlag = false;
+	public const bool StaticFlag = false;
 
-	public int bufpos = 0;
+	public int BufPos = 0;
 
-	internal int bufsize = 0;
+	internal int BufSize = 0;
 
-	internal int available = 0;
+	internal int Available = 0;
 
-	internal int tokenBegin = 0;
+	internal int TokenBegin = 0;
 
-	protected internal int[] bufline = Array.Empty<int>();
+	protected internal int[] BufLine = Array.Empty<int>();
 
-	protected internal int[] bufcolumn = Array.Empty<int>();
+	protected internal int[] BufColumn = Array.Empty<int>();
 
 	protected internal int column = 0;
 
@@ -69,26 +68,26 @@ public class JavaCharStream
 		if (inBuf > 0)
 		{
 			inBuf--;
-			num = bufpos + 1;
+			num = BufPos + 1;
 			javaCharStream = this;
 			int num2 = num;
-			javaCharStream.bufpos = num;
-			if (num2 == bufsize)
+			javaCharStream.BufPos = num;
+			if (num2 == BufSize)
 			{
-				bufpos = 0;
+				BufPos = 0;
 			}
-			return buffer[bufpos];
+			return buffer[BufPos];
 		}
-		num = bufpos + 1;
+		num = BufPos + 1;
 		javaCharStream = this;
 		int num3 = num;
-		javaCharStream.bufpos = num;
-		if (num3 == available)
+		javaCharStream.BufPos = num;
+		if (num3 == Available)
 		{
 			AdjustBuffSize();
 		}
 		char[] array = buffer;
-		int num4 = bufpos;
+		int num4 = BufPos;
 		int num5;
 		num = (num5 = ReadByte());
 		int num6 = num4;
@@ -101,18 +100,18 @@ public class JavaCharStream
 			int num8 = 1;
 			while (true)
 			{
-				num = bufpos + 1;
+				num = BufPos + 1;
 				javaCharStream = this;
 				int num9 = num;
-				javaCharStream.bufpos = num;
-				if (num9 == available)
+				javaCharStream.BufPos = num;
+				if (num9 == Available)
 				{
 					AdjustBuffSize();
 				}
 				try
 				{
 					char[] array3 = buffer;
-					int num10 = bufpos;
+					int num10 = BufPos;
 					num = (num5 = ReadByte());
 					num6 = num10;
 					array2 = array3;
@@ -123,13 +122,13 @@ public class JavaCharStream
 						UpdateLineColumn((char)num5);
 						if (num5 == 117 && (num8 & 1) == 1)
 						{
-							num = bufpos - 1;
+							num = BufPos - 1;
 							javaCharStream = this;
 							int num12 = num;
-							javaCharStream.bufpos = num;
+							javaCharStream.BufPos = num;
 							if (num12 < 0)
 							{
-								bufpos = bufsize - 1;
+								BufPos = BufSize - 1;
 							}
 							break;
 						}
@@ -170,7 +169,7 @@ public class JavaCharStream
 				{
 					column++;
 				}
-				buffer[bufpos] = (char)(num5 = (ushort)((HexVal((char)num5) << 12) | (HexVal(ReadByte()) << 8) | (HexVal(ReadByte()) << 4) | HexVal(ReadByte())));
+				buffer[BufPos] = (char)(num5 = (ushort)((HexVal((char)num5) << 12) | (HexVal(ReadByte()) << 8) | (HexVal(ReadByte()) << 4) | HexVal(ReadByte())));
 				column += 4;
 			}
 			catch (IOException)
@@ -199,20 +198,20 @@ public class JavaCharStream
 
 	public virtual string GetImage()
 	{
-		if (bufpos >= tokenBegin)
+		if (BufPos >= TokenBegin)
 		{
-			return new string(buffer, tokenBegin, bufpos - tokenBegin + 1);
+			return new string(buffer, TokenBegin, BufPos - TokenBegin + 1);
 		}
-		return (new string(buffer, tokenBegin, bufsize - tokenBegin)+(new string(buffer, 0, bufpos + 1)));
+		return (new string(buffer, TokenBegin, BufSize - TokenBegin)+(new string(buffer, 0, BufPos + 1)));
 	}
 
-    public virtual int BeginLine => bufline[tokenBegin];
+    public virtual int BeginLine => BufLine[TokenBegin];
 
-    public virtual int BeginColumn => bufcolumn[tokenBegin];
+    public virtual int BeginColumn => BufColumn[TokenBegin];
 
-    public virtual int EndLine => bufline[bufpos];
+    public virtual int EndLine => BufLine[BufPos];
 
-    public virtual int EndColumn => bufcolumn[bufpos];
+    public virtual int EndColumn => BufColumn[BufPos];
 
 
     public virtual char BeginToken()
@@ -220,17 +219,17 @@ public class JavaCharStream
 		if (inBuf > 0)
 		{
 			inBuf--;
-			int num = bufpos + 1;
-			bufpos = num;
-			if (num == bufsize)
+			int num = BufPos + 1;
+			BufPos = num;
+			if (num == BufSize)
 			{
-				bufpos = 0;
+				BufPos = 0;
 			}
-			tokenBegin = bufpos;
-			return buffer[bufpos];
+			TokenBegin = BufPos;
+			return buffer[BufPos];
 		}
-		tokenBegin = 0;
-		bufpos = -1;
+		TokenBegin = 0;
+		BufPos = -1;
 		char result = ReadChar();
 
 		return result;
@@ -239,25 +238,25 @@ public class JavaCharStream
 	public virtual void Backup(int i)
 	{
 		inBuf += i;
-		int num = bufpos - i;
-		bufpos = num;
+		int num = BufPos - i;
+		BufPos = num;
 		if (num < 0)
 		{
-			bufpos += bufsize;
+			BufPos += BufSize;
 		}
 	}
 
 	public virtual char[] GetSuffix(int i)
 	{
 		char[] array = new char[i];
-		if (bufpos + 1 >= i)
+		if (BufPos + 1 >= i)
 		{
-			Array.Copy(buffer, bufpos - i + 1, array, 0, i);
+			Array.Copy(buffer, BufPos - i + 1, array, 0, i);
 		}
 		else
 		{
-			Array.Copy(buffer, bufsize - (i - bufpos - 1), array, 0, i - bufpos - 1);
-			Array.Copy(buffer, 0, array, i - bufpos - 1, bufpos + 1);
+			Array.Copy(buffer, BufSize - (i - BufPos - 1), array, 0, i - BufPos - 1);
+			Array.Copy(buffer, 0, array, i - BufPos - 1, BufPos + 1);
 		}
 		return array;
 	}
@@ -289,15 +288,15 @@ public class JavaCharStream
 			ex = x;
 		}
 		IOException ex2 = ex;
-		if (bufpos != 0)
+		if (BufPos != 0)
 		{
-			bufpos--;
+			BufPos--;
 			Backup(0);
 		}
 		else
 		{
-			bufline[bufpos] = line;
-			bufcolumn[bufpos] = column;
+			BufLine[BufPos] = line;
+			BufColumn[BufPos] = column;
 		}
 		throw (ex2);
 	}
@@ -305,34 +304,34 @@ public class JavaCharStream
 
 	protected internal virtual void ExpandBuff(bool b)
 	{
-		char[] dest = new char[bufsize + 2048];
-		int[] dest2 = new int[bufsize + 2048];
-		int[] dest3 = new int[bufsize + 2048];
+		char[] dest = new char[BufSize + 2048];
+		int[] dest2 = new int[BufSize + 2048];
+		int[] dest3 = new int[BufSize + 2048];
 		System.Exception ex;
 		try
 		{
 			if (b)
 			{
-				Array.Copy(buffer, tokenBegin, dest, 0, bufsize - tokenBegin);
-				Array.Copy(buffer, 0, dest, bufsize - tokenBegin, bufpos);
+				Array.Copy(buffer, TokenBegin, dest, 0, BufSize - TokenBegin);
+				Array.Copy(buffer, 0, dest, BufSize - TokenBegin, BufPos);
 				buffer = dest;
-				Array.Copy(bufline, tokenBegin, dest2, 0, bufsize - tokenBegin);
-				Array.Copy(bufline, 0, dest2, bufsize - tokenBegin, bufpos);
-				bufline = dest2;
-				Array.Copy(bufcolumn, tokenBegin, dest3, 0, bufsize - tokenBegin);
-				Array.Copy(bufcolumn, 0, dest3, bufsize - tokenBegin, bufpos);
-				bufcolumn = dest3;
-				bufpos += bufsize - tokenBegin;
+				Array.Copy(BufLine, TokenBegin, dest2, 0, BufSize - TokenBegin);
+				Array.Copy(BufLine, 0, dest2, BufSize - TokenBegin, BufPos);
+				BufLine = dest2;
+				Array.Copy(BufColumn, TokenBegin, dest3, 0, BufSize - TokenBegin);
+				Array.Copy(BufColumn, 0, dest3, BufSize - TokenBegin, BufPos);
+				BufColumn = dest3;
+				BufPos += BufSize - TokenBegin;
 			}
 			else
 			{
-				Array.Copy(buffer, tokenBegin, dest, 0, bufsize - tokenBegin);
+				Array.Copy(buffer, TokenBegin, dest, 0, BufSize - TokenBegin);
 				buffer = dest;
-				Array.Copy(bufline, tokenBegin, dest2, 0, bufsize - tokenBegin);
-				bufline = dest2;
-				Array.Copy(bufcolumn, tokenBegin, dest3, 0, bufsize - tokenBegin);
-				bufcolumn = dest3;
-				bufpos -= tokenBegin;
+				Array.Copy(BufLine, TokenBegin, dest2, 0, BufSize - TokenBegin);
+				BufLine = dest2;
+				Array.Copy(BufColumn, TokenBegin, dest3, 0, BufSize - TokenBegin);
+				BufColumn = dest3;
+				BufPos -= TokenBegin;
 			}
 		}
 		catch (System.Exception x)
@@ -340,10 +339,10 @@ public class JavaCharStream
 			ex =x;
 			goto IL_01ca;
 		}
-		int num = bufsize + 2048;
-		bufsize = num;
-		available = num;
-		tokenBegin = 0;
+		int num = BufSize + 2048;
+		BufSize = num;
+		Available = num;
+		TokenBegin = 0;
 		return;
 	IL_01ca:
 		System.Exception @this = ex;
@@ -355,29 +354,29 @@ public class JavaCharStream
 
 	protected internal virtual void AdjustBuffSize()
 	{
-		if (available == bufsize)
+		if (Available == BufSize)
 		{
-			if (tokenBegin > 2048)
+			if (TokenBegin > 2048)
 			{
-				bufpos = 0;
-				available = tokenBegin;
+				BufPos = 0;
+				Available = TokenBegin;
 			}
 			else
 			{
 				ExpandBuff(b: false);
 			}
 		}
-		else if (available > tokenBegin)
+		else if (Available > TokenBegin)
 		{
-			available = bufsize;
+			Available = BufSize;
 		}
-		else if (tokenBegin - available < 2048)
+		else if (TokenBegin - Available < 2048)
 		{
 			ExpandBuff(b: true);
 		}
 		else
 		{
-			available = tokenBegin;
+			Available = TokenBegin;
 		}
 	}
 
@@ -440,8 +439,8 @@ public class JavaCharStream
 					break;
 				}
 		}
-		bufline[bufpos] = line;
-		bufcolumn[bufpos] = column;
+		BufLine[BufPos] = line;
+		BufColumn[BufPos] = column;
 	}
 
     internal static int HexVal(char c) => c switch
@@ -468,7 +467,7 @@ public class JavaCharStream
 
     public JavaCharStream(TextReader r, int i1, int i2, int i3)
 	{
-		bufpos = -1;
+		BufPos = -1;
 		column = 0;
 		line = 1;
 		prevCharIsCR = false;
@@ -480,11 +479,11 @@ public class JavaCharStream
 		inputStream = r;
 		line = i1;
 		column = i2 - 1;
-		bufsize = i3;
-		available = i3;
+		BufSize = i3;
+		Available = i3;
 		buffer = new char[i3];
-		bufline = new int[i3];
-		bufcolumn = new int[i3];
+		BufLine = new int[i3];
+		BufColumn = new int[i3];
 		nextCharBuf = new char[4096];
 	}
 
@@ -498,11 +497,11 @@ public class JavaCharStream
 		{
 			num = i3;
 			int num2 = num;
-			bufsize = num;
-			available = num2;
+			BufSize = num;
+			Available = num2;
 			buffer = new char[i3];
-			bufline = new int[i3];
-			bufcolumn = new int[i3];
+			BufLine = new int[i3];
+			BufColumn = new int[i3];
 			nextCharBuf = new char[4096];
 		}
 		num = 0;
@@ -515,10 +514,10 @@ public class JavaCharStream
 		num = num4;
 		int num5 = num;
 		inBuf = num;
-		tokenBegin = num5;
+		TokenBegin = num5;
 		num = -1;
 		int num6 = num;
-		bufpos = num;
+		BufPos = num;
 		nextCharInd = num6;
 	}
 
@@ -544,9 +543,9 @@ public class JavaCharStream
 
     protected internal virtual int TabSize { get => tabSize; set => tabSize = value; }
 
-    public virtual int Column => bufcolumn[bufpos];
+    public virtual int Column => BufColumn[BufPos];
 
-    public virtual int Line => bufline[bufpos];
+    public virtual int Line => BufLine[BufPos];
 
 
     public JavaCharStream(TextReader r)
@@ -589,14 +588,14 @@ public class JavaCharStream
 	{
 		nextCharBuf = null;
 		buffer = null;
-		bufline = null;
-		bufcolumn = null;
+		BufLine = null;
+		BufColumn = null;
 	}
 
 	public virtual void AdjustBeginLineColumn(int i1, int i2)
 	{
-		int num = tokenBegin;
-		int num2 = ((bufpos < tokenBegin) ? (bufsize - tokenBegin + bufpos + 1 + inBuf) : (bufpos - tokenBegin + inBuf + 1));
+		int num = TokenBegin;
+		int num2 = ((BufPos < TokenBegin) ? (BufSize - TokenBegin + BufPos + 1 + inBuf) : (BufPos - TokenBegin + inBuf + 1));
 		int j = 0;
 		int num3 = 0;
 		_ = 0;
@@ -604,32 +603,32 @@ public class JavaCharStream
 		int num4 = 0;
 		for (; j < num2; j++)
 		{
-			int[] array = bufline;
+			int[] array = BufLine;
 			int num5 = num;
-			int num6 = bufsize;
+			int num6 = BufSize;
 			int num7 = array[num3 = ((num6 != -1) ? (num5 % num6) : 0)];
-			int[] array2 = bufline;
+			int[] array2 = BufLine;
 			num++;
 			int num8 = num;
-			int num9 = bufsize;
+			int num9 = BufSize;
 			int num10;
 			if (num7 != array2[num10 = ((num9 != -1) ? (num8 % num9) : 0)])
 			{
 				break;
 			}
-			bufline[num3] = i1;
-			int num11 = num4 + bufcolumn[num10] - bufcolumn[num3];
-			bufcolumn[num3] = i2 + num4;
+			BufLine[num3] = i1;
+			int num11 = num4 + BufColumn[num10] - BufColumn[num3];
+			BufColumn[num3] = i2 + num4;
 			num4 = num11;
 		}
 		if (j < num2)
 		{
-			int[] array3 = bufline;
+			int[] array3 = BufLine;
 			int num12 = num3;
 			int num13 = i1;
 			i1++;
 			array3[num12] = num13;
-			bufcolumn[num3] = i2 + num4;
+			BufColumn[num3] = i2 + num4;
 			while (true)
 			{
 				int num14 = j;
@@ -638,17 +637,17 @@ public class JavaCharStream
 				{
 					break;
 				}
-				int[] array4 = bufline;
+				int[] array4 = BufLine;
 				int num15 = num;
-				int num16 = bufsize;
+				int num16 = BufSize;
 				int num17 = array4[num3 = ((num16 != -1) ? (num15 % num16) : 0)];
-				int[] array5 = bufline;
+				int[] array5 = BufLine;
 				num++;
 				int num18 = num;
-				int num19 = bufsize;
+				int num19 = BufSize;
 				if (num17 != array5[(num19 != -1) ? (num18 % num19) : 0])
 				{
-					int[] array6 = bufline;
+					int[] array6 = BufLine;
 					int num20 = num3;
 					int num21 = i1;
 					i1++;
@@ -656,11 +655,11 @@ public class JavaCharStream
 				}
 				else
 				{
-					bufline[num3] = i1;
+					BufLine[num3] = i1;
 				}
 			}
 		}
-		line = bufline[num3];
-		column = bufcolumn[num3];
+		line = BufLine[num3];
+		column = BufColumn[num3];
 	}
 }

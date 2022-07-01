@@ -1,68 +1,65 @@
-using System.Collections;
 using System.Collections.Generic;
-
 namespace org.javacc.jjtree;
-
 
 internal class JJTreeGlobals
 {
-	private static HashSet<string> jjtreeOptions =new();
+	private static HashSet<string> JJTreeOptions =new();
 
-	internal static List<string> toolList = new();
+	internal static List<string> ToolList = new();
 
-	public static string parserName = "";
+	public static string ParserName = "";
 
-	public static string packageName = "";
+	public static string PackageName = "";
 
-	public static string nodePackageName = "";
+	public static string NodePackageName = "";
 
-	public static Token parserImplements;
+	public static Token ParserImplements;
 
-	public static Token parserClassBodyStart;
+	public static Token ParserClassBodyStart;
 
-	public static Token parserImports;
+	public static Token ParserImports;
 
-	internal static Dictionary<string, ASTJavacode> productions = new();
+	internal static Dictionary<string, ASTJavacode> Productions = new();
 
 
-    public static bool IsOptionJJTreeOnly(string name) => jjtreeOptions.Contains((name.ToUpper()));
+    public static bool IsOptionJJTreeOnly(string name) => JJTreeOptions.Contains((name.ToUpper()));
 
 
     internal static void Initialize()
 	{
-		toolList = new();
-		parserName = null;
-		packageName = "";
-		parserImplements = null;
-		parserClassBodyStart = null;
-		parserImports = null;
-		productions = new();
-		jjtreeOptions = new();
-		jjtreeOptions.Add("JJTREE_OUTPUT_DIRECTORY");
-		jjtreeOptions.Add("MULTI");
-		jjtreeOptions.Add("NODE_PREFIX");
-		jjtreeOptions.Add("NODE_PACKAGE");
-		jjtreeOptions.Add("NODE_EXTENDS");
-		jjtreeOptions.Add("NODE_CLASS");
-		jjtreeOptions.Add("NODE_STACK_SIZE");
-		jjtreeOptions.Add("NODE_DEFAULT_VOID");
-		jjtreeOptions.Add("OUTPUT_FILE");
-		jjtreeOptions.Add("CHECK_DEFINITE_NODE");
-		jjtreeOptions.Add("NODE_SCOPE_HOOK");
-		jjtreeOptions.Add("TRACK_TOKENS");
-		jjtreeOptions.Add("NODE_FACTORY");
-		jjtreeOptions.Add("NODE_USES_PARSER");
-		jjtreeOptions.Add("BUILD_NODE_FILES");
-		jjtreeOptions.Add("VISITOR");
-		jjtreeOptions.Add("VISITOR_DATA_TYPE");
+		ToolList = new();
+		ParserName = null;
+		PackageName = "";
+		ParserImplements = null;
+		ParserClassBodyStart = null;
+		ParserImports = null;
+		Productions = new();
+		JJTreeOptions = new();
+		JJTreeOptions.Add("JJTREE_OUTPUT_DIRECTORY");
+		JJTreeOptions.Add("MULTI");
+		JJTreeOptions.Add("NODE_PREFIX");
+		JJTreeOptions.Add("NODE_PACKAGE");
+		JJTreeOptions.Add("NODE_EXTENDS");
+		JJTreeOptions.Add("NODE_CLASS");
+		JJTreeOptions.Add("NODE_STACK_SIZE");
+		JJTreeOptions.Add("NODE_DEFAULT_VOID");
+		JJTreeOptions.Add("OUTPUT_FILE");
+		JJTreeOptions.Add("CHECK_DEFINITE_NODE");
+		JJTreeOptions.Add("NODE_SCOPE_HOOK");
+		JJTreeOptions.Add("TRACK_TOKENS");
+		JJTreeOptions.Add("NODE_FACTORY");
+		JJTreeOptions.Add("NODE_USES_PARSER");
+		JJTreeOptions.Add("BUILD_NODE_FILES");
+		JJTreeOptions.Add("VISITOR");
+		JJTreeOptions.Add("VISITOR_DATA_TYPE");
 	}
 
 	static JJTreeGlobals()
 	{
 		Initialize();
-		toolList = new ();
-		packageName = "";
-		nodePackageName = "";
-		productions = new ();
+		ToolList = new ();
+		PackageName = "";
+		NodePackageName = "";
+		Productions = new ();
 	}
 }

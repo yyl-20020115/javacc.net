@@ -157,7 +157,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						jj_consume_token(85);
 						Token token = identifier();
 						jj_consume_token(86);
-						JJTreeGlobals.parserName = token.Image;
+						JJTreeGlobals.ParserName = token.Image;
 						CompilationUnit();
 						jj_consume_token(4);
 						jj_consume_token(85);
@@ -168,11 +168,11 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						jjtreeCloseNodeScope(aSTCompilationUnit);
 						if (string.Equals(JJTreeOptions.NodePackage, ""))
 						{
-							JJTreeGlobals.nodePackageName = JJTreeGlobals.packageName;
+							JJTreeGlobals.NodePackageName = JJTreeGlobals.PackageName;
 						}
 						else
 						{
-							JJTreeGlobals.nodePackageName = JJTreeOptions.NodePackage;
+							JJTreeGlobals.NodePackageName = JJTreeOptions.NodePackage;
 						}
 					}
 					catch (System.Exception x)
@@ -699,7 +699,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		{
 			PackageDeclaration();
 		}
-		JJTreeGlobals.parserImports = getToken(1);
+		JJTreeGlobals.ParserImports = getToken(1);
 		while (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 47)
 		{
 			ImportDeclaration();
@@ -1192,7 +1192,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				jjtree.CloseNodeScope(aSTJavacode, b: true);
 				num = 0;
 				jjtreeCloseNodeScope(aSTJavacode);
-				JJTreeGlobals.productions.Add(aSTJavacode2.Name, aSTJavacode2);
+				JJTreeGlobals.Productions.Add(aSTJavacode2.Name, aSTJavacode2);
 			}
 			catch (System.Exception x6)
 			{
@@ -1852,7 +1852,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				jjtree.CloseNodeScope(aSTBNF, b: true);
 				num = 0;
 				jjtreeCloseNodeScope(aSTBNF);
-				JJTreeGlobals.productions.Add(aSTBNF2.Name, aSTBNF2);
+				JJTreeGlobals.Productions.Add(aSTBNF2.Name, aSTBNF2);
 			}
 			catch (System.Exception x11)
 			{
@@ -5236,7 +5236,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		jj_consume_token(55);
 		string packageName = Name();
 		jj_consume_token(91);
-		JJTreeGlobals.packageName = packageName;
+		JJTreeGlobals.PackageName = packageName;
 	}
 
 	
@@ -5473,17 +5473,17 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		{
 			jj_la1[62] = jj_gen;
 		}
-		if (string.Equals(@this, JJTreeGlobals.parserName))
+		if (string.Equals(@this, JJTreeGlobals.ParserName))
 		{
 			if (token != null)
 			{
-				JJTreeGlobals.parserImplements = token;
+				JJTreeGlobals.ParserImplements = token;
 			}
 			else
 			{
-				JJTreeGlobals.parserImplements = getToken(1);
+				JJTreeGlobals.ParserImplements = getToken(1);
 			}
-			JJTreeGlobals.parserClassBodyStart = getToken(1);
+			JJTreeGlobals.ParserClassBodyStart = getToken(1);
 		}
 		ClassOrInterfaceBody();
 	}

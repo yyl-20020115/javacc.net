@@ -197,8 +197,8 @@ public class JJTree
 		try
 		{
 			WriteLine(("Reading from file ")+(io.InputFileName)+(" . . ."));
-			JJTreeGlobals.toolList = JavaCCGlobals.getToolNames(text);
-			JJTreeGlobals.toolList.Add("JJTree");
+			JJTreeGlobals.ToolList = JavaCCGlobals.getToolNames(text);
+			JJTreeGlobals.ToolList.Add("JJTree");
 			try
 			{
 				try
@@ -255,7 +255,7 @@ public class JJTree
 					io.Out.Close();
 					NodeFiles.GenerateTreeConstants_java();
 					NodeFiles.GenerateVisitor_java();
-					JJTreeState.generateTreeState_java();
+					JJTreeState.GenerateTreeState_java();
 					WriteLine(("Annotated grammar generated successfully in ")+(io.OutputFileName));
 				}
 				catch (ParseException x5)

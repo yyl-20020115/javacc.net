@@ -98,6 +98,4 @@ internal class JJTreeOptions : Options
 		Options.OptionValues.Add("VISITOR_EXCEPTION", "");
 		Options.OptionValues.Add("JJTREE_OUTPUT_DIRECTORY", "");
 	}
-
-
 }

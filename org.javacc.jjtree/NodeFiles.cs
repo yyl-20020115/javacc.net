@@ -9,7 +9,7 @@ internal sealed class NodeFiles
     internal const string nodeVersion = "4.1";
     internal static HashSet<string> nodesGenerated = new();
 
-    internal static string NodeConstants => JJTreeGlobals.parserName + "TreeConstants";
+    internal static string NodeConstants => JJTreeGlobals.ParserName + "TreeConstants";
 
     internal static void GenerateTreeConstants_java()
     {
@@ -122,14 +122,14 @@ internal sealed class NodeFiles
 
     internal static void GeneratePrologue(TextWriter P_0)
     {
-        if (!string.Equals(JJTreeGlobals.nodePackageName, ""))
+        if (!string.Equals(JJTreeGlobals.NodePackageName, ""))
         {
-            P_0.WriteLine(("package ") + (JJTreeGlobals.nodePackageName) + (";")
+            P_0.WriteLine(("package ") + (JJTreeGlobals.NodePackageName) + (";")
                 );
             P_0.WriteLine();
-            if (!string.Equals(JJTreeGlobals.nodePackageName, JJTreeGlobals.packageName))
+            if (!string.Equals(JJTreeGlobals.NodePackageName, JJTreeGlobals.PackageName))
             {
-                P_0.WriteLine(("import ") + (JJTreeGlobals.packageName) + (".*;")
+                P_0.WriteLine(("import ") + (JJTreeGlobals.PackageName) + (".*;")
                 );
                 P_0.WriteLine();
             }
@@ -263,7 +263,7 @@ internal sealed class NodeFiles
         printWriter.WriteLine("  protected Node[] children;");
         printWriter.WriteLine("  protected int id;");
         printWriter.WriteLine("  protected Object value;");
-        printWriter.WriteLine(("  protected ")+(JJTreeGlobals.parserName)+(" parser;")
+        printWriter.WriteLine(("  protected ")+(JJTreeGlobals.ParserName)+(" parser;")
             );
         if (JJTreeOptions.TrackTokens)
         {
@@ -275,7 +275,7 @@ internal sealed class NodeFiles
         printWriter.WriteLine("    id = i;");
         printWriter.WriteLine("  }");
         printWriter.WriteLine("");
-        printWriter.WriteLine(("  public SimpleNode(")+(JJTreeGlobals.parserName)+(" p, int i) {")
+        printWriter.WriteLine(("  public SimpleNode(")+(JJTreeGlobals.ParserName)+(" p, int i) {")
             );
         printWriter.WriteLine("    this(i);");
         printWriter.WriteLine("    parser = p;");
@@ -287,7 +287,7 @@ internal sealed class NodeFiles
             printWriter.WriteLine("    return new SimpleNode(id);");
             printWriter.WriteLine("  }");
             printWriter.WriteLine("");
-            printWriter.WriteLine(("  public static Node jjtCreate(")+(JJTreeGlobals.parserName)+(" p, int id) {")
+            printWriter.WriteLine(("  public static Node jjtCreate(")+(JJTreeGlobals.ParserName)+(" p, int id) {")
                 );
             printWriter.WriteLine("    return new SimpleNode(p, id);");
             printWriter.WriteLine("  }");
@@ -417,7 +417,7 @@ internal sealed class NodeFiles
         printWriter.WriteLine("  }");
         printWriter.WriteLine();
         printWriter.WriteLine(("  public ")+(P_1)+("(")
-            +(JJTreeGlobals.parserName)
+            +(JJTreeGlobals.ParserName)
             +(" p, int id) {")
             );
         printWriter.WriteLine("    super(p, id);");
@@ -430,7 +430,7 @@ internal sealed class NodeFiles
                 );
             printWriter.WriteLine("  }");
             printWriter.WriteLine();
-            printWriter.WriteLine(("  public static Node jjtCreate(")+(JJTreeGlobals.parserName)+(" p, int id) {")
+            printWriter.WriteLine(("  public static Node jjtCreate(")+(JJTreeGlobals.ParserName)+(" p, int id) {")
                 );
             printWriter.WriteLine(("      return new ")+(P_1)+("(p, id);")
                 );
@@ -461,7 +461,7 @@ internal sealed class NodeFiles
 
     internal static string visitorClass()
     {
-        return (JJTreeGlobals.parserName)+("Visitor");
+        return (JJTreeGlobals.ParserName)+("Visitor");
     }
 
 

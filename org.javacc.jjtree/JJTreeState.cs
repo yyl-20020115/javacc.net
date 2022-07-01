@@ -4,7 +4,7 @@ namespace org.javacc.jjtree;
 
 internal sealed class JJTreeState
 {	
-	internal static void insertParserMembers(IO io)
+	internal static void InsertParserMembers(IO io)
 	{
 		string str = ((!Options.getStatic()) ? "" : "static ");
 		io.WriteLine();
@@ -16,7 +16,7 @@ internal sealed class JJTreeState
 	}
 
 	
-	internal static void generateTreeState_java()
+	internal static void GenerateTreeState_java()
 	{
 		var f = new FileInfo(
 			Path.Combine(JJTreeOptions.JJTreeOutputDirectory.FullName,
@@ -42,7 +42,7 @@ internal sealed class JJTreeState
 	}
 
 
-    private static string NameState() => ("JJT") + (JJTreeGlobals.parserName) + ("State");
+    private static string NameState() => ("JJT") + (JJTreeGlobals.ParserName) + ("State");
 
 
     private static void InsertState(TextWriter writer)
