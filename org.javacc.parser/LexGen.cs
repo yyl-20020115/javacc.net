@@ -214,13 +214,13 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		{
 			TokenProduction tokenProduction = (TokenProduction)enumeration.nextElement();
 			ArrayList respecs = tokenProduction.respecs;
-			for (int i = 0; i < (nint)tokenProduction.lexStates.LongLength; i++)
+			for (int i = 0; i < (nint)tokenProduction.LexStates.LongLength; i++)
 			{
 				ArrayList vector;
-				if ((vector = (ArrayList)allTpsForState.get(tokenProduction.lexStates[i])) == null)
+				if ((vector = (ArrayList)allTpsForState.get(tokenProduction.LexStates[i])) == null)
 				{
-					array[maxLexStates++] = tokenProduction.lexStates[i];
-					allTpsForState.Add(tokenProduction.lexStates[i], vector = new ArrayList());
+					array[maxLexStates++] = tokenProduction.LexStates[i];
+					allTpsForState.Add(tokenProduction.LexStates[i], vector = new ArrayList());
 				}
 				vector.Add(tokenProduction);
 			}
@@ -1402,7 +1402,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			for (int i = 0; i < vector2.Count; i++)
 			{
 				TokenProduction tokenProduction = (TokenProduction)vector2[i];
-				int kind = tokenProduction.kind;
+				int kind = tokenProduction.Kind;
 				int num2 = (tokenProduction.ignoreCase ? 1 : 0);
 				var respecs = tokenProduction.respecs;
 				if (i == 0)

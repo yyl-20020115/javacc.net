@@ -91,7 +91,7 @@ public sealed class JJDocMain : JJDocGlobals
 			try
 			{
 				javaCCParser.javacc_input();
-				JJDoc.start();
+				JJDoc.Start();
 				if (JavaCCErrors._Error_Count == 0)
 				{
 					if (JavaCCErrors._Warning_Count == 0)

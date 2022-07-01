@@ -1,107 +1,101 @@
 using org.javacc.parser;
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
-
 namespace org.javacc.jjdoc;
-
 
 public class JJDoc : JJDocGlobals
 {	
-	private static void emitTokenProductions(Generator P_0, ArrayList P_1)
+	private static void EmitTokenProductions(Generator generator, List<TokenProduction> list)
 	{
-		P_0.TokensStart();
-		foreach(TokenProduction tokenProduction in P_1)
+		generator.TokensStart();
+		foreach(var tokenProduction in list)
 		{
-			emitTopLevelSpecialTokens(tokenProduction.firstToken, P_0);
-			string text = "";
+			EmitTopLevelSpecialTokens(tokenProduction.firstToken, generator);
+			var text = "";
 			if (tokenProduction.isExplicit)
 			{
-				if (tokenProduction.lexStates == null)
+				if (tokenProduction.LexStates == null)
 				{
-					text = new StringBuilder().Append(text).Append("<*> ").ToString();
+					text +=("<*> ");
 				}
 				else
 				{
-					text = new StringBuilder().Append(text).Append("<").ToString();
-					for (int i = 0; i < (nint)tokenProduction.lexStates.LongLength; i++)
+					text +=("<");
+					for (int i = 0; i < tokenProduction.LexStates.Length; i++)
 					{
-						text = new StringBuilder().Append(text).Append(tokenProduction.lexStates[i]).ToString();
-						if (i < (nint)tokenProduction.lexStates.LongLength - 1)
+						text +=(tokenProduction.LexStates[i]);
+						if (i < tokenProduction.LexStates.Length - 1)
 						{
-							text = new StringBuilder().Append(text).Append(",").ToString();
+							text +=(",");
 						}
 					}
-					text = new StringBuilder().Append(text).Append("> ").ToString();
+					text +=("> ");
 				}
-				text = new StringBuilder().Append(text).Append(TokenProduction._KindImage[tokenProduction.kind]).ToString();
+				text +=(TokenProduction.KindImage[tokenProduction.Kind]);
 				if (tokenProduction.ignoreCase)
 				{
-					text = new StringBuilder().Append(text).Append(" [IGNORE_CASE]").ToString();
+					text +=(" [IGNORE_CASE]");
 				}
-				text = new StringBuilder().Append(text).Append(" : {\n").ToString();
+				text +=(" : {\n");
 				foreach(var regExprSpec in tokenProduction.respecs)
 				{
-					text = new StringBuilder().Append(text).Append(emitRE(regExprSpec.rexp)).ToString();
+					text +=(emitRE(regExprSpec.rexp));
 					if (regExprSpec.nsTok != null)
 					{
-						text = new StringBuilder().Append(text).Append(" : ").Append(regExprSpec.nsTok.image)
-							.ToString();
+						text +=(" : ")+(regExprSpec.nsTok.image)
+							;
 					}
-					text = new StringBuilder().Append(text).Append("\n").ToString();
-						text = new StringBuilder().Append(text).Append("| ").ToString();
+					text +=("\n");
+						text +=("| ");
 				}
-				text = new StringBuilder().Append(text).Append("}\n\n").ToString();
+				text +=("}\n\n");
 			}
 			if (!string.Equals(text, ""))
 			{
-				P_0.TokenStart(tokenProduction);
-				P_0.Text(text);
-				P_0.TokenEnd(tokenProduction);
+				generator.TokenStart(tokenProduction);
+				generator.Text(text);
+				generator.TokenEnd(tokenProduction);
 			}
 		}
-		P_0.TokensEnd();
+		generator.TokensEnd();
 	}
 
 	
-	private static void emitNormalProductions(Generator P_0, ArrayList P_1)
+	private static void EmitNormalProductions(Generator generator, List<NormalProduction> ps)
 	{
-		P_0.NonterminalsStart();
-		Enumeration enumeration = P_1.elements();
-		while (enumeration.hasMoreElements())
+		generator.NonterminalsStart();
+		foreach(var p in ps)
 		{
-			NormalProduction normalProduction = (NormalProduction)enumeration.nextElement();
-			emitTopLevelSpecialTokens(normalProduction.firstToken, P_0);
-			if (normalProduction is BNFProduction)
+			EmitTopLevelSpecialTokens(p.firstToken, generator);
+			if (p is BNFProduction b2)
 			{
-				P_0.ProductionStart(normalProduction);
-				if (normalProduction.expansion is Choice)
+				generator.ProductionStart(p);
+				if (p.Expansion is Choice c)
 				{
 					int b = 1;
-					Choice choice = (Choice)normalProduction.expansion;
-					Enumeration enumeration2 = choice.Choices.elements();
-					while (enumeration2.hasMoreElements())
+					foreach(var ex in c.Choices)
 					{
-						Expansion expansion = (Expansion)enumeration2.nextElement();
-						P_0.ExpansionStart(expansion, (byte)b != 0);
-						emitExpansionTree(expansion, P_0);
-						P_0.ExpansionEnd(expansion, (byte)b != 0);
+						generator.ExpansionStart(ex, (byte)b != 0);
+						emitExpansionTree(ex, generator);
+						generator.ExpansionEnd(ex, (byte)b != 0);
 						b = 0;
 					}
 				}
 				else
 				{
-					P_0.ExpansionStart(normalProduction.expansion, b: true);
-					emitExpansionTree(normalProduction.expansion, P_0);
-					P_0.ExpansionEnd(normalProduction.expansion, b: true);
+					generator.ExpansionStart(p.Expansion, b: true);
+					emitExpansionTree(p.Expansion, generator);
+					generator.ExpansionEnd(p.Expansion, b: true);
 				}
-				P_0.ProductionEnd(normalProduction);
+				generator.ProductionEnd(p);
 			}
-			else if (normalProduction is JavaCodeProduction)
+			else if (p is JavaCodeProduction j)
 			{
-				P_0.Javacode((JavaCodeProduction)normalProduction);
+				generator.Javacode(j);
 			}
 		}
-		P_0.NonterminalsEnd();
+		generator.NonterminalsEnd();
 	}
 
 	private static Token getPrecedingSpecialToken(Token P_0)
@@ -115,7 +109,7 @@ public class JJDoc : JJDocGlobals
 	}
 
 	
-	private static void emitTopLevelSpecialTokens(Token P_0, Generator P_1)
+	private static void EmitTopLevelSpecialTokens(Token P_0, Generator P_1)
 	{
 		if (P_0 == null)
 		{
@@ -129,7 +123,7 @@ public class JJDoc : JJDocGlobals
 			JavaCCGlobals.ccol = P_0.BeginColumn;
 			while (P_0 != null)
 			{
-				text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTokenOnly(P_0)).ToString();
+				text +=(JavaCCGlobals.printTokenOnly(P_0));
 				P_0 = P_0.next;
 			}
 		}
@@ -140,108 +134,104 @@ public class JJDoc : JJDocGlobals
 	}
 
 	
-	private static string emitRE(RegularExpression P_0)
+	private static string emitRE(RegularExpression re)
 	{
+		bool first = true;
+
 		string text = "";
-		int num = ((!string.Equals(P_0.label, "")) ? 1 : 0);
-		int num2 = ((P_0 is RJustName) ? 1 : 0);
-		int num3 = ((P_0 is REndOfFile) ? 1 : 0);
-		int num4 = ((P_0 is RStringLiteral) ? 1 : 0);
-		int num5 = ((P_0.tpContext != null) ? 1 : 0);
+		int num = ((!string.Equals(re.label, "")) ? 1 : 0);
+		int num2 = ((re is RJustName) ? 1 : 0);
+		int num3 = ((re is REndOfFile) ? 1 : 0);
+		int num4 = ((re is RStringLiteral) ? 1 : 0);
+		int num5 = ((re.tpContext != null) ? 1 : 0);
 		int num6 = ((num2 != 0 || num3 != 0 || num != 0 || (num4 == 0 && num5 != 0)) ? 1 : 0);
 		if (num6 != 0)
 		{
-			text = new StringBuilder().Append(text).Append("<").ToString();
+			text +=("<");
 			if (num2 == 0)
 			{
-				if (P_0.private_rexp)
+				if (re.private_rexp)
 				{
-					text = new StringBuilder().Append(text).Append("#").ToString();
+					text +=("#");
 				}
 				if (num != 0)
 				{
-					text = new StringBuilder().Append(text).Append(P_0.label).ToString();
-					text = new StringBuilder().Append(text).Append(": ").ToString();
+					text +=(re.label);
+					text +=(": ");
 				}
 			}
 		}
-		if (P_0 is RCharacterList)
+		if (re is RCharacterList)
 		{
-			RCharacterList rCharacterList = (RCharacterList)P_0;
+			RCharacterList rCharacterList = (RCharacterList)re;
 			if (rCharacterList.negated_list)
 			{
-				text = new StringBuilder().Append(text).Append("~").ToString();
+				text +=("~");
 			}
-			text = new StringBuilder().Append(text).Append("[").ToString();
-			Enumeration enumeration = rCharacterList.descriptors.elements();
-			while (enumeration.hasMoreElements())
+			text +=("[");
+			foreach(var obj in rCharacterList.descriptors)
 			{
-				object obj = enumeration.nextElement();
 				if (obj is SingleCharacter)
 				{
-					text = new StringBuilder().Append(text).Append("\"").ToString();
+					text +=("\"");
 					char[] value = new char[1] { ((SingleCharacter)obj).ch };
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.add_escapes(new string(value))).ToString();
-					text = new StringBuilder().Append(text).Append("\"").ToString();
+					text +=(JavaCCGlobals.add_escapes(new string(value)));
+					text +=("\"");
 				}
 				else if (obj is CharacterRange)
 				{
-					text = new StringBuilder().Append(text).Append("\"").ToString();
+					text +=("\"");
 					char[] value = new char[1] { ((CharacterRange)obj).Left };
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.add_escapes(new string(value))).ToString();
-					text = new StringBuilder().Append(text).Append("\"-\"").ToString();
+					text +=(JavaCCGlobals.add_escapes(new string(value)));
+					text +=("\"-\"");
 					value[0] = ((CharacterRange)obj).Right;
-					text = new StringBuilder().Append(text).Append(JavaCCGlobals.add_escapes(new string(value))).ToString();
-					text = new StringBuilder().Append(text).Append("\"").ToString();
+					text +=(JavaCCGlobals.add_escapes(new string(value)));
+					text +=("\"");
 				}
 				else
 				{
 					JJDocGlobals.error("Oops: unknown character list element type.");
 				}
-				if (enumeration.hasMoreElements())
+				if (!first)
 				{
-					text = new StringBuilder().Append(text).Append(",").ToString();
+					text +=(",");
 				}
+				first = false;
 			}
-			text = new StringBuilder().Append(text).Append("]").ToString();
+			text +=("]");
 		}
-		else if (P_0 is RChoice)
+		else if (re is RChoice rChoice)
 		{
-			RChoice rChoice = (RChoice)P_0;
-			Enumeration enumeration = rChoice.Choices.elements();
-			while (enumeration.hasMoreElements())
+			foreach(var regularExpression in rChoice.Choices)
 			{
-				RegularExpression regularExpression = (RegularExpression)enumeration.nextElement();
-				text = new StringBuilder().Append(text).Append(emitRE(regularExpression)).ToString();
-				if (enumeration.hasMoreElements())
+				text +=(emitRE(regularExpression as RegularExpression));
+				if (!first)
 				{
-					text = new StringBuilder().Append(text).Append(" | ").ToString();
+					text +=(" | ");
 				}
+				first = false;
 			}
 		}
-		else if (P_0 is REndOfFile)
+		else if (re is REndOfFile)
 		{
-			text = new StringBuilder().Append(text).Append("EOF").ToString();
+			text +=("EOF");
 		}
-		else if (P_0 is RJustName)
+		else if (re is RJustName)
 		{
-			RJustName rJustName = (RJustName)P_0;
-			text = new StringBuilder().Append(text).Append(rJustName.label).ToString();
+			RJustName rJustName = (RJustName)re;
+			text +=(rJustName.label);
 		}
-		else if (P_0 is ROneOrMore)
+		else if (re is ROneOrMore)
 		{
-			ROneOrMore rOneOrMore = (ROneOrMore)P_0;
-			text = new StringBuilder().Append(text).Append("(").ToString();
-			text = new StringBuilder().Append(text).Append(emitRE(rOneOrMore.regexpr)).ToString();
-			text = new StringBuilder().Append(text).Append(")+").ToString();
+			ROneOrMore rOneOrMore = (ROneOrMore)re;
+			text +=("(");
+			text +=(emitRE(rOneOrMore.RegExpr));
+			text +=(")+");
 		}
-		else if (P_0 is RSequence)
+		else if (re is RSequence rSequence)
 		{
-			RSequence rSequence = (RSequence)P_0;
-			Enumeration enumeration = rSequence.units.elements();
-			while (enumeration.hasMoreElements())
+			foreach(var regularExpression in rSequence.Units)
 			{
-				RegularExpression regularExpression = (RegularExpression)enumeration.nextElement();
 				int num7 = 0;
 				if (regularExpression is RChoice)
 				{
@@ -249,39 +239,40 @@ public class JJDoc : JJDocGlobals
 				}
 				if (num7 != 0)
 				{
-					text = new StringBuilder().Append(text).Append("(").ToString();
+					text +=("(");
 				}
-				text = new StringBuilder().Append(text).Append(emitRE(regularExpression)).ToString();
+				text +=(emitRE(regularExpression));
 				if (num7 != 0)
 				{
-					text = new StringBuilder().Append(text).Append(")").ToString();
+					text +=(")");
 				}
-				if (enumeration.hasMoreElements())
+				if (!first)
 				{
-					text = new StringBuilder().Append(text).Append(" ").ToString();
+					text +=(" ");
 				}
+				first=false;
 			}
 		}
-		else if (P_0 is RStringLiteral)
+		else if (re is RStringLiteral)
 		{
-			RStringLiteral rStringLiteral = (RStringLiteral)P_0;
-			text = new StringBuilder().Append(text).Append("\"").Append(JavaCCGlobals.add_escapes(rStringLiteral.image))
-				.Append("\"")
-				.ToString();
+			RStringLiteral rStringLiteral = (RStringLiteral)re;
+			text +=("\"")+(JavaCCGlobals.add_escapes(rStringLiteral.image))
+				+("\"")
+				;
 		}
-		else if (P_0 is RZeroOrMore)
+		else if (re is RZeroOrMore)
 		{
-			RZeroOrMore rZeroOrMore = (RZeroOrMore)P_0;
-			text = new StringBuilder().Append(text).Append("(").ToString();
-			text = new StringBuilder().Append(text).Append(emitRE(rZeroOrMore.regexpr)).ToString();
-			text = new StringBuilder().Append(text).Append(")*").ToString();
+			RZeroOrMore rZeroOrMore = (RZeroOrMore)re;
+			text +=("(");
+			text +=(emitRE(rZeroOrMore.regexpr));
+			text +=(")*");
 		}
-		else if (P_0 is RZeroOrOne)
+		else if (re is RZeroOrOne)
 		{
-			RZeroOrOne rZeroOrOne = (RZeroOrOne)P_0;
-			text = new StringBuilder().Append(text).Append("(").ToString();
-			text = new StringBuilder().Append(text).Append(emitRE(rZeroOrOne.regexpr)).ToString();
-			text = new StringBuilder().Append(text).Append(")?").ToString();
+			RZeroOrOne rZeroOrOne = (RZeroOrOne)re;
+			text +=("(");
+			text +=(emitRE(rZeroOrOne.regexpr));
+			text +=(")?");
 		}
 		else
 		{
@@ -289,53 +280,53 @@ public class JJDoc : JJDocGlobals
 		}
 		if (num6 != 0)
 		{
-			text = new StringBuilder().Append(text).Append(">").ToString();
+			text +=(">");
 		}
 		return text;
 	}
 
 	
-	private static void emitExpansionTree(Expansion P_0, Generator P_1)
+	private static void emitExpansionTree(Expansion exp, Generator generator)
 	{
-		if (P_0 is Action)
+		if (exp is Action a)
 		{
-			emitExpansionAction((Action)P_0, P_1);
+			emitExpansionAction(a, generator);
 		}
-		else if (P_0 is Choice)
+		else if (exp is Choice c)
 		{
-			emitExpansionChoice((Choice)P_0, P_1);
+			emitExpansionChoice(c, generator);
 		}
-		else if (P_0 is Lookahead)
+		else if (exp is Lookahead l)
 		{
-			emitExpansionLookahead((Lookahead)P_0, P_1);
+			emitExpansionLookahead(l, generator);
 		}
-		else if (P_0 is NonTerminal)
+		else if (exp is NonTerminal t)
 		{
-			emitExpansionNonTerminal((NonTerminal)P_0, P_1);
+			emitExpansionNonTerminal(t, generator);
 		}
-		else if (P_0 is OneOrMore)
+		else if (exp is OneOrMore o)
 		{
-			emitExpansionOneOrMore((OneOrMore)P_0, P_1);
+			emitExpansionOneOrMore(o, generator);
 		}
-		else if (P_0 is RegularExpression)
+		else if (exp is RegularExpression r)
 		{
-			emitExpansionRegularExpression((RegularExpression)P_0, P_1);
+			emitExpansionRegularExpression(r, generator);
 		}
-		else if (P_0 is Sequence)
+		else if (exp is Sequence s)
 		{
-			emitExpansionSequence((Sequence)P_0, P_1);
+			emitExpansionSequence(s, generator);
 		}
-		else if (P_0 is TryBlock)
+		else if (exp is TryBlock b)
 		{
-			emitExpansionTryBlock((TryBlock)P_0, P_1);
+			emitExpansionTryBlock(b, generator);
 		}
-		else if (P_0 is ZeroOrMore)
+		else if (exp is ZeroOrMore z)
 		{
-			emitExpansionZeroOrMore((ZeroOrMore)P_0, P_1);
+			emitExpansionZeroOrMore(z, generator);
 		}
-		else if (P_0 is ZeroOrOne)
+		else if (exp is ZeroOrOne e)
 		{
-			emitExpansionZeroOrOne((ZeroOrOne)P_0, P_1);
+			emitExpansionZeroOrOne(e, generator);
 		}
 		else
 		{
@@ -343,80 +334,78 @@ public class JJDoc : JJDocGlobals
 		}
 	}
 
-	private static void emitExpansionAction(Action P_0, Generator P_1)
+	private static void emitExpansionAction(Action a, Generator generator)
 	{
 	}
 
 	
-	private static void emitExpansionChoice(Choice P_0, Generator P_1)
+	private static void emitExpansionChoice(Choice c, Generator generator)
 	{
-		Enumeration enumeration = P_0.Choices.elements();
-		while (enumeration.hasMoreElements())
+		var first = true;
+		foreach(var expansion in c.Choices)
 		{
-			Expansion expansion = (Expansion)enumeration.nextElement();
-			emitExpansionTree(expansion, P_1);
-			if (enumeration.hasMoreElements())
+			emitExpansionTree(expansion, generator);
+			if (!first)
 			{
-				P_1.Text(" | ");
+				generator.Text(" | ");
 			}
+			first = false;
 		}
 	}
 
-	private static void emitExpansionLookahead(Lookahead P_0, Generator P_1)
+	private static void emitExpansionLookahead(Lookahead l, Generator generator)
 	{
 	}
 
 	
-	private static void emitExpansionNonTerminal(NonTerminal P_0, Generator P_1)
+	private static void emitExpansionNonTerminal(NonTerminal t, Generator generator)
 	{
-		P_1.NonTerminalStart(P_0);
-		P_1.Text(P_0.name);
-		P_1.NonTerminalEnd(P_0);
+		generator.NonTerminalStart(t);
+		generator.Text(t.name);
+		generator.NonTerminalEnd(t);
 	}
 
 	
-	private static void emitExpansionOneOrMore(OneOrMore P_0, Generator P_1)
+	private static void emitExpansionOneOrMore(OneOrMore o, Generator generator)
 	{
-		P_1.Text("( ");
-		emitExpansionTree(P_0.expansion, P_1);
-		P_1.Text(" )+");
+		generator.Text("( ");
+		emitExpansionTree(o.expansion, generator);
+		generator.Text(" )+");
 	}
 
 	
-	private static void emitExpansionRegularExpression(RegularExpression P_0, Generator P_1)
+	private static void emitExpansionRegularExpression(RegularExpression r, Generator generator)
 	{
-		string text = emitRE(P_0);
+		string text = emitRE(r);
 		if (!string.Equals(text, ""))
 		{
-			P_1.ReStart(P_0);
-			P_1.Text(text);
-			P_1.ReEnd(P_0);
+			generator.ReStart(r);
+			generator.Text(text);
+			generator.ReEnd(r);
 		}
 	}
 
 	
-	private static void emitExpansionSequence(Sequence P_0, Generator P_1)
+	private static void emitExpansionSequence(Sequence seq, Generator generator)
 	{
 		int num = 1;
-		Enumeration enumeration = P_0.units.elements();
-		while (enumeration.hasMoreElements())
+		foreach(var expansion in seq.units)
 		{
-			Expansion expansion = (Expansion)enumeration.nextElement();
 			if (!(expansion is Lookahead) && !(expansion is Action))
 			{
 				if (num == 0)
 				{
-					P_1.Text(" ");
+					generator.Text(" ");
 				}
 				int num2 = ((expansion is Choice || expansion is Sequence) ? 1 : 0);
 				if (num2 != 0)
 				{
-					P_1.Text("( ");
+					generator.Text("( ");
 				}
-				emitExpansionTree(expansion, P_1);
+				emitExpansionTree(expansion, generator);
 				if (num2 != 0)
 				{
-					P_1.Text(" )");
+					generator.Text(" )");
 				}
 				num = 0;
 			}
@@ -424,48 +413,46 @@ public class JJDoc : JJDocGlobals
 	}
 
 	
-	private static void emitExpansionTryBlock(TryBlock P_0, Generator P_1)
+	private static void emitExpansionTryBlock(TryBlock b, Generator generator)
 	{
-		int num = ((P_0.exp is Choice) ? 1 : 0);
+		int num = ((b.exp is Choice) ? 1 : 0);
 		if (num != 0)
 		{
-			P_1.Text("( ");
+			generator.Text("( ");
 		}
-		emitExpansionTree(P_0.exp, P_1);
+		emitExpansionTree(b.exp, generator);
 		if (num != 0)
 		{
-			P_1.Text(" )");
+			generator.Text(" )");
 		}
 	}
 
 	
-	private static void emitExpansionZeroOrMore(ZeroOrMore P_0, Generator P_1)
+	private static void emitExpansionZeroOrMore(ZeroOrMore z, Generator generator)
 	{
-		P_1.Text("( ");
-		emitExpansionTree(P_0.expansion, P_1);
-		P_1.Text(" )*");
+		generator.Text("( ");
+		emitExpansionTree(z.expansion, generator);
+		generator.Text(" )*");
 	}
 
 	
-	private static void emitExpansionZeroOrOne(ZeroOrOne P_0, Generator P_1)
+	private static void emitExpansionZeroOrOne(ZeroOrOne o, Generator generator)
 	{
-		P_1.Text("( ");
-		emitExpansionTree(P_0.expansion, P_1);
-		P_1.Text(" )?");
+		generator.Text("( ");
+		emitExpansionTree(o.expansion, generator);
+		generator.Text(" )?");
 	}
 
 	
-	public JJDoc()
-	{
-	}
-
+	public JJDoc() { }
 	
-	internal static void start()
+	
+	internal static void Start()
 	{
 		JJDocGlobals.generator = JJDocGlobals.GetGenerator();
 		JJDocGlobals.generator.DocumentStart();
-		emitTokenProductions(JJDocGlobals.generator, JavaCCGlobals.rexprlist);
-		emitNormalProductions(JJDocGlobals.generator, JavaCCGlobals.bnfproductions);
+		EmitTokenProductions(JJDocGlobals.generator, JavaCCGlobals.rexprlist);
+		EmitNormalProductions(JJDocGlobals.generator, JavaCCGlobals.bnfproductions);
 		JJDocGlobals.generator.DocumentEnd();
 	}
 

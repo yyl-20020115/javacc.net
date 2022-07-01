@@ -2,13 +2,13 @@ namespace org.javacc.parser;
 
 public class ROneOrMore : RegularExpression
 {
-	public RegularExpression regexpr;
+	public RegularExpression RegExpr;
 	
 	public ROneOrMore(Token t, RegularExpression re)
 	{
 		Line = t.BeginLine;
 		Column = t.BeginColumn;
-		regexpr = re;
+		RegExpr = re;
 	}
 
 	
@@ -17,7 +17,7 @@ public class ROneOrMore : RegularExpression
 		var nfa = new Nfa();
 		var start = nfa.Start;
 		var end = nfa.End;
-		var nfa2 = regexpr.GenerateNfa(b);
+		var nfa2 = RegExpr.GenerateNfa(b);
 		start.AddMove(nfa2.Start);
 		nfa2.End.AddMove(nfa2.Start);
 		nfa2.End.AddMove(end);

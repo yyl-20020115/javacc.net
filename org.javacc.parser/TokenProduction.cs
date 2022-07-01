@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 
 namespace org.javacc.parser;
@@ -6,40 +6,21 @@ namespace org.javacc.parser;
 public class TokenProduction
 {
 	public const int TOKEN = 0;
-
 	public const int SKIP = 1;
-
 	public const int MORE = 2;
-
 	public const int SPECIAL = 3;
-
-	internal static string[] _KindImage =
+	public static string[] KindImage =
 		 new string[] { "TOKEN", "SKIP", "MORE", "SPECIAL" };
-
-	public int line;
-
-	public int column;
-
-	public string[] lexStates;
-
-	public int kind;
-
+	public int Line = 0;
+	public int Column = 0;
+	public string[] LexStates = Array.Empty<string>();
+	public int Kind = 0;
 	public List<RegExprSpec> respecs = new();
-
-	public bool isExplicit;
-
-	public bool ignoreCase;
-
+	public bool isExplicit = true;
+	public bool ignoreCase = false;
 	public Token firstToken;
-
 	public Token lastToken;
-
-
-    public static string[] KindImage => _KindImage;
-
     public TokenProduction()
 	{
-		isExplicit = true;
-		ignoreCase = false;
 	}
 }

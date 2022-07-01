@@ -224,7 +224,7 @@ public class RStringLiteral : RegularExpression
 			}
 			try
 			{
-				if ((vector2 = (ArrayList)P_1.epsilonMoves.clone()) == null || vector2.Count == 0)
+				if ((vector2 = (ArrayList)P_1.epsilonMoves.Clone()) == null || vector2.Count == 0)
 				{
 					DumpNfaStartStatesCode(statesForPos, P_0);
 					return;

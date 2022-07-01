@@ -46,7 +46,7 @@ public sealed class LookaheadWalk
 				
 				return result;
 			}
-			ArrayList result2 = genFirstSet(v, prod.expansion);
+			ArrayList result2 = genFirstSet(v, prod.Expansion);
 			
 			return result2;
 		}

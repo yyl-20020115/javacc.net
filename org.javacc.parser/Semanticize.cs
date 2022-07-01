@@ -84,7 +84,7 @@ public class Semanticize : JavaCCGlobals
 						.ToString());
 					return;
 				}
-				if (rJustName == root && !rJustName.tpContext.isExplicit && regularExpression.tpContext.kind != 0)
+				if (rJustName == root && !rJustName.tpContext.isExplicit && regularExpression.tpContext.Kind != 0)
 				{
 					JavaCCErrors.Semantic_Error(P_0, new StringBuilder().Append("Token name \"").Append(rJustName.label).Append("\" refers to a non-token ")
 						.Append("(SKIP, MORE, IGNORE_IN_BNF) regular expression.")
@@ -402,7 +402,7 @@ public class Semanticize : JavaCCGlobals
 		Enumeration enumeration = JavaCCGlobals.bnfproductions.elements();
 		while (enumeration.hasMoreElements())
 		{
-			ExpansionTreeWalker.postOrderWalk(((NormalProduction)enumeration.nextElement()).expansion, new LookaheadFixer());
+			ExpansionTreeWalker.postOrderWalk(((NormalProduction)enumeration.nextElement()).Expansion, new LookaheadFixer());
 		}
 		enumeration = JavaCCGlobals.bnfproductions.elements();
 		while (enumeration.hasMoreElements())
@@ -416,7 +416,7 @@ public class Semanticize : JavaCCGlobals
 		enumeration = JavaCCGlobals.bnfproductions.elements();
 		while (enumeration.hasMoreElements())
 		{
-			ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration.nextElement()).expansion, new ProductionDefinedChecker());
+			ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration.nextElement()).Expansion, new ProductionDefinedChecker());
 		}
 		enumeration = JavaCCGlobals.rexprlist.elements();
 		while (enumeration.hasMoreElements())
@@ -434,11 +434,11 @@ public class Semanticize : JavaCCGlobals
 				}
 				if (regExprSpec.rexp is REndOfFile)
 				{
-					if (tokenProduction.lexStates != null)
+					if (tokenProduction.LexStates != null)
 					{
 						JavaCCErrors.Semantic_Error(regExprSpec.rexp, "EOF action/state change must be specified for all states, i.e., <*>TOKEN:.");
 					}
-					if (tokenProduction.kind != 0)
+					if (tokenProduction.Kind != 0)
 					{
 						JavaCCErrors.Semantic_Error(regExprSpec.rexp, "EOF action/state change can be specified only in a TOKEN specification.");
 					}
@@ -505,23 +505,23 @@ public class Semanticize : JavaCCGlobals
 			TokenProduction tokenProduction = (TokenProduction)enumeration.nextElement();
 			ArrayList respecs = tokenProduction.respecs;
 			Enumeration enumeration3;
-			if (tokenProduction.lexStates == null)
+			if (tokenProduction.LexStates == null)
 			{
-				tokenProduction.lexStates = new string[JavaCCGlobals.lexstate_I2S.Count];
+				tokenProduction.LexStates = new string[JavaCCGlobals.lexstate_I2S.Count];
 				int num = 0;
 				enumeration3 = JavaCCGlobals.lexstate_I2S.elements();
 				while (enumeration3.hasMoreElements())
 				{
-					string[] lexStates = tokenProduction.lexStates;
+					string[] lexStates = tokenProduction.LexStates;
 					int num2 = num;
 					num++;
 					lexStates[num2] = (string)enumeration3.nextElement();
 				}
 			}
-			Hashtable[] array = new Hashtable[(nint)tokenProduction.lexStates.LongLength];
-			for (int i = 0; i < (nint)tokenProduction.lexStates.LongLength; i++)
+			Hashtable[] array = new Hashtable[(nint)tokenProduction.LexStates.LongLength];
+			for (int i = 0; i < (nint)tokenProduction.LexStates.LongLength; i++)
 			{
-				array[i] = (Hashtable)JavaCCGlobals.simple_tokens_table.get(tokenProduction.lexStates[i]);
+				array[i] = (Hashtable)JavaCCGlobals.simple_tokens_table.get(tokenProduction.LexStates[i]);
 			}
 			enumeration3 = respecs.elements();
 			while (enumeration3.hasMoreElements())
@@ -609,7 +609,7 @@ public class Semanticize : JavaCCGlobals
 						}
 						else if (tokenProduction.isExplicit)
 						{
-							if (string.Equals(tokenProduction.lexStates[j], "DEFAULT"))
+							if (string.Equals(tokenProduction.LexStates[j], "DEFAULT"))
 							{
 								JavaCCErrors.Semantic_Error(rStringLiteral, new StringBuilder().Append("Duplicate definition of string token \"").Append(rStringLiteral.image).Append("\".")
 									.ToString());
@@ -617,15 +617,15 @@ public class Semanticize : JavaCCGlobals
 							else
 							{
 								JavaCCErrors.Semantic_Error(rStringLiteral, new StringBuilder().Append("Duplicate definition of string token \"").Append(rStringLiteral.image).Append("\" in lexical state \"")
-									.Append(tokenProduction.lexStates[j])
+									.Append(tokenProduction.LexStates[j])
 									.Append("\".")
 									.ToString());
 							}
 						}
-						else if (regularExpression2.tpContext.kind != 0)
+						else if (regularExpression2.tpContext.Kind != 0)
 						{
 							JavaCCErrors.Semantic_Error(rStringLiteral, new StringBuilder().Append("String token \"").Append(rStringLiteral.image).Append("\" has been defined as a \"")
-								.Append(TokenProduction._KindImage[regularExpression2.tpContext.kind])
+								.Append(TokenProduction._KindImage[regularExpression2.tpContext.Kind])
 								.Append("\" token.")
 								.ToString());
 						}
@@ -749,7 +749,7 @@ public class Semanticize : JavaCCGlobals
 			while (enumeration5.hasMoreElements())
 			{
 				NormalProduction normalProduction2 = (NormalProduction)enumeration5.nextElement();
-				if (emptyExpansionExists(normalProduction2.expansion) && !normalProduction2.emptyPossible)
+				if (emptyExpansionExists(normalProduction2.Expansion) && !normalProduction2.emptyPossible)
 				{
 					NormalProduction normalProduction3 = normalProduction2;
 					int num5 = 1;
@@ -764,13 +764,13 @@ public class Semanticize : JavaCCGlobals
 			Enumeration enumeration5 = JavaCCGlobals.bnfproductions.elements();
 			while (enumeration5.hasMoreElements())
 			{
-				ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration5.nextElement()).expansion, new EmptyChecker());
+				ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration5.nextElement()).Expansion, new EmptyChecker());
 			}
 			enumeration5 = JavaCCGlobals.bnfproductions.elements();
 			while (enumeration5.hasMoreElements())
 			{
 				NormalProduction normalProduction2 = (NormalProduction)enumeration5.nextElement();
-				addLeftMost(normalProduction2, normalProduction2.expansion);
+				addLeftMost(normalProduction2, normalProduction2.Expansion);
 			}
 			enumeration5 = JavaCCGlobals.bnfproductions.elements();
 			while (enumeration5.hasMoreElements())
@@ -814,7 +814,7 @@ public class Semanticize : JavaCCGlobals
 				enumeration5 = JavaCCGlobals.bnfproductions.elements();
 				while (enumeration5.hasMoreElements())
 				{
-					ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration5.nextElement()).expansion, new LookaheadChecker());
+					ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration5.nextElement()).Expansion, new LookaheadChecker());
 				}
 			}
 		}
@@ -1028,7 +1028,7 @@ public class Semanticize : JavaCCGlobals
 			}
 			if (P_0 is RSequence)
 			{
-				Enumeration enumeration = ((RSequence)P_0).units.elements();
+				Enumeration enumeration = ((RSequence)P_0).Units.elements();
 				while (enumeration.hasMoreElements())
 				{
 					if (rexpWalk((RegularExpression)enumeration.nextElement()))
@@ -1040,7 +1040,7 @@ public class Semanticize : JavaCCGlobals
 			}
 			if (P_0 is ROneOrMore)
 			{
-				bool result = rexpWalk(((ROneOrMore)P_0).regexpr);
+				bool result = rexpWalk(((ROneOrMore)P_0).RegExpr);
 				
 				return result;
 			}

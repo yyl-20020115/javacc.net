@@ -1,12 +1,13 @@
 using System.Collections;
+using System.Collections.Generic;
 
 namespace org.javacc.parser;
 
 public class RCharacterList : RegularExpression
 {
-	public bool negated_list;
+	public bool negated_list=false;
 
-	public ArrayList descriptors;
+	public List<object> descriptors = new();
 
 
 	internal static char[] diffLowerCaseRanges;
@@ -14,14 +15,11 @@ public class RCharacterList : RegularExpression
 
 	internal static char[] diffUpperCaseRanges;
 
-	internal bool transformed;
+	internal bool transformed = false;
 
 	
 	internal RCharacterList()
 	{
-		negated_list = false;
-		descriptors = new ArrayList();
-		transformed = false;
 	}
 
 	
@@ -124,7 +122,7 @@ public class RCharacterList : RegularExpression
 	
 	internal virtual void SortDescriptors()
 	{
-		ArrayList vector = new ArrayList(descriptors.Count);
+		List<object> vector = new (descriptors.Count);
 		int num = 0;
 		for (int i = 0; i < descriptors.Count; i++)
 		{
@@ -218,14 +216,14 @@ public class RCharacterList : RegularExpression
 						}
 					}
 				}
-				vector.Insert(num, char);//.insertElementAt(characterRange, num2);
+				vector.Insert(num, characterRange);//.insertElementAt(characterRange, num2);
 				num++;
 				break;
 				IL_0268:
 				num2++;
 			}
 		}
-		vector.TrimToSize();
+		vector.TrimExcess();
 		descriptors = vector;
 	}
 
@@ -233,7 +231,7 @@ public class RCharacterList : RegularExpression
 	internal virtual void RemoveNegation()
 	{
 		SortDescriptors();
-		ArrayList vector = new ArrayList();
+		List<object> vector = new ();
 		int num = -1;
 		for (int i = 0; i < descriptors.Count; i++)
 		{
@@ -286,9 +284,9 @@ public class RCharacterList : RegularExpression
 		return (P_0.Left >= P_1.Left && P_0.Right <= P_1.Right) ? true : false;
 	}
 
-	internal static bool Overlaps(CharacterRange P_0, CharacterRange P_1)
+	internal static bool Overlaps(CharacterRange cr1, CharacterRange cr2)
 	{
-		return (P_0.Left <= P_1.Right && P_0.Right > P_1.Right) ? true : false;
+		return (cr1.Left <= cr2.Right && cr1.Right > cr2.Right) ? true : false;
 	}
 
 	
@@ -336,13 +334,13 @@ public class RCharacterList : RegularExpression
 	}
 
 	
-	internal RCharacterList(char P_0)
+	internal RCharacterList(char ch)
 	{
 		negated_list = false;
-		descriptors = new ArrayList();
+		descriptors = new ();
 		transformed = false;
-		descriptors = new ArrayList();
-		descriptors.Add(new SingleCharacter(P_0));
+		descriptors = new ();
+		descriptors.Add(new SingleCharacter(ch));
 		negated_list = false;
 		ordinal = int.MaxValue;
 	}

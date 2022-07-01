@@ -128,7 +128,7 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 						.ToString());
 					continue;
 				}
-				if (regularExpression.tpContext.kind == 0)
+				if (regularExpression.tpContext.Kind == 0)
 				{
 					JavaCCErrors.Warning(regularExpression, "Consider giving this non-string token a label for better error reporting.");
 				}

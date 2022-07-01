@@ -26,7 +26,7 @@ public class JavaCCGlobals
 
 	public static ArrayList cu_from_insertion_point_2;
 
-	public static ArrayList bnfproductions;
+	public static List<NormalProduction> bnfproductions;
 
 	public static Hashtable production_table;
 
@@ -36,7 +36,7 @@ public class JavaCCGlobals
 
 	public static ArrayList token_mgr_decls;
 
-	public static ArrayList rexprlist;
+	public static List<TokenProduction> rexprlist;
 
 	public static int tokenCount;
 
@@ -717,24 +717,24 @@ public class JavaCCGlobals
 		jjtreeGenerated = false;
 		toolNames = null;
 		cu_name = null;
-		cu_to_insertion_point_1 = new ArrayList();
-		cu_to_insertion_point_2 = new ArrayList();
-		cu_from_insertion_point_2 = new ArrayList();
-		bnfproductions = new ArrayList();
-		production_table = new Hashtable();
+		cu_to_insertion_point_1 = new ();
+		cu_to_insertion_point_2 = new ();
+		cu_from_insertion_point_2 = new ();
+		bnfproductions = new ();
+		production_table = new ();
 		lexstate_S2I = new ();
-		lexstate_I2S = new Hashtable();
+		lexstate_I2S = new ();
 		token_mgr_decls = null;
-		rexprlist = new ArrayList();
+		rexprlist = new ();
 		tokenCount = 0;
-		named_tokens_table = new Hashtable();
-		ordered_named_tokens = new ArrayList();
-		names_of_tokens = new Hashtable();
-		rexps_of_tokens = new Hashtable();
-		simple_tokens_table = new Hashtable();
+		named_tokens_table = new ();
+		ordered_named_tokens = new();
+		names_of_tokens = new();
+		rexps_of_tokens = new();
+		simple_tokens_table = new();
 		maskindex = 0;
 		jj2index = 0;
-		maskVals = new ArrayList();
+		maskVals = new();
 		cline = 0;
 		ccol = 0;
 		actForEof = null;
@@ -743,21 +743,21 @@ public class JavaCCGlobals
 
 	static JavaCCGlobals()
 	{
-		cu_to_insertion_point_1 = new ArrayList();
-		cu_to_insertion_point_2 = new ArrayList();
-		cu_from_insertion_point_2 = new ArrayList();
-		bnfproductions = new ArrayList();
-		production_table = new Hashtable();
+		cu_to_insertion_point_1 = new();
+		cu_to_insertion_point_2 = new();
+		cu_from_insertion_point_2 = new();
+		bnfproductions = new();
+		production_table = new();
 		lexstate_S2I = new ();
-		lexstate_I2S = new Hashtable();
-		rexprlist = new ArrayList();
-		named_tokens_table = new Hashtable();
-		ordered_named_tokens = new ArrayList();
-		names_of_tokens = new Hashtable();
-		rexps_of_tokens = new Hashtable();
-		simple_tokens_table = new Hashtable();
+		lexstate_I2S = new();
+		rexprlist = new();
+		named_tokens_table = new();
+		ordered_named_tokens = new();
+		names_of_tokens = new();
+		rexps_of_tokens = new();
+		simple_tokens_table = new();
 		maskindex = 0;
 		jj2index = 0;
-		maskVals = new ArrayList();
+		maskVals = new();
 	}
 }

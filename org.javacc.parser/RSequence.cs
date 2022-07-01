@@ -4,7 +4,7 @@ namespace org.javacc.parser;
 
 public class RSequence : RegularExpression
 {
-	public List<RegularExpression> units = new();
+	public List<RegularExpression> Units = new();
 	
 	internal RSequence()
 	{
@@ -14,15 +14,15 @@ public class RSequence : RegularExpression
 	internal RSequence(List<RegularExpression> units)
 	{
 		ordinal = int.MaxValue;
-		this.units = units;
+		this.Units = units;
 	}
 
 	
 	public override Nfa GenerateNfa(bool b)
 	{
-		if (units.Count == 1)
+		if (Units.Count == 1)
 		{
-			Nfa result = units[0].GenerateNfa(b);
+			Nfa result = Units[0].GenerateNfa(b);
 			
 			return result;
 		}
@@ -30,12 +30,12 @@ public class RSequence : RegularExpression
 		NfaState start = nfa.Start;
 		NfaState end = nfa.End;
 		Nfa nfa2 = null;
-		var regularExpression = units[0];
+		var regularExpression = Units[0];
 		var nfa3 = regularExpression.GenerateNfa(b);
 		start.AddMove(nfa3.Start);
-		for (int i = 1; i < units.Count; i++)
+		for (int i = 1; i < Units.Count; i++)
 		{
-			regularExpression = units[i];
+			regularExpression = Units[i];
 			nfa2 = regularExpression.GenerateNfa(b);
 			nfa3.End.AddMove(nfa2.Start);
 			nfa3 = nfa2;

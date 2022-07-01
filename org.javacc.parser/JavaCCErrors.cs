@@ -68,8 +68,8 @@ public sealed class JavaCCErrors
 		}
 		else if (_loc is TokenProduction tokenProduction)
 		{
-			Console.Error.Write(("Line ")+(tokenProduction.line)+(", Column ")
-				+(tokenProduction.column)
+			Console.Error.Write(("Line ")+(tokenProduction.Line)+(", Column ")
+				+(tokenProduction.Column)
 				+(": "))
 				;
 		}

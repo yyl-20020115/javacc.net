@@ -57,7 +57,7 @@ public sealed class ExpansionTreeWalker
 		}
 		else if (exp is RSequence q)
 		{
-			Enumeration enumeration = ((RSequence)exp).units.elements();
+			Enumeration enumeration = ((RSequence)exp).Units.elements();
 			while (enumeration.hasMoreElements())
 			{
 				PreOrderWalk((Expansion)enumeration.nextElement(), tree);
@@ -65,7 +65,7 @@ public sealed class ExpansionTreeWalker
 		}
 		else if (exp is ROneOrMore ro)
 		{
-			PreOrderWalk(((ROneOrMore)exp).regexpr, tree);
+			PreOrderWalk(((ROneOrMore)exp).RegExpr, tree);
 		}
 		else if (exp is RZeroOrMore rz)
 		{
@@ -136,7 +136,7 @@ public sealed class ExpansionTreeWalker
 			}
 			else if (P_0 is RSequence rs)
 			{
-				Enumeration enumeration = ((RSequence)P_0).units.elements();
+				Enumeration enumeration = ((RSequence)P_0).Units.elements();
 				while (enumeration.hasMoreElements())
 				{
 					postOrderWalk((Expansion)enumeration.nextElement(), P_1);
@@ -144,7 +144,7 @@ public sealed class ExpansionTreeWalker
 			}
 			else if (P_0 is ROneOrMore ro)
 			{
-				postOrderWalk(((ROneOrMore)P_0).regexpr, P_1);
+				postOrderWalk(((ROneOrMore)P_0).RegExpr, P_1);
 			}
 			else if (P_0 is RZeroOrMore rz)
 			{

@@ -21,9 +21,9 @@ public class NormalProduction :Expansion
 
 	public ArrayList parameter_list_tokens;
 
-	public ArrayList throws_list;
+	public List<Token> throws_list;
 
-	public Expansion expansion;
+	public Expansion Expansion;
 
 	internal bool emptyPossible;
 
@@ -40,7 +40,7 @@ public class NormalProduction :Expansion
 	protected internal string eol;
 
 	
-	protected internal virtual StringBuilder dumpPrefix(int i)
+	protected internal virtual StringBuilder DumpPrefix(int i)
 	{
 		var stringBuilder = new StringBuilder(128);
 		for (int j = 0; j < i; j++)
@@ -53,10 +53,10 @@ public class NormalProduction :Expansion
 	
 	public NormalProduction()
 	{
-		parents = new ArrayList();
-		return_type_tokens = new ArrayList();
-		parameter_list_tokens = new ArrayList();
-		throws_list = new ArrayList();
+		parents = new ();
+		return_type_tokens = new ();
+		parameter_list_tokens = new ();
+		throws_list = new ();
 		emptyPossible = false;
 		leftExpansions = new NormalProduction[10];
 		leIndex = 0;
@@ -65,17 +65,17 @@ public class NormalProduction :Expansion
 	}
 
 	
-	public virtual StringBuilder dump(int i, HashSet<Expansion> s)
+	public new virtual StringBuilder Dump(int i, HashSet<Expansion> s)
 	{
-		var stringBuilder = dumpPrefix(i).Append((this.GetHashCode())).Append(' ').Append(this.GetType().Name)
+		var stringBuilder = DumpPrefix(i).Append((this.GetHashCode())).Append(' ').Append(this.GetType().Name)
 			.Append(' ')
 			.Append(lhs);
 		if (!s.Contains(this))
 		{
 			s.Add(this);
-			if (expansion != null)
+			if (Expansion != null)
 			{
-				stringBuilder.Append(eol).Append(expansion.Dump(i + 1, s));
+				stringBuilder.Append(eol).Append(Expansion.Dump(i + 1, s));
 			}
 		}
 		return stringBuilder;

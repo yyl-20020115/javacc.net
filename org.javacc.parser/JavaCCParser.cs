@@ -586,7 +586,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		{
 			jj_la1[6] = jj_gen;
 		}
-		Block(javaCodeProduction.code_tokens);
+		Block(javaCodeProduction.CodeTokens);
 		javaCodeProduction.lastToken = getToken(0);
 		JavaCCParserInternals.addproduction(javaCodeProduction);
 	}
@@ -599,9 +599,9 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		TokenProduction tokenProduction2 = tokenProduction;
 		tokenProduction2.firstToken = token;
 		Token token2 = token;
-		tokenProduction.line = token2.BeginLine;
-		tokenProduction.column = token2.BeginColumn;
-		tokenProduction.lexStates = new string[1] { "DEFAULT" };
+		tokenProduction.Line = token2.BeginLine;
+		tokenProduction.Column = token2.BeginColumn;
+		tokenProduction.LexStates = new string[1] { "DEFAULT" };
 		if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 101)
 		{
 			if (jj_2_1(2))
@@ -609,7 +609,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 				jj_consume_token(101);
 				jj_consume_token(116);
 				jj_consume_token(132);
-				tokenProduction.lexStates = null;
+				tokenProduction.LexStates = null;
 			}
 			else
 			{
@@ -632,10 +632,10 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 				}
 				jj_la1[11] = jj_gen;
 				jj_consume_token(132);
-				tokenProduction.lexStates = new string[vector.Count];
+				tokenProduction.LexStates = new string[vector.Count];
 				for (int i = 0; i < vector.Count; i++)
 				{
-					tokenProduction.lexStates[i] = (string)vector[i];
+					tokenProduction.LexStates[i] = (string)vector[i];
 				}
 			}
 		}
@@ -644,7 +644,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 			jj_la1[13] = jj_gen;
 		}
 		regexpr_kind(tokenProduction);
-		if (tokenProduction.kind != 0 && Options.getUserTokenManager())
+		if (tokenProduction.Kind != 0 && Options.getUserTokenManager())
 		{
 			JavaCCErrors.Warning(getToken(0), "Regular expression is being treated as if it were a TOKEN since option USER_TOKEN_MANAGER has been set to true.");
 		}
@@ -1043,19 +1043,19 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		{
 		case 6:
 			jj_consume_token(6);
-			tp.kind = 0;
+			tp.Kind = 0;
 			break;
 		case 7:
 			jj_consume_token(7);
-			tp.kind = 3;
+			tp.Kind = 3;
 			break;
 		case 9:
 			jj_consume_token(9);
-			tp.kind = 1;
+			tp.Kind = 1;
 			break;
 		case 8:
 			jj_consume_token(8);
-			tp.kind = 2;
+			tp.Kind = 2;
 			break;
 		default:
 			jj_la1[16] = jj_gen;
@@ -1216,7 +1216,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 			if (c.member is RJustName)
 			{
 				RSequence rSequence = new RSequence();
-				rSequence.units.Add(c.member);
+				rSequence.Units.Add(c.member);
 				regularExpression = rSequence;
 			}
 			else
@@ -1917,11 +1917,11 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 				rSequence = new RSequence();
 				rSequence.Line = ((RegularExpression)c.member).Line;
 				rSequence.Column = ((RegularExpression)c.member).Column;
-				rSequence.units.Add(c.member);
-				rSequence.units.Add(container.member);
+				rSequence.Units.Add(c.member);
+				rSequence.Units.Add(container.member);
 				break;
 			default:
-				rSequence.units.Add(container.member);
+				rSequence.Units.Add(container.member);
 				break;
 			}
 			switch ((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk())

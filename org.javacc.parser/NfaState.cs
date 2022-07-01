@@ -244,7 +244,7 @@ public class NfaState
 		{
 			NfaState nfaState = (NfaState)allStates[index];
 			nfaState.epsilonMoveArray = new NfaState[nfaState.epsilonMoves.Count];
-			nfaState.epsilonMoves.copyInto(nfaState.epsilonMoveArray);
+			nfaState.epsilonMoves.CopyInto(nfaState.epsilonMoveArray);
 		}
 	}
 

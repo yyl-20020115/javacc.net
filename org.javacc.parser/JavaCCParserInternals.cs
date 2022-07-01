@@ -120,37 +120,37 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 	protected internal static void production_addexpansion(BNFProduction bnfp, Expansion e)
 	{
 		e.parent = bnfp;
-		bnfp.expansion = e;
+		bnfp.Expansion = e;
 	}
 
 	
 	protected internal static void addregexpr(TokenProduction tp)
 	{
 		JavaCCGlobals.rexprlist.Add(tp);
-		if (Options.getUserTokenManager() && (tp.lexStates == null || (nint)tp.lexStates.LongLength != 1 || !string.Equals(tp.lexStates[0], "DEFAULT")))
+		if (Options.getUserTokenManager() && (tp.LexStates == null || (nint)tp.LexStates.LongLength != 1 || !string.Equals(tp.LexStates[0], "DEFAULT")))
 		{
 			JavaCCErrors.Warning(tp, "Ignoring lexical state specifications since option USER_TOKEN_MANAGER has been set to true.");
 		}
-		if (tp.lexStates == null)
+		if (tp.LexStates == null)
 		{
 			return;
 		}
-		for (int i = 0; i < (nint)tp.lexStates.LongLength; i++)
+		for (int i = 0; i < (nint)tp.LexStates.LongLength; i++)
 		{
 			for (int j = 0; j < i; j++)
 			{
-				if (string.Equals(tp.lexStates[i], tp.lexStates[j]))
+				if (string.Equals(tp.LexStates[i], tp.LexStates[j]))
 				{
-					JavaCCErrors.Parse_Error(tp, new StringBuilder().Append("Multiple occurrence of \"").Append(tp.lexStates[i]).Append("\" in lexical state list.")
+					JavaCCErrors.Parse_Error(tp, new StringBuilder().Append("Multiple occurrence of \"").Append(tp.LexStates[i]).Append("\" in lexical state list.")
 						.ToString());
 				}
 			}
-			if (!JavaCCGlobals.lexstate_S2I.TryGetValue(tp.lexStates[i], out var _))
+			if (!JavaCCGlobals.lexstate_S2I.TryGetValue(tp.LexStates[i], out var _))
 			{
 				int integer = (nextFreeLexState++);
-				JavaCCGlobals.lexstate_S2I.Add(tp.lexStates[i], integer);
-				JavaCCGlobals.lexstate_I2S.Add(integer, tp.lexStates[i]);
-				JavaCCGlobals.simple_tokens_table.Add(tp.lexStates[i], new Hashtable());
+				JavaCCGlobals.lexstate_S2I.Add(tp.LexStates[i], integer);
+				JavaCCGlobals.lexstate_I2S.Add(integer, tp.LexStates[i]);
+				JavaCCGlobals.simple_tokens_table.Add(tp.LexStates[i], new Hashtable());
 			}
 		}
 	}
@@ -175,11 +175,11 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 	{
 		if (!(re is REndOfFile))
 		{
-			TokenProduction tokenProduction = new TokenProduction();
+			var tokenProduction = new TokenProduction();
 			tokenProduction.isExplicit = false;
-			tokenProduction.lexStates = new string[1] { "DEFAULT" };
-			tokenProduction.kind = 0;
-			RegExprSpec regExprSpec = new RegExprSpec();
+			tokenProduction.LexStates = new string[1] { "DEFAULT" };
+			tokenProduction.Kind = 0;
+			var regExprSpec = new RegExprSpec();
 			regExprSpec.rexp = re;
 			regExprSpec.rexp.tpContext = tokenProduction;
 			regExprSpec.act = new Action();
