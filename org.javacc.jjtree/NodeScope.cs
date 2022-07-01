@@ -294,7 +294,7 @@ public class NodeScope
 					.ToString());
 				P_0.WriteLine(new StringBuilder().Append(P_2).Append("  }").ToString());
 			}
-			P_0.WriteLine(new StringBuilder().Append(P_2).Append("  throw (Error)").Append(exceptionVar)
+			P_0.WriteLine(new StringBuilder().Append(P_2).Append("  throw ").Append(exceptionVar)
 				.Append(";")
 				.ToString());
 		}

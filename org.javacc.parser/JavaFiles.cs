@@ -2407,6 +2407,6 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 	
 	static JavaFiles()
 	{
-		JavaCCGlobals.___003Cclinit_003E();
+		
 	}
 }

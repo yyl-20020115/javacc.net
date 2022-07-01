@@ -13023,7 +13023,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
 	static JavaCCParser()
 	{
-		JavaCCParserInternals.___003Cclinit_003E();
+		
 		jj_la1_init_0();
 		jj_la1_init_1();
 		jj_la1_init_2();

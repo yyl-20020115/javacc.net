@@ -982,9 +982,4 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 	{
 	}
 
-	
-	static ParseGen()
-	{
-		JavaCCGlobals.___003Cclinit_003E();
-	}
 }

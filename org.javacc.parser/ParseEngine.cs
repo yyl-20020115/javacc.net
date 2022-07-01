@@ -1416,7 +1416,7 @@ public class ParseEngine : JavaCCGlobals
 
 	static ParseEngine()
 	{
-		JavaCCGlobals.___003Cclinit_003E();
+		
 		gensymindex = 0;
 		phase2list = new ArrayList();
 		phase3list = new ArrayList();

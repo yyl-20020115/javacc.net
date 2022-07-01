@@ -1705,7 +1705,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 
 	static LexGen()
 	{
-		JavaCCGlobals.___003Cclinit_003E();
+		
 		allTpsForState = new ();
 		lexStateIndex = 0;
 		maxOrdinal = 1;

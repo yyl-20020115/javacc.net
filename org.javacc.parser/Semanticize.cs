@@ -175,7 +175,7 @@ public class Semanticize : JavaCCGlobals
 		
 		static LookaheadChecker()
 		{
-			JavaCCGlobals.___003Cclinit_003E();
+			
 		}
 	}
 
@@ -256,7 +256,7 @@ public class Semanticize : JavaCCGlobals
 		
 		static LookaheadFixer()
 		{
-			JavaCCGlobals.___003Cclinit_003E();
+			
 		}
 	}
 
@@ -307,7 +307,7 @@ public class Semanticize : JavaCCGlobals
 		
 		static ProductionDefinedChecker()
 		{
-			JavaCCGlobals.___003Cclinit_003E();
+			
 		}
 	}
 
@@ -1073,7 +1073,7 @@ public class Semanticize : JavaCCGlobals
 
 	static Semanticize()
 	{
-		JavaCCGlobals.___003Cclinit_003E();
+		
 		removeList = new ArrayList();
 		itemList = new ArrayList();
 	}

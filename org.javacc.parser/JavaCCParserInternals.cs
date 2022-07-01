@@ -393,7 +393,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 
 	static JavaCCParserInternals()
 	{
-		JavaCCGlobals.___003Cclinit_003E();
+		
 		add_cu_token_here = JavaCCGlobals.cu_to_insertion_point_1;
 		insertionpoint1set = false;
 		insertionpoint2set = false;
