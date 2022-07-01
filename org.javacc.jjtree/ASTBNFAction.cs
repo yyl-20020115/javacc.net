@@ -8,10 +8,7 @@ public class ASTBNFAction : JJTreeNode
 		{
 			if (node is ASTBNFNodeScope atbs)
 			{
-				if (atbs.node_scope == ns)
-				{
-					return node;
-				}
+				if (atbs.node_scope == ns) return node;
 			}
 			else if (node is ASTExpansionNodeScope ntbs && ntbs.node_scope == ns)
 			{
@@ -23,15 +20,11 @@ public class ASTBNFAction : JJTreeNode
 
 
 	internal ASTBNFAction(int id)
-		: base(id)
-	{
-	}
-
-
+		: base(id) { }
 	public override void Write(IO io)
 	{
-		var enclosingNodeScope = NodeScope.getEnclosingNodeScope(this);
-		if (enclosingNodeScope != null && !enclosingNodeScope.isVoid())
+		var enclosingNodeScope = NodeScope.GetEnclosingNodeScope(this);
+		if (enclosingNodeScope != null && !enclosingNodeScope.IsVoid)
 		{
 			int num = 1;
 			var scopingParent = getScopingParent(enclosingNodeScope);

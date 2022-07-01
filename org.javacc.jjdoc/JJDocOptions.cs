@@ -15,5 +15,4 @@ public class JJDocOptions : Options
 		Options.OptionValues.Add("OUTPUT_FILE", "");
 		Options.OptionValues.Add("CSS", "");
 	}
-
 }

@@ -1,5 +1,4 @@
 namespace org.javacc.jjtree;
-
 public class ASTBNFOneOrMore : JJTreeNode
 {
 	public ASTBNFOneOrMore(int i) : base(i) { }

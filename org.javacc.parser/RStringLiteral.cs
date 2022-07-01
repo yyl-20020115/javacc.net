@@ -1,6 +1,7 @@
 using javacc.net;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -104,9 +105,9 @@ public class RStringLiteral : RegularExpression
 			{
 				kindInfo.InsertValidKind(ordinal);
 			}
-			if (!Options.getIgnoreCase() && LexGen.ignoreCase[ordinal] && num2 != Character.toLowerCase((char)num2))
+			if (!Options.getIgnoreCase() && LexGen.ignoreCase[ordinal] && num2 != Char.ToLower((char)num2))
 			{
-				key = java.lang.String.instancehelper_toLowerCase(new StringBuilder().Append("").Append(java.lang.String.instancehelper_charAt(image, j)).ToString());
+				key = Char.ToLower(image[j]).ToString();
 				if (j >= charPosKind.Count)
 				{
 					charPosKind.Add(hashtable = new Hashtable());
@@ -128,7 +129,7 @@ public class RStringLiteral : RegularExpression
 					kindInfo.InsertValidKind(ordinal);
 				}
 			}
-			if (!Options.getIgnoreCase() && LexGen.ignoreCase[ordinal] && num2 != Character.toUpperCase((char)num2))
+			if (!Options.getIgnoreCase() && LexGen.ignoreCase[ordinal] && num2 != char.ToUpper((char)num2))
 			{
 				key = java.lang.String.instancehelper_toUpperCase(new StringBuilder().Append("").Append(java.lang.String.instancehelper_charAt(image, j)).ToString());
 				if (j >= charPosKind.Count)
@@ -217,7 +218,7 @@ public class RStringLiteral : RegularExpression
 				continue;
 			}
 			string text2 = allImages[i];
-			if (text2 == null || java.lang.String.instancehelper_length(text2) < 1)
+			if (text2 == null || text2.Length < 1)
 			{
 				continue;
 			}
@@ -231,10 +232,6 @@ public class RStringLiteral : RegularExpression
 			}
 			catch (System.Exception x)
 			{
-				if (ByteCodeHelper.MapException<System.Exception>(x, ByteCodeHelper.MapFlags.Unused) == null)
-				{
-					throw;
-				}
 				goto IL_00e1;
 			}
 			goto IL_00f2;
@@ -243,11 +240,11 @@ public class RStringLiteral : RegularExpression
 			JavaCCErrors.Semantic_Error("Error cloning state vector");
 			goto IL_00f2;
 			IL_00f2:
-			intermediateKinds[i] = new int[java.lang.String.instancehelper_length(text2)];
-			intermediateMatchedPos[i] = new int[java.lang.String.instancehelper_length(text2)];
+			intermediateKinds[i] = new int[text2.Length];
+			intermediateMatchedPos[i] = new int[text2.Length];
 			int i2 = 0;
 			_ = int.MaxValue;
-			for (int j = 0; j < java.lang.String.instancehelper_length(text2); j++)
+			for (int j = 0; j < text2.Length; j++)
 			{
 				int num6;
 				int num3;
@@ -685,14 +682,14 @@ public class RStringLiteral : RegularExpression
 				}
 				if (Options.getIgnoreCase())
 				{
-					if (num5 != Character.toUpperCase((char)num5))
+					if (num5 != char.ToUpper((char)num5))
 					{
-						P_0.WriteLine(new StringBuilder().Append("      case ").Append((int)Character.toUpperCase((char)num5)).Append(":")
+						P_0.WriteLine(new StringBuilder().Append("      case ").Append((int)char.ToUpper((char)num5)).Append(":")
 							.ToString());
 					}
-					if (num5 != Character.toLowerCase((char)num5))
+					if (num5 != Char.ToLower((char)num5))
 					{
-						P_0.WriteLine(new StringBuilder().Append("      case ").Append((int)Character.toLowerCase((char)num5)).Append(":")
+						P_0.WriteLine(new StringBuilder().Append("      case ").Append((int)Char.ToLower((char)num5)).Append(":")
 							.ToString());
 					}
 				}
@@ -919,13 +916,13 @@ public class RStringLiteral : RegularExpression
 				LexGen.AddCharToSkip((char)num5, num6);
 				if (Options.getIgnoreCase())
 				{
-					if (num5 != Character.toUpperCase((char)num5))
+					if (num5 != char.ToUpper((char)num5))
 					{
-						LexGen.AddCharToSkip(Character.toUpperCase((char)num5), num6);
+						LexGen.AddCharToSkip(char.ToUpper((char)num5), num6);
 					}
-					if (num5 != Character.toLowerCase((char)num5))
+					if (num5 != Char.ToLower((char)num5))
 					{
-						LexGen.AddCharToSkip(Character.toLowerCase((char)num5), num6);
+						LexGen.AddCharToSkip(Char.ToLower((char)num5), num6);
 					}
 				}
 			}
@@ -1128,7 +1125,7 @@ public class RStringLiteral : RegularExpression
 		{
 			int num = P_0[i];
 			int num2 = P_1[i];
-			if (num != num2 && Character.toLowerCase((char)num2) != num && Character.toUpperCase((char)num2) != num)
+			if (num != num2 && Char.ToLower((char)num2) != num && char.ToUpper((char)num2) != num)
 			{
 				return false;
 			}
@@ -1533,8 +1530,8 @@ public class RStringLiteral : RegularExpression
 			nfaState.AddChar(image[i]);
 			if (Options.getIgnoreCase() || b)
 			{
-				nfaState.AddChar(Character.toLowerCase(image[i]));
-				nfaState.AddChar(Character.toUpperCase(image[i]));
+				nfaState.AddChar(Char.ToLower(image[i]));
+				nfaState.AddChar(char.ToUpper(image[i]));
 			}
 			nfaState.next = nfaState3;
 			nfaState = nfaState3;
@@ -1545,7 +1542,7 @@ public class RStringLiteral : RegularExpression
 	}
 
 	
-	public override StringBuilder dump(int i, HashSet<object> s)
+	public override StringBuilder dump(int i, HashSet<Expansion> s)
 	{
 		return base.dump(i, s).Append(' ').Append(image);
 	}
@@ -1561,7 +1558,6 @@ public class RStringLiteral : RegularExpression
 
 	static RStringLiteral()
 	{
-		RegularExpression.___003Cclinit_003E();
 		maxStrKind = 0;
 		maxLen = 0;
 		charCnt = 0;

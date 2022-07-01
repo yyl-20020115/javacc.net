@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-
 namespace org.javacc.jjtree;
 
 public class ASTProduction : JJTreeNode
@@ -10,20 +9,15 @@ public class ASTProduction : JJTreeNode
 	private Dictionary<NodeScope,int> scopes = new();
 	private int nextNodeScopeNumber = 0;
 
-	internal ASTProduction(int P_0)
-		: base(P_0) { }
+	internal ASTProduction(int id) : base(id) { }
 	
-	internal virtual int GetNodeScopeNumber(NodeScope P_0)
+	internal virtual int GetNodeScopeNumber(NodeScope scope)
 	{
-		if (!scopes.TryGetValue(P_0,out var integer))
+		if (!scopes.TryGetValue(scope,out var integer))
 		{
-			int num = nextNodeScopeNumber;
-			nextNodeScopeNumber = num + 1;
-			integer = (num);
-			scopes.Add(P_0, integer);
+			integer = nextNodeScopeNumber++;
+			scopes.Add(scope, integer);
 		}
-		int result = integer;
-		
-		return result;
+		return integer;
 	}
 }

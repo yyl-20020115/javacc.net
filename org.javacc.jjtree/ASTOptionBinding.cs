@@ -1,27 +1,26 @@
 namespace org.javacc.jjtree;
 public class ASTOptionBinding : JJTreeNode
 {
-	private bool suppressed = false;
-	private string name ="";
+	private bool Suppressed = false;
+	private string Name ="";
 	
-	internal ASTOptionBinding(int P_0)
-		: base(P_0) { }
+	internal ASTOptionBinding(int id) : base(id) { }
 	
-	internal virtual void Initialize(string P_0, string P_1)
+	internal virtual void Initialize(string name, string text)
 	{
-		name = P_0;
-		if (JJTreeGlobals.isOptionJJTreeOnly(name))
+		Name = name;
+		if (JJTreeGlobals.IsOptionJJTreeOnly(Name))
 		{
-			suppressed = true;
+			Suppressed = true;
 		}
 	}
 
-    internal virtual bool IsSuppressed => suppressed;
+    internal virtual bool IsSuppressed => Suppressed;
 
     internal virtual void SuppressOption(bool P_0)
 	{
-		int num = ((suppressed = P_0) ? 1 : 0);
+		int num = ((Suppressed = P_0) ? 1 : 0);
 	}
 
-    internal override string TranslateImage(Token P_0) => suppressed ? WhiteOut(P_0) : P_0.image;
+    internal override string TranslateImage(Token token) => Suppressed ? WhiteOut(token) : token.Image;
 }

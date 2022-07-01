@@ -100,9 +100,11 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		try
 		{
 			
-			File file = new File(Options.getOutputDirectory(), new StringBuilder().Append(tokMgrClassName).Append(".java").ToString());
-			ostr = new TextWriter(new BufferedWriter(new FileWriter(file), 8092));
-			ArrayList vector = (ArrayList)JavaCCGlobals.toolNames.clone();
+			FileInfo file = new FileInfo(
+				Path.Combine(Options.getOutputDirectory().FullName, tokMgrClassName)+(".java"));
+		
+			ostr = new StreamWriter(file.FullName);
+			ArrayList vector = (ArrayList)JavaCCGlobals.toolNames.Clone();
 			vector.Add("JavaCC");
 			ostr.WriteLine(new StringBuilder().Append("/* ").Append(JavaCCGlobals.getIdString(vector, new StringBuilder().Append(tokMgrClassName).Append(".java").ToString())).Append(" */")
 				.ToString());

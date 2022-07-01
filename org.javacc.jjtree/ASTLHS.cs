@@ -1,29 +1,16 @@
 namespace org.javacc.jjtree;
-
 public class ASTLHS : JJTreeNode
 {
-
-	internal ASTLHS(int P_0)
-		: base(P_0)
-	{
-	}
-
-
+	internal ASTLHS(int id) : base(id) {}
 	public override void Write(IO io)
 	{
-		NodeScope enclosingNodeScope = NodeScope.getEnclosingNodeScope(this);
-		Token firstToken = FirstToken;
-		Token lastToken = LastToken;
-		for (Token token = firstToken; token != lastToken.next; token = token.next)
+		var enclosingNodeScope = NodeScope.GetEnclosingNodeScope(this);
+		var firstToken = FirstToken;
+		var lastToken = LastToken;
+		for (var token = firstToken; token != lastToken.Next; token = token.Next)
 		{
-			TokenUtils.Write(token, io, "jjtThis", enclosingNodeScope.getNodeVariable());
+			TokenUtils.Write(token, io, "jjtThis", enclosingNodeScope.NodeVariable);
 		}
-	}
-
-
-	public new void Write(object P_0)
-	{
-		this.Write((IO)P_0);
 	}
 
 }

@@ -12,7 +12,6 @@ public class TextGenerator: Generator
 	{
 		writer.Write(str);
 	}
-
 	
 	protected internal virtual TextWriter CreateOutputStream()
 	{

@@ -7,61 +7,56 @@ public class JJTreeNode : SimpleNode
 	private Token first;
 	private Token last;
 	private bool whitingOut = false;
-
-	public JJTreeNode(int i)
-		: base(i)
-	{
-		whitingOut = false;
-	}
+	public JJTreeNode(int i) : base(i) { }
     public virtual int Ordinal { get => this.ordinal; set => this.ordinal = value; }
     public virtual Token LastToken { get => last; set => last = value; }
     public virtual Token FirstToken { get => first; set => first = value; }
 
     protected internal virtual void Write(Token t, IO io)
 	{
-		var token = t.specialToken;
+		var token = t.SpecialToken;
 		if (token != null)
 		{
-			while (token.specialToken != null)
+			while (token.SpecialToken != null)
 			{
-				token = token.specialToken;
+				token = token.SpecialToken;
 			}
 			while (token != null)
 			{
 				io.Write(TokenUtils.AddUnicodeEscapes(TranslateImage(token)));
-				token = token.next;
+				token = token.Next;
 			}
 		}
-		var enclosingNodeScope = NodeScope.getEnclosingNodeScope(this);
+		var enclosingNodeScope = NodeScope.GetEnclosingNodeScope(this);
 		if (enclosingNodeScope == null)
 		{
 			io.Write(TokenUtils.AddUnicodeEscapes(TranslateImage(t)));
 			return;
 		}
-		if (string.Equals(t.image, "jjtThis"))
+		if (string.Equals(t.Image, "jjtThis"))
 		{
-			io.Write(enclosingNodeScope.getNodeVariable());
+			io.Write(enclosingNodeScope.NodeVariable);
 			return;
 		}
-		if (string.Equals(t.image, "jjtree") && string.Equals(t.next.image, ".") && string.Equals(t.next.next.image, "currentNode") && string.Equals(t.next.next.next.image, "(") && string.Equals(t.next.next.next.next.image, ")"))
+		if (string.Equals(t.Image, "jjtree") && string.Equals(t.Next.Image, ".") && string.Equals(t.Next.Next.Image, "currentNode") && string.Equals(t.Next.Next.Next.Image, "(") && string.Equals(t.Next.Next.Next.Next.Image, ")"))
 		{
 			whitingOut = true;
 		}
 		if (whitingOut)
 		{
-			if (string.Equals(t.image, "jjtree"))
+			if (string.Equals(t.Image, "jjtree"))
 			{
-				io.Write(enclosingNodeScope.getNodeVariable());
+				io.Write(enclosingNodeScope.NodeVariable);
 				io.Write(" ");
 				return;
 			}
-			if (string.Equals(t.image, ")"))
+			if (string.Equals(t.Image, ")"))
 			{
 				io.Write(" ");
 				whitingOut = false;
 				return;
 			}
-			for (int i = 0; i < (t.image.Length); i++)
+			for (int i = 0; i < (t.Image.Length); i++)
 			{
 				io.Write(" ");
 			}
@@ -74,19 +69,19 @@ public class JJTreeNode : SimpleNode
 
 	public virtual void Write(IO io)
 	{
-		if (LastToken.next == FirstToken)
+		if (LastToken.Next == FirstToken)
 		{
 			return;
 		}
 		var firstToken = FirstToken;
 		var token = new Token();
-		token.next = firstToken;
+		token.Next = firstToken;
 		for (int i = 0; i < jjtGetNumChildren(); i++)
 		{
 			var jJTreeNode = (JJTreeNode)jjtGetChild(i);
 			while (true)
 			{
-				token = token.next;
+				token = token.Next;
 				if (token == jJTreeNode.FirstToken)
 				{
 					break;
@@ -98,18 +93,17 @@ public class JJTreeNode : SimpleNode
 		}
 		while (token != LastToken)
 		{
-			token = token.next;
+			token = token.Next;
 			Write(token, io);
 		}
 	}
 
-    internal virtual string TranslateImage(Token P_0) => P_0.image;
+    internal virtual string TranslateImage(Token token) => token.Image;
 
-
-    internal virtual string getIndentation(JJTreeNode P_0, int P_1)
+    internal virtual string getIndentation(JJTreeNode node, int idx)
 	{
 		var text = "";
-		for (int i = P_1 + 1; i < P_0.FirstToken.beginColumn; i++)
+		for (int i = idx + 1; i < node.FirstToken.BeginColumn; i++)
 		{
 			text += " "; 
 		}
@@ -133,10 +127,10 @@ public class JJTreeNode : SimpleNode
 
     internal virtual string WhiteOut(Token P_0)
 	{
-		var stringBuilder = new StringBuilder(P_0.image.Length);
-		for (int i = 0; i < P_0.image.Length; i++)
+		var stringBuilder = new StringBuilder(P_0.Image.Length);
+		for (int i = 0; i < P_0.Image.Length; i++)
 		{
-			int num = P_0.image[i];
+			int num = P_0.Image[i];
 			if (num != 9 && num != 10 && num != 13 && num != 12)
 			{
 				stringBuilder.Append(' ');
@@ -167,10 +161,4 @@ public class JJTreeNode : SimpleNode
 
 
     internal virtual string GetIndentation(JJTreeNode P_0) => getIndentation(P_0, 0);
-
-
-    protected internal void Write(Token P_0, object P_1)
-	{
-		Write(P_0, (IO)P_1);
-	}
 }

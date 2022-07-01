@@ -1,15 +1,14 @@
 using System.Text;
 using org.javacc.parser;
 namespace org.javacc.jjtree;
-
 public class ASTGrammar : JJTreeNode
 {	
-	internal ASTGrammar(int P_0) : base(P_0) {}
+	internal ASTGrammar(int id) : base(id) {}
 
-	internal virtual void generate(IO P_0)
+	internal virtual void Generate(IO io)
 	{
-		P_0.WriteLine(("/*@bgen(jjtree) ")+(JavaCCGlobals.getIdString(JJTreeGlobals.toolList, P_0.OutputFileName))+(" */"));
-		P_0.Write("/*@egen*/");
-		Write(P_0);
+		io.WriteLine(("/*@bgen(jjtree) ")+(JavaCCGlobals.getIdString(JJTreeGlobals.toolList, io.OutputFileName))+(" */"));
+		io.Write("/*@egen*/");
+		Write(io);
 	}
 }

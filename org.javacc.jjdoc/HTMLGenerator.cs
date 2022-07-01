@@ -19,7 +19,6 @@ public class HTMLGenerator : TextGenerator, Generator
 		writer.WriteLine(str);
 	}
 
-	
 	public override void ProductionStart(NormalProduction np)
 	{
 		if (!JJDocOptions.OneTable)

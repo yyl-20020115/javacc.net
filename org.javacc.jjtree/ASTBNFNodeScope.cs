@@ -1,15 +1,12 @@
 namespace org.javacc.jjtree;
-
 public class ASTBNFNodeScope : JJTreeNode
 {
 	internal NodeScope node_scope;
 	internal JJTreeNode expansion_unit;
-
 	internal ASTBNFNodeScope(int P_0) : base(P_0) { }
-
 	public override void Write(IO io)
 	{
-		if (node_scope.isVoid())
+		if (node_scope.IsVoid)
 		{
 			base.Write(io);
 			return;

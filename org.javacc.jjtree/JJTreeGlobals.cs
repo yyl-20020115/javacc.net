@@ -25,15 +25,13 @@ internal class JJTreeGlobals
 	internal static Hashtable productions;
 
 	
-	public static bool isOptionJJTreeOnly(string P_0)
+	public static bool IsOptionJJTreeOnly(string name)
 	{
-		bool result = jjtreeOptions.Contains((P_0.ToUpper()));
-		
-		return result;
+		return jjtreeOptions.Contains((name.ToUpper()));
 	}
 
 	
-	internal static void initialize()
+	internal static void Initialize()
 	{
 		toolList = new();
 		parserName = null;
@@ -64,7 +62,7 @@ internal class JJTreeGlobals
 
 	static JJTreeGlobals()
 	{
-		initialize();
+		Initialize();
 		toolList = new ();
 		packageName = "";
 		nodePackageName = "";

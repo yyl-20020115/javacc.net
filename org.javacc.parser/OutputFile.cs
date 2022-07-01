@@ -138,7 +138,6 @@ public class OutputFile
 
 	public virtual TextWriter getPrintWriter()
 	{
-		NoSuchAlgorithmException ex;
 		if (pw == null)
 		{
 			MessageDigest instance;
@@ -146,9 +145,8 @@ public class OutputFile
 			{
 				instance = MessageDigest.getInstance("MD5");
 			}
-			catch (NoSuchAlgorithmException x)
+			catch (Exception x)
 			{
-				ex = ByteCodeHelper.MapException<NoSuchAlgorithmException>(x, ByteCodeHelper.MapFlags.NoRemapping);
 				goto IL_0025;
 			}
 
@@ -183,7 +181,7 @@ public class OutputFile
 	}
 
 
-	public OutputFile(File f, string str, string[] strarr)
+	public OutputFile(FileInfo f, string str, string[] strarr)
 	{
 		toolName = "JavaCC";
 		needToWrite = true;

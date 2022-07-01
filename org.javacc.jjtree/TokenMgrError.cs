@@ -1,9 +1,7 @@
 using System.Runtime.Serialization;
 using System.Text;
 using javacc.net;
-
 namespace org.javacc.jjtree;
-
 
 public class TokenMgrError : System.Exception
 {
@@ -15,26 +13,18 @@ public class TokenMgrError : System.Exception
 
 	internal const int LOOP_DETECTED = 3;
 
-	internal int errorCode;
+	internal int errorCode = 1;
 
 
 	public TokenMgrError(string str, int i)
-		: base(str)
-	{
-		errorCode = i;
-	}
-
+		: base(str) { }
 
 	public TokenMgrError(bool b, int i1, int i2, int i3, string str, char ch, int i4)
-		: this(LexicalError(b, i1, i2, i3, str, ch), i4)
+		: this(LexicalError(b, i1, i2, i3, str, ch), i4) { }
+
+	protected internal static string AddEscapes(string str)
 	{
-	}
-
-
-
-	protected internal static string addEscapes(string str)
-	{
-		StringBuilder stringBuilder = new StringBuilder();
+		var stringBuilder = new StringBuilder();
 		for (int i = 0; i < str.Length; i++)
 		{
 			switch (str[i])
@@ -77,9 +67,7 @@ public class TokenMgrError : System.Exception
 				stringBuilder.Append((char)num);
 			}
 		}
-		string result = stringBuilder.ToString();
-
-		return result;
+		return stringBuilder.ToString();
 	}
 
 
@@ -88,13 +76,13 @@ public class TokenMgrError : System.Exception
 		string result = new StringBuilder().Append("Lexical error at line ").Append(i2).Append(", column ")
 			.Append(i3)
 			.Append(".  Encountered: ")
-			.Append((!b) ? new StringBuilder().Append("\"").Append(addEscapes((ch.ToString()))).Append("\"")
+			.Append((!b) ? new StringBuilder().Append("\"").Append(AddEscapes((ch.ToString()))).Append("\"")
 				.Append(" (")
 				.Append((int)ch)
 				.Append("), ")
 				.ToString() : "<EOF> ")
 			.Append("after : \"")
-			.Append(addEscapes(str))
+			.Append(AddEscapes(str))
 			.Append("\"")
 			.ToString();
 
@@ -104,13 +92,5 @@ public class TokenMgrError : System.Exception
 
 	public override string Message => base.Message;
 
-	public TokenMgrError()
-	{
-	}
-
-
-	protected TokenMgrError(SerializationInfo P_0, StreamingContext P_1)
-	: base(P_0, P_1)
-	{
-	}
+	public TokenMgrError() { }
 }

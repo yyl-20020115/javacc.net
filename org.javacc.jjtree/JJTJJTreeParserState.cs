@@ -1,13 +1,14 @@
 using System.Collections;
+using System.Collections.Generic;
 
 namespace org.javacc.jjtree;
 
 
 public class JJTJJTreeParserState
 {
-	private ArrayList nodes;
+	private List<Node> nodes;
 
-	private ArrayList marks;
+	private List<int> marks;
 
 	private int sp;
 
@@ -22,9 +23,13 @@ public class JJTJJTreeParserState
 		sp = num;
 		if (num < mk)
 		{
-			mk = ((int)marks.remove(marks.Count - 1)).intValue();
+			mk = marks[marks.Count - 1];
+			
+			marks.RemoveAt(marks.Count - 1);
 		}
-		return (Node)nodes.remove(nodes.Count - 1);
+		var n = nodes[nodes.Count - 1];
+		nodes.RemoveAt(nodes.Count - 1);
+		return n;
 	}
 
 	
@@ -42,8 +47,8 @@ public class JJTJJTreeParserState
 	
 	public JJTJJTreeParserState()
 	{
-		nodes = new ArrayList();
-		marks = new ArrayList();
+		nodes = new ();
+		marks = new ();
 		sp = 0;
 		mk = 0;
 	}
@@ -87,9 +92,9 @@ public class JJTJJTreeParserState
 	
 	public virtual void openNodeScope(Node n)
 	{
-		List list = marks;
+		List<int> list = marks;
 		;
-		list.Add(new int(mk));
+		list.Add((mk));
 		mk = sp;
 		n.jjtOpen();
 	}

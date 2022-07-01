@@ -157,7 +157,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						jj_consume_token(85);
 						Token token = identifier();
 						jj_consume_token(86);
-						JJTreeGlobals.parserName = token.image;
+						JJTreeGlobals.parserName = token.Image;
 						CompilationUnit();
 						jj_consume_token(4);
 						jj_consume_token(85);
@@ -535,15 +535,15 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		Token token = ((!lookingAhead) ? this.token : jj_scanpos);
 		for (int j = 0; j < i; j++)
 		{
-			if (token.next != null)
+			if (token.Next != null)
 			{
-				token = token.next;
+				token = token.Next;
 				continue;
 			}
 			Token obj = token;
 			Token nextToken = token_source.getNextToken();
 			Token token2 = obj;
-			token2.next = nextToken;
+			token2.Next = nextToken;
 			token = nextToken;
 		}
 		return token;
@@ -558,7 +558,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	
 		public void javacc_options()
 	{
-		if (!string.Equals(getToken(1).image, "options"))
+		if (!string.Equals(getToken(1).Image, "options"))
 		{
 			return;
 		}
@@ -647,20 +647,20 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		private Token jj_consume_token(int P_0)
 	{
 		Token token;
-		if ((token = this.token).next != null)
+		if ((token = this.token).Next != null)
 		{
-			this.token = this.token.next;
+			this.token = this.token.Next;
 		}
 		else
 		{
 			Token obj = this.token;
 			Token nextToken = token_source.getNextToken();
 			Token token2 = obj;
-			token2.next = nextToken;
+			token2.Next = nextToken;
 			this.token = nextToken;
 		}
 		this.m_jj_ntk = -1;
-		if (this.token.kind == P_0)
+		if (this.token.Kind == P_0)
 		{
 			jj_gen++;
 			int num = jj_gc + 1;
@@ -771,7 +771,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	
 	private int jj_ntk()
 	{
-		Token next = this.token.next;
+		Token next = this.token.Next;
 		Token obj = next;
 		jj_nt = next;
 		int kind;
@@ -781,13 +781,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			next = token_source.getNextToken();
 			Token token = obj2;
 			Token obj3 = next;
-			token.next = next;
-			kind = obj3.kind;
+			token.Next = next;
+			kind = obj3.Kind;
 			int result = kind;
 			this.m_jj_ntk = kind;
 			return result;
 		}
-		kind = jj_nt.kind;
+		kind = jj_nt.Kind;
 		int result2 = kind;
 		this.m_jj_ntk = kind;
 		return result2;
@@ -834,26 +834,26 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					Token token2 = IntegerLiteral();
 					Token obj = token;
 					Token obj2 = token2;
-					string image = token.image;
+					string image = token.Image;
 					;
-					Options.setInputFileOption(obj, obj2, image, (token2.image));
-					aSTOptionBinding.Initialize(token.image, token2.image);
+					Options.setInputFileOption(obj, obj2, image, (token2.Image));
+					aSTOptionBinding.Initialize(token.Image, token2.Image);
 					break;
 				}
 				case 39:
 				case 69:
 				{
 					Token token2 = BooleanLiteral();
-					Options.setInputFileOption(token, token2, token.image, (token2.image));
-					aSTOptionBinding.Initialize(token.image, token2.image);
+					Options.setInputFileOption(token, token2, token.Image, (token2.Image));
+					aSTOptionBinding.Initialize(token.Image, token2.Image);
 					break;
 				}
 				case 84:
 				{
 					Token token2 = StringLiteral();
-					string text = TokenUtils.remove_escapes_and_quotes(token2, token2.image);
-					Options.setInputFileOption(token, token2, token.image, text);
-					aSTOptionBinding.Initialize(token.image, text);
+					string text = TokenUtils.RemoveEscapeAndQuotes(token2, token2.Image);
+					Options.setInputFileOption(token, token2, token.Image, text);
+					aSTOptionBinding.Initialize(token.Image, text);
 					break;
 				}
 				default:
@@ -1001,7 +1001,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					jj_la1[7] = jj_gen;
 				}
 				Token stmBeginLoc = jj_consume_token(87);
-				aSTJavacode2.name = token.image;
+				aSTJavacode2.name = token.Image;
 				aSTJavacode2.stmBeginLoc = stmBeginLoc;
 				aSTJavacodeBody = new ASTJavacodeBody(7);
 				num2 = 1;
@@ -1542,7 +1542,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				jj_consume_token(99);
 				Token declBeginLoc = jj_consume_token(87);
-				aSTBNF2.name = token.image;
+				aSTBNF2.name = token.Image;
 				aSTBNF2.declBeginLoc = declBeginLoc;
 				node_scope = new NodeScope(aSTBNF2, aSTNodeDescriptor);
 				aSTBNFDeclaration = new ASTBNFDeclaration(9);
@@ -2158,13 +2158,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				case 11:
 				case 137:
 				{
-					string text = (aSTNodeDescriptor.name = Name());
+					string text = (aSTNodeDescriptor.Name = Name());
 					break;
 				}
 				case 71:
 				{
 					Token token = jj_consume_token(71);
-					aSTNodeDescriptor.name = token.image;
+					aSTNodeDescriptor.Name = token.Image;
 					break;
 				}
 				default:
@@ -3419,18 +3419,18 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		{
 			jj_la1[26] = jj_gen;
 		}
-		if (num2 == 0 && getToken(1).kind != 86)
+		if (num2 == 0 && getToken(1).Kind != 86)
 		{
 			jj_consume_token(92);
 			num = 1;
 		}
-		if (getToken(1).kind != 86 && getToken(1).kind != 87)
+		if (getToken(1).Kind != 86 && getToken(1).Kind != 87)
 		{
 			expansion_choices(astp);
 			num2 = 0;
 			num = 0;
 		}
-		if (num2 == 0 && num == 0 && getToken(1).kind != 86)
+		if (num2 == 0 && num == 0 && getToken(1).Kind != 86)
 		{
 			jj_consume_token(92);
 			num = 1;
@@ -4148,7 +4148,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	private bool notTailOfExpansionUnit()
 	{
 		Token token = getToken(1);
-		if (token.kind == 113 || token.kind == 92 || token.kind == 86 || token.kind == 88 || token.kind == 90)
+		if (token.Kind == 113 || token.Kind == 92 || token.Kind == 86 || token.Kind == 88 || token.Kind == 90)
 		{
 			return false;
 		}
@@ -5133,16 +5133,16 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			while (true)
 			{
 				Token token = getToken(1);
-				if (token.kind == 0)
+				if (token.Kind == 0)
 				{
 					
 					throw new ParseException();
 				}
-				if (token.kind == 85)
+				if (token.Kind == 85)
 				{
 					num2++;
 				}
-				if (token.kind == 86)
+				if (token.Kind == 86)
 				{
 					num2 += -1;
 					if (num2 == 0)
@@ -5173,16 +5173,16 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	
 	public Token getNextToken()
 	{
-		if (this.token.next != null)
+		if (this.token.Next != null)
 		{
-			this.token = this.token.next;
+			this.token = this.token.Next;
 		}
 		else
 		{
 			Token obj = this.token;
 			Token nextToken = token_source.getNextToken();
 			Token token = obj;
-			token.next = nextToken;
+			token.Next = nextToken;
 			this.token = nextToken;
 		}
 		this.m_jj_ntk = -1;
@@ -5560,7 +5560,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			
 			throw new ParseException();
 		}
-		return token.image;
+		return token.Image;
 	}
 
 	
@@ -7432,7 +7432,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	
 		public void RSIGNEDSHIFT()
 	{
-		if (getToken(1).kind != 126 || ((Token.GTToken)getToken(1)).realKind != 125)
+		if (getToken(1).Kind != 126 || ((Token.GTToken)getToken(1)).realKind != 125)
 		{
 			jj_consume_token(-1);
 			
@@ -7484,7 +7484,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	
 		public void RUNSIGNEDSHIFT()
 	{
-		if (getToken(1).kind != 126 || ((Token.GTToken)getToken(1)).realKind != 124)
+		if (getToken(1).Kind != 126 || ((Token.GTToken)getToken(1)).realKind != 124)
 		{
 			jj_consume_token(-1);
 			
@@ -10769,13 +10769,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		if (jj_scanpos == jj_lastpos)
 		{
 			jj_la--;
-			if (jj_scanpos.next == null)
+			if (jj_scanpos.Next == null)
 			{
 				Token obj = jj_scanpos;
 				Token nextToken = token_source.getNextToken();
 				Token token = obj;
 				Token obj2 = nextToken;
-				token.next = nextToken;
+				token.Next = nextToken;
 				nextToken = obj2;
 				Token obj3 = nextToken;
 				jj_scanpos = nextToken;
@@ -10783,7 +10783,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			else
 			{
-				Token nextToken = jj_scanpos.next;
+				Token nextToken = jj_scanpos.Next;
 				Token obj4 = nextToken;
 				jj_scanpos = nextToken;
 				jj_lastpos = obj4;
@@ -10791,7 +10791,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		}
 		else
 		{
-			jj_scanpos = jj_scanpos.next;
+			jj_scanpos = jj_scanpos.Next;
 		}
 		if (jj_rescan)
 		{
@@ -10800,14 +10800,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			while (next != null && next != jj_scanpos)
 			{
 				num++;
-				next = next.next;
+				next = next.Next;
 			}
 			if (next != null)
 			{
 				jj_add_error_token(P_0, num);
 			}
 		}
-		if (jj_scanpos.kind != P_0)
+		if (jj_scanpos.Kind != P_0)
 		{
 			return true;
 		}
@@ -11598,7 +11598,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	private bool jj_3R_84()
 	{
 		lookingAhead = true;
-		jj_semLA = ((getToken(1).kind == 126 && ((Token.GTToken)getToken(1)).realKind == 124) ? true : false);
+		jj_semLA = ((getToken(1).Kind == 126 && ((Token.GTToken)getToken(1)).realKind == 124) ? true : false);
 		lookingAhead = false;
 		if (!jj_semLA || jj_3R_114())
 		{
@@ -11709,7 +11709,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	private bool jj_3R_83()
 	{
 		lookingAhead = true;
-		jj_semLA = ((getToken(1).kind == 126 && ((Token.GTToken)getToken(1)).realKind == 125) ? true : false);
+		jj_semLA = ((getToken(1).Kind == 126 && ((Token.GTToken)getToken(1)).realKind == 125) ? true : false);
 		lookingAhead = false;
 		if (!jj_semLA || jj_3R_113())
 		{
@@ -15253,7 +15253,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		}
 		catch (UnsupportedEncodingException x)
 		{
-			ex = ByteCodeHelper.MapException<UnsupportedEncodingException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 			goto IL_008e;
 		}
 		token_source = new JJTreeParserTokenManager(jj_input_stream);
@@ -15285,7 +15285,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		}
 		catch (UnsupportedEncodingException x)
 		{
-			ex = ByteCodeHelper.MapException<UnsupportedEncodingException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+ex=x;
 			goto IL_001e;
 		}
 		token_source.ReInit(jj_input_stream);

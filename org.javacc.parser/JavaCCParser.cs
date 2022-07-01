@@ -12367,7 +12367,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		}
 		catch (UnsupportedEncodingException x)
 		{
-			ex = ByteCodeHelper.MapException<UnsupportedEncodingException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+ex=x;
 			goto IL_00a6;
 		}
 		JavaCCParserTokenManager.___003Cclinit_003E();
@@ -12400,7 +12400,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		}
 		catch (UnsupportedEncodingException x)
 		{
-			ex = ByteCodeHelper.MapException<UnsupportedEncodingException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex = x;
 			goto IL_001e;
 		}
 		token_source.ReInit(jj_input_stream);
@@ -12956,8 +12956,8 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		jj_2_rtns = new JJCalls[48];
 		jj_rescan = false;
 		jj_gc = 0;
-		jj_ls = new LookaheadSuccess(null);
-		jj_expentries = new ArrayList();
+		jj_ls = new LookaheadSuccess();
+		jj_expentries = new ();
 		jj_kind = -1;
 		jj_lasttokens = new int[100];
 		token_source = jccptm;

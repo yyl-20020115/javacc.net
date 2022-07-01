@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
 namespace org.javacc.jjtree
 {
-    [Serializable]
     internal class UnsupportedEncodingException : Exception
     {
         public UnsupportedEncodingException()
@@ -15,10 +13,6 @@ namespace org.javacc.jjtree
         }
 
         public UnsupportedEncodingException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected UnsupportedEncodingException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

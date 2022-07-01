@@ -1,13 +1,9 @@
 using System;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
-
 using System.Text;
+using System.Runtime.Serialization;
 using javacc.net;
 
 namespace org.javacc.jjtree;
-
-
 public class ParseException : System.Exception
 {
 	protected internal bool specialConstructor;
@@ -107,7 +103,7 @@ public class ParseException : System.Exception
 			{
 				return base.Message;
 			}
-			StringBuilder stringBuilder = new StringBuilder();
+			var stringBuilder = new StringBuilder();
 			int num = 0;
 			for (int i = 0; i < (nint)expectedTokenSequences.LongLength; i++)
 			{
@@ -125,29 +121,28 @@ public class ParseException : System.Exception
 				}
 				stringBuilder.Append(eol).Append("    ");
 			}
-			string str = "Encountered \"";
-			Token next = currentToken.next;
+			var str = "Encountered \"";
+			var next = currentToken.Next;
 			for (int k = 0; k < num; k++)
 			{
 				if (k != 0)
 				{
-					str = new StringBuilder().Append(str).Append(" ").ToString();
+					str += (" ");
 				}
-				if (next.kind == 0)
+				if (next.Kind == 0)
 				{
-					str = new StringBuilder().Append(str).Append(tokenImage[0]).ToString();
+					str += tokenImage[0];
 					break;
 				}
-				str = new StringBuilder().Append(str).Append(" ").Append(tokenImage[next.kind])
-					.ToString();
-				str = new StringBuilder().Append(str).Append(" \"").ToString();
-				str = new StringBuilder().Append(str).Append(add_escapes(next.image)).ToString();
-				str = new StringBuilder().Append(str).Append(" \"").ToString();
-				next = next.next;
+				str += tokenImage[next.Kind];
+				str +=" \"";
+				str +=add_escapes(next.Image);
+				str +=" \"";
+				next = next.Next;
 			}
-			str = new StringBuilder().Append(str).Append("\" at line ").Append(currentToken.next.beginLine)
+			str = new StringBuilder().Append(str).Append("\" at line ").Append(currentToken.Next.BeginLine)
 				.Append(", column ")
-				.Append(currentToken.next.beginColumn)
+				.Append(currentToken.Next.BeginColumn)
 				.ToString();
 			str = new StringBuilder().Append(str).Append(".").Append(eol)
 				.ToString();
@@ -156,13 +151,7 @@ public class ParseException : System.Exception
 				.ToString() : new StringBuilder().Append(str).Append("Was expecting:").Append(eol)
 				.Append("    ")
 				.ToString());
-			return new StringBuilder().Append(str).Append(stringBuilder.ToString()).ToString();
+			return str+stringBuilder.ToString();
 		}
-	}
-
-
-	protected ParseException(SerializationInfo P_0, StreamingContext P_1)
-	: base(P_0, P_1)
-	{
 	}
 }

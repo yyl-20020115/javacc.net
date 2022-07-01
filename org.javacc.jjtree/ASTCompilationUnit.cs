@@ -1,33 +1,32 @@
-using System.Text;
 namespace org.javacc.jjtree;
-
 public class ASTCompilationUnit : JJTreeNode
 {
 	internal ASTCompilationUnit(int P_0) : base(P_0) { }
-
 	public override void Write(IO io)
 	{
 		var token = FirstToken;
 		while (true)
 		{
-			if (token == JJTreeGlobals.parserImports && !string.Equals(JJTreeGlobals.nodePackageName, "") && !string.Equals(JJTreeGlobals.nodePackageName, JJTreeGlobals.packageName))
+			if (token == JJTreeGlobals.parserImports 
+				&& !string.Equals(JJTreeGlobals.nodePackageName, "") 
+				&& !string.Equals(JJTreeGlobals.nodePackageName, JJTreeGlobals.packageName))
 			{
 				io.Out.WriteLine("");
-				io.Out.WriteLine(("import ")+(JJTreeGlobals.nodePackageName)+(".*;"));
+				io.Out.WriteLine("import "+JJTreeGlobals.nodePackageName+(".*;"));
 			}
 			if (token == JJTreeGlobals.parserImplements)
 			{
-				if (string.Equals(token.image, "implements"))
+				if (string.Equals(token.Image, "implements"))
 				{
 					Write(token, io);
 					JJTreeNode.OpenJJTreeComment(io, null);
-					io.Out.Write((" ")+(NodeFiles.nodeConstants())+(", "));
+					io.Out.Write((" ")+(NodeFiles.NodeConstants)+(", "));
 					JJTreeNode.CloseJJTreeComment(io);
 				}
 				else
 				{
 					JJTreeNode.OpenJJTreeComment(io, null);
-					io.Out.Write(("implements ")+(NodeFiles.nodeConstants()));
+					io.Out.Write(("implements ")+(NodeFiles.NodeConstants));
 					JJTreeNode.CloseJJTreeComment(io);
 					Write(token, io);
 				}
@@ -42,11 +41,8 @@ public class ASTCompilationUnit : JJTreeNode
 				JJTreeState.insertParserMembers(io);
 				JJTreeNode.CloseJJTreeComment(io);
 			}
-			if (token == LastToken)
-			{
-				break;
-			}
-			token = token.next;
+			if (token == LastToken) break;
+			token = token.Next;
 		}
 	}
 }

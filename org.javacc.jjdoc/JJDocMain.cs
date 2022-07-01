@@ -9,8 +9,7 @@ public sealed class JJDocMain : JJDocGlobals
 {
 	public static int Main(string[] strarr)
 	{
-		int status = mainProgram(strarr);
-		return status;
+		return mainProgram(strarr);
 	}
 
 	public static int mainProgram(string[] strarr)

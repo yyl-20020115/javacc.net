@@ -1,21 +1,18 @@
 using System.Text;
 namespace org.javacc.jjtree;
-
 public class ASTBNFDeclaration : JJTreeNode
 {
 	internal NodeScope node_scope;
-
 	internal ASTBNFDeclaration(int P_0)
 		: base(P_0) { }
-
 	public override void Write(IO io)
 	{
-		if (!node_scope.isVoid())
+		if (!node_scope.IsVoid)
 		{
 			string text = "";
 			if (TokenUtils.HasTokens(this))
 			{
-				for (int i = 1; i < FirstToken.beginColumn; i++)
+				for (int i = 1; i < FirstToken.BeginColumn; i++)
 				{
 					text = new StringBuilder().Append(text).Append(" ").ToString();
 				}
@@ -31,5 +28,4 @@ public class ASTBNFDeclaration : JJTreeNode
 		}
 		base.Write(io);
 	}
-
 }

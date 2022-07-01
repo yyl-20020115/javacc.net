@@ -1,9 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
-
 namespace org.javacc.jjtree;
-
 
 public class JJTreeParserTokenManager : JJTreeParserConstants
 {
@@ -359,7 +357,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 					if ((jjtoToken[jjmatchedKind >> 6] & (1L << jjmatchedKind)) != 0)
 					{
 						token2 = jjFillToken();
-						token2.specialToken = token;
+						token2.SpecialToken = token;
 						TokenLexicalActions(token2);
 						if (___003C_003EjjnewLexState[jjmatchedKind] != -1)
 						{
@@ -445,11 +443,11 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 				}
 				else
 				{
-					token2.specialToken = token;
+					token2.SpecialToken = token;
 					Token token3 = token;
 					Token token4 = token2;
 					Token token5 = token3;
-					token5.next = token4;
+					token5.Next = token4;
 					token = token4;
 				}
 				SkipLexicalActions(token2);
@@ -466,7 +464,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		
 		jjmatchedKind = 0;
 		token2 = jjFillToken();
-		token2.specialToken = token;
+		token2.SpecialToken = token;
 		return token2;
 	}
 
@@ -2925,10 +2923,10 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		int endLine = input_stream.getEndLine();
 		int endColumn = input_stream.getEndColumn();
 		Token token = Token.NewToken(jjmatchedKind, str);
-		token.beginLine = beginLine;
-		token.endLine = endLine;
-		token.beginColumn = beginColumn;
-		token.endColumn = endColumn;
+		token.BeginLine = beginLine;
+		token.EndLine = endLine;
+		token.BeginColumn = beginColumn;
+		token.EndColumn = endColumn;
 		return token;
 	}
 
@@ -3332,10 +3330,10 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 				image = new StringBuilder();
 			}
 			image.Append(___003C_003EjjstrLiteralImages[124]);
-			P_0.kind = 126;
+			P_0.Kind = 126;
 			((Token.GTToken)P_0).realKind = 124;
 			input_stream.backup(2);
-			P_0.image = ">";
+			P_0.Image = ">";
 			break;
 		case 125:
 			if (image == null)
@@ -3343,10 +3341,10 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 				image = new StringBuilder();
 			}
 			image.Append(___003C_003EjjstrLiteralImages[125]);
-			P_0.kind = 126;
+			P_0.Kind = 126;
 			((Token.GTToken)P_0).realKind = 125;
 			input_stream.backup(1);
-			P_0.image = ">";
+			P_0.Image = ">";
 			break;
 		}
 	}

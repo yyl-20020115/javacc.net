@@ -5,45 +5,30 @@ namespace org.javacc.jjtree;
 public class SimpleNode: Node
 {
 	protected internal Node parent;
-
 	protected internal Node[] children;
-
 	protected internal int id;
-
 	protected internal object value;
-
 	protected internal JJTreeParser parser;
 
-	public SimpleNode(int i)
-	{
-		id = i;
-	}
+	public SimpleNode(int i) { id = i; }
 
-	
-	public override string ToString()
-	{
-		return JJTreeParserTreeConstants.jjtNodeName[id];
-	}
+    public override string ToString() => JJTreeParserTreeConstants.jjtNodeName[id];
 
-	
-	public virtual string ToString(string str)
-	{
-		return new StringBuilder().Append(str).Append(ToString()).ToString();
-	}
 
-	
-	public virtual void dump(string str)
+    public virtual string ToString(string str) => str + this.ToString();
+
+
+    public virtual void Dump(string str)
 	{
 		Console.WriteLine(ToString(str));
 		if (children != null)
 		{
 			for (int i = 0; i < (nint)children.LongLength; i++)
 			{
-				((SimpleNode)children[i])?.dump(new StringBuilder().Append(str).Append(" ").ToString());
+				((SimpleNode)children[i])?.Dump(str+" ");
 			}
 		}
 	}
-
 	
 	public SimpleNode(JJTreeParser jjtp, int i)
 		: this(i)

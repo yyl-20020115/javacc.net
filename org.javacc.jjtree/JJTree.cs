@@ -1,28 +1,26 @@
 using System.Collections;
 using System.Text;
 using org.javacc.parser;
-
 namespace org.javacc.jjtree;
-
 
 public class JJTree 
 {
 	private IO io;
 
-	private void WriteLine(string P_0)
+	private void WriteLine(string text)
 	{
-		io.Msg.WriteLine(P_0);
+		io.Msg.WriteLine(text);
 	}
 
 	
-	private void initializeOptions()
+	private void InitializeOptions()
 	{
 		JJTreeOptions.Init();
-		JJTreeGlobals.initialize();
+		JJTreeGlobals.Initialize();
 	}
 
 	
-	private void help_message()
+	private void HelpMessage()
 	{
 		WriteLine("Usage:");
 		WriteLine("    jjtree option-settings inputfile");
@@ -83,7 +81,7 @@ public class JJTree
 	}
 
 	
-	public virtual int main(string[] strarr)
+	public virtual int Main(string[] strarr)
 	{
 		ASTNodeDescriptor.nodeIds = new ArrayList();
 		ASTNodeDescriptor.nodeNames = new ArrayList();
@@ -94,11 +92,11 @@ public class JJTree
 		int result;
 		try
 		{
-			initializeOptions();
+			InitializeOptions();
 			if (strarr.Length == 0)
 			{
 				WriteLine("");
-				help_message();
+				HelpMessage();
 				result = 1;
 				goto IL_0070;
 			}
@@ -261,10 +259,10 @@ public class JJTree
 			{
 				try
 				{
-					aSTGrammar.generate(io);
+					aSTGrammar.Generate(io);
 					io.Out.Close();
-					NodeFiles.generateTreeConstants_java();
-					NodeFiles.generateVisitor_java();
+					NodeFiles.GenerateTreeConstants_java();
+					NodeFiles.GenerateVisitor_java();
 					JJTreeState.generateTreeState_java();
 					WriteLine(new StringBuilder().Append("Annotated grammar generated successfully in ").Append(io.OutputFileName).ToString());
 				}

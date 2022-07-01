@@ -12,19 +12,14 @@ internal sealed class NodeFiles
 	internal const string nodeVersion = "4.1";
 	internal static HashSet<Node> nodesGenerated = new();
 
-	internal static string nodeConstants()
-	{
-		string result = new StringBuilder().Append(JJTreeGlobals.parserName).Append("TreeConstants").ToString();
-		
-		return result;
-	}
+    internal static string NodeConstants => JJTreeGlobals.parserName + "TreeConstants";
 
-	
-	internal static void generateTreeConstants_java()
+
+    internal static void GenerateTreeConstants_java()
 	{
-		string str = nodeConstants();
+		var str = NodeConstants;
 		
-		FileInfo f = new FileInfo(
+		var f = new FileInfo(
 			Path.Combine(JJTreeOptions.JJTreeOutputDirectory.DirectoryName, new StringBuilder().Append(str).Append(".java").ToString()));
 		IOException ex;
 		try
@@ -33,7 +28,7 @@ internal sealed class NodeFiles
 			TextWriter printWriter = outputFile.getPrintWriter();
 			ArrayList nodeIds = ASTNodeDescriptor.NodeIds;
 			ArrayList nodeNames = ASTNodeDescriptor.NodeNames;
-			generatePrologue(printWriter);
+			GeneratePrologue(printWriter);
 			printWriter.WriteLine(new StringBuilder().Append("public interface ").Append(str).ToString());
 			printWriter.WriteLine("{");
 			for (int i = 0; i < nodeIds.Count; i++)
@@ -69,7 +64,7 @@ internal sealed class NodeFiles
 	}
 
 	
-	internal static void generateVisitor_java()
+	internal static void GenerateVisitor_java()
 	{
 		if (!JJTreeOptions.Visitor)
 		{
@@ -82,10 +77,10 @@ internal sealed class NodeFiles
 		IOException ex;
 		try
 		{
-			OutputFile outputFile = new OutputFile(f);
-			TextWriter printWriter = outputFile.getPrintWriter();
-			ArrayList nodeNames = ASTNodeDescriptor.NodeNames;
-			generatePrologue(printWriter);
+			var outputFile = new OutputFile(f);
+			var printWriter = outputFile.getPrintWriter();
+			var nodeNames = ASTNodeDescriptor.NodeNames;
+			GeneratePrologue(printWriter);
 			printWriter.WriteLine(new StringBuilder().Append("public interface ").Append(str).ToString());
 			printWriter.WriteLine("{");
 			string str2 = mergeVisitorException();
@@ -130,7 +125,7 @@ internal sealed class NodeFiles
 	}
 
 	
-	internal static void generatePrologue(TextWriter P_0)
+	internal static void GeneratePrologue(TextWriter P_0)
 	{
 		if (!string.Equals(JJTreeGlobals.nodePackageName, ""))
 		{
@@ -208,7 +203,7 @@ internal sealed class NodeFiles
 		private static void generateNode_java(OutputFile P_0)
 	{
 		TextWriter printWriter = P_0.getPrintWriter();
-		generatePrologue(printWriter);
+		GeneratePrologue(printWriter);
 		printWriter.WriteLine("/* All AST nodes must implement this interface.  It provides basic");
 		printWriter.WriteLine("   machinery for constructing the parent and child relationships");
 		printWriter.WriteLine("   between nodes. */");
@@ -262,7 +257,7 @@ internal sealed class NodeFiles
 		private static void generateSimpleNode_java(OutputFile P_0)
 	{
 		TextWriter printWriter = P_0.getPrintWriter();
-		generatePrologue(printWriter);
+		GeneratePrologue(printWriter);
 		printWriter.Write("public class SimpleNode");
 		if (!string.Equals(JJTreeOptions.NodeExtends, ""))
 		{
@@ -382,7 +377,7 @@ internal sealed class NodeFiles
 		printWriter.WriteLine("     ToString(String), otherwise overriding ToString() is probably all");
 		printWriter.WriteLine("     you need to do. */");
 		printWriter.WriteLine("");
-		printWriter.WriteLine(new StringBuilder().Append("  public String ToString() { return ").Append(nodeConstants()).Append(".jjtNodeName[id]; }")
+		printWriter.WriteLine(new StringBuilder().Append("  public String ToString() { return ").Append(NodeConstants).Append(".jjtNodeName[id]; }")
 			.ToString());
 		printWriter.WriteLine("  public String ToString(String prefix) { return prefix + ToString(); }");
 		printWriter.WriteLine("");
@@ -408,7 +403,7 @@ internal sealed class NodeFiles
 		private static void generateMULTINode_java(OutputFile P_0, string P_1)
 	{
 		TextWriter printWriter = P_0.getPrintWriter();
-		generatePrologue(printWriter);
+		GeneratePrologue(printWriter);
 		if ((JJTreeOptions.NodeClass.Length) > 0)
 		{
 			printWriter.WriteLine(new StringBuilder().Append("public class ").Append(P_1).Append(" extends ")

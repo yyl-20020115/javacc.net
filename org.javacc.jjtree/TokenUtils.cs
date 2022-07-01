@@ -1,12 +1,10 @@
 using System.Text;
 using javacc.net;
 using org.javacc.parser;
-
 namespace org.javacc.jjtree;
 
 public sealed class TokenUtils
-{
-	
+{	
 	internal static string AddUnicodeEscapes(string P_0)
 	{
 		;
@@ -29,87 +27,79 @@ public sealed class TokenUtils
 		return result;
 	}
 
-	
-	internal static bool HasTokens(JJTreeNode P_0)
-	{
-		if (P_0.LastToken.next == P_0.FirstToken)
-		{
-			return false;
-		}
-		return true;
-	}
+    internal static bool HasTokens(JJTreeNode node) => node.LastToken.Next != node.FirstToken;
 
-	
-	internal static void Write(Token P_0, IO P_1, string P_2, string P_3)
+
+    internal static void Write(Token _token, IO io, string text1, string text2)
 	{
-		var token = P_0.specialToken;
+		var token = _token.SpecialToken;
 		if (token != null)
 		{
-			while (token.specialToken != null)
+			while (token.SpecialToken != null)
 			{
-				token = token.specialToken;
+				token = token.SpecialToken;
 			}
 			while (token != null)
 			{
-				P_1.Write(AddUnicodeEscapes(token.image));
-				token = token.next;
+				io.Write(AddUnicodeEscapes(token.Image));
+				token = token.Next;
 			}
 		}
-		string text = P_0.image;
-		if (P_2 != null && string.Equals(text, P_2))
+		string text = _token.Image;
+		if (text1 != null && string.Equals(text, text1))
 		{
-			text = P_3;
+			text = text2;
 		}
-		P_1.Write(AddUnicodeEscapes(text));
+		io.Write(AddUnicodeEscapes(text));
 	}
 
 	
-	internal static string remove_escapes_and_quotes(Token P_0, string P_1)
+	internal static string RemoveEscapeAndQuotes(Token token, string _text)
 	{
 		string text = "";
 		int num = 1;
-		while (num < P_1.Length - 1)
+		while (num < _text.Length - 1)
 		{
-			if (P_1[num] != '\\')
+			if (_text[num] != '\\')
 			{
-				text = new StringBuilder().Append(text).Append(P_1[num]).ToString();
+				text +=_text[num];
 				num++;
 				continue;
 			}
 			num++;
-			int num2 = P_1[num];
+			int num2 = _text[num];
 			switch (num2)
 			{
 			case 98:
-				text = new StringBuilder().Append(text).Append('\b').ToString();
+				text = ('\b').ToString();
 				num++;
 				continue;
 			case 116:
-				text = new StringBuilder().Append(text).Append('\t').ToString();
+				text = ('\t').ToString();
 				num++;
 				continue;
 			case 110:
-				text = new StringBuilder().Append(text).Append('\n').ToString();
+				text = ('\n').ToString();
 				num++;
 				continue;
 			case 102:
-				text = new StringBuilder().Append(text).Append('\f').ToString();
+				text = ('\f').ToString();
 				num++;
 				continue;
 			case 114:
-				text = new StringBuilder().Append(text).Append('\r').ToString();
+				text = ('\r').ToString();
 				num++;
 				continue;
 			case 34:
-				text = new StringBuilder().Append(text).Append('"').ToString();
+				text = ('"').ToString();
 				num++;
 				continue;
 			case 39:
-				text = new StringBuilder().Append(text).Append('\'').ToString();
+				text = ('\'').ToString();
 				num++;
 				continue;
 			case 92:
-				text = new StringBuilder().Append(text).Append('\\').ToString();
+				text = ('\\').ToString();
 				num++;
 				continue;
 			case 48:
@@ -123,57 +113,57 @@ public sealed class TokenUtils
 			{
 				int num3 = num2 - 48;
 				num++;
-				int num4 = P_1[num];
+				int num4 = _text[num];
 				if (num4 >= 48 && num4 <= 55)
 				{
 					num3 = num3 * 8 + num4 - 48;
 					num++;
-					num4 = P_1[num];
+					num4 = _text[num];
 					if (num2 <= 51 && num4 >= 48 && num4 <= 55)
 					{
 						num3 = num3 * 8 + num4 - 48;
 						num++;
 					}
 				}
-				text = new StringBuilder().Append(text).Append((char)num3).ToString();
+				text +=((char)num3).ToString();
 				continue;
 			}
 			}
 			if (num2 == 117)
 			{
 				num++;
-				num2 = P_1[num];
-				if (hexchar((char)num2))
+				num2 = _text[num];
+				if (HexChar((char)num2))
 				{
-					int num3 = hexval((char)num2);
+					int num3 = HexVal((char)num2);
 					num++;
-					num2 = P_1[num];
-					if (hexchar((char)num2))
+					num2 = _text[num];
+					if (HexChar((char)num2))
 					{
-						num3 = num3 * 16 + hexval((char)num2);
+						num3 = num3 * 16 + HexVal((char)num2);
 						num++;
-						num2 = P_1[num];
-						if (hexchar((char)num2))
+						num2 = _text[num];
+						if (HexChar((char)num2))
 						{
-							num3 = num3 * 16 + hexval((char)num2);
+							num3 = num3 * 16 + HexVal((char)num2);
 							num++;
-							num2 = P_1[num];
-							if (hexchar((char)num2))
+							num2 = _text[num];
+							if (HexChar((char)num2))
 							{
-								_ = num3 * 16 + hexval((char)num2);
+								_ = num3 * 16 + HexVal((char)num2);
 								num++;
 								continue;
 							}
 						}
 					}
 				}
-				JavaCCErrors.Parse_Error(P_0, new StringBuilder().Append("Encountered non-hex character '").Append((char)num2).Append("' at position ")
+				JavaCCErrors.Parse_Error(token, new StringBuilder().Append("Encountered non-hex character '").Append((char)num2).Append("' at position ")
 					.Append(num)
 					.Append(" of string - Unicode escape must have 4 hex digits after it.")
 					.ToString());
 				return text;
 			}
-			JavaCCErrors.Parse_Error(P_0, new StringBuilder().Append("Illegal escape sequence '\\").Append((char)num2).Append("' at position ")
+			JavaCCErrors.Parse_Error(token, new StringBuilder().Append("Illegal escape sequence '\\").Append((char)num2).Append("' at position ")
 				.Append(num)
 				.Append(" of string.")
 				.ToString());
@@ -182,39 +172,18 @@ public sealed class TokenUtils
 		return text;
 	}
 
-	private static bool hexchar(char P_0)
-	{
-		if (P_0 >= '0' && P_0 <= '9')
-		{
-			return true;
-		}
-		if (P_0 >= 'A' && P_0 <= 'F')
-		{
-			return true;
-		}
-		if (P_0 >= 'a' && P_0 <= 'f')
-		{
-			return true;
-		}
-		return false;
-	}
+    private static bool HexChar(char c) => c switch
+    {
+        >= '0' and <= '9' => true,
+        >= 'A' and <= 'F' => true,
+        >= 'a' and <= 'f' => true,
+        _ => false,
+    };
 
-	private static int hexval(char P_0)
-	{
-		if (P_0 >= '0' && P_0 <= '9')
-		{
-			return P_0 - 48;
-		}
-		if (P_0 >= 'A' && P_0 <= 'F')
-		{
-			return P_0 - 65 + 10;
-		}
-		return P_0 - 97 + 10;
-	}
-
-	
-	internal static void Write(Token P_0, IO P_1)
-	{
-		Write(P_0, P_1, null, null);
-	}
+    private static int HexVal(char c) => c switch
+    {
+        >= '0' and <= '9' => c - 48,
+        >= 'A' and <= 'F' => c - 65 + 10,
+        _ => c - 97 + 10
+    };
 }

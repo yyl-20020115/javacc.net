@@ -1,23 +1,19 @@
-using System.Text;
 namespace org.javacc.jjtree;
-
 public class ASTJavacodeBody : JJTreeNode
 {
 	internal NodeScope node_scope;
-	internal ASTJavacodeBody(int P_0)
-		: base(P_0) { }
-
+	internal ASTJavacodeBody(int id) : base(id) { }
 
 	public override void Write(IO io)
 	{
-		if (node_scope.isVoid())
+		if (node_scope.IsVoid)
 		{
 			base.Write(io);
 			return;
 		}
-		Token firstToken = FirstToken;
-		string text = "";
-		for (int i = 4; i < firstToken.beginColumn; i++)
+		var firstToken = FirstToken;
+		var text = "";
+		for (int i = 4; i < firstToken.BeginColumn; i++)
 		{
 			text += " ";
 		}
@@ -25,11 +21,5 @@ public class ASTJavacodeBody : JJTreeNode
 		io.WriteLine();
 		node_scope.insertOpenNodeCode(io, text);
 		node_scope.tryTokenSequence(io, text, firstToken, LastToken);
-	}
-
-
-	public new void Write(object P_0)
-	{
-		this.Write((IO)P_0);
 	}
 }

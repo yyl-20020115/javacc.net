@@ -194,10 +194,10 @@ public class JavaCharStream
 		return (char)num5;
 	IL_01d9:
 
-		string message = new StringBuilder().Append("Invalid escape character at line ").Append(line).Append(" column ")
-			.Append(column)
-			.Append(".")
-			.ToString();
+		string message = ("Invalid escape character at line ")+(line)+(" column ")
+			+(column)
+			+(".")
+			;
 
 		throw new System.Exception(message);
 	}
@@ -207,13 +207,9 @@ public class JavaCharStream
 	{
 		if (bufpos >= tokenBegin)
 		{
-			string result = new string(buffer, tokenBegin, bufpos - tokenBegin + 1);
-
-			return result;
+			return new string(buffer, tokenBegin, bufpos - tokenBegin + 1);
 		}
-		string result2 = new StringBuilder().Append(new string(buffer, tokenBegin, bufsize - tokenBegin)).Append(new string(buffer, 0, bufpos + 1)).ToString();
-
-		return result2;
+		return new StringBuilder().Append(new string(buffer, tokenBegin, bufsize - tokenBegin)).Append(new string(buffer, 0, bufpos + 1)).ToString();
 	}
 
 	public virtual int getBeginLine()
