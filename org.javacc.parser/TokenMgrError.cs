@@ -1,7 +1,5 @@
-using System.Runtime.Serialization;
-using System.Text;
 using javacc.net;
-
+using System.Text;
 namespace org.javacc.parser;
 
 
@@ -67,9 +65,9 @@ public class TokenMgrError : System.Exception
             int num;
             if ((num = str[i]) < 32 || num > 126)
             {
-                string @this = new StringBuilder().Append("0000").Append(Utils.ToString(num, 16)).ToString();
-                stringBuilder.Append(new StringBuilder().Append("\\u").Append(
-                    @this.Substring(@this.Length - 4, @this.Length)).ToString());
+                string @this = ("0000")+(Utils.ToString(num, 16));
+                stringBuilder.Append(("\\u")+(
+                    @this.Substring(@this.Length - 4, @this.Length)));
             }
             else
             {
@@ -84,33 +82,23 @@ public class TokenMgrError : System.Exception
 
     protected internal static string LexicalError(bool b, int i1, int i2, int i3, string str, char ch)
     {
-        string result = new StringBuilder().Append("Lexical error at line ").Append(i2).Append(", column ")
-            .Append(i3)
-            .Append(".  Encountered: ")
-            .Append((!b) ? new StringBuilder().Append("\"").Append(
+        return ("Lexical error at line ")+(i2)+(", column ")
+            +(i3)
+            +(".  Encountered: ")
+            +((!b) ? ("\"")+(
                 addEscapes(
-                ch.ToString())).Append("\"")
-                .Append(" (")
-                .Append((int)ch)
-                .Append("), ")
+                ch.ToString()))+("\"")
+                +(" (")
+                +((int)ch)
+                +("), ")
                 .ToString() : "<EOF> ")
-            .Append("after : \"")
-            .Append(addEscapes(str))
-            .Append("\"")
-            .ToString();
-
-        return result;
+            +("after : \"")
+            +(addEscapes(str))
+            +("\"")
+            ;
     }
-
-    public override string Message => base.Message;
 
     public TokenMgrError()
-    {
-    }
-
-
-    protected TokenMgrError(SerializationInfo P_0, StreamingContext P_1)
-    : base(P_0, P_1)
     {
     }
 }

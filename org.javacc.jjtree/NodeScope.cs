@@ -120,9 +120,9 @@ public class NodeScope
 		P_2.Write(P_0);
 		JJTreeNode.OpenJJTreeComment(P_0, null);
 		P_0.WriteLine();
-		var hashtable = new Hashtable();
-		findThrown(hashtable, P_2);
-		var enumeration = hashtable.GetEnumerator();
+		var dict = new Dictionary<string,string>();
+		findThrown(dict, P_2);
+		var enumeration = dict.GetEnumerator();
 		insertCatchBlocks(P_0, enumeration, P_1);
 		P_0.WriteLine((P_1)+("} finally {"));
 		if (usesCloseNodeVar())
@@ -146,7 +146,7 @@ public class NodeScope
 	}
 
 	
-	internal virtual void tryTokenSequence(IO io, string text, Token t1, Token t2)
+	internal virtual void TryTokenSequence(IO io, string text, Token t1, Token t2)
 	{
 		io.WriteLine((text)+("try {"));
 		JJTreeNode.CloseJJTreeComment(io);
@@ -157,8 +157,7 @@ public class NodeScope
 		JJTreeNode.OpenJJTreeComment(io, null);
 		io.WriteLine();
 
-		Enumeration enumeration = Production.ThrowsList.elements();
-		insertCatchBlocks(io, enumeration, text);
+		insertCatchBlocks(io, Production.ThrowsList, text);
 		io.WriteLine((text)+("} finally {"));
 		if (usesCloseNodeVar())
 		{
@@ -173,10 +172,10 @@ public class NodeScope
 	}
 
 	
-	internal NodeScope(ASTProduction P_0, ASTNodeDescriptor P_1)
+	internal NodeScope(ASTProduction astp, ASTNodeDescriptor astn)
 	{
-		Production = P_0;
-		if (P_1 == null)
+		Production = astp;
+		if (astn == null)
 		{
 			string text = Production.Name;
 			if (JJTreeOptions.NodeDefaultVoid)
@@ -187,7 +186,7 @@ public class NodeScope
 		}
 		else
 		{
-			nodeDescriptor = P_1;
+			nodeDescriptor = astn;
 		}
 		ScopeNumber = Production.GetNodeScopeNumber(this);
 		NodeVar = constructVariable("n");
@@ -199,10 +198,7 @@ public class NodeScope
 	private string constructVariable(string P_0)
 	{
 		string @this = ("000")+(ScopeNumber);
-		string result = ("jjt")+(P_0)+(String.instancehelper_substring(@this, @this.Length - 3, @this.Length))
-			;
-		
-		return result;
+		return ("jjt") + (P_0) + (@this.Substring(@this.Length - 3, @this.Length));
 	}
 
 	internal virtual bool usesCloseNodeVar()
@@ -277,26 +273,24 @@ public class NodeScope
 	}
 
 	
-	private static void findThrown(Hashtable P_0, JJTreeNode P_1)
+	private static void findThrown(Dictionary<string,string> dict, JJTreeNode node)
 	{
-		if (P_1 is ASTBNFNonTerminal)
+		if (node is ASTBNFNonTerminal)
 		{
-			string image = P_1.FirstToken.Image;
-			ASTProduction aSTProduction = (ASTProduction)JJTreeGlobals.Productions.get(image);
-			if (aSTProduction != null)
+			string image = node.FirstToken.Image;
+			//ASTProduction aSTProduction = (ASTProduction)JJTreeGlobals.Productions.get(image);
+			if (JJTreeGlobals.Productions.TryGetValue(image, out var aSTProduction ))
 			{
-				Enumeration enumeration = aSTProduction.ThrowsList.elements();
-				while (enumeration.hasMoreElements())
+				foreach(var t in aSTProduction.ThrowsList)
 				{
-					string text = (string)enumeration.nextElement();
-					P_0.Add(text, text);
+					dict.Add(t, t);
 				}
 			}
 		}
-		for (int i = 0; i < P_1.jjtGetNumChildren(); i++)
+		for (int i = 0; i < node.jjtGetNumChildren(); i++)
 		{
-			JJTreeNode jJTreeNode = (JJTreeNode)P_1.jjtGetChild(i);
-			findThrown(P_0, jJTreeNode);
+			JJTreeNode jJTreeNode = (JJTreeNode)node.jjtGetChild(i);
+			findThrown(dict, jJTreeNode);
 		}
 	}
 

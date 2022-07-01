@@ -20,6 +20,6 @@ public class ASTJavacodeBody : JJTreeNode
 		JJTreeNode.OpenJJTreeComment(io, nodeScope.NodeDescriptorText);
 		io.WriteLine();
 		nodeScope.insertOpenNodeCode(io, text);
-		nodeScope.tryTokenSequence(io, text, firstToken, LastToken);
+		nodeScope.TryTokenSequence(io, text, firstToken, LastToken);
 	}
 }

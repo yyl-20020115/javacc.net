@@ -2,7 +2,6 @@ namespace org.javacc.parser;
 
 public sealed class ExpansionTreeWalker
 {
-	
 	internal static void PreOrderWalk(Expansion exp, TreeWalkerOp tree)
 	{
 		tree.Action(exp);
@@ -57,10 +56,9 @@ public sealed class ExpansionTreeWalker
 		}
 		else if (exp is RSequence q)
 		{
-			Enumeration enumeration = ((RSequence)exp).Units.elements();
-			while (enumeration.hasMoreElements())
+			foreach(var u in q.Units)
 			{
-				PreOrderWalk((Expansion)enumeration.nextElement(), tree);
+				PreOrderWalk(u, tree);
 			}
 		}
 		else if (exp is ROneOrMore ro)
@@ -82,84 +80,80 @@ public sealed class ExpansionTreeWalker
 	}
 
 	
-	internal static void postOrderWalk(Expansion P_0, TreeWalkerOp P_1)
+	internal static void postOrderWalk(Expansion exp, TreeWalkerOp walker)
 	{
-		if (P_1.GoDeeper(P_0))
+		if (walker.GoDeeper(exp))
 		{
-			if (P_0 is Choice c)
+			if (exp is Choice c)
 			{
-				Enumeration enumeration = ((Choice)P_0).Choices.elements();
-				while (enumeration.hasMoreElements())
+				foreach(var ch in c.Choices)
 				{
-					postOrderWalk((Expansion)enumeration.nextElement(), P_1);
+					postOrderWalk(ch, walker);
 				}
 			}
-			else if (P_0 is Sequence s)
+			else if (exp is Sequence s)
 			{
-				Enumeration enumeration = ((Sequence)P_0).units.elements();
-				while (enumeration.hasMoreElements())
+				foreach(var unit in s.units)
 				{
-					postOrderWalk((Expansion)enumeration.nextElement(), P_1);
+					postOrderWalk(unit, walker);
 				}
 			}
-			else if (P_0 is OneOrMore o)
+			else if (exp is OneOrMore o)
 			{
-				postOrderWalk(((OneOrMore)P_0).expansion, P_1);
+				postOrderWalk(((OneOrMore)exp).expansion, walker);
 			}
-			else if (P_0 is ZeroOrMore z)
+			else if (exp is ZeroOrMore z)
 			{
-				postOrderWalk(((ZeroOrMore)P_0).expansion, P_1);
+				postOrderWalk(((ZeroOrMore)exp).expansion, walker);
 			}
-			else if (P_0 is ZeroOrOne m)
+			else if (exp is ZeroOrOne m)
 			{
-				postOrderWalk(((ZeroOrOne)P_0).expansion, P_1);
+				postOrderWalk(((ZeroOrOne)exp).expansion, walker);
 			}
-			else if (P_0 is Lookahead l)
+			else if (exp is Lookahead l)
 			{
-				Expansion la_expansion = ((Lookahead)P_0).la_expansion;
-				if (!(la_expansion is Sequence) || (Expansion)((Sequence)la_expansion).units[0] != P_0)
+				Expansion la_expansion = ((Lookahead)exp).la_expansion;
+				if (!(la_expansion is Sequence) || (Expansion)((Sequence)la_expansion).units[0] != exp)
 				{
-					postOrderWalk(la_expansion, P_1);
+					postOrderWalk(la_expansion, walker);
 				}
 			}
-			else if (P_0 is TryBlock b)
+			else if (exp is TryBlock b)
 			{
-				postOrderWalk(((TryBlock)P_0).exp, P_1);
+				postOrderWalk(((TryBlock)exp).exp, walker);
 			}
-			else if (P_0 is RChoice rc)
+			else if (exp is RChoice rc)
 			{
-				Enumeration enumeration = ((RChoice)P_0).Choices.elements();
-				while (enumeration.hasMoreElements())
-				{
-					postOrderWalk((Expansion)enumeration.nextElement(), P_1);
+				foreach(var ec in rc.Choices)
+                {
+					postOrderWalk(ec, walker);
 				}
 			}
-			else if (P_0 is RSequence rs)
+			else if (exp is RSequence rs)
 			{
-				Enumeration enumeration = ((RSequence)P_0).Units.elements();
-				while (enumeration.hasMoreElements())
+				foreach(var un in rs.Units)
 				{
-					postOrderWalk((Expansion)enumeration.nextElement(), P_1);
+					postOrderWalk(un, walker);
 				}
 			}
-			else if (P_0 is ROneOrMore ro)
+			else if (exp is ROneOrMore ro)
 			{
-				postOrderWalk(((ROneOrMore)P_0).RegExpr, P_1);
+				postOrderWalk(((ROneOrMore)exp).RegExpr, walker);
 			}
-			else if (P_0 is RZeroOrMore rz)
+			else if (exp is RZeroOrMore rz)
 			{
-				postOrderWalk(((RZeroOrMore)P_0).regexpr, P_1);
+				postOrderWalk(((RZeroOrMore)exp).regexpr, walker);
 			}
-			else if (P_0 is RZeroOrOne rm)
+			else if (exp is RZeroOrOne rm)
 			{
-				postOrderWalk(((RZeroOrOne)P_0).regexpr, P_1);
+				postOrderWalk(((RZeroOrOne)exp).regexpr, walker);
 			}
-			else if (P_0 is RRepetitionRange rr)
+			else if (exp is RRepetitionRange rr)
 			{
-				postOrderWalk(((RRepetitionRange)P_0).regexpr, P_1);
+				postOrderWalk(((RRepetitionRange)exp).regexpr, walker);
 			}
 		}
-		P_1.Action(P_0);
+		walker.Action(exp);
 	}
 
 	

@@ -1002,7 +1002,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				Token stmBeginLoc = jj_consume_token(87);
 				aSTJavacode2.Name = token.Image;
-				aSTJavacode2.stmBeginLoc = stmBeginLoc;
+				aSTJavacode2.StmBeginLoc = stmBeginLoc;
 				aSTJavacodeBody = new ASTJavacodeBody(7);
 				num2 = 1;
 				jjtree.OpenNodeScope(aSTJavacodeBody);

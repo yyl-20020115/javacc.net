@@ -1,5 +1,7 @@
+using org.javacc.jjtree;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -57,7 +59,7 @@ public class NfaState
 
 	internal NfaState stateForCase;
 
-	internal ArrayList epsilonMoves;
+	internal List<Node> epsilonMoves;
 
 	internal string epsilonMovesString;
 
@@ -244,7 +246,7 @@ public class NfaState
 		{
 			NfaState nfaState = (NfaState)allStates[index];
 			nfaState.epsilonMoveArray = new NfaState[nfaState.epsilonMoves.Count];
-			nfaState.epsilonMoves.CopyInto(nfaState.epsilonMoveArray);
+			nfaState.epsilonMoves.CopyTo(nfaState.epsilonMoveArray);
 		}
 	}
 
