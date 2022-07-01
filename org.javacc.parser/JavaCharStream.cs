@@ -348,12 +348,12 @@ public class JavaCharStream
 		char[] array = new char[i];
 		if (bufpos + 1 >= i)
 		{
-			ByteCodeHelper.arraycopy_primitive_2(buffer, bufpos - i + 1, array, 0, i);
+			System.Copy(buffer, bufpos - i + 1, array, 0, i);
 		}
 		else
 		{
-			ByteCodeHelper.arraycopy_primitive_2(buffer, bufsize - (i - bufpos - 1), array, 0, i - bufpos - 1);
-			ByteCodeHelper.arraycopy_primitive_2(buffer, 0, array, i - bufpos - 1, bufpos + 1);
+			Array.Copy(buffer, bufsize - (i - bufpos - 1), array, 0, i - bufpos - 1);
+			Array.Copy(buffer, 0, array, i - bufpos - 1, bufpos + 1);
 		}
 		return array;
 	}
@@ -409,24 +409,24 @@ public class JavaCharStream
 		{
 			if (b)
 			{
-				ByteCodeHelper.arraycopy_primitive_2(buffer, tokenBegin, dest, 0, bufsize - tokenBegin);
-				ByteCodeHelper.arraycopy_primitive_2(buffer, 0, dest, bufsize - tokenBegin, bufpos);
+				Array.Copy(buffer, tokenBegin, dest, 0, bufsize - tokenBegin);
+				Array.Copy(buffer, 0, dest, bufsize - tokenBegin, bufpos);
 				buffer = dest;
-				ByteCodeHelper.arraycopy_primitive_4(bufline, tokenBegin, dest2, 0, bufsize - tokenBegin);
-				ByteCodeHelper.arraycopy_primitive_4(bufline, 0, dest2, bufsize - tokenBegin, bufpos);
+				Array.Copy(bufline, tokenBegin, dest2, 0, bufsize - tokenBegin);
+				Array.Copy(bufline, 0, dest2, bufsize - tokenBegin, bufpos);
 				bufline = dest2;
-				ByteCodeHelper.arraycopy_primitive_4(bufcolumn, tokenBegin, dest3, 0, bufsize - tokenBegin);
-				ByteCodeHelper.arraycopy_primitive_4(bufcolumn, 0, dest3, bufsize - tokenBegin, bufpos);
+				Array.Copy(bufcolumn, tokenBegin, dest3, 0, bufsize - tokenBegin);
+				Array.Copy(bufcolumn, 0, dest3, bufsize - tokenBegin, bufpos);
 				bufcolumn = dest3;
 				bufpos += bufsize - tokenBegin;
 			}
 			else
 			{
-				ByteCodeHelper.arraycopy_primitive_2(buffer, tokenBegin, dest, 0, bufsize - tokenBegin);
+				System.Copy(buffer, tokenBegin, dest, 0, bufsize - tokenBegin);
 				buffer = dest;
-				ByteCodeHelper.arraycopy_primitive_4(bufline, tokenBegin, dest2, 0, bufsize - tokenBegin);
+				Array.Copy(bufline, tokenBegin, dest2, 0, bufsize - tokenBegin);
 				bufline = dest2;
-				ByteCodeHelper.arraycopy_primitive_4(bufcolumn, tokenBegin, dest3, 0, bufsize - tokenBegin);
+				Array.Copy(bufcolumn, tokenBegin, dest3, 0, bufsize - tokenBegin);
 				bufcolumn = dest3;
 				bufpos -= tokenBegin;
 			}

@@ -646,7 +646,7 @@ public class NfaState
 			else
 			{
 				char[] dest = new char[(nint)charMoves.LongLength + (nint)P_0.charMoves.LongLength];
-				ByteCodeHelper.arraycopy_primitive_2(charMoves, 0, dest, 0, charMoves.Length);
+				Array.Copy(charMoves, 0, dest, 0, charMoves.Length);
 				charMoves = dest;
 				for (int i = 0; i < (nint)P_0.charMoves.LongLength; i++)
 				{
@@ -663,7 +663,7 @@ public class NfaState
 			else
 			{
 				char[] dest = new char[(nint)rangeMoves.LongLength + (nint)P_0.rangeMoves.LongLength];
-				ByteCodeHelper.arraycopy_primitive_2(rangeMoves, 0, dest, 0, rangeMoves.Length);
+				Array.Copy(rangeMoves, 0, dest, 0, rangeMoves.Length);
 				rangeMoves = dest;
 				for (int i = 0; i < (nint)P_0.rangeMoves.LongLength; i += 2)
 				{
@@ -708,7 +708,7 @@ public class NfaState
 	private static char[] ExpandCharArr(char[] P_0, int P_1)
 	{
 		char[] array = new char[(nint)P_0.LongLength + P_1];
-		ByteCodeHelper.arraycopy_primitive_2(P_0, 0, array, 0, P_0.Length);
+		Array.Copy(P_0, 0, array, 0, P_0.Length);
 		return array;
 	}
 
@@ -1077,7 +1077,7 @@ public class NfaState
 		if (epsilonMovesString != null && allNextStates.get(epsilonMovesString) == null)
 		{
 			int[] array2 = new int[usefulEpsilonMoves];
-			ByteCodeHelper.arraycopy_primitive_4(array, 0, array2, 0, num);
+			Array.Copy(array, 0, array2, 0, num);
 			allNextStates.Add(epsilonMovesString, array2);
 		}
 		return epsilonMovesString;
@@ -2548,7 +2548,7 @@ public class NfaState
 			array8 = null;
 		}
 		nonAsciiMoveIndices = new int[num];
-		ByteCodeHelper.arraycopy_primitive_4(tmpIndices, 0, nonAsciiMoveIndices, 0, num);
+		Array.Copy(tmpIndices, 0, nonAsciiMoveIndices, 0, num);
 		for (int i = 0; i < 256; i++)
 		{
 			if (array9[i])
@@ -2612,7 +2612,7 @@ public class NfaState
 				}
 			}
 			int[] array3 = new int[num];
-			ByteCodeHelper.arraycopy_primitive_4(array, 0, array3, 0, num);
+			Array.Copy(array, 0, array3, 0, num);
 			hashtable.Add(key, array3);
 			allNextStates.Add(key, array3);
 		}

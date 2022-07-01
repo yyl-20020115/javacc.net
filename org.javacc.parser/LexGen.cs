@@ -248,7 +248,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		stateHasActions = new bool[maxLexStates];
 		lexStateName = new string[maxLexStates];
 		singlesToSkip = new NfaState[maxLexStates];
-		ByteCodeHelper.arraycopy_fast(array, 0, lexStateName, 0, maxLexStates);
+		Array.Copy(array, 0, lexStateName, 0, maxLexStates);
 		for (int i = 0; i < maxLexStates; i++)
 		{
 			canMatchAnyChar[i] = -1;
@@ -1446,7 +1446,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					if ((nint)kinds.LongLength < curRE.ordinal)
 					{
 						int[] dest = new int[curRE.ordinal + 1];
-						ByteCodeHelper.arraycopy_primitive_4(kinds, 0, dest, 0, kinds.Length);
+						Array.Copy(kinds, 0, dest, 0, kinds.Length);
 						kinds = dest;
 					}
 					kinds[curRE.ordinal] = kind;

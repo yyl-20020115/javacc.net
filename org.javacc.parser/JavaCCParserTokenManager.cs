@@ -3478,12 +3478,12 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
 			int[] array3 = array;
 			int[] dest = array3;
 			beginLine = array3;
-			ByteCodeHelper.arraycopy_primitive_4(src, 0, dest, 0, depth);
+			Array.Copy(src, 0, dest, 0, depth);
 			int[] src2 = beginCol;
 			array3 = array2;
 			int[] dest2 = array3;
 			beginCol = array3;
-			ByteCodeHelper.arraycopy_primitive_4(src2, 0, dest2, 0, depth);
+			Array.Copy(src2, 0, dest2, 0, depth);
 		}
 		beginLine[depth] = P_0;
 		beginCol[depth] = P_1;
