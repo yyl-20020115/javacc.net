@@ -42,8 +42,8 @@ public class RStringLiteral : RegularExpression
 	
 	public RStringLiteral(Token t, string str)
 	{
-		line = t.beginLine;
-		column = t.beginColumn;
+		Line = t.BeginLine;
+		Column = t.BeginColumn;
 		image = str;
 	}
 
@@ -1226,13 +1226,13 @@ public class RStringLiteral : RegularExpression
 	
 	internal static int GetLine(int P_0)
 	{
-		return LexGen.rexprs[P_0].line;
+		return LexGen.rexprs[P_0].Line;
 	}
 
 	
 	internal static int GetColumn(int P_0)
 	{
-		return LexGen.rexprs[P_0].column;
+		return LexGen.rexprs[P_0].Column;
 	}
 
 	
@@ -1542,9 +1542,9 @@ public class RStringLiteral : RegularExpression
 	}
 
 	
-	public override StringBuilder dump(int i, HashSet<Expansion> s)
+	public override StringBuilder Dump(int i, HashSet<Expansion> s)
 	{
-		return base.dump(i, s).Append(' ').Append(image);
+		return base.Dump(i, s).Append(' ').Append(image);
 	}
 
 	

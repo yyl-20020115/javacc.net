@@ -44,8 +44,8 @@ public class RCharacterList : RegularExpression
 				}
 				continue;
 			}
-			ch = ((CharacterRange)descriptors[i]).left;
-			int right = ((CharacterRange)descriptors[i]).right;
+			ch = ((CharacterRange)descriptors[i]).Left;
+			int right = ((CharacterRange)descriptors[i]).Right;
 			int j;
 			for (j = 0; ch > diffLowerCaseRanges[j]; j += 2)
 			{
@@ -150,7 +150,7 @@ public class RCharacterList : RegularExpression
 						}
 						else
 						{
-							int left = ((CharacterRange)vector[num2]).left;
+							int left = ((CharacterRange)vector[num2]).Left;
 							if (InRange(singleCharacter.ch, (CharacterRange)vector[num2]))
 							{
 								break;
@@ -161,7 +161,7 @@ public class RCharacterList : RegularExpression
 							}
 						}
 					}
-					vector.insertElementAt(singleCharacter, num2);
+					vector.Insert(num2, singleCharacter);//.insertElementAt(singleCharacter, num2);
 					num++;
 					break;
 					IL_00e5:
@@ -179,11 +179,11 @@ public class RCharacterList : RegularExpression
 					{
 						if (InRange(((SingleCharacter)vector[num2]).ch, characterRange))
 						{
-							vector.removeElementAt(num2--);
+							vector.RemoveAt(num2--);
 							num += -1;
 							goto IL_0268;
 						}
-						if (((SingleCharacter)vector[num2]).ch <= characterRange.right)
+						if (((SingleCharacter)vector[num2]).ch <= characterRange.Right)
 						{
 							goto IL_0268;
 						}
@@ -196,36 +196,36 @@ public class RCharacterList : RegularExpression
 						}
 						if (SubRange((CharacterRange)vector[num2], characterRange))
 						{
-							vector.setElementAt(characterRange, num2);
+                            vector[num2]=(characterRange);
 							break;
 						}
 						if (Overlaps(characterRange, (CharacterRange)vector[num2]))
 						{
-							characterRange.left = (char)(((CharacterRange)vector[num2]).right + 1);
+							characterRange.Left = (char)(((CharacterRange)vector[num2]).Right + 1);
 							goto IL_0268;
 						}
 						if (Overlaps((CharacterRange)vector[num2], characterRange))
 						{
 							CharacterRange obj = characterRange;
-							((CharacterRange)vector[num2]).right = (char)(characterRange.left + 1);
+							((CharacterRange)vector[num2]).Right = (char)(characterRange.Left + 1);
 							characterRange = (CharacterRange)vector[num2];
-							vector.setElementAt(obj, num2);
+							vector[num2] = obj;//.setElementAt(obj, num2);
 							goto IL_0268;
 						}
-						if (((CharacterRange)vector[num2]).left <= characterRange.right)
+						if (((CharacterRange)vector[num2]).Left <= characterRange.Right)
 						{
 							goto IL_0268;
 						}
 					}
 				}
-				vector.insertElementAt(characterRange, num2);
+				vector.Insert(num, char);//.insertElementAt(characterRange, num2);
 				num++;
 				break;
 				IL_0268:
 				num2++;
 			}
 		}
-		vector.trimToSize();
+		vector.TrimToSize();
 		descriptors = vector;
 	}
 
@@ -251,8 +251,8 @@ public class RCharacterList : RegularExpression
 				}
 				continue;
 			}
-			ch = ((CharacterRange)descriptors[i]).left;
-			int right = ((CharacterRange)descriptors[i]).right;
+			ch = ((CharacterRange)descriptors[i]).Left;
+			int right = ((CharacterRange)descriptors[i]).Right;
 			if (ch >= 0 && ch <= num + 1)
 			{
 				num = right;
@@ -278,17 +278,17 @@ public class RCharacterList : RegularExpression
 
 	internal static bool InRange(char P_0, CharacterRange P_1)
 	{
-		return (P_0 >= P_1.left && P_0 <= P_1.right) ? true : false;
+		return (P_0 >= P_1.Left && P_0 <= P_1.Right) ? true : false;
 	}
 
 	internal static bool SubRange(CharacterRange P_0, CharacterRange P_1)
 	{
-		return (P_0.left >= P_1.left && P_0.right <= P_1.right) ? true : false;
+		return (P_0.Left >= P_1.Left && P_0.Right <= P_1.Right) ? true : false;
 	}
 
 	internal static bool Overlaps(CharacterRange P_0, CharacterRange P_1)
 	{
-		return (P_0.left <= P_1.right && P_0.right > P_1.right) ? true : false;
+		return (P_0.Left <= P_1.Right && P_0.Right > P_1.Right) ? true : false;
 	}
 
 	
@@ -312,8 +312,8 @@ public class RCharacterList : RegularExpression
 		}
 		transformed = true;
 		Nfa nfa = new Nfa();
-		NfaState start = nfa.start;
-		NfaState end = nfa.end;
+		NfaState start = nfa.Start;
+		NfaState end = nfa.End;
 		for (int i = 0; i < descriptors.Count; i++)
 		{
 			if (descriptors[i] is SingleCharacter)
@@ -322,13 +322,13 @@ public class RCharacterList : RegularExpression
 				continue;
 			}
 			CharacterRange characterRange = (CharacterRange)descriptors[i];
-			if (characterRange.left == characterRange.right)
+			if (characterRange.Left == characterRange.Right)
 			{
-				start.AddChar(characterRange.left);
+				start.AddChar(characterRange.Left);
 			}
 			else
 			{
-				start.AddRange(characterRange.left, characterRange.right);
+				start.AddRange(characterRange.Left, characterRange.Right);
 			}
 		}
 		start.next = end;

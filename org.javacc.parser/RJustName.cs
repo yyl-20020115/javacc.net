@@ -6,17 +6,15 @@ public class RJustName : RegularExpression
 	
 	public RJustName(Token t, string str)
 	{
-		line = t.beginLine;
-		column = t.beginColumn;
+		Line = t.BeginLine;
+		Column = t.BeginColumn;
 		label = str;
 	}
 
 	
 	public override Nfa GenerateNfa(bool b)
 	{
-		Nfa result = regexpr.GenerateNfa(b);
-		
-		return result;
+		return regexpr.GenerateNfa(b);
 	}
 	public RJustName()
 	{

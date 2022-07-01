@@ -8,13 +8,13 @@ public class RZeroOrOne : RegularExpression
 	
 	public override Nfa GenerateNfa(bool b)
 	{
-		Nfa nfa = new Nfa();
-		NfaState start = nfa.start;
-		NfaState end = nfa.end;
-		Nfa nfa2 = regexpr.GenerateNfa(b);
-		start.AddMove(nfa2.start);
+		var nfa = new Nfa();
+		var start = nfa.Start;
+		var end = nfa.End;
+		var nfa2 = regexpr.GenerateNfa(b);
+		start.AddMove(nfa2.Start);
 		start.AddMove(end);
-		nfa2.end.AddMove(end);
+		nfa2.End.AddMove(end);
 		return nfa;
 	}
 }

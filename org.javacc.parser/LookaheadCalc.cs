@@ -11,14 +11,14 @@ public class LookaheadCalc : JavaCCGlobals
 		{
 			return 0;
 		}
-		for (int i = 0; i < P_0.choices.Count; i++)
+		for (int i = 0; i < P_0.Choices.Count; i++)
 		{
-			if (!explicitLA((Expansion)P_0.choices[i]))
+			if (!explicitLA((Expansion)P_0.Choices[i]))
 			{
 				return i;
 			}
 		}
-		int result = P_0.choices.Count;
+		int result = P_0.Choices.Count;
 		
 		return result;
 	}
@@ -145,41 +145,41 @@ public class LookaheadCalc : JavaCCGlobals
 	public static void choiceCalc(Choice c)
 	{
 		int num = firstChoice(c);
-		ArrayList[] array = new ArrayList[c.choices.Count];
-		ArrayList[] array2 = new ArrayList[c.choices.Count];
-		int[] array3 = new int[c.choices.Count - 1];
-		MatchInfo[] array4 = new MatchInfo[c.choices.Count - 1];
-		int[] array5 = new int[c.choices.Count - 1];
+		ArrayList[] array = new ArrayList[c.Choices.Count];
+		ArrayList[] array2 = new ArrayList[c.Choices.Count];
+		int[] array3 = new int[c.Choices.Count - 1];
+		MatchInfo[] array4 = new MatchInfo[c.Choices.Count - 1];
+		int[] array5 = new int[c.Choices.Count - 1];
 		for (int i = 1; i <= Options.getChoiceAmbiguityCheck(); i++)
 		{
 			MatchInfo.laLimit = i;
 			LookaheadWalk.considerSemanticLA = ((!Options.getForceLaCheck()) ? true : false);
-			for (int j = num; j < c.choices.Count - 1; j++)
+			for (int j = num; j < c.Choices.Count - 1; j++)
 			{
 				LookaheadWalk.sizeLimitedMatches = new ArrayList();
 				MatchInfo matchInfo = new MatchInfo();
 				matchInfo.firstFreeLoc = 0;
 				ArrayList vector = new ArrayList();
 				vector.Add(matchInfo);
-				LookaheadWalk.genFirstSet(vector, (Expansion)c.choices[j]);
+				LookaheadWalk.genFirstSet(vector, (Expansion)c.Choices[j]);
 				array[j] = LookaheadWalk.sizeLimitedMatches;
 			}
 			LookaheadWalk.considerSemanticLA = false;
-			for (int j = num + 1; j < c.choices.Count; j++)
+			for (int j = num + 1; j < c.Choices.Count; j++)
 			{
 				LookaheadWalk.sizeLimitedMatches = new ArrayList();
 				MatchInfo matchInfo = new MatchInfo();
 				matchInfo.firstFreeLoc = 0;
 				ArrayList vector = new ArrayList();
 				vector.Add(matchInfo);
-				LookaheadWalk.genFirstSet(vector, (Expansion)c.choices[j]);
+				LookaheadWalk.genFirstSet(vector, (Expansion)c.Choices[j]);
 				array2[j] = LookaheadWalk.sizeLimitedMatches;
 			}
 			if (i == 1)
 			{
-				for (int j = num; j < c.choices.Count - 1; j++)
+				for (int j = num; j < c.Choices.Count - 1; j++)
 				{
-					Expansion expansion = (Expansion)c.choices[j];
+					Expansion expansion = (Expansion)c.Choices[j];
 					if (Semanticize.emptyExpansionExists(expansion))
 					{
 						JavaCCErrors.Warning(expansion, "This choice can expand to the empty token sequence and will therefore always be taken in favor of the choices appearing later.");
@@ -193,9 +193,9 @@ public class LookaheadCalc : JavaCCGlobals
 				}
 			}
 			int num2 = 0;
-			for (int j = num; j < c.choices.Count - 1; j++)
+			for (int j = num; j < c.Choices.Count - 1; j++)
 			{
-				for (int k = j + 1; k < c.choices.Count; k++)
+				for (int k = j + 1; k < c.Choices.Count; k++)
 				{
 					MatchInfo matchInfo;
 					if ((matchInfo = overlap(array[j], array2[k])) != null)
@@ -213,17 +213,17 @@ public class LookaheadCalc : JavaCCGlobals
 				break;
 			}
 		}
-		for (int i = num; i < c.choices.Count - 1; i++)
+		for (int i = num; i < c.Choices.Count - 1; i++)
 		{
-			if (!explicitLA((Expansion)c.choices[i]) || Options.getForceLaCheck())
+			if (!explicitLA((Expansion)c.Choices[i]) || Options.getForceLaCheck())
 			{
 				if (array3[i] > Options.getChoiceAmbiguityCheck())
 				{
 					JavaCCErrors.Warning("Choice conflict involving two expansions at");
-					Console.Error.Write(new StringBuilder().Append("         line ").Append(((Expansion)c.choices[i]).line).ToString());
-					Console.Error.Write(new StringBuilder().Append(", column ").Append(((Expansion)c.choices[i]).column).ToString());
-					Console.Error.Write(new StringBuilder().Append(" and line ").Append(((Expansion)c.choices[(array5[i])]).line).ToString());
-					Console.Error.Write(new StringBuilder().Append(", column ").Append(((Expansion)c.choices[(array5[i])]).column).ToString());
+					Console.Error.Write(new StringBuilder().Append("         line ").Append(((Expansion)c.Choices[i]).Line).ToString());
+					Console.Error.Write(new StringBuilder().Append(", column ").Append(((Expansion)c.Choices[i]).Column).ToString());
+					Console.Error.Write(new StringBuilder().Append(" and line ").Append(((Expansion)c.Choices[(array5[i])]).Line).ToString());
+					Console.Error.Write(new StringBuilder().Append(", column ").Append(((Expansion)c.Choices[(array5[i])]).Column).ToString());
 					Console.Error.WriteLine(" respectively.");
 					Console.Error.WriteLine(new StringBuilder().Append("         A common prefix is: ").Append(image(array4[i])).ToString());
 					Console.Error.WriteLine(new StringBuilder().Append("         Consider using a lookahead of ").Append(array3[i]).Append(" or more for earlier expansion.")
@@ -232,10 +232,10 @@ public class LookaheadCalc : JavaCCGlobals
 				else if (array3[i] > 1)
 				{
 					JavaCCErrors.Warning("Choice conflict involving two expansions at");
-					Console.Error.Write(new StringBuilder().Append("         line ").Append(((Expansion)c.choices[i]).line).ToString());
-					Console.Error.Write(new StringBuilder().Append(", column ").Append(((Expansion)c.choices[i]).column).ToString());
-					Console.Error.Write(new StringBuilder().Append(" and line ").Append(((Expansion)c.choices[(array5[i])]).line).ToString());
-					Console.Error.Write(new StringBuilder().Append(", column ").Append(((Expansion)c.choices[(array5[i])]).column).ToString());
+					Console.Error.Write(new StringBuilder().Append("         line ").Append(((Expansion)c.Choices[i]).Line).ToString());
+					Console.Error.Write(new StringBuilder().Append(", column ").Append(((Expansion)c.Choices[i]).Column).ToString());
+					Console.Error.Write(new StringBuilder().Append(" and line ").Append(((Expansion)c.Choices[(array5[i])]).Line).ToString());
+					Console.Error.Write(new StringBuilder().Append(", column ").Append(((Expansion)c.Choices[(array5[i])]).Column).ToString());
 					Console.Error.WriteLine(" respectively.");
 					Console.Error.WriteLine(new StringBuilder().Append("         A common prefix is: ").Append(image(array4[i])).ToString());
 					Console.Error.WriteLine(new StringBuilder().Append("         Consider using a lookahead of ").Append(array3[i]).Append(" for earlier expansion.")
@@ -281,9 +281,9 @@ public class LookaheadCalc : JavaCCGlobals
 		{
 			JavaCCErrors.Warning(new StringBuilder().Append("Choice conflict in ").Append(image(e1)).Append(" construct ")
 				.Append("at line ")
-				.Append(e1.line)
+				.Append(e1.Line)
 				.Append(", column ")
-				.Append(e1.column)
+				.Append(e1.Column)
 				.Append(".")
 				.ToString());
 			Console.Error.WriteLine("         Expansion nested within construct and expansion following construct");
@@ -295,9 +295,9 @@ public class LookaheadCalc : JavaCCGlobals
 		{
 			JavaCCErrors.Warning(new StringBuilder().Append("Choice conflict in ").Append(image(e1)).Append(" construct ")
 				.Append("at line ")
-				.Append(e1.line)
+				.Append(e1.Line)
 				.Append(", column ")
-				.Append(e1.column)
+				.Append(e1.Column)
 				.Append(".")
 				.ToString());
 			Console.Error.WriteLine("         Expansion nested within construct and expansion following construct");

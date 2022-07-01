@@ -11,20 +11,14 @@ public class Options
 	protected internal static Dictionary<string,object> OptionValues = new();
 	private static HashSet<string> cmdLineSetting;
 	private static HashSet<string> inputFileSetting;
-	
-	public static bool getStatic()
-	{
-		return BooleanValue("STATIC");
-	}
 
-	
-	public static bool isOption(string str)
-	{
-		return (str != null && str.Length > 1 && str[0] == '-') ? true : false;
-	}
+    public static bool getStatic() => BooleanValue("STATIC");
 
-	
-	public static void setCmdLineOption(string str)
+
+    public static bool IsOption(string str) => str != null && str.Length > 1 && str[0] == '-';
+
+
+    public static void setCmdLineOption(string str)
 	{
 		string @this = ((str[0] != '-') ? str : str.Substring(1));
 		int num = String.instancehelper_indexOf(@this, 61);
@@ -73,7 +67,7 @@ public class Options
 							.ToString());
 						return;
 					}
-					obj = new int(num4);
+					obj = (num4);
 				}
 				catch (NumberFormatException)
 				{

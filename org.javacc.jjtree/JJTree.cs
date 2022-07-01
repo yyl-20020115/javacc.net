@@ -113,7 +113,7 @@ public class JJTree
 		{
 			WriteLine("(type \"jjtree\" with no arguments for help)");
 			text = strarr[strarr.Length - 1];
-			if (Options.isOption(text))
+			if (Options.IsOption(text))
 			{
 				WriteLine(new StringBuilder().Append("Last argument \"").Append(text).Append("\" is not a filename")
 					.ToString());
@@ -144,7 +144,7 @@ public class JJTree
 			{
 				if (result2 < (nint)strarr.LongLength - 1)
 				{
-					if (!Options.isOption(strarr[result2]))
+					if (!Options.IsOption(strarr[result2]))
 					{
 						WriteLine(new StringBuilder().Append("Argument \"").Append(strarr[result2]).Append("\" must be an option setting.")
 							.ToString());

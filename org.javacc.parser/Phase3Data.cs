@@ -6,9 +6,9 @@ internal class Phase3Data
 
 	internal int count;
 
-	internal Phase3Data(Expansion P_0, int P_1)
+	internal Phase3Data(Expansion exp, int count)
 	{
-		exp = P_0;
-		count = P_1;
+		this.exp = exp;
+		this.count = count;
 	}
 }

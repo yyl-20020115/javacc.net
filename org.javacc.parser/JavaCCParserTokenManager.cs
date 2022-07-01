@@ -3009,9 +3009,9 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
 		int endLine = input_stream.getEndLine();
 		int endColumn = input_stream.getEndColumn();
 		Token token = Token.NewToken(jjmatchedKind, str);
-		token.beginLine = num;
+		token.BeginLine = num;
 		token.endLine = endLine;
-		token.beginColumn = beginColumn;
+		token.BeginColumn = beginColumn;
 		token.endColumn = endColumn;
 		return token;
 	}

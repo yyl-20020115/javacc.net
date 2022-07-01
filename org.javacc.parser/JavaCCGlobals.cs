@@ -3,11 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-
 using javacc.net;
-
 namespace org.javacc.parser;
-
 
 public class JavaCCGlobals 
 {
@@ -301,13 +298,13 @@ public class JavaCCGlobals
 	
 	protected internal static void printTokenOnly(Token t, TextWriter pw)
 	{
-		while (cline < t.beginLine)
+		while (cline < t.BeginLine)
 		{
 			pw.WriteLine("");
 			ccol = 1;
 			cline++;
 		}
-		while (ccol < t.beginColumn)
+		while (ccol < t.BeginColumn)
 		{
 			pw.Write(" ");
 			ccol++;
@@ -348,7 +345,7 @@ public class JavaCCGlobals
 			text = new StringBuilder().Append(text).Append(printTokenOnly(token)).ToString();
 			token = token.next;
 		}
-		if (ccol != 1 && cline != t.beginLine)
+		if (ccol != 1 && cline != t.BeginLine)
 		{
 			text = new StringBuilder().Append(text).Append("\n").ToString();
 			cline++;
@@ -361,13 +358,13 @@ public class JavaCCGlobals
 	protected internal static string printTokenOnly(Token t)
 	{
 		string str = "";
-		while (cline < t.beginLine)
+		while (cline < t.BeginLine)
 		{
 			str = new StringBuilder().Append(str).Append("\n").ToString();
 			ccol = 1;
 			cline++;
 		}
-		while (ccol < t.beginColumn)
+		while (ccol < t.BeginColumn)
 		{
 			str = new StringBuilder().Append(str).Append(" ").ToString();
 			ccol++;
@@ -624,8 +621,8 @@ public class JavaCCGlobals
 		{
 			token = token.specialToken;
 		}
-		cline = token.beginLine;
-		ccol = token.beginColumn;
+		cline = token.BeginLine;
+		ccol = token.BeginColumn;
 	}
 
 	
@@ -662,7 +659,7 @@ public class JavaCCGlobals
 				printTokenOnly(token, pw);
 				token = token.next;
 			}
-			if (ccol != 1 && cline != t.beginLine)
+			if (ccol != 1 && cline != t.BeginLine)
 			{
 				pw.WriteLine("");
 				cline++;

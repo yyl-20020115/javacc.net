@@ -3,82 +3,81 @@ namespace org.javacc.parser;
 public sealed class ExpansionTreeWalker
 {
 	
-	internal static void preOrderWalk(Expansion P_0, TreeWalkerOp P_1)
+	internal static void PreOrderWalk(Expansion exp, TreeWalkerOp tree)
 	{
-		P_1.Action(P_0);
-		if (!P_1.GoDeeper(P_0))
+		tree.Action(exp);
+		if (!tree.GoDeeper(exp))
 		{
 			return;
 		}
-		if (P_0 is Choice c)
+		if (exp is Choice c)
 		{
-			foreach(var choice in c.choices)
+			foreach(var choice in c.Choices)
 			{
-				preOrderWalk(choice, P_1);
+				PreOrderWalk(choice, tree);
 			}
 		}
-		else if (P_0 is Sequence s)
+		else if (exp is Sequence s)
 		{
 			foreach (var unit in s.units)
 			{
-				preOrderWalk(unit, P_1);
+				PreOrderWalk(unit, tree);
 			}
 		}
-		else if (P_0 is OneOrMore z)
+		else if (exp is OneOrMore z)
 		{
-			preOrderWalk(z.expansion, P_1);
+			PreOrderWalk(z.expansion, tree);
 		}
-		else if (P_0 is ZeroOrMore o)
+		else if (exp is ZeroOrMore o)
 		{
-			preOrderWalk(o.expansion, P_1);
+			PreOrderWalk(o.expansion, tree);
 		}
-		else if (P_0 is ZeroOrOne m)
+		else if (exp is ZeroOrOne m)
 		{
-			preOrderWalk(m.expansion, P_1);
+			PreOrderWalk(m.expansion, tree);
 		}
-		else if (P_0 is Lookahead)
+		else if (exp is Lookahead l)
 		{
-			Expansion la_expansion = ((Lookahead)P_0).la_expansion;
-			if (!(la_expansion is Sequence) || (Expansion)((Sequence)la_expansion).units[0] != P_0)
+			var la_expansion = l.la_expansion;
+			if (!(la_expansion is Sequence) || (Expansion)((Sequence)la_expansion).units[0] != exp)
 			{
-				preOrderWalk(la_expansion, P_1);
+				PreOrderWalk(la_expansion, tree);
 			}
 		}
-		else if (P_0 is TryBlock b)
+		else if (exp is TryBlock b)
 		{
-			preOrderWalk(b.exp, P_1);
+			PreOrderWalk(b.exp, tree);
 		}
-		else if (P_0 is RChoice r)
+		else if (exp is RChoice r)
 		{
-			Enumeration enumeration = ((RChoice)P_0).choices.elements();
+			foreach(Expansion e in r.Choices)
+			{
+				PreOrderWalk(e, tree);
+			}
+		}
+		else if (exp is RSequence q)
+		{
+			Enumeration enumeration = ((RSequence)exp).units.elements();
 			while (enumeration.hasMoreElements())
 			{
-				preOrderWalk((Expansion)enumeration.nextElement(), P_1);
+				PreOrderWalk((Expansion)enumeration.nextElement(), tree);
 			}
 		}
-		else if (P_0 is RSequence q)
+		else if (exp is ROneOrMore ro)
 		{
-			Enumeration enumeration = ((RSequence)P_0).units.elements();
-			while (enumeration.hasMoreElements())
-			{
-				preOrderWalk((Expansion)enumeration.nextElement(), P_1);
-			}
+			PreOrderWalk(((ROneOrMore)exp).regexpr, tree);
 		}
-		else if (P_0 is ROneOrMore ro)
+		else if (exp is RZeroOrMore rz)
 		{
-			preOrderWalk(((ROneOrMore)P_0).regexpr, P_1);
+			PreOrderWalk(((RZeroOrMore)exp).regexpr, tree);
 		}
-		else if (P_0 is RZeroOrMore rz)
+		else if (exp is RZeroOrOne rm)
 		{
-			preOrderWalk(((RZeroOrMore)P_0).regexpr, P_1);
+			PreOrderWalk(((RZeroOrOne)exp).regexpr, tree);
 		}
-		else if (P_0 is RZeroOrOne rm)
+		else if (exp is RRepetitionRange rr)
 		{
-			preOrderWalk(((RZeroOrOne)P_0).regexpr, P_1);
-		}
-		else if (P_0 is RRepetitionRange rr)
-		{
-			preOrderWalk(((RRepetitionRange)P_0).regexpr, P_1);
+			PreOrderWalk(((RRepetitionRange)exp).regexpr, tree);
 		}
 	}
 
@@ -89,7 +88,7 @@ public sealed class ExpansionTreeWalker
 		{
 			if (P_0 is Choice c)
 			{
-				Enumeration enumeration = ((Choice)P_0).choices.elements();
+				Enumeration enumeration = ((Choice)P_0).Choices.elements();
 				while (enumeration.hasMoreElements())
 				{
 					postOrderWalk((Expansion)enumeration.nextElement(), P_1);
@@ -129,7 +128,7 @@ public sealed class ExpansionTreeWalker
 			}
 			else if (P_0 is RChoice rc)
 			{
-				Enumeration enumeration = ((RChoice)P_0).choices.elements();
+				Enumeration enumeration = ((RChoice)P_0).Choices.elements();
 				while (enumeration.hasMoreElements())
 				{
 					postOrderWalk((Expansion)enumeration.nextElement(), P_1);

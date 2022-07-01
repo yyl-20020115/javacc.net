@@ -216,21 +216,21 @@ public class Semanticize : JavaCCGlobals
 				return;
 			}
 			Choice choice = new Choice();
-			choice.line = lookahead.line;
-			choice.column = lookahead.column;
+			choice.Line = lookahead.Line;
+			choice.Column = lookahead.Column;
 			choice.parent = sequence;
 			Sequence sequence2 = new Sequence();
-			sequence2.line = lookahead.line;
-			sequence2.column = lookahead.column;
+			sequence2.Line = lookahead.Line;
+			sequence2.Column = lookahead.Column;
 			sequence2.parent = choice;
 			sequence2.units.Add(lookahead);
 			lookahead.parent = sequence2;
 			Action action = new Action();
-			action.line = lookahead.line;
-			action.column = lookahead.column;
+			action.Line = lookahead.Line;
+			action.Column = lookahead.Column;
 			action.parent = sequence2;
 			sequence2.units.Add(action);
-			choice.choices.Add(sequence2);
+			choice.Choices.Add(sequence2);
 			if (lookahead.amount != 0)
 			{
 				if (lookahead.action_tokens.Count != 0)
@@ -244,8 +244,8 @@ public class Semanticize : JavaCCGlobals
 			}
 			Lookahead lookahead2 = new Lookahead();
 			lookahead2.isExplicit = false;
-			lookahead2.line = lookahead.line;
-			lookahead2.column = lookahead.column;
+			lookahead2.Line = lookahead.Line;
+			lookahead2.Column = lookahead.Column;
 			lookahead2.parent = sequence;
 			lookahead.la_expansion = new REndOfFile();
 			lookahead2.la_expansion = new REndOfFile();
@@ -356,7 +356,7 @@ public class Semanticize : JavaCCGlobals
 		}
 		if (e is Choice)
 		{
-			Enumeration enumeration = ((Choice)e).choices.elements();
+			Enumeration enumeration = ((Choice)e).Choices.elements();
 			while (enumeration.hasMoreElements())
 			{
 				if (emptyExpansionExists((Expansion)enumeration.nextElement()))
@@ -390,7 +390,7 @@ public class Semanticize : JavaCCGlobals
 	
 		public static void start()
 	{
-		if (JavaCCErrors.Get_Error_Count() != 0)
+		if (JavaCCErrors._Error_Count != 0)
 		{
 			
 			throw new MetaParseException();
@@ -416,7 +416,7 @@ public class Semanticize : JavaCCGlobals
 		enumeration = JavaCCGlobals.bnfproductions.elements();
 		while (enumeration.hasMoreElements())
 		{
-			ExpansionTreeWalker.preOrderWalk(((NormalProduction)enumeration.nextElement()).expansion, new ProductionDefinedChecker());
+			ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration.nextElement()).expansion, new ProductionDefinedChecker());
 		}
 		enumeration = JavaCCGlobals.rexprlist.elements();
 		while (enumeration.hasMoreElements())
@@ -551,9 +551,9 @@ public class Semanticize : JavaCCGlobals
 								JavaCCErrors.Semantic_Error(rStringLiteral, new StringBuilder().Append("String \"").Append(rStringLiteral.image).Append("\" can never be matched ")
 									.Append("due to presence of more general (IGNORE_CASE) regular expression ")
 									.Append("at line ")
-									.Append(other.line)
+									.Append(other.Line)
 									.Append(", column ")
-									.Append(other.column)
+									.Append(other.Column)
 									.Append(".")
 									.ToString());
 							}
@@ -577,7 +577,7 @@ public class Semanticize : JavaCCGlobals
 								{
 									str = new StringBuilder().Append(str).Append(",").ToString();
 								}
-								str = new StringBuilder().Append(str).Append(" line ").Append(regularExpression.line)
+								str = new StringBuilder().Append(str).Append(" line ").Append(regularExpression.Line)
 									.ToString();
 								num3++;
 							}
@@ -673,7 +673,7 @@ public class Semanticize : JavaCCGlobals
 				{
 					RegExprSpec regExprSpec2 = (RegExprSpec)enumeration3.nextElement();
 					fixRJustNames.root = regExprSpec2.rexp;
-					ExpansionTreeWalker.preOrderWalk(regExprSpec2.rexp, fixRJustNames);
+					ExpansionTreeWalker.PreOrderWalk(regExprSpec2.rexp, fixRJustNames);
 					if (regExprSpec2.rexp is RJustName)
 					{
 						prepareToRemove(respecs2, regExprSpec2);
@@ -736,7 +736,7 @@ public class Semanticize : JavaCCGlobals
 				}
 			}
 		}
-		if (JavaCCErrors.Get_Error_Count() != 0)
+		if (JavaCCErrors._Error_Count != 0)
 		{
 			
 			throw new MetaParseException();
@@ -759,12 +759,12 @@ public class Semanticize : JavaCCGlobals
 				}
 			}
 		}
-		if (Options.getSanityCheck() && JavaCCErrors.Get_Error_Count() == 0)
+		if (Options.getSanityCheck() && JavaCCErrors._Error_Count == 0)
 		{
 			Enumeration enumeration5 = JavaCCGlobals.bnfproductions.elements();
 			while (enumeration5.hasMoreElements())
 			{
-				ExpansionTreeWalker.preOrderWalk(((NormalProduction)enumeration5.nextElement()).expansion, new EmptyChecker());
+				ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration5.nextElement()).expansion, new EmptyChecker());
 			}
 			enumeration5 = JavaCCGlobals.bnfproductions.elements();
 			while (enumeration5.hasMoreElements())
@@ -809,16 +809,16 @@ public class Semanticize : JavaCCGlobals
 					}
 				}
 			}
-			if (JavaCCErrors.Get_Error_Count() == 0)
+			if (JavaCCErrors._Error_Count == 0)
 			{
 				enumeration5 = JavaCCGlobals.bnfproductions.elements();
 				while (enumeration5.hasMoreElements())
 				{
-					ExpansionTreeWalker.preOrderWalk(((NormalProduction)enumeration5.nextElement()).expansion, new LookaheadChecker());
+					ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration5.nextElement()).expansion, new LookaheadChecker());
 				}
 			}
 		}
-		if (JavaCCErrors.Get_Error_Count() != 0)
+		if (JavaCCErrors._Error_Count != 0)
 		{
 			
 			throw new MetaParseException();
@@ -911,7 +911,7 @@ public class Semanticize : JavaCCGlobals
 		}
 		else if (P_1 is Choice)
 		{
-			Enumeration enumeration = ((Choice)P_1).choices.elements();
+			Enumeration enumeration = ((Choice)P_1).Choices.elements();
 			while (enumeration.hasMoreElements())
 			{
 				addLeftMost(P_0, (Expansion)enumeration.nextElement());
@@ -1016,7 +1016,7 @@ public class Semanticize : JavaCCGlobals
 		{
 			if (P_0 is RChoice)
 			{
-				Enumeration enumeration = ((RChoice)P_0).choices.elements();
+				Enumeration enumeration = ((RChoice)P_0).Choices.elements();
 				while (enumeration.hasMoreElements())
 				{
 					if (rexpWalk((RegularExpression)enumeration.nextElement()))

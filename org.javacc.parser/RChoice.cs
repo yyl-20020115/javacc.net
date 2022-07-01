@@ -1,24 +1,22 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Text;
 
 namespace org.javacc.parser;
 
 public class RChoice : RegularExpression
 {
-	public ArrayList choices;
-	
-	public RChoice()
-	{
-		choices = new ArrayList();
-	}
+	public List<Expansion> Choices = new();
+
+	public RChoice() { }
 	
 	public virtual void CheckUnmatchability()
 	{
 		int num = 0;
-		for (int i = 0; i < choices.Count; i++)
+		for (int i = 0; i < Choices.Count; i++)
 		{
 			RegularExpression regularExpression;
-			if (!(regularExpression = (RegularExpression)choices[i]).private_rexp && regularExpression.ordinal > 0 && regularExpression.ordinal < ordinal && LexGen.lexStates[regularExpression.ordinal] == LexGen.lexStates[ordinal])
+			if (!(regularExpression = (RegularExpression)Choices[i]).private_rexp && regularExpression.ordinal > 0 && regularExpression.ordinal < ordinal && LexGen.lexStates[regularExpression.ordinal] == LexGen.lexStates[ordinal])
 			{
 				if (label != null)
 				{
@@ -45,17 +43,18 @@ public class RChoice : RegularExpression
 	{
 		CompressChoices();
 		RCharacterList rCharacterList = null;
-		for (int i = 0; i < choices.Count; i++)
+		for (int i = 0; i < Choices.Count; i++)
 		{
-			RegularExpression regularExpression = (RegularExpression)choices[i];
+			RegularExpression regularExpression = (RegularExpression)Choices[i];
 			while (regularExpression is RJustName)
 			{
 				regularExpression = ((RJustName)regularExpression).regexpr;
 			}
-			if (regularExpression is RStringLiteral && String.instancehelper_length(((RStringLiteral)regularExpression).image) == 1)
+			if (regularExpression is RStringLiteral && (((RStringLiteral)regularExpression).image.Length) == 1)
 			{
-				ArrayList vector = choices;
-				vector.setElementAt(regularExpression = new RCharacterList(String.instancehelper_charAt(((RStringLiteral)regularExpression).image, 0)), i);
+				
+				this.Choices[i]=	regularExpression = new RCharacterList(
+                    (((RStringLiteral)regularExpression).image[0]));
 			}
 			if (regularExpression is RCharacterList)
 			{
@@ -66,11 +65,11 @@ public class RChoice : RegularExpression
 				ArrayList descriptors = ((RCharacterList)regularExpression).descriptors;
 				if (rCharacterList == null)
 				{
-					choices.setElementAt(rCharacterList = new RCharacterList(), i);
+                    Choices[i]=(rCharacterList = new RCharacterList());
 				}
 				else
 				{
-					choices.removeElementAt(i--);
+					Choices.RemoveAt(i--);
 				}
 				int index = descriptors.Count;
 				while (index-- > 0)
@@ -84,20 +83,20 @@ public class RChoice : RegularExpression
 	
 	internal virtual void CompressChoices()
 	{
-		for (int i = 0; i < choices.Count; i++)
+		for (int i = 0; i < Choices.Count; i++)
 		{
-			RegularExpression regularExpression = (RegularExpression)choices[i];
-			while (regularExpression is RJustName)
+			RegularExpression regularExpression = (RegularExpression)Choices[i];
+			while (regularExpression is RJustName j)
 			{
-				regularExpression = ((RJustName)regularExpression).regexpr;
+				regularExpression = j.regexpr;
 			}
-			if (regularExpression is RChoice)
+			if (regularExpression is RChoice r)
 			{
-				choices.removeElementAt(i--);
-				int index = ((RChoice)regularExpression).choices.Count;
+				Choices.RemoveAt(i--);
+				int index = r.Choices.Count;
 				while (index-- > 0)
 				{
-					choices.Add(((RChoice)regularExpression).choices[index]);
+					Choices.Add(r.Choices[index]);
 				}
 			}
 		}
@@ -107,21 +106,22 @@ public class RChoice : RegularExpression
 	public override Nfa GenerateNfa(bool b)
 	{
 		CompressCharLists();
-		if (choices.Count == 1)
+		if (Choices.Count == 1)
 		{
-			Nfa result = ((RegularExpression)choices[0]).GenerateNfa(b);
-			
-			return result;
+			return (Choices[0] as RegularExpression).GenerateNfa(b);
 		}
-		Nfa nfa = new Nfa();
-		NfaState start = nfa.start;
-		NfaState end = nfa.end;
-		for (int i = 0; i < choices.Count; i++)
+		var nfa = new Nfa();
+		var start = nfa.Start;
+		var end = nfa.End;
+		for (int i = 0; i < Choices.Count; i++)
 		{
-			RegularExpression regularExpression = (RegularExpression)choices[i];
-			Nfa nfa2 = regularExpression.GenerateNfa(b);
-			start.AddMove(nfa2.start);
-			nfa2.end.AddMove(end);
+			var regularExpression = Choices[i] as RegularExpression;
+			if(regularExpression != null)
+            {
+				var nfa2 = regularExpression.GenerateNfa(b);
+				start.AddMove(nfa2.Start);
+				nfa2.End.AddMove(end);
+			}
 		}
 		return nfa;
 	}

@@ -16,44 +16,29 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 
 	private static int nextFreeLexState;
 
-	
-	protected internal static bool hexchar(char ch)
-	{
-		if (ch >= '0' && ch <= '9')
-		{
-			return true;
-		}
-		if (ch >= 'A' && ch <= 'F')
-		{
-			return true;
-		}
-		if (ch >= 'a' && ch <= 'f')
-		{
-			return true;
-		}
-		return false;
-	}
 
-	protected internal static int hexval(char ch)
-	{
-		if (ch >= '0' && ch <= '9')
-		{
-			return ch - 48;
-		}
-		if (ch >= 'A' && ch <= 'F')
-		{
-			return ch - 65 + 10;
-		}
-		return ch - 97 + 10;
-	}
+    protected internal static bool Hexchar(char ch) => ch switch
+    {
+        >= '0' and <= '9' => true,
+        >= 'A' and <= 'F' => true,
+        >= 'a' and <= 'f' => true,
+        _ => false
+    };
 
-	
-	public JavaCCParserInternals()
+    protected internal static int HexVal(char ch) => ch switch
+    {
+        >= '0' and <= '9' => ch - 48,
+        >= 'A' and <= 'F' => ch - 65 + 10,
+        _ => ch - 97 + 10
+    };
+
+
+    public JavaCCParserInternals()
 	{
 	}
 
 	
-	protected internal static void initialize()
+	protected internal static void Initialize()
 	{
 		int integer = (0);
 		JavaCCGlobals.lexstate_S2I.Add("DEFAULT", integer);
@@ -61,13 +46,13 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 		JavaCCGlobals.simple_tokens_table.Add("DEFAULT", new Hashtable());
 	}
 
-	protected internal static void addcuname(string str)
+	protected internal static void AddCuname(string str)
 	{
 		JavaCCGlobals.cu_name = str;
 	}
 
 	
-	protected internal static void compare(Token t, string str1, string str2)
+	protected internal static void Compare(Token t, string str1, string str2)
 	{
 		if (!string.Equals(str2, str1))
 		{
@@ -79,7 +64,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 	}
 
 	
-	protected internal static void setinsertionpoint(Token t, int i)
+	protected internal static void SetInsertionPoint(Token t, int i)
 	{
 		do
 		{
@@ -108,7 +93,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 	}
 
 	
-	protected internal static void insertionpointerrors(Token t)
+	protected internal static void InsertionPointError(Token t)
 	{
 		while (first_cu_token != t)
 		{
@@ -285,24 +270,24 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 			{
 				num++;
 				num2 = str[num];
-				if (hexchar((char)num2))
+				if (Hexchar((char)num2))
 				{
-					int num3 = hexval((char)num2);
+					int num3 = HexVal((char)num2);
 					num++;
 					num2 = str[num];
-					if (hexchar((char)num2))
+					if (Hexchar((char)num2))
 					{
-						num3 = num3 * 16 + hexval((char)num2);
+						num3 = num3 * 16 + HexVal((char)num2);
 						num++;
 						num2 = str[num];
-						if (hexchar((char)num2))
+						if (Hexchar((char)num2))
 						{
-							num3 = num3 * 16 + hexval((char)num2);
+							num3 = num3 * 16 + HexVal((char)num2);
 							num++;
 							num2 = str[num];
-							if (hexchar((char)num2))
+							if (Hexchar((char)num2))
 							{
-								_ = num3 * 16 + hexval((char)num2);
+								_ = num3 * 16 + HexVal((char)num2);
 								num++;
 								continue;
 							}
@@ -370,8 +355,8 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 			return;
 		}
 		TryBlock tryBlock = new TryBlock();
-		tryBlock.line = t.beginLine;
-		tryBlock.column = t.beginColumn;
+		tryBlock.Line = t.BeginLine;
+		tryBlock.Column = t.BeginColumn;
 		tryBlock.exp = (Expansion)c2.member;
 		tryBlock.exp.parent = tryBlock;
 		tryBlock.exp.ordinal = 0;

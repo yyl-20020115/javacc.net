@@ -5,9 +5,9 @@ namespace org.javacc.parser;
 
 public sealed class JavaCCErrors
 {
-	private static int parse_error_count;
-	private static int semantic_error_count;
-	private static int warning_count;
+	private static int parse_error_count = 0;
+	private static int semantic_error_count = 0;
+	private static int warning_count = 0;
 
 	
 	public static void Warning(string str)
@@ -25,18 +25,12 @@ public sealed class JavaCCErrors
 		semantic_error_count++;
 	}
 
-	public static int Get_Error_Count()
-	{
-		return parse_error_count + semantic_error_count;
-	}
+    public static int _Error_Count => parse_error_count + semantic_error_count;
 
-	public static int Get_Warning_Count()
-	{
-		return warning_count;
-	}
+    public static int _Warning_Count => warning_count;
 
-	
-	public static void Warning(object obj, string str)
+
+    public static void Warning(object obj, string str)
 	{
 		Console.Error.Write("Warning: ");
 		PrintLocationInfo(obj);
@@ -63,62 +57,52 @@ public sealed class JavaCCErrors
 	}
 
 	
-	private static void PrintLocationInfo(object P_0)
+	private static void PrintLocationInfo(object _loc)
 	{
-		if (P_0 is NormalProduction)
+		if (_loc is NormalProduction normalProduction)
 		{
-			NormalProduction normalProduction = (NormalProduction)P_0;
-			Console.Error.Write(new StringBuilder().Append("Line ").Append(normalProduction.line).Append(", Column ")
-				.Append(normalProduction.column)
-				.Append(": ")
-				.ToString());
+			Console.Error.Write(("Line ")+(normalProduction.line)+(", Column ")
+				+(normalProduction.column)
+				+(": ")
+				);
 		}
-		else if (P_0 is TokenProduction)
+		else if (_loc is TokenProduction tokenProduction)
 		{
-			TokenProduction tokenProduction = (TokenProduction)P_0;
-			Console.Error.Write(new StringBuilder().Append("Line ").Append(tokenProduction.line).Append(", Column ")
-				.Append(tokenProduction.column)
-				.Append(": ")
-				.ToString());
+			Console.Error.Write(("Line ")+(tokenProduction.line)+(", Column ")
+				+(tokenProduction.column)
+				+(": "))
+				;
 		}
-		else if (P_0 is Expansion)
+		else if (_loc is Expansion loc)
 		{
-			Expansion expansion = (Expansion)P_0;
-			Console.Error.Write(new StringBuilder().Append("Line ").Append(expansion.line).Append(", Column ")
-				.Append(expansion.column)
-				.Append(": ")
-				.ToString());
+			Console.Error.Write(("Line ")+(loc.Line)+(", Column ")
+				+(loc.Column)
+				+(": ")
+				);
 		}
-		else if (P_0 is CharacterRange)
+		else if (_loc is CharacterRange locr)
 		{
-			CharacterRange characterRange = (CharacterRange)P_0;
-			Console.Error.Write(new StringBuilder().Append("Line ").Append(characterRange.line).Append(", Column ")
-				.Append(characterRange.column)
-				.Append(": ")
-				.ToString());
+			Console.Error.Write(("Line ")+(locr.Line)+(", Column ")
+				+(locr.Column)
+				+(": ")
+				);
 		}
-		else if (P_0 is SingleCharacter)
+		else if (_loc is SingleCharacter locs)
 		{
-			SingleCharacter singleCharacter = (SingleCharacter)P_0;
-			Console.Error.Write(new StringBuilder().Append("Line ").Append(singleCharacter.line).Append(", Column ")
-				.Append(singleCharacter.column)
-				.Append(": ")
-				.ToString());
+			Console.Error.Write(("Line ")+(locs.line)+(", Column ")
+				+(locs.column)
+				+(": ")
+				);
 		}
-		else if (P_0 is Token)
+		else if (_loc is Token token)
 		{
-			Token token = (Token)P_0;
-			Console.Error.Write(new StringBuilder().Append("Line ").Append(token.beginLine).Append(", Column ")
-				.Append(token.beginColumn)
-				.Append(": ")
-				.ToString());
+			Console.Error.Write(("Line ")+(token.BeginLine)+(", Column ")
+				+(token.BeginColumn)
+				+(": ")
+				);
 		}
 	}
 
-	
-	private JavaCCErrors()
-	{
-	}
 
 	
 	public static void Parse_Error(string str)
@@ -128,20 +112,7 @@ public sealed class JavaCCErrors
 		parse_error_count++;
 	}
 
-	public static int Get_Parse_Error_Count()
-	{
-		return parse_error_count;
-	}
+    public static int _Parse_Error_Count => parse_error_count;
 
-	public static int Get_Semantic_Error_Count()
-	{
-		return semantic_error_count;
-	}
-
-	public static void ReInit()
-	{
-		parse_error_count = 0;
-		semantic_error_count = 0;
-		warning_count = 0;
-	}
+    public static int _Semantic_Error_Count => semantic_error_count;
 }

@@ -54,9 +54,9 @@ public sealed class LookaheadWalk
 		{
 			vector = new ArrayList();
 			Choice choice = (Choice)e;
-			for (int k = 0; k < choice.choices.Count; k++)
+			for (int k = 0; k < choice.Choices.Count; k++)
 			{
-				ArrayList v2 = genFirstSet(v, (Expansion)choice.choices[k]);
+				ArrayList v2 = genFirstSet(v, (Expansion)choice.Choices[k]);
 				vectorAppend(vector, v2);
 			}
 			return vector;

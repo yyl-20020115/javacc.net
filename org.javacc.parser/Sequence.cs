@@ -13,13 +13,13 @@ public class Sequence : Expansion
 	
 	public Sequence(Token t, Lookahead l)
 	{
-		line = t.beginLine;
-		column = t.beginColumn;
+		Line = t.BeginLine;
+		Column = t.BeginColumn;
 		units.Add(l);
 	}
 
 	
-	public override StringBuilder dump(int i, HashSet<Expansion> s)
+	public override StringBuilder Dump(int i, HashSet<Expansion> s)
 	{
 		if (s.Contains(this))
 		{
@@ -28,14 +28,14 @@ public class Sequence : Expansion
 			//object obj = (s2.___003Cref_003E = dumpPrefix(i));
 			//StringBuilder result = stringBuilder.insert(0, s2);
 			
-			return this.DumpPrefix(i).Append( "["+base.dump(0,s) + "]");
+			return this.DumpPrefix(i).Append( "["+base.Dump(0,s) + "]");
 		}
 		s.Add(this);
-		var stringBuffer2 = base.dump(i, s);
+		var stringBuffer2 = base.Dump(i, s);
 		//Iterator iterator = units.iterator();
 		foreach (var expansion in this.units) 
 		{
-			stringBuffer2.Append(Expansion.EOL).Append(expansion.dump(i + 1, s));
+			stringBuffer2.Append(Expansion.EOL).Append(expansion.Dump(i + 1, s));
 		}
 		return stringBuffer2;
 	}

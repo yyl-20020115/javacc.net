@@ -13,8 +13,8 @@ public class Token
 	}
 
 	public int kind;
-	public int beginLine;
-	public int beginColumn;
+	public int BeginLine;
+	public int BeginColumn;
 	public int endLine;
 	public int endColumn;
 	public string image;

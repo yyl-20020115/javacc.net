@@ -14,15 +14,15 @@ public class TryBlock : Expansion
 
 	public TryBlock() { }
 	
-	public override StringBuilder dump(int i, HashSet<Expansion> s)
+	public override StringBuilder Dump(int i, HashSet<Expansion> s)
 	{
-		var stringBuilder = base.dump(i, s);
+		var stringBuilder = base.Dump(i, s);
 		if (s.Contains(this))
 		{
 			return stringBuilder;
 		}
 		s.Add(this);
-		stringBuilder.Append(Expansion.EOL).Append(exp.dump(i + 1, s));
+		stringBuilder.Append(Expansion.EOL).Append(exp.Dump(i + 1, s));
 		return stringBuilder;
 	}
 }

@@ -1,7 +1,4 @@
 using System;
-using System.Runtime.Serialization;
-using System.Security.Permissions;
-
 using System.Text;
 using javacc.net;
 
@@ -14,14 +11,14 @@ public class ParseException : System.Exception
 	public int[][] expectedTokenSequences;
 	public string[] tokenImage;
 	protected internal string eol;
-	
+
 	public ParseException()
 	{
 		eol = Environment.NewLine;
 		specialConstructor = false;
 	}
 
-	
+
 	public ParseException(string str)
 		: base(str)
 	{
@@ -29,7 +26,7 @@ public class ParseException : System.Exception
 		specialConstructor = false;
 	}
 
-	
+
 	public ParseException(Token t, int[][] iarr, string[] strarr)
 		: base("")
 	{
@@ -40,7 +37,7 @@ public class ParseException : System.Exception
 		tokenImage = strarr;
 	}
 
-	
+
 	protected internal virtual string add_escapes(string str)
 	{
 		var stringBuilder = new StringBuilder();
@@ -48,32 +45,32 @@ public class ParseException : System.Exception
 		{
 			switch (str[i])
 			{
-			case '\b':
-				stringBuilder.Append("\\b");
-				continue;
-			case '\t':
-				stringBuilder.Append("\\t");
-				continue;
-			case '\n':
-				stringBuilder.Append("\\n");
-				continue;
-			case '\f':
-				stringBuilder.Append("\\f");
-				continue;
-			case '\r':
-				stringBuilder.Append("\\r");
-				continue;
-			case '"':
-				stringBuilder.Append("\\\"");
-				continue;
-			case '\'':
-				stringBuilder.Append("\\'");
-				continue;
-			case '\\':
-				stringBuilder.Append("\\\\");
-				continue;
-			case '\0':
-				continue;
+				case '\b':
+					stringBuilder.Append("\\b");
+					continue;
+				case '\t':
+					stringBuilder.Append("\\t");
+					continue;
+				case '\n':
+					stringBuilder.Append("\\n");
+					continue;
+				case '\f':
+					stringBuilder.Append("\\f");
+					continue;
+				case '\r':
+					stringBuilder.Append("\\r");
+					continue;
+				case '"':
+					stringBuilder.Append("\\\"");
+					continue;
+				case '\'':
+					stringBuilder.Append("\\'");
+					continue;
+				case '\\':
+					stringBuilder.Append("\\\\");
+					continue;
+				case '\0':
+					continue;
 			}
 			int num;
 			if ((num = str[i]) < 32 || num > 126)
@@ -88,11 +85,11 @@ public class ParseException : System.Exception
 			}
 		}
 		string result = stringBuilder.ToString();
-		
+
 		return result;
 	}
 
-	
+
 	public override string Message
 	{
 		get
@@ -139,9 +136,9 @@ public class ParseException : System.Exception
 				str = new StringBuilder().Append(str).Append(" \"").ToString();
 				next = next.next;
 			}
-			str = new StringBuilder().Append(str).Append("\" at line ").Append(currentToken.next.beginLine)
+			str = new StringBuilder().Append(str).Append("\" at line ").Append(currentToken.next.BeginLine)
 				.Append(", column ")
-				.Append(currentToken.next.beginColumn)
+				.Append(currentToken.next.BeginColumn)
 				.ToString();
 			str = new StringBuilder().Append(str).Append(".").Append(eol)
 				.ToString();
@@ -154,9 +151,4 @@ public class ParseException : System.Exception
 		}
 	}
 
-	
-		protected ParseException(SerializationInfo P_0, StreamingContext P_1)
-		: base(P_0, P_1)
-	{
-	}
 }

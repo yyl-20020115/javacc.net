@@ -6,16 +6,16 @@ namespace org.javacc.parser;
 
 public class Expansion
 {
-	internal int line;
-	internal int column;
-	internal string internal_name;
-	internal bool phase3done;
-	public object parent;
-	internal int ordinal;
-	public static long NextGenerationIndex;
-	public long myGeneration;
-	public bool inMinimumSize;
-	internal static string EOL;
+	public static long NextGenerationIndex = 1L;
+	internal static string EOL = Environment.NewLine;
+	internal int Line = 0;
+	internal int Column = 0;
+	internal string internal_name ="";
+	internal bool phase3done =false;
+	public object parent =new();
+	internal int ordinal = 0;
+	public long myGeneration = 0L;
+	public bool inMinimumSize= false;
 
     protected internal static string Eol => EOL;
 
@@ -37,36 +37,23 @@ public class Expansion
 		inMinimumSize = false;
 	}
 
-    public override int GetHashCode() => line + column;
+    public override int GetHashCode() => Line + Column;
 
     public static void ReInit()
 	{
 		NextGenerationIndex = 1L;
 	}
 
-	public override string ToString()
-	{
-		return new StringBuilder().Append("[").Append(line).Append(",")
-			.Append(column)
-			.Append(" ")
-			.Append(this.GetHashCode())
-			.Append(" ")
-			.Append(this.GetType().Name)
-			.Append("]")
-			.ToString();
-	}
+    public override string ToString() => ("[") + (Line) + (",")
+            + (Column)
+            + (" ")
+            + (this.GetHashCode())
+            + (" ")
+            + (this.GetType().Name)
+            + ("]");
 
-	
-	public virtual StringBuilder dump(int i, HashSet<Expansion> s)
-	{
-		return DumpPrefix(i).Append(
-			(this).GetHashCode()).Append(" ").Append(
-				this.GetType().Name);
-	}
 
-	static Expansion()
-	{
-		NextGenerationIndex = 1L;
-		EOL = Environment.NewLine;// java.lang.System.getProperty("line.separator", "\n");
-	}
+    public virtual StringBuilder Dump(int i, HashSet<Expansion> s) => DumpPrefix(i).Append(
+            (this).GetHashCode()).Append(" ").Append(
+                this.GetType().Name);
 }

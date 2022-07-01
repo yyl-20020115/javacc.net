@@ -14,7 +14,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 	public static void start()
 	{
 		Token token = null;
-		if (JavaCCErrors.Get_Error_Count() != 0)
+		if (JavaCCErrors._Error_Count != 0)
 		{
 			
 			throw new MetaParseException();
@@ -26,7 +26,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		try
 		{
 			
-			ostr = new TextWriter(new BufferedWriter(new FileWriter(new File(Options.getOutputDirectory(), new StringBuilder().Append(JavaCCGlobals.cu_name).Append(".java").ToString())), 8192));
+			ostr = new StreamWriter(Path.Combine(Options.getOutputDirectory().FullName, (JavaCCGlobals.cu_name)+(".java")));
 		}
 		catch (IOException)
 		{

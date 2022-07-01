@@ -2,19 +2,14 @@ namespace org.javacc.parser;
 
 public class Nfa
 {
-	internal NfaState start;
-	internal NfaState end;
+	internal NfaState Start = new();
+	internal NfaState End = new();
 	
-	public Nfa()
-	{
-		start = new NfaState();
-		end = new NfaState();
-	}
-
+	public Nfa() { }
 	
 	public Nfa(NfaState ns1, NfaState ns2)
 	{
-		start = ns1;
-		end = ns2;
+		Start = ns1;
+		End = ns2;
 	}
 }

@@ -6,8 +6,8 @@ public class RZeroOrMore : RegularExpression
 	
 	public RZeroOrMore(Token t, RegularExpression re)
 	{
-		line = t.beginLine;
-		column = t.beginColumn;
+		Line = t.BeginLine;
+		Column = t.BeginColumn;
 		regexpr = re;
 	}
 	
@@ -15,14 +15,14 @@ public class RZeroOrMore : RegularExpression
 	
 	public override Nfa GenerateNfa(bool b)
 	{
-		Nfa nfa = new Nfa();
-		NfaState start = nfa.start;
-		NfaState end = nfa.end;
-		Nfa nfa2 = regexpr.GenerateNfa(b);
-		start.AddMove(nfa2.start);
+		var nfa = new Nfa();
+		var start = nfa.Start;
+		var end = nfa.End;
+		var nfa2 = regexpr.GenerateNfa(b);
+		start.AddMove(nfa2.Start);
 		start.AddMove(end);
-		nfa2.end.AddMove(end);
-		nfa2.end.AddMove(nfa2.start);
+		nfa2.End.AddMove(end);
+		nfa2.End.AddMove(nfa2.Start);
 		return nfa;
 	}
 }

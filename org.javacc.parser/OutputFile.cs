@@ -26,22 +26,20 @@ public class OutputFile
 
         public override void Flush()
         {
-            throw new NotImplementedException();
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            throw new NotImplementedException();
+			return 0;
         }
 
         public override long Seek(long offset, SeekOrigin origin)
         {
-            throw new NotImplementedException();
+			return offset;
         }
 
         public override void SetLength(long value)
         {
-            throw new NotImplementedException();
         }
 
         public override void Write(byte[] P_0, int P_1, int P_2)
@@ -78,7 +76,7 @@ public class OutputFile
 		}
 
 
-		public virtual void closePrintWriter()
+		public virtual void ClosePrintWriter()
 		{
 			base.Close();
 		}
@@ -123,11 +121,6 @@ public class OutputFile
 
 	private static char[] HEX_DIGITS;
 
-
-
-	public static void ___003Cclinit_003E()
-	{
-	}
 
 
 	public OutputFile(FileInfo f)
@@ -176,7 +169,7 @@ public class OutputFile
 		{
 			pw.WriteLine(new StringBuilder().Append("/* JavaCC - OriginalChecksum=").Append(getMD5sum()).Append(" (do not edit this line) */")
 				.ToString());
-			pw.closePrintWriter();
+			pw.ClosePrintWriter();
 		}
 	}
 
@@ -234,11 +227,11 @@ public class OutputFile
 				needToWrite = false;
 				if (str != null)
 				{
-					checkVersion(f, str);
+					CheckVersion(f, str);
 				}
 				if (strarr != null)
 				{
-					checkOptions(f, strarr);
+					CheckOptions(f, strarr);
 				}
 			}
 			else
@@ -269,7 +262,7 @@ public class OutputFile
 
 	private static string toHexString(byte[] P_0)
 	{
-		StringBuilder stringBuilder = new StringBuilder(32);
+		var stringBuilder = new StringBuilder(32);
 		for (int i = 0; i < (nint)P_0.LongLength; i++)
 		{
 			int num = P_0[i];
@@ -281,24 +274,24 @@ public class OutputFile
 	}
 
 
-	private void checkVersion(File P_0, string P_1)
+	private void CheckVersion(FileInfo info, string name)
 	{
-		string text = new StringBuilder().Append("/* ").Append(JavaCCGlobals.getIdString(toolName, P_0.getName())).Append(" Version ")
+		string text = new StringBuilder().Append("/* ").Append(JavaCCGlobals.getIdString(toolName, info.getName())).Append(" Version ")
 			.ToString();
 		try
 		{
 			try
 			{
-				BufferedReader bufferedReader = new BufferedReader(new FileReader(P_0));
+				BufferedReader bufferedReader = new BufferedReader(new FileReader(info));
 				string @this;
 				while ((@this = bufferedReader.readLine()) != null)
 				{
 					if (String.instancehelper_startsWith(@this, text))
 					{
 						string text2 = String.instancehelper_replaceAll(String.instancehelper_replaceFirst(text, ".* Version ", ""), " \\*/", "");
-						if ((object)text2 != P_1)
+						if ((object)text2 != name)
 						{
-							JavaCCErrors.Warning(new StringBuilder().Append(P_0.getName()).Append(": File is obsolete.  Please rename or delete this file so").Append(" that a new one can be generated for you.")
+							JavaCCErrors.Warning(new StringBuilder().Append(info.getName()).Append(": File is obsolete.  Please rename or delete this file so").Append(" that a new one can be generated for you.")
 								.ToString());
 						}
 						break;
@@ -315,7 +308,7 @@ public class OutputFile
 			goto IL_00b7;
 		}
 
-		JavaCCErrors.Semantic_Error(new StringBuilder().Append("Could not open file ").Append(P_0.getName()).Append(" for writing.")
+		JavaCCErrors.Semantic_Error(new StringBuilder().Append("Could not open file ").Append(info.getName()).Append(" for writing.")
 			.ToString());
 
 		throw new System.Exception();
@@ -325,7 +318,7 @@ public class OutputFile
 	}
 
 
-	private void checkOptions(File P_0, string[] P_1)
+	private void CheckOptions(FileInfo P_0, string[] text)
 	{
 		try
 		{
@@ -338,7 +331,7 @@ public class OutputFile
 				{
 					if (String.instancehelper_startsWith(@this, "/* JavaCCOptions:"))
 					{
-						string optionsString = Options.getOptionsString(P_1);
+						string optionsString = Options.getOptionsString(text);
 						//object obj = (s.___003Cref_003E = optionsString);
 						if (!String.instancehelper_contains(@this, s))
 						{

@@ -11,10 +11,10 @@ public class RSequence : RegularExpression
 	}
 
 	
-	internal RSequence(List<RegularExpression> P_0)
+	internal RSequence(List<RegularExpression> units)
 	{
 		ordinal = int.MaxValue;
-		units = P_0;
+		this.units = units;
 	}
 
 	
@@ -27,20 +27,20 @@ public class RSequence : RegularExpression
 			return result;
 		}
 		Nfa nfa = new Nfa();
-		NfaState start = nfa.start;
-		NfaState end = nfa.end;
+		NfaState start = nfa.Start;
+		NfaState end = nfa.End;
 		Nfa nfa2 = null;
 		var regularExpression = units[0];
 		var nfa3 = regularExpression.GenerateNfa(b);
-		start.AddMove(nfa3.start);
+		start.AddMove(nfa3.Start);
 		for (int i = 1; i < units.Count; i++)
 		{
 			regularExpression = units[i];
 			nfa2 = regularExpression.GenerateNfa(b);
-			nfa3.end.AddMove(nfa2.start);
+			nfa3.End.AddMove(nfa2.Start);
 			nfa3 = nfa2;
 		}
-		nfa2.end.AddMove(end);
+		nfa2.End.AddMove(end);
 		return nfa;
 	}
 }

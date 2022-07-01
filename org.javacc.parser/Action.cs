@@ -9,9 +9,9 @@ public class Action : Expansion
 
 	public Action() { }
 	
-	public override StringBuilder dump(int i, HashSet<Expansion> s)
+	public override StringBuilder Dump(int i, HashSet<Expansion> s)
 	{
-		var stringBuilder = base.dump(i, s);
+		var stringBuilder = base.Dump(i, s);
 		s.Add(this);
 		if (action_tokens.Count > 0)
 		{

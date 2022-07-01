@@ -22,7 +22,7 @@ public static class EntryPoint
 		JavaFiles.reInit();
 		LexGen.reInit();
 		NfaState.reInit();
-		MatchInfo.reInit();
+		MatchInfo.ReInit();
 		LookaheadWalk.reInit();
 		Semanticize.reInit();
 		ParseGen.reInit();
@@ -44,7 +44,7 @@ public static class EntryPoint
 			return 1;
 		}
 		Console.WriteLine("(type \"javacc\" with no arguments for help)");
-		if (Options.isOption(strarr[strarr.Length - 1]))
+		if (Options.IsOption(strarr[strarr.Length - 1]))
 		{
 			Console.WriteLine(new StringBuilder().Append("Last argument \"").Append(strarr[strarr.Length - 1]).Append("\" is not a filename.")
 				.ToString());
@@ -52,7 +52,7 @@ public static class EntryPoint
 		}
 		for (int i = 0; i < (nint)strarr.LongLength - 1; i++)
 		{
-			if (!Options.isOption(strarr[i]))
+			if (!Options.IsOption(strarr[i]))
 			{
 				Console.WriteLine(new StringBuilder().Append("Argument \"").Append(strarr[i]).Append("\" must be an option setting.")
 					.ToString());
@@ -79,7 +79,6 @@ public static class EntryPoint
 					Console.WriteLine(new StringBuilder().Append(strarr[strarr.Length - 1]).Append(" is a directory. Please use a valid file name.").ToString());
 					return 1;
 				}
-				JavaCCParser.___003Cclinit_003E();
 				javaCCParser = new JavaCCParser(new StreamReader(strarr[strarr.Length - 1]));
 			}
 			catch (Exception)
@@ -112,24 +111,24 @@ public static class EntryPoint
 				ParseGen.start();
 				LexGen.start();
 				OtherFilesGen.start();
-				if (JavaCCErrors.Get_Error_Count() == 0 && (Options.getBuildParser() || Options.getBuildTokenManager()))
+				if (JavaCCErrors._Error_Count == 0 && (Options.getBuildParser() || Options.getBuildTokenManager()))
 				{
-					if (JavaCCErrors.Get_Warning_Count() == 0)
+					if (JavaCCErrors._Warning_Count == 0)
 					{
 						Console.WriteLine("Parser generated successfully.");
 					}
 					else
 					{
-						Console.WriteLine(new StringBuilder().Append("Parser generated with 0 errors and ").Append(JavaCCErrors.Get_Warning_Count()).Append(" warnings.")
+						Console.WriteLine(new StringBuilder().Append("Parser generated with 0 errors and ").Append(JavaCCErrors._Warning_Count).Append(" warnings.")
 							.ToString());
 					}
 					return 0;
 				}
-				Console.WriteLine(new StringBuilder().Append("Detected ").Append(JavaCCErrors.Get_Error_Count()).Append(" errors and ")
-					.Append(JavaCCErrors.Get_Warning_Count())
+				Console.WriteLine(new StringBuilder().Append("Detected ").Append(JavaCCErrors._Error_Count).Append(" errors and ")
+					.Append(JavaCCErrors._Warning_Count)
 					.Append(" warnings.")
 					.ToString());
-				return (JavaCCErrors.Get_Error_Count() != 0) ? 1 : 0;
+				return (JavaCCErrors._Error_Count != 0) ? 1 : 0;
 			}
 			catch (MetaParseException)
 			{
@@ -137,20 +136,20 @@ public static class EntryPoint
 		}
 		catch (ParseException x)
 		{
-			ex4 = ByteCodeHelper.MapException<ParseException>(x, ByteCodeHelper.MapFlags.NoRemapping);
+			ex4 = x;
 			goto IL_0361;
 		}
 
-		Console.WriteLine(new StringBuilder().Append("Detected ").Append(JavaCCErrors.Get_Error_Count()).Append(" errors and ")
-			.Append(JavaCCErrors.Get_Warning_Count())
+		Console.WriteLine(new StringBuilder().Append("Detected ").Append(JavaCCErrors._Error_Count).Append(" errors and ")
+			.Append(JavaCCErrors._Warning_Count)
 			.Append(" warnings.")
 			.ToString());
 		return 1;
 	IL_0361:
 		ParseException @this = ex4;
 		Console.WriteLine((@this.ToString()));
-		Console.WriteLine(new StringBuilder().Append("Detected ").Append(JavaCCErrors.Get_Error_Count() + 1).Append(" errors and ")
-			.Append(JavaCCErrors.Get_Warning_Count())
+		Console.WriteLine(new StringBuilder().Append("Detected ").Append(JavaCCErrors._Error_Count + 1).Append(" errors and ")
+			.Append(JavaCCErrors._Warning_Count)
 			.Append(" warnings.")
 			.ToString());
 		return 1;

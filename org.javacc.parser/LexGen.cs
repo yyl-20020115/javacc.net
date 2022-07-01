@@ -122,8 +122,8 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					kind = ((Token)JavaCCGlobals.cu_to_insertion_point_1[i]).kind;
 					if (kind == 97 || kind == 27 || kind == 45 || kind == 63 || kind == 35 || kind == 55)
 					{
-						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[num]).beginLine;
-						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[num]).beginColumn;
+						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[num]).BeginLine;
+						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[num]).BeginColumn;
 						int j;
 						for (j = num; j < i; j++)
 						{
@@ -326,9 +326,9 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 						{
 							str2 = new StringBuilder().Append(str2).Append("; ").ToString();
 						}
-						str2 = new StringBuilder().Append(str2).Append("line ").Append(rexprs[initMatch[num2]].line)
+						str2 = new StringBuilder().Append(str2).Append("line ").Append(rexprs[initMatch[num2]].Line)
 							.Append(", column ")
-							.Append(rexprs[initMatch[num2]].column)
+							.Append(rexprs[initMatch[num2]].Column)
 							.ToString();
 						num++;
 						continue;
@@ -1370,7 +1370,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 	
 	public static void start()
 	{
-		if (!Options.getBuildTokenManager() || Options.getUserTokenManager() || JavaCCErrors.Get_Error_Count() > 0)
+		if (!Options.getBuildTokenManager() || Options.getUserTokenManager() || JavaCCErrors._Error_Count > 0)
 		{
 			return;
 		}
@@ -1443,9 +1443,9 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 							vector.Add(curRE);
 						}
 						Nfa nfa = curRE.GenerateNfa((byte)num2 != 0);
-						nfa.end.isFinal = true;
-						nfa.end.kind = curRE.ordinal;
-						initialState.AddMove(nfa.start);
+						nfa.End.isFinal = true;
+						nfa.End.kind = curRE.ordinal;
+						initialState.AddMove(nfa.Start);
 					}
 					if ((nint)kinds.LongLength < curRE.ordinal)
 					{

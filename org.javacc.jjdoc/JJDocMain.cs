@@ -25,7 +25,7 @@ public sealed class JJDocMain : JJDocGlobals
 			return 1;
 		}
 		JJDocGlobals.info("(type \"jjdoc\" with no arguments for help)");
-		if (Options.isOption(strarr[strarr.Length - 1]))
+		if (Options.IsOption(strarr[strarr.Length - 1]))
 		{
 			JJDocGlobals.error(new StringBuilder().Append("Last argument \"").Append(strarr[strarr.Length - 1]).Append("\" is not a filename or \"-\".  ")
 				.ToString());
@@ -33,7 +33,7 @@ public sealed class JJDocMain : JJDocGlobals
 		}
 		for (int i = 0; i < (nint)strarr.LongLength - 1; i++)
 		{
-			if (!Options.isOption(strarr[i]))
+			if (!Options.IsOption(strarr[i]))
 			{
 				JJDocGlobals.error(new StringBuilder().Append("Argument \"").Append(strarr[i]).Append("\" must be an option setting.  ")
 					.ToString());
@@ -92,24 +92,24 @@ public sealed class JJDocMain : JJDocGlobals
 			{
 				javaCCParser.javacc_input();
 				JJDoc.start();
-				if (JavaCCErrors.Get_Error_Count() == 0)
+				if (JavaCCErrors._Error_Count == 0)
 				{
-					if (JavaCCErrors.Get_Warning_Count() == 0)
+					if (JavaCCErrors._Warning_Count == 0)
 					{
 						JJDocGlobals.info(new StringBuilder().Append("Grammar documentation generated successfully in ").Append(JJDocGlobals.output_file).ToString());
 					}
 					else
 					{
-						JJDocGlobals.info(new StringBuilder().Append("Grammar documentation generated with 0 errors and ").Append(JavaCCErrors.Get_Warning_Count()).Append(" warnings.")
+						JJDocGlobals.info(new StringBuilder().Append("Grammar documentation generated with 0 errors and ").Append(JavaCCErrors._Warning_Count).Append(" warnings.")
 							.ToString());
 					}
 					return 0;
 				}
-				JJDocGlobals.error(new StringBuilder().Append("Detected ").Append(JavaCCErrors.Get_Error_Count()).Append(" errors and ")
-					.Append(JavaCCErrors.Get_Warning_Count())
+				JJDocGlobals.error(new StringBuilder().Append("Detected ").Append(JavaCCErrors._Error_Count).Append(" errors and ")
+					.Append(JavaCCErrors._Warning_Count)
 					.Append(" warnings.")
 					.ToString());
-				return (JavaCCErrors.Get_Error_Count() != 0) ? 1 : 0;
+				return (JavaCCErrors._Error_Count != 0) ? 1 : 0;
 			}
 			catch (MetaParseException x)
 			{
@@ -123,16 +123,16 @@ public sealed class JJDocMain : JJDocGlobals
 		}
 		MetaParseException @this = ex3;
 		JJDocGlobals.error((@this.Message));
-		JJDocGlobals.error(new StringBuilder().Append("Detected ").Append(JavaCCErrors.Get_Error_Count()).Append(" errors and ")
-			.Append(JavaCCErrors.Get_Warning_Count())
+		JJDocGlobals.error(new StringBuilder().Append("Detected ").Append(JavaCCErrors._Error_Count).Append(" errors and ")
+			.Append(JavaCCErrors._Warning_Count)
 			.Append(" warnings.")
 			.ToString());
 		return 1;
 		IL_031e:
 		ParseException this2 = ex4;
 		JJDocGlobals.error((this2.Message));
-		JJDocGlobals.error(new StringBuilder().Append("Detected ").Append(JavaCCErrors.Get_Error_Count() + 1).Append(" errors and ")
-			.Append(JavaCCErrors.Get_Warning_Count())
+		JJDocGlobals.error(new StringBuilder().Append("Detected ").Append(JavaCCErrors._Error_Count + 1).Append(" errors and ")
+			.Append(JavaCCErrors._Warning_Count)
 			.Append(" warnings.")
 			.ToString());
 		return 1;

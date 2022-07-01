@@ -8,27 +8,23 @@ public class OneOrMore : Expansion
 
 	public OneOrMore(Token t, Expansion e)
 	{
-		line = t.beginLine;
-		column = t.beginColumn;
+		Line = t.BeginLine;
+		Column = t.BeginColumn;
 		expansion = e;
 		expansion.parent = this;
 	}
-
 	
-	public OneOrMore()
-	{
-	}
-
+	public OneOrMore() { }
 	
-	public override StringBuilder dump(int i, HashSet<Expansion> s)
+	public override StringBuilder Dump(int i, HashSet<Expansion> s)
 	{
-		var stringBuilder = base.dump(i, s);
+		var stringBuilder = base.Dump(i, s);
 		if (s.Contains(this))
 		{
 			return stringBuilder;
 		}
 		s.Add(this);
-		stringBuilder.Append(Expansion.EOL).Append(expansion.dump(i + 1, s));
+		stringBuilder.Append(Expansion.EOL).Append(expansion.Dump(i + 1, s));
 		return stringBuilder;
 	}
 }

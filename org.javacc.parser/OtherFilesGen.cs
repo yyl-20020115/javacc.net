@@ -1,3 +1,4 @@
+using System.Collections;
 using System.IO;
 using System.Text;
 
@@ -13,9 +14,8 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 	{
 		Token t = null;
 		keepLineCol = Options.getKeepLineColumn();
-		if (JavaCCErrors.Get_Error_Count() != 0)
+		if (JavaCCErrors._Error_Count != 0)
 		{
-			
 			throw new MetaParseException();
 		}
 		JavaFiles.gen_TokenMgrError();
@@ -41,13 +41,13 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 		{
 			
 			ostr = new StreamWriter(
-				new FileInfo(Options.getOutputDirectory(), new StringBuilder().Append(JavaCCGlobals.cu_name).Append("Constants.java").ToString(), 8192));
+				Path.Combine(Options.getOutputDirectory().FullName, (JavaCCGlobals.cu_name)+("Constants.java")));
 		}
 		catch (IOException)
 		{
 			goto IL_00aa;
 		}
-		var vector = JavaCCGlobals.toolNames.Clone();
+		var vector = JavaCCGlobals.toolNames.Clone() as ArrayList;
 		vector.Add("JavaCC");
 		ostr.WriteLine(new StringBuilder().Append("/* ").Append(JavaCCGlobals.getIdString(vector, new StringBuilder().Append(JavaCCGlobals.cu_name).Append("Constants.java").ToString())).Append(" */")
 			.ToString());

@@ -1,25 +1,24 @@
-using System.Text;
 namespace org.javacc.parser;
 
 public class CharacterRange
 {
-	internal int line;
-	internal int column;
-	public char left;
-	public char right;
+	internal int Line = 0;
+	internal int Column = 0;
+	public char Left = '\0';
+	public char Right = '\0';
 
 	internal CharacterRange() { }
 	
-	internal CharacterRange(char P_0, char P_1)
+	internal CharacterRange(char c1, char c2)
 	{
-		if (P_0 > P_1)
+		if (c1 > c2)
 		{
-			JavaCCErrors.Semantic_Error(this, new StringBuilder().Append("Invalid range : \"").Append((int)P_0).Append("\" - \"")
-				.Append((int)P_1)
-				.Append("\". First character shoud be less than or equal to the second one in a range.")
-				.ToString());
+			JavaCCErrors.Semantic_Error(this, ("Invalid range : \"")+((int)c1)+("\" - \"")
+				+((int)c2)
+				+("\". First character shoud be less than or equal to the second one in a range.")
+				);
 		}
-		left = P_0;
-		right = P_1;
+		Left = c1;
+		Right = c2;
 	}
 }

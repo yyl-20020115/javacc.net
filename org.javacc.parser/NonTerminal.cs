@@ -6,21 +6,16 @@ namespace org.javacc.parser;
 
 public class NonTerminal : Expansion
 {
-	public ArrayList lhsTokens;
+	public ArrayList lhsTokens = new();
 
-	public string name;
+	public string name = "";
 
-	public ArrayList argument_tokens;
+	public ArrayList argument_tokens = new();
 
 	public NormalProduction prod;
-	
-	public NonTerminal()
-	{
-		lhsTokens = new ArrayList();
-		argument_tokens = new ArrayList();
-	}
 
+	public NonTerminal() { }
 
-    public override StringBuilder dump(int i, HashSet<Expansion> s) => base.dump(i, s).Append(' ').Append(name);
+    public override StringBuilder Dump(int i, HashSet<Expansion> s) => base.Dump(i, s).Append(' ').Append(name);
 
 }

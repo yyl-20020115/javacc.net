@@ -11,7 +11,7 @@ public class MatchInfo
 		match = new int[laLimit];
 	}
 
-	public static void reInit()
+	public static void ReInit()
 	{
 		laLimit = 0;
 	}

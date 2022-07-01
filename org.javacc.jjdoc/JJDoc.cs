@@ -78,7 +78,7 @@ public class JJDoc : JJDocGlobals
 				{
 					int b = 1;
 					Choice choice = (Choice)normalProduction.expansion;
-					Enumeration enumeration2 = choice.choices.elements();
+					Enumeration enumeration2 = choice.Choices.elements();
 					while (enumeration2.hasMoreElements())
 					{
 						Expansion expansion = (Expansion)enumeration2.nextElement();
@@ -125,8 +125,8 @@ public class JJDoc : JJDocGlobals
 		string text = "";
 		if (P_0 != null)
 		{
-			JavaCCGlobals.cline = P_0.beginLine;
-			JavaCCGlobals.ccol = P_0.beginColumn;
+			JavaCCGlobals.cline = P_0.BeginLine;
+			JavaCCGlobals.ccol = P_0.BeginColumn;
 			while (P_0 != null)
 			{
 				text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTokenOnly(P_0)).ToString();
@@ -187,10 +187,10 @@ public class JJDoc : JJDocGlobals
 				else if (obj is CharacterRange)
 				{
 					text = new StringBuilder().Append(text).Append("\"").ToString();
-					char[] value = new char[1] { ((CharacterRange)obj).left };
+					char[] value = new char[1] { ((CharacterRange)obj).Left };
 					text = new StringBuilder().Append(text).Append(JavaCCGlobals.add_escapes(new string(value))).ToString();
 					text = new StringBuilder().Append(text).Append("\"-\"").ToString();
-					value[0] = ((CharacterRange)obj).right;
+					value[0] = ((CharacterRange)obj).Right;
 					text = new StringBuilder().Append(text).Append(JavaCCGlobals.add_escapes(new string(value))).ToString();
 					text = new StringBuilder().Append(text).Append("\"").ToString();
 				}
@@ -208,7 +208,7 @@ public class JJDoc : JJDocGlobals
 		else if (P_0 is RChoice)
 		{
 			RChoice rChoice = (RChoice)P_0;
-			Enumeration enumeration = rChoice.choices.elements();
+			Enumeration enumeration = rChoice.Choices.elements();
 			while (enumeration.hasMoreElements())
 			{
 				RegularExpression regularExpression = (RegularExpression)enumeration.nextElement();
@@ -350,7 +350,7 @@ public class JJDoc : JJDocGlobals
 	
 	private static void emitExpansionChoice(Choice P_0, Generator P_1)
 	{
-		Enumeration enumeration = P_0.choices.elements();
+		Enumeration enumeration = P_0.Choices.elements();
 		while (enumeration.hasMoreElements())
 		{
 			Expansion expansion = (Expansion)enumeration.nextElement();

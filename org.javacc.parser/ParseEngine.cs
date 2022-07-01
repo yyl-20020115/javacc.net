@@ -71,9 +71,9 @@ public class ParseEngine : JavaCCGlobals
 		if (P_0 is Choice)
 		{
 			Choice choice = (Choice)P_0;
-			for (int i = 0; i < choice.choices.Count; i++)
+			for (int i = 0; i < choice.Choices.Count; i++)
 			{
-				if (javaCodeCheck((Expansion)choice.choices[i]))
+				if (javaCodeCheck((Expansion)choice.Choices[i]))
 				{
 					return true;
 				}
@@ -149,9 +149,9 @@ public class ParseEngine : JavaCCGlobals
 		else if (P_0 is Choice)
 		{
 			Choice choice = (Choice)P_0;
-			for (int i = 0; i < choice.choices.Count; i++)
+			for (int i = 0; i < choice.Choices.Count; i++)
 			{
-				genFirstSet((Expansion)choice.choices[i]);
+				genFirstSet((Expansion)choice.Choices[i]);
 			}
 		}
 		else if (P_0 is Sequence)
@@ -303,12 +303,12 @@ public class ParseEngine : JavaCCGlobals
 		else if (P_0 is Choice)
 		{
 			Choice choice = (Choice)P_0;
-			Lookahead[] array = new Lookahead[choice.choices.Count];
-			string[] array2 = new string[choice.choices.Count + 1];
-			array2[choice.choices.Count] = "\njj_consume_token(-1);\nthrow new ParseException();";
-			for (int i = 0; i < choice.choices.Count; i++)
+			Lookahead[] array = new Lookahead[choice.Choices.Count];
+			string[] array2 = new string[choice.Choices.Count + 1];
+			array2[choice.Choices.Count] = "\njj_consume_token(-1);\nthrow new ParseException();";
+			for (int i = 0; i < choice.Choices.Count; i++)
 			{
-				Sequence sequence = (Sequence)choice.choices[i];
+				Sequence sequence = (Sequence)choice.Choices[i];
 				array2[i] = phase1ExpansionGen(sequence);
 				array[i] = (Lookahead)sequence.units[0];
 			}
@@ -784,9 +784,9 @@ public class ParseEngine : JavaCCGlobals
 		else if (exp is Choice)
 		{
 			Choice choice = (Choice)exp;
-			for (int i = 0; i < choice.choices.Count; i++)
+			for (int i = 0; i < choice.Choices.Count; i++)
 			{
-				generate3R((Expansion)choice.choices[i], P_0);
+				generate3R((Expansion)choice.Choices[i], P_0);
 			}
 		}
 		else if (exp is Sequence)
@@ -954,7 +954,7 @@ public class ParseEngine : JavaCCGlobals
 		else if (exp is Choice)
 		{
 			Choice choice = (Choice)exp;
-			if (choice.choices.Count != 1)
+			if (choice.Choices.Count != 1)
 			{
 				if (!xsp_declared)
 				{
@@ -963,9 +963,9 @@ public class ParseEngine : JavaCCGlobals
 				}
 				ostr.WriteLine("    xsp = jj_scanpos;");
 			}
-			for (int i = 0; i < choice.choices.Count; i++)
+			for (int i = 0; i < choice.Choices.Count; i++)
 			{
-				Sequence sequence = (Sequence)choice.choices[i];
+				Sequence sequence = (Sequence)choice.Choices[i];
 				Lookahead lookahead = (Lookahead)sequence.units[0];
 				if (lookahead.action_tokens.Count != 0)
 				{
@@ -987,7 +987,7 @@ public class ParseEngine : JavaCCGlobals
 				{
 					ostr.Write("!jj_semLA || ");
 				}
-				if (i != choice.choices.Count - 1)
+				if (i != choice.Choices.Count - 1)
 				{
 					ostr.WriteLine(new StringBuilder().Append(genjj_3Call(sequence)).Append(") {").ToString());
 					ostr.WriteLine("    jj_scanpos = xsp;");
@@ -998,7 +998,7 @@ public class ParseEngine : JavaCCGlobals
 						.ToString());
 				}
 			}
-			for (int i = 1; i < choice.choices.Count; i++)
+			for (int i = 1; i < choice.Choices.Count; i++)
 			{
 				ostr.WriteLine("    }");
 			}
@@ -1109,9 +1109,9 @@ public class ParseEngine : JavaCCGlobals
 			int num = P_1;
 			Choice choice = (Choice)P_0;
 			int num2 = 0;
-			while (num > 1 && num2 < choice.choices.Count)
+			while (num > 1 && num2 < choice.Choices.Count)
 			{
-				Expansion expansion2 = (Expansion)choice.choices[num2];
+				Expansion expansion2 = (Expansion)choice.Choices[num2];
 				int num3 = minimumSize(expansion2, num);
 				if (num > num3)
 				{
@@ -1188,8 +1188,8 @@ public class ParseEngine : JavaCCGlobals
 			.Append((P_0.accessMod == null) ? "public" : P_0.accessMod)
 			.Append(" ")
 			.ToString());
-		JavaCCGlobals.cline = token.beginLine;
-		JavaCCGlobals.ccol = token.beginColumn;
+		JavaCCGlobals.cline = token.BeginLine;
+		JavaCCGlobals.ccol = token.BeginColumn;
 		JavaCCGlobals.printTokenOnly(token, ostr);
 		for (int i = 1; i < P_0.return_type_tokens.Count; i++)
 		{
@@ -1299,7 +1299,7 @@ public class ParseEngine : JavaCCGlobals
 		for (int i = 0; i < (nint)P_0.LongLength; i++)
 		{
 			Console.Error.WriteLine(new StringBuilder().Append("Lookahead: ").Append(i).ToString());
-			Console.Error.WriteLine(P_0[i].dump(0, new()));
+			Console.Error.WriteLine(P_0[i].Dump(0, new()));
 			Console.Error.WriteLine();
 		}
 	}
@@ -1323,8 +1323,8 @@ public class ParseEngine : JavaCCGlobals
 				JavaCCGlobals.printLeadingComments(token, ostr);
 				ostr.Write(new StringBuilder().Append("  ").Append(JavaCCGlobals.staticOpt()).Append((normalProduction.accessMod == null) ? "" : new StringBuilder().Append(normalProduction.accessMod).Append(" ").ToString())
 					.ToString());
-				JavaCCGlobals.cline = token.beginLine;
-				JavaCCGlobals.ccol = token.beginColumn;
+				JavaCCGlobals.cline = token.BeginLine;
+				JavaCCGlobals.ccol = token.BeginColumn;
 				JavaCCGlobals.printTokenOnly(token, ostr);
 				for (int i = 1; i < javaCodeProduction.return_type_tokens.Count; i++)
 				{

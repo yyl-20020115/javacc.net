@@ -1,9 +1,9 @@
-﻿using System;
+﻿using org.javacc.jjtree;
+using System;
 using System.Runtime.Serialization;
 
 namespace org.javacc.parser
 {
-    [Serializable]
     internal class RuntimeException : Exception
     {
         private UnsupportedEncodingException cause;
@@ -22,10 +22,6 @@ namespace org.javacc.parser
         }
 
         public RuntimeException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
-
-        protected RuntimeException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
     }

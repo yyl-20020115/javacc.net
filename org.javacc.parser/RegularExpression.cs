@@ -34,9 +34,9 @@ public abstract class RegularExpression : Expansion
 	}
 
 	
-	public override StringBuilder dump(int i, HashSet<Expansion> s)
+	public override StringBuilder Dump(int i, HashSet<Expansion> s)
 	{
-		var stringBuilder = base.dump(i, s);
+		var stringBuilder = base.Dump(i, s);
 		s.Add(this);
 		stringBuilder.Append(' ').Append(label);
 		return stringBuilder;

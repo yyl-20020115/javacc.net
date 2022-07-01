@@ -19,15 +19,15 @@ public class Lookahead : Expansion
 	}
 
 	
-	public override StringBuilder dump(int i, HashSet<Expansion> s)
+	public override StringBuilder Dump(int i, HashSet<Expansion> s)
 	{
-		var stringBuilder = base.dump(i, s).Append((!isExplicit) ? " implicit" : " explicit");
+		var stringBuilder = base.Dump(i, s).Append((!isExplicit) ? " implicit" : " explicit");
 		if (s.Contains(this))
 		{
 			return stringBuilder;
 		}
 		s.Add(this);
-		stringBuilder.Append(Expansion.EOL).Append(la_expansion.dump(i + 1, s));
+		stringBuilder.Append(Expansion.EOL).Append(la_expansion.Dump(i + 1, s));
 		return stringBuilder;
 	}
 

@@ -75,7 +75,7 @@ public class NormalProduction :Expansion
 			s.Add(this);
 			if (expansion != null)
 			{
-				stringBuilder.Append(eol).Append(expansion.dump(i + 1, s));
+				stringBuilder.Append(eol).Append(expansion.Dump(i + 1, s));
 			}
 		}
 		return stringBuilder;

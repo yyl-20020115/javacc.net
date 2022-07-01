@@ -219,8 +219,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 				{
 					if (((Token)JavaCCGlobals.cu_to_insertion_point_1[i]).kind == 97)
 					{
-						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).beginLine;
-						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).beginColumn;
+						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).BeginLine;
+						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).BeginColumn;
 						for (int j = 0; j <= i; j++)
 						{
 							JavaCCGlobals.printToken((Token)JavaCCGlobals.cu_to_insertion_point_1[j], printWriter);
@@ -996,8 +996,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 				{
 					if (((Token)JavaCCGlobals.cu_to_insertion_point_1[i]).kind == 97)
 					{
-						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).beginLine;
-						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).beginColumn;
+						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).BeginLine;
+						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).BeginColumn;
 						for (int j = 0; j <= i; j++)
 						{
 							JavaCCGlobals.printToken((Token)JavaCCGlobals.cu_to_insertion_point_1[j], printWriter);
@@ -1600,8 +1600,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 				{
 					if (((Token)JavaCCGlobals.cu_to_insertion_point_1[i]).kind == 97)
 					{
-						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).beginLine;
-						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).beginColumn;
+						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).BeginLine;
+						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).BeginColumn;
 						for (int j = 0; j <= i; j++)
 						{
 							JavaCCGlobals.printToken((Token)JavaCCGlobals.cu_to_insertion_point_1[j], printWriter);
@@ -1754,8 +1754,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 				{
 					if (((Token)JavaCCGlobals.cu_to_insertion_point_1[i]).kind == 97)
 					{
-						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).beginLine;
-						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).beginColumn;
+						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).BeginLine;
+						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).BeginColumn;
 						for (int j = 0; j <= i; j++)
 						{
 							JavaCCGlobals.printToken((Token)JavaCCGlobals.cu_to_insertion_point_1[j], printWriter);
@@ -1997,8 +1997,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 				{
 					if (((Token)JavaCCGlobals.cu_to_insertion_point_1[i]).kind == 97)
 					{
-						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).beginLine;
-						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).beginColumn;
+						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).BeginLine;
+						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).BeginColumn;
 						for (int j = 0; j <= i; j++)
 						{
 							JavaCCGlobals.printToken((Token)JavaCCGlobals.cu_to_insertion_point_1[j], printWriter);
@@ -2183,8 +2183,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 				{
 					if (((Token)JavaCCGlobals.cu_to_insertion_point_1[i]).kind == 97)
 					{
-						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).beginLine;
-						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).beginColumn;
+						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).BeginLine;
+						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).BeginColumn;
 						for (int j = 0; j <= i; j++)
 						{
 							JavaCCGlobals.printToken((Token)JavaCCGlobals.cu_to_insertion_point_1[j], printWriter);
@@ -2360,8 +2360,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 				{
 					if (((Token)JavaCCGlobals.cu_to_insertion_point_1[i]).kind == 97)
 					{
-						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).beginLine;
-						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).beginColumn;
+						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).BeginLine;
+						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).BeginColumn;
 						for (int j = 0; j <= i; j++)
 						{
 							JavaCCGlobals.printToken((Token)JavaCCGlobals.cu_to_insertion_point_1[j], printWriter);
