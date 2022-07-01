@@ -132,7 +132,7 @@ internal sealed class JJTreeState
 		writer.WriteLine("    if (--sp < mk) {");
 		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
-			writer.WriteLine("      mk = ((int)marks.remove(marks.Count-1)).intValue();");
+			writer.WriteLine("      mk = ((int)marks.remove(marks.Count-1));");
 		}
 		else
 		{
@@ -174,7 +174,7 @@ internal sealed class JJTreeState
 		writer.WriteLine("    }");
 		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
-			writer.WriteLine("    mk = ((int)marks.remove(marks.Count-1)).intValue();");
+			writer.WriteLine("    mk = ((int)marks.remove(marks.Count-1));");
 		}
 		else
 		{
@@ -186,7 +186,7 @@ internal sealed class JJTreeState
 		writer.WriteLine("  public void openNodeScope(Node n) {");
 		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
-			writer.WriteLine("    marks.Add(new int(mk));");
+			writer.WriteLine("    marks.Add((mk));");
 		}
 		else
 		{
@@ -204,7 +204,7 @@ internal sealed class JJTreeState
 		writer.WriteLine("  public void closeNodeScope(Node n, int num) {");
 		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
-			writer.WriteLine("    mk = ((int)marks.remove(marks.Count-1)).intValue();");
+			writer.WriteLine("    mk = ((int)marks.remove(marks.Count-1));");
 		}
 		else
 		{
@@ -231,7 +231,7 @@ internal sealed class JJTreeState
 		writer.WriteLine("      int a = nodeArity();");
 		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
-			writer.WriteLine("      mk = ((int)marks.remove(marks.Count-1)).intValue();");
+			writer.WriteLine("      mk = ((int)marks.remove(marks.Count-1));");
 		}
 		else
 		{
@@ -248,7 +248,7 @@ internal sealed class JJTreeState
 		writer.WriteLine("    } else {");
 		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
-			writer.WriteLine("      mk = ((int)marks.remove(marks.Count-1)).intValue();");
+			writer.WriteLine("      mk = ((int)marks.remove(marks.Count-1));");
 		}
 		else
 		{

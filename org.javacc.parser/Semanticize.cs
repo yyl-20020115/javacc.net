@@ -104,7 +104,7 @@ public class Semanticize : JavaCCGlobals
 				return true;
 			}
 			Sequence sequence = (Sequence)P_0;
-			object obj = sequence.units[0];
+			object obj = sequence.Units[0];
 			if (!(obj is Lookahead))
 			{
 				return true;
@@ -200,7 +200,7 @@ public class Semanticize : JavaCCGlobals
 				return;
 			}
 			Sequence sequence = (Sequence)P_0;
-			Lookahead lookahead = (Lookahead)sequence.units[0];
+			Lookahead lookahead = (Lookahead)sequence.Units[0];
 			if (!lookahead.isExplicit)
 			{
 				return;
@@ -213,13 +213,13 @@ public class Semanticize : JavaCCGlobals
 			sequence2.Line = lookahead.Line;
 			sequence2.Column = lookahead.Column;
 			sequence2.parent = choice;
-			sequence2.units.Add(lookahead);
+			sequence2.Units.Add(lookahead);
 			lookahead.parent = sequence2;
 			Action action = new Action();
 			action.Line = lookahead.Line;
 			action.Column = lookahead.Column;
 			action.parent = sequence2;
-			sequence2.units.Add(action);
+			sequence2.Units.Add(action);
 			choice.Choices.Add(sequence2);
 			if (lookahead.amount != 0)
 			{
@@ -239,8 +239,8 @@ public class Semanticize : JavaCCGlobals
 			lookahead2.parent = sequence;
 			lookahead.la_expansion = new REndOfFile();
 			lookahead2.la_expansion = new REndOfFile();
-			sequence.units.setElementAt(lookahead2, 0);
-			sequence.units.insertElementAt(choice, 1);
+			sequence.Units[0]=lookahead2;
+			sequence.Units.Insert(1,choice);
 		}
 
 		
@@ -358,7 +358,7 @@ public class Semanticize : JavaCCGlobals
 		}
 		if (e is Sequence)
 		{
-			Enumeration enumeration = ((Sequence)e).units.elements();
+			Enumeration enumeration = ((Sequence)e).Units.elements();
 			while (enumeration.hasMoreElements())
 			{
 				if (!emptyExpansionExists((Expansion)enumeration.nextElement()))
@@ -493,7 +493,7 @@ public class Semanticize : JavaCCGlobals
 		while (enumeration.hasMoreElements())
 		{
 			TokenProduction tokenProduction = (TokenProduction)enumeration.nextElement();
-			ArrayList respecs = tokenProduction.respecs;
+			var respecs = tokenProduction.respecs;
 			Enumeration enumeration3;
 			if (tokenProduction.LexStates == null)
 			{
@@ -639,13 +639,13 @@ public class Semanticize : JavaCCGlobals
 				{
 					Hashtable hashtable2 = JavaCCGlobals.names_of_tokens;
 					;
-					hashtable2.Add(new int(regExprSpec2.rexp.ordinal), regExprSpec2.rexp.label);
+					hashtable2.Add((regExprSpec2.rexp.ordinal), regExprSpec2.rexp.label);
 				}
 				if (!(regExprSpec2.rexp is RJustName))
 				{
 					Hashtable hashtable3 = JavaCCGlobals.rexps_of_tokens;
 					;
-					hashtable3.Add(new int(regExprSpec2.rexp.ordinal), regExprSpec2.rexp);
+					hashtable3.Add((regExprSpec2.rexp.ordinal), regExprSpec2.rexp);
 				}
 			}
 		}
@@ -694,7 +694,7 @@ public class Semanticize : JavaCCGlobals
 							JavaCCGlobals.ordered_named_tokens.Add(rJustName);
 							Hashtable hashtable4 = JavaCCGlobals.names_of_tokens;
 							;
-							hashtable4.Add(new int(rJustName.ordinal), rJustName.label);
+							hashtable4.Add((rJustName.ordinal), rJustName.label);
 						}
 						else
 						{
@@ -718,7 +718,7 @@ public class Semanticize : JavaCCGlobals
 				{
 					RegExprSpec regExprSpec = (RegExprSpec)enumeration2.nextElement();
 					;
-					int key = new int(regExprSpec.rexp.ordinal);
+					int key = (regExprSpec.rexp.ordinal);
 					if (JavaCCGlobals.names_of_tokens.get(key) == null)
 					{
 						JavaCCErrors.Warning(regExprSpec.rexp, "Unlabeled regular expression cannot be referred to by user generated token manager.");
@@ -837,7 +837,7 @@ public class Semanticize : JavaCCGlobals
 		for (int i = 0; i < removeList.Count; i++)
 		{
 			ArrayList vector = (ArrayList)removeList[i];
-			vector.removeElement(itemList[i]);
+			vector.Remove(itemList[i]);
 		}
 		removeList.removeAllElements();
 		itemList.removeAllElements();
@@ -909,7 +909,7 @@ public class Semanticize : JavaCCGlobals
 		}
 		else if (P_1 is Sequence)
 		{
-			Enumeration enumeration = ((Sequence)P_1).units.elements();
+			Enumeration enumeration = ((Sequence)P_1).Units.elements();
 			while (enumeration.hasMoreElements())
 			{
 				Expansion expansion = (Expansion)enumeration.nextElement();

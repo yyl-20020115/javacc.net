@@ -152,7 +152,7 @@ public class Options
 	
 	protected internal static int IntValue(string str)
 	{
-		return  ((int)OptionValues.get(str)).intValue();
+		return  ((int)OptionValues.get(str));
 	}
 
 	
@@ -237,7 +237,7 @@ public class Options
 		obj3 = upgradeValue(str, obj3);
 		if (obj4 != null)
 		{
-			if (Object.instancehelper_getClass(obj4) != Object.instancehelper_getClass(obj3) || (obj3 is int && ((int)obj3).intValue() <= 0))
+			if (Object.instancehelper_getClass(obj4) != Object.instancehelper_getClass(obj3) || (obj3 is int && ((int)obj3) <= 0))
 			{
 				JavaCCErrors.Warning(obj2, new StringBuilder().Append("Bad option value \"").Append(obj3).Append("\" for \"")
 					.Append(str)

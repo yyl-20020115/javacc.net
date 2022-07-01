@@ -322,7 +322,7 @@ public class NfaState
 		while (enumeration.hasMoreElements())
 		{
 			string key = (string)enumeration.nextElement();
-			int num = ((int)stateNameForComposite.get(key)).intValue();
+			int num = ((int)stateNameForComposite.get(key));
 			if (num >= generatedStates)
 			{
 				statesForState[LexGen.lexStateIndex][num] = (int[])allNextStates.get(key);
@@ -607,21 +607,21 @@ public class NfaState
 		done = false;
 		mark = null;
 		stateDone = null;
-		allStates = new ArrayList();
-		indexedAllStates = new ArrayList();
-		nonAsciiTableForMethod = new ArrayList();
-		equivStatesTable = new Hashtable();
-		allNextStates = new Hashtable();
-		lohiByteTab = new Hashtable();
-		stateNameForComposite = new Hashtable();
-		compositeStateTable = new Hashtable();
-		stateBlockTable = new Hashtable();
-		stateSetsToFix = new Hashtable();
-		allBitVectors = new ArrayList();
+		allStates = new ();
+		indexedAllStates = new ();
+		nonAsciiTableForMethod = new ();
+		equivStatesTable = new ();
+		allNextStates = new ();
+		lohiByteTab = new ();
+		stateNameForComposite = new ();
+		compositeStateTable = new ();
+		stateBlockTable = new ();
+		stateSetsToFix = new ();
+		allBitVectors = new ();
 		tmpIndices = new int[512];
 		allBits = "{\n   0xffffffffffffffffL, 0xffffffffffffffffL, 0xffffffffffffffffL, 0xffffffffffffffffL\n};";
-		tableToDump = new Hashtable();
-		orderedStateSet = new ArrayList();
+		tableToDump = new ();
+		orderedStateSet = new ();
 		lastIndex = 0;
 		jjCheckNAddStatesUnaryNeeded = false;
 		kinds = null;
@@ -944,7 +944,7 @@ public class NfaState
 								vector.Add(nfaState2);
 							}
 							InsertInOrder(vector, nfaState3);
-							epsilonMoves.removeElementAt(i--);
+							epsilonMoves.RemoveAt(i--);
 						}
 					}
 				}
@@ -962,7 +962,7 @@ public class NfaState
 						nfaState = CreateEquivState(vector);
 						equivStatesTable.Add(text, nfaState);
 					}
-					epsilonMoves.removeElementAt(num--);
+					epsilonMoves.RemoveAt(num--);
 					epsilonMoves.Add(nfaState);
 					vector = null;
 					nfaState = null;
@@ -984,12 +984,12 @@ public class NfaState
 							num2 = 1;
 						}
 						nfaState.MergeMoves(nfaState3);
-						epsilonMoves.removeElementAt(i--);
+						epsilonMoves.RemoveAt(i--);
 					}
 				}
 				if (nfaState != null)
 				{
-					epsilonMoves.removeElementAt(num--);
+					epsilonMoves.RemoveAt(num--);
 					epsilonMoves.Add(nfaState);
 					nfaState = null;
 				}
@@ -1007,7 +1007,7 @@ public class NfaState
 			}
 			else
 			{
-				epsilonMoves.removeElementAt(num--);
+				epsilonMoves.RemoveAt(num--);
 			}
 		}
 	}
@@ -1182,7 +1182,7 @@ public class NfaState
 		}
 		for (int i = 0; i < P_0.Count; i++)
 		{
-			if (((int)P_0[i]).intValue() != ((int)P_1[i]).intValue())
+			if (((int)P_0[i]) != ((int)P_1[i]))
 			{
 				return false;
 			}
@@ -1220,7 +1220,7 @@ public class NfaState
 		int integer;
 		if ((integer = (int)stateNameForComposite.get(P_0)) != null)
 		{
-			int result = integer.intValue();
+			int result = integer;
 			
 			return result;
 		}
@@ -1239,7 +1239,7 @@ public class NfaState
 		if ((nint)array.LongLength == 1)
 		{
 			;
-			integer = new int(array[0]);
+			integer = (array[0]);
 			stateNameForComposite.Add(P_0, integer);
 			return array[0];
 		}
@@ -1275,7 +1275,7 @@ public class NfaState
 			}
 		}
 		int num = ((i < (nint)array.LongLength) ? array[i] : ((dummyStateIndex != -1) ? (++dummyStateIndex) : (dummyStateIndex = generatedStates)));
-		integer = new int(num);
+		integer = (num);
 		stateNameForComposite.Add(P_0, integer);
 		compositeStateTable.Add(P_0, array);
 		return num;
@@ -1329,7 +1329,7 @@ public class NfaState
 	
 	private static int StateNameForComposite(string P_0)
 	{
-		int result = ((int)stateNameForComposite.get(P_0)).intValue();
+		int result = ((int)stateNameForComposite.get(P_0));
 		
 		return result;
 	}
@@ -1511,7 +1511,7 @@ public class NfaState
 		{
 			if (loByteVec != null && loByteVec.Count > 1)
 			{
-				P_0.WriteLine(("                  if ((jjbitVec") + (((int)loByteVec[1]).intValue())+("[i2")
+				P_0.WriteLine(("                  if ((jjbitVec") + (((int)loByteVec[1]))+("[i2")
 					+("] & l2) != 0L)")
 					.ToString());
 			}
@@ -1814,7 +1814,7 @@ public class NfaState
 		while (vector.Count > 0)
 		{
 			NfaState nfaState = (NfaState)vector[0];
-			vector.removeElement(nfaState);
+			vector.Remove(nfaState);
 			long num3 = nfaState.asciiMoves[P_1];
 			ArrayList vector3 = new ArrayList();
 			vector3.Add(nfaState);
@@ -1825,7 +1825,7 @@ public class NfaState
 				{
 					num3 |= nfaState2.asciiMoves[P_1];
 					vector3.Add(nfaState2);
-					vector.removeElementAt(k--);
+					vector.RemoveAt(k--);
 				}
 			}
 			vector2.Add(vector3);
@@ -2041,7 +2041,7 @@ public class NfaState
 			{
 				if (loByteVec != null && loByteVec.Count > 1)
 				{
-					P_0.WriteLine(("                  if ((jjbitVec")+(((int)loByteVec.elementAt(1)).intValue())+("[i2")
+					P_0.WriteLine(("                  if ((jjbitVec")+(((int)loByteVec.elementAt(1)))+("[i2")
 						+("] & l2) != 0L")
 						+(str)
 						+(")")
@@ -2067,7 +2067,7 @@ public class NfaState
 			{
 				if (loByteVec != null && loByteVec.Count > 1)
 				{
-					P_0.WriteLine(("                  if ((jjbitVec")+(((int)loByteVec.elementAt(1)).intValue())+("[i2")
+					P_0.WriteLine(("                  if ((jjbitVec")+(((int)loByteVec.elementAt(1)))+("[i2")
 						+("] & l2) == 0L)")
 						.ToString());
 					P_0.WriteLine("                     break;");
@@ -2089,7 +2089,7 @@ public class NfaState
 		{
 			if (loByteVec != null && loByteVec.Count > 1)
 			{
-				P_0.WriteLine(("                  if ((jjbitVec")+(((int)loByteVec.elementAt(1)).intValue())+("[i2")
+				P_0.WriteLine(("                  if ((jjbitVec")+(((int)loByteVec.elementAt(1)))+("[i2")
 					+("] & l2) != 0L)")
 					.ToString());
 			}
@@ -2271,11 +2271,11 @@ public class NfaState
 		{
 			for (int i = 0; i < loByteVec.Count; i += 2)
 			{
-				P_0.WriteLine(("      case ")+(((int)loByteVec[i]).intValue())+(":")
+				P_0.WriteLine(("      case ")+(((int)loByteVec[i]))+(":")
 					.ToString());
-				if (!AllBitsSet((string)allBitVectors.elementAt(((int)loByteVec.elementAt(i + 1)).intValue())))
+				if (!AllBitsSet((string)allBitVectors.elementAt(((int)loByteVec[i+1]))))
 				{
-					P_0.WriteLine(("         return ((jjbitVec")+(((int)loByteVec.elementAt(i + 1)).intValue())+("[i2")
+					P_0.WriteLine(("         return ((jjbitVec")+(((int)loByteVec[i+1]))+("[i2")
 						+("] & l2) != 0L);")
 						.ToString());
 				}
@@ -2320,8 +2320,8 @@ public class NfaState
 	
 	private static void ReArrange()
 	{
-		ArrayList vector = allStates;
-		allStates = new ArrayList();
+		var vector = allStates;
+		allStates = new ();
 		allStates.setSize(generatedStates);
 		for (int i = 0; i < vector.Count; i++)
 		{
@@ -2512,12 +2512,12 @@ public class NfaState
 				Hashtable hashtable = lohiByteTab;
 				string key = text;
 				;
-				hashtable.Add(key, integer = new int(lohiByteCnt++));
+				hashtable.Add(key, integer = (lohiByteCnt++));
 			}
 			int[] array15 = tmpIndices;
 			int num33 = num;
 			num++;
-			array15[num33] = integer.intValue();
+			array15[num33] = integer;
 			text = ("{\n   0x")+(Utils.ToHexString(array2[i][0]))+("L, ")
 				+("0x")
 				+(Utils.ToHexString(array2[i][1]))
@@ -2541,12 +2541,12 @@ public class NfaState
 				Hashtable hashtable2 = lohiByteTab;
 				string key2 = text;
 				;
-				hashtable2.Add(key2, integer = new int(lohiByteCnt++));
+				hashtable2.Add(key2, integer = (lohiByteCnt++));
 			}
 			int[] array16 = tmpIndices;
 			int num34 = num;
 			num++;
-			array16[num34] = integer.intValue();
+			array16[num34] = integer;
 			array8 = null;
 		}
 		nonAsciiMoveIndices = new int[num];
@@ -2581,13 +2581,13 @@ public class NfaState
 				}
 				Hashtable hashtable3 = lohiByteTab;
 				;
-				hashtable3.Add(text2, obj9 = new int(lohiByteCnt++));
+				hashtable3.Add(text2, obj9 = (lohiByteCnt++));
 			}
 			if (loByteVec == null)
 			{
 				loByteVec = new ArrayList();
 			}
-			loByteVec.Add(new int(i));
+			loByteVec.Add((i));
 			loByteVec.Add(obj9);
 		}
 		UpdateDuplicateNonAsciiMoves();

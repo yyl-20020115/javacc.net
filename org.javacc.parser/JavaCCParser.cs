@@ -1285,13 +1285,13 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		{
 			jj_la1[20] = jj_gen;
 		}
-		sequence.units.Add(lookahead);
+		sequence.Units.Add(lookahead);
 		do
 		{
 			expansion_unit(container);
-			sequence.units.Add(container.member);
+			sequence.Units.Add(container.member);
 			((Expansion)container.member).parent = sequence;
-			((Expansion)container.member).ordinal = sequence.units.Count - 1;
+			((Expansion)container.member).ordinal = sequence.Units.Count - 1;
 		}
 		while (notTailOfExpansionUnit());
 		if (lookahead.la_expansion == null)
@@ -1373,7 +1373,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 			Action action = new Action();
 			action.Line = obj.BeginLine;
 			action.Column = obj.BeginColumn;
-			sequence.units.Add(action);
+			sequence.Units.Add(action);
 			action.parent = sequence;
 			action.ordinal = 1;
 			choice.Choices.Add(sequence);
@@ -1981,12 +1981,12 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 				{
 				case 114:
 					jj_consume_token(114);
-					ROneOrMore.___003Cclinit_003E();
+					
 					c.member = new ROneOrMore(token, (RegularExpression)c.member);
 					break;
 				case 116:
 					jj_consume_token(116);
-					RZeroOrMore.___003Cclinit_003E();
+					
 					c.member = new RZeroOrMore(token, (RegularExpression)c.member);
 					break;
 				case 104:

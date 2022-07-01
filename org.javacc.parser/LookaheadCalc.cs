@@ -82,7 +82,7 @@ public class LookaheadCalc : JavaCCGlobals
 			return false;
 		}
 		Sequence sequence = (Sequence)P_0;
-		object obj = sequence.units[0];
+		object obj = sequence.Units[0];
 		if (!(obj is Lookahead))
 		{
 			return false;

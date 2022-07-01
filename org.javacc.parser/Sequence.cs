@@ -6,7 +6,7 @@ namespace org.javacc.parser;
 
 public class Sequence : Expansion
 {
-	public List<Expansion> units = new();
+	public List<Expansion> Units = new();
 	
 	public Sequence() { }
 
@@ -15,7 +15,7 @@ public class Sequence : Expansion
 	{
 		Line = t.BeginLine;
 		Column = t.BeginColumn;
-		units.Add(l);
+		Units.Add(l);
 	}
 
 	
@@ -33,7 +33,7 @@ public class Sequence : Expansion
 		s.Add(this);
 		var stringBuffer2 = base.Dump(i, s);
 		//Iterator iterator = units.iterator();
-		foreach (var expansion in this.units) 
+		foreach (var expansion in this.Units) 
 		{
 			stringBuffer2.Append(Expansion.EOL).Append(expansion.Dump(i + 1, s));
 		}

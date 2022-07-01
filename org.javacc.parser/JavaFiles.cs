@@ -78,16 +78,16 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			
 			return 0.0;
 		}
-		BufferedReader bufferedReader = null;
+		TextReader bufferedReader = null;
 		double num;
 		try
 		{
 			try
 			{
-				bufferedReader = new BufferedReader(new FileReader(file));
+				bufferedReader = (new StreamReader(file));
 				num = 0.0;
 				string @this;
-				while ((@this = bufferedReader.readLine()) != null)
+				while ((@this = bufferedReader.ReadLine()) != null)
 				{
 					if (!String.instancehelper_startsWith(@this, text))
 					{
@@ -206,7 +206,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		{
 			
 			File f = new File(Options.getOutputDirectory(), "JavaCharStream.java");
-			OutputFile.___003Cclinit_003E();
+			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[1] { "STATIC" });
 			if (!outputFile.needToWrite)
 			{
@@ -982,14 +982,13 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			File f = new File(Options.getOutputDirectory(), "SimpleCharStream.java");
-			OutputFile.___003Cclinit_003E();
+			var f = new FileInfo(Path.Combine(Options.getOutputDirectory().DirectoryName, "SimpleCharStream.java"));
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[1] { "STATIC" });
 			if (!outputFile.needToWrite)
 			{
 				return;
 			}
-			TextWriter printWriter = outputFile.getPrintWriter();
+			var printWriter = outputFile.getPrintWriter();
 			if (JavaCCGlobals.cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).kind == 60)
 			{
 				for (int i = 1; i < JavaCCGlobals.cu_to_insertion_point_1.Count; i++)
@@ -1587,7 +1586,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		{
 			
 			File f = new File(Options.getOutputDirectory(), "CharStream.java");
-			OutputFile.___003Cclinit_003E();
+			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[1] { "STATIC" });
 			if (!outputFile.needToWrite)
 			{
@@ -1740,8 +1739,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			File f = new File(Options.getOutputDirectory(), "ParseException.java");
-			OutputFile.___003Cclinit_003E();
+			var f = new File(Options.getOutputDirectory(), "ParseException.java");
+			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[1] { "KEEP_LINE_COL" });
 			if (!outputFile.needToWrite)
 			{
@@ -1984,7 +1983,6 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		{
 			
 			File f = new File(Options.getOutputDirectory(), "TokenMgrError.java");
-			OutputFile.___003Cclinit_003E();
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[0]);
 			if (!outputFile.needToWrite)
 			{
@@ -2170,7 +2168,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		{
 			
 			File f = new File(Options.getOutputDirectory(), "Token.java");
-			OutputFile.___003Cclinit_003E();
+			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[2] { "TOKEN_EXTENDS", "KEEP_LINE_COL" });
 			if (!outputFile.needToWrite)
 			{
@@ -2347,7 +2345,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		{
 			
 			File f = new File(Options.getOutputDirectory(), "TokenManager.java");
-			OutputFile.___003Cclinit_003E();
+			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[0]);
 			if (!outputFile.needToWrite)
 			{

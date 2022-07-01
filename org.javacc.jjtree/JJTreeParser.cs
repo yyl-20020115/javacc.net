@@ -33,7 +33,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 
 
-		private LookaheadSuccess()
+		public LookaheadSuccess()
 		{
 		}
 

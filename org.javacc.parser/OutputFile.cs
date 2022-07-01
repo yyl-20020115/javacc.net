@@ -146,7 +146,7 @@ public class OutputFile
 			dos = new DigestOutputStream(new BufferedOutputStream(new FileOutputStream(file)), instance);
 			pw = new TrapClosePrintWriter(this, dos);
 			string str = ((compatibleVersion != null) ? compatibleVersion : "4.1d1");
-			pw.WriteLine(("/* ")+(JavaCCGlobals.getIdString(toolName, file.getName()))+(" Version ")
+			pw.WriteLine(("/* ")+(JavaCCGlobals.getIdString(toolName, file.Name))+(" Version ")
 				+(str)
 				+(" */")
 				.ToString());
@@ -184,7 +184,7 @@ public class OutputFile
 		NoSuchAlgorithmException ex;
 		if (f.Exists)
 		{
-			BufferedReader bufferedReader = new BufferedReader(new FileReader(f));
+			BufferedReader bufferedReader = new BufferedReader(new StreamReader(f));
 			MessageDigest instance;
 			try
 			{
@@ -200,7 +200,7 @@ public class OutputFile
 			string text = null;
 			string text2;
 			CharSequence charSequence = default(CharSequence);
-			while ((text2 = bufferedReader.readLine()) != null)
+			while ((text2 = bufferedReader.ReadLine()) != null)
 			{
 				if (String.instancehelper_startsWith(text2, "/* JavaCC - OriginalChecksum="))
 				{
@@ -236,14 +236,14 @@ public class OutputFile
 			}
 			else
 			{
-				Console.WriteLine(("File \"")+(f.getName())+("\" is being rebuilt.")
+				Console.WriteLine(("File \"")+(f.Names)+("\" is being rebuilt.")
 					.ToString());
 				needToWrite = true;
 			}
 		}
 		else
 		{
-			Console.WriteLine(("File \"")+(f.getName())+("\" does not exist.  Will create one.")
+			Console.WriteLine(("File \"")+(f.Name)+("\" does not exist.  Will create one.")
 				.ToString());
 			needToWrite = true;
 		}
@@ -276,22 +276,22 @@ public class OutputFile
 
 	private void CheckVersion(FileInfo info, string name)
 	{
-		string text = ("/* ")+(JavaCCGlobals.getIdString(toolName, info.getName()))+(" Version ")
+		string text = ("/* ")+(JavaCCGlobals.getIdString(toolName, info.Name))+(" Version ")
 			.ToString();
 		try
 		{
 			try
 			{
-				BufferedReader bufferedReader = new BufferedReader(new FileReader(info));
+				BufferedReader bufferedReader = new BufferedReader(new StreamReader(info));
 				string @this;
-				while ((@this = bufferedReader.readLine()) != null)
+				while ((@this = bufferedReader.ReadLine()) != null)
 				{
 					if (String.instancehelper_startsWith(@this, text))
 					{
 						string text2 = String.instancehelper_replaceAll(String.instancehelper_replaceFirst(text, ".* Version ", ""), " \\*/", "");
 						if ((object)text2 != name)
 						{
-							JavaCCErrors.Warning((info.getName())+(": File is obsolete.  Please rename or delete this file so")+(" that a new one can be generated for you.")
+							JavaCCErrors.Warning((info.Name)+(": File is obsolete.  Please rename or delete this file so")+(" that a new one can be generated for you.")
 								.ToString());
 						}
 						break;
@@ -308,7 +308,7 @@ public class OutputFile
 			goto IL_00b7;
 		}
 
-		JavaCCErrors.Semantic_Error(("Could not open file ")+(info.getName())+(" for writing.")
+		JavaCCErrors.Semantic_Error(("Could not open file ")+(info.Name)+(" for writing.")
 			.ToString());
 
 		throw new System.Exception();
@@ -324,10 +324,10 @@ public class OutputFile
 		{
 			try
 			{
-				BufferedReader bufferedReader = new BufferedReader(new FileReader(P_0));
+				var bufferedReader = new StreamReader(P_0.FullName);
 				string @this;
 				CharSequence s = default(CharSequence);
-				while ((@this = bufferedReader.readLine()) != null)
+				while ((@this = bufferedReader.ReadLine()) != null)
 				{
 					if (String.instancehelper_startsWith(@this, "/* JavaCCOptions:"))
 					{
@@ -335,7 +335,7 @@ public class OutputFile
 						//object obj = (s.___003Cref_003E = optionsString);
 						if (!String.instancehelper_contains(@this, s))
 						{
-							JavaCCErrors.Warning((P_0.getName())+(": Generated using incompatible options. Please rename or delete this file so")+(" that a new one can be generated for you.")
+							JavaCCErrors.Warning((P_0.Name)+(": Generated using incompatible options. Please rename or delete this file so")+(" that a new one can be generated for you.")
 								.ToString());
 						}
 						break;
@@ -352,7 +352,7 @@ public class OutputFile
 			goto IL_0082;
 		}
 
-		JavaCCErrors.Semantic_Error(("Could not open file ")+(P_0.getName())+(" for writing.")
+		JavaCCErrors.Semantic_Error(("Could not open file ")+(P_0.Name)+(" for writing.")
 			.ToString());
 
 		throw new System.Exception();

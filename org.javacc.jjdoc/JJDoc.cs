@@ -389,7 +389,7 @@ public class JJDoc : JJDocGlobals
 	private static void emitExpansionSequence(Sequence seq, Generator generator)
 	{
 		int num = 1;
-		foreach(var expansion in seq.units)
+		foreach(var expansion in seq.Units)
 		{
 			if (!(expansion is Lookahead) && !(expansion is Action))
 			{

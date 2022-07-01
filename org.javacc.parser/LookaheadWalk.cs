@@ -65,9 +65,9 @@ public sealed class LookaheadWalk
 		{
 			vector = v;
 			Sequence sequence = (Sequence)e;
-			for (int k = 0; k < sequence.units.Count; k++)
+			for (int k = 0; k < sequence.Units.Count; k++)
 			{
-				vector = genFirstSet(vector, (Expansion)sequence.units[k]);
+				vector = genFirstSet(vector, (Expansion)sequence.Units[k]);
 				if (vector.Count == 0)
 				{
 					break;
@@ -163,9 +163,9 @@ public sealed class LookaheadWalk
 		{
 			Sequence sequence = (Sequence)e.parent;
 			ArrayList vector2 = v;
-			for (int i = e.ordinal + 1; i < sequence.units.Count; i++)
+			for (int i = e.ordinal + 1; i < sequence.Units.Count; i++)
 			{
-				vector2 = genFirstSet(vector2, (Expansion)sequence.units[i]);
+				vector2 = genFirstSet(vector2, (Expansion)sequence.Units[i]);
 				if (vector2.Count == 0)
 				{
 					return vector2;

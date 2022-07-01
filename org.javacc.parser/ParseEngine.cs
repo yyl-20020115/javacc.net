@@ -83,9 +83,9 @@ public class ParseEngine : JavaCCGlobals
 		if (P_0 is Sequence)
 		{
 			Sequence sequence = (Sequence)P_0;
-			for (int i = 0; i < sequence.units.Count; i++)
+			for (int i = 0; i < sequence.Units.Count; i++)
 			{
-				Expansion[] array = (Expansion[])sequence.units.toArray(new Expansion[sequence.units.Count]);
+				Expansion[] array = (Expansion[])sequence.Units.ToArray();
 				if (array[i] is Lookahead && ((Lookahead)array[i]).isExplicit)
 				{
 					return false;
@@ -157,27 +157,27 @@ public class ParseEngine : JavaCCGlobals
 		else if (P_0 is Sequence)
 		{
 			Sequence sequence = (Sequence)P_0;
-			object obj = sequence.units[0];
+			object obj = sequence.Units[0];
 			if (obj is Lookahead && ((Lookahead)obj).action_tokens.Count != 0)
 			{
 				jj2LA = true;
 			}
-			for (int j = 0; j < sequence.units.Count; j++)
+			for (int j = 0; j < sequence.Units.Count; j++)
 			{
-				Expansion expansion = (Expansion)sequence.units[j];
+				Expansion expansion = (Expansion)sequence.Units[j];
 				if (expansion is NonTerminal && ((NonTerminal)expansion).prod is JavaCodeProduction)
 				{
-					if (j > 0 && sequence.units[j-1] is Lookahead)
+					if (j > 0 && sequence.Units[j-1] is Lookahead)
 					{
-						Lookahead lookahead = (Lookahead)sequence.units[j-1];
+						Lookahead lookahead = (Lookahead)sequence.Units[j-1];
 						genFirstSet(lookahead.la_expansion);
 					}
 				}
 				else
 				{
-					genFirstSet((Expansion)sequence.units[j]);
+					genFirstSet((Expansion)sequence.Units[j]);
 				}
-				if (!Semanticize.emptyExpansionExists((Expansion)sequence.units[j]))
+				if (!Semanticize.emptyExpansionExists((Expansion)sequence.Units[j]))
 				{
 					break;
 				}
@@ -310,16 +310,16 @@ public class ParseEngine : JavaCCGlobals
 			{
 				Sequence sequence = (Sequence)choice.Choices[i];
 				array2[i] = phase1ExpansionGen(sequence);
-				array[i] = (Lookahead)sequence.units[0];
+				array[i] = (Lookahead)sequence.Units[0];
 			}
 			text = buildLookaheadChecker(array, array2);
 		}
 		else if (P_0 is Sequence)
 		{
 			Sequence sequence2 = (Sequence)P_0;
-			for (int j = 1; j < sequence2.units.Count; j++)
+			for (int j = 1; j < sequence2.Units.Count; j++)
 			{
-				text = (text)+(phase1ExpansionGen((Expansion)sequence2.units[j])).ToString();
+				text = (text)+(phase1ExpansionGen((Expansion)sequence2.Units[j])).ToString();
 			}
 		}
 		else if (P_0 is OneOrMore)
@@ -329,7 +329,7 @@ public class ParseEngine : JavaCCGlobals
 			Lookahead lookahead;
 			if (expansion is Sequence)
 			{
-				lookahead = (Lookahead)((Sequence)expansion).units[0];
+				lookahead = (Lookahead)((Sequence)expansion).Units[0];
 			}
 			else
 			{
@@ -361,7 +361,7 @@ public class ParseEngine : JavaCCGlobals
 			Lookahead lookahead;
 			if (expansion is Sequence)
 			{
-				lookahead = (Lookahead)((Sequence)expansion).units[0];
+				lookahead = (Lookahead)((Sequence)expansion).Units[0];
 			}
 			else
 			{
@@ -393,7 +393,7 @@ public class ParseEngine : JavaCCGlobals
 			Lookahead lookahead;
 			if (expansion is Sequence)
 			{
-				lookahead = (Lookahead)((Sequence)expansion).units[0];
+				lookahead = (Lookahead)((Sequence)expansion).Units[0];
 			}
 			else
 			{
@@ -631,7 +631,7 @@ public class ParseEngine : JavaCCGlobals
 					int num9 = num6;
 					int[] array4 = array3;
 					array4[num9] |= 1 << num8;
-					string text2 = (string)JavaCCGlobals.names_of_tokens.get(new int(i));
+					string text2 = (string)JavaCCGlobals.names_of_tokens.get((i));
 					text = ((text2 != null) ? (text)+(text2).ToString() : (text)+(i).ToString());
 					text = (text)+(":\u0001").ToString();
 				}
@@ -729,9 +729,9 @@ public class ParseEngine : JavaCCGlobals
 		{
 			while (true)
 			{
-				if (expansion is Sequence && ((Sequence)expansion).units.Count == 2)
+				if (expansion is Sequence && ((Sequence)expansion).Units.Count == 2)
 				{
-					expansion = (Expansion)((Sequence)expansion).units.elementAt(1);
+					expansion = (Expansion)((Sequence)expansion).Units.elementAt(1);
 					continue;
 				}
 				if (!(expansion is NonTerminal))
@@ -793,9 +793,9 @@ public class ParseEngine : JavaCCGlobals
 		{
 			Sequence sequence = (Sequence)exp;
 			int i = P_0.count;
-			for (int j = 1; j < sequence.units.Count; j++)
+			for (int j = 1; j < sequence.Units.Count; j++)
 			{
-				Expansion expansion = (Expansion)sequence.units[j];
+				Expansion expansion = (Expansion)sequence.Units[j];
 				setupPhase3Builds(new Phase3Data(expansion, i));
 				i -= minimumSize(expansion);
 				if (i <= 0)
@@ -913,7 +913,7 @@ public class ParseEngine : JavaCCGlobals
 			{
 				Hashtable hashtable = JavaCCGlobals.names_of_tokens;
 				;
-				object obj = hashtable.get(new int(regularExpression.ordinal));
+				object obj = hashtable.get((regularExpression.ordinal));
 				if (obj != null)
 				{
 					ostr.WriteLine(("    if (jj_scan_token(")+((string)obj)+(")) ")
@@ -966,7 +966,7 @@ public class ParseEngine : JavaCCGlobals
 			for (int i = 0; i < choice.Choices.Count; i++)
 			{
 				Sequence sequence = (Sequence)choice.Choices[i];
-				Lookahead lookahead = (Lookahead)sequence.units[0];
+				Lookahead lookahead = (Lookahead)sequence.Units[0];
 				if (lookahead.action_tokens.Count != 0)
 				{
 					ostr.WriteLine("    jj_lookingAhead = true;");
@@ -1007,9 +1007,9 @@ public class ParseEngine : JavaCCGlobals
 		{
 			Sequence sequence = (Sequence)exp;
 			int num = P_0.count;
-			for (int i = 1; i < sequence.units.Count; i++)
+			for (int i = 1; i < sequence.Units.Count; i++)
 			{
-				Expansion expansion2 = (Expansion)sequence.units[i];
+				Expansion expansion2 = (Expansion)sequence.Units[i];
 				buildPhase3Routine(new Phase3Data(expansion2, num), true);
 				num -= minimumSize(expansion2);
 				if (num <= 0)
@@ -1125,9 +1125,9 @@ public class ParseEngine : JavaCCGlobals
 		{
 			int num = 0;
 			Sequence sequence = (Sequence)P_0;
-			for (int i = 1; i < sequence.units.Count; i++)
+			for (int i = 1; i < sequence.Units.Count; i++)
 			{
-				Expansion expansion3 = (Expansion)sequence.units[i];
+				Expansion expansion3 = (Expansion)sequence.Units[i];
 				int num3 = minimumSize(expansion3);
 				if (num == int.MaxValue || num3 == int.MaxValue)
 				{

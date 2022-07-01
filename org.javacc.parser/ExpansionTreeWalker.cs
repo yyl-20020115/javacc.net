@@ -18,7 +18,7 @@ public sealed class ExpansionTreeWalker
 		}
 		else if (exp is Sequence s)
 		{
-			foreach (var unit in s.units)
+			foreach (var unit in s.Units)
 			{
 				PreOrderWalk(unit, tree);
 			}
@@ -38,7 +38,7 @@ public sealed class ExpansionTreeWalker
 		else if (exp is Lookahead l)
 		{
 			var la_expansion = l.la_expansion;
-			if (!(la_expansion is Sequence) || (Expansion)((Sequence)la_expansion).units[0] != exp)
+			if (!(la_expansion is Sequence) || (Expansion)((Sequence)la_expansion).Units[0] != exp)
 			{
 				PreOrderWalk(la_expansion, tree);
 			}
@@ -93,7 +93,7 @@ public sealed class ExpansionTreeWalker
 			}
 			else if (exp is Sequence s)
 			{
-				foreach(var unit in s.units)
+				foreach(var unit in s.Units)
 				{
 					postOrderWalk(unit, walker);
 				}
@@ -113,7 +113,7 @@ public sealed class ExpansionTreeWalker
 			else if (exp is Lookahead l)
 			{
 				Expansion la_expansion = ((Lookahead)exp).la_expansion;
-				if (!(la_expansion is Sequence) || (Expansion)((Sequence)la_expansion).units[0] != exp)
+				if (!(la_expansion is Sequence) || (Expansion)((Sequence)la_expansion).Units[0] != exp)
 				{
 					postOrderWalk(la_expansion, walker);
 				}
