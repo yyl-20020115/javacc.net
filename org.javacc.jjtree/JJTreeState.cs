@@ -1,5 +1,4 @@
 using System.IO;
-using System.Text;
 using org.javacc.parser;
 namespace org.javacc.jjtree;
 
@@ -70,7 +69,7 @@ internal sealed class JJTreeState
 		writer.WriteLine("  private int mk;        // current mark");
 		writer.WriteLine("  private boolean node_created;");
 		writer.WriteLine("");
-		writer.WriteLine(new StringBuilder().Append("  public ").Append(NameState()).Append("() {")
+		writer.WriteLine("  public "+(NameState())+("() {")
 			.ToString());
 		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{

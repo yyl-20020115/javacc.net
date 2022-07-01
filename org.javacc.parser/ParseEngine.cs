@@ -432,7 +432,7 @@ public class ParseEngine : JavaCCGlobals
 					}
 					text = new StringBuilder().Append(text).Append(JavaCCGlobals.printTrailingComments(t)).ToString();
 				}
-				text = new StringBuilder().Append(text).Append(" ").ToString();
+				text += " ";
 				t = (Token)tryBlock.ids[i2];
 				JavaCCGlobals.printTokenSetup(t);
 				text = new StringBuilder().Append(text).Append(JavaCCGlobals.printToken(t)).ToString();

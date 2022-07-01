@@ -6,15 +6,15 @@ namespace org.javacc.jjtree;
 
 internal class JJTreeGlobals
 {
-	private static HashSet<string> jjtreeOptions;
+	private static HashSet<string> jjtreeOptions =new();
 
-	internal static ArrayList toolList;
+	internal static List<string> toolList = new();
 
-	public static string parserName;
+	public static string parserName = "";
 
-	public static string packageName;
+	public static string packageName = "";
 
-	public static string nodePackageName;
+	public static string nodePackageName = "";
 
 	public static Token parserImplements;
 
@@ -22,16 +22,13 @@ internal class JJTreeGlobals
 
 	public static Token parserImports;
 
-	internal static Hashtable productions;
+	internal static Dictionary<string, ASTJavacode> productions = new();
 
-	
-	public static bool IsOptionJJTreeOnly(string name)
-	{
-		return jjtreeOptions.Contains((name.ToUpper()));
-	}
 
-	
-	internal static void Initialize()
+    public static bool IsOptionJJTreeOnly(string name) => jjtreeOptions.Contains((name.ToUpper()));
+
+
+    internal static void Initialize()
 	{
 		toolList = new();
 		parserName = null;

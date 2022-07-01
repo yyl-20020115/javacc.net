@@ -1,6 +1,6 @@
 namespace org.javacc.jjtree;
 public class ASTRRepetitionRange : JJTreeNode
 {	
-	public ASTRRepetitionRange(int i) : base(i) { }
-	public ASTRRepetitionRange(JJTreeParser jjtp, int i) : base(jjtp, i) { }
+	public ASTRRepetitionRange(int id) : base(id) { }
+	public ASTRRepetitionRange(JJTreeParser jjtp, int id) : base(jjtp, id) { }
 }

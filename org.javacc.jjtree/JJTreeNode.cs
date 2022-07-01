@@ -7,14 +7,14 @@ public class JJTreeNode : SimpleNode
 	private Token first;
 	private Token last;
 	private bool whitingOut = false;
-	public JJTreeNode(int i) : base(i) { }
+	public JJTreeNode(int id) : base(id) { }
     public virtual int Ordinal { get => this.ordinal; set => this.ordinal = value; }
     public virtual Token LastToken { get => last; set => last = value; }
     public virtual Token FirstToken { get => first; set => first = value; }
 
-    protected internal virtual void Write(Token t, IO io)
+    protected internal virtual void Write(Token _token, IO io)
 	{
-		var token = t.SpecialToken;
+		var token = _token.SpecialToken;
 		if (token != null)
 		{
 			while (token.SpecialToken != null)
@@ -30,40 +30,40 @@ public class JJTreeNode : SimpleNode
 		var enclosingNodeScope = NodeScope.GetEnclosingNodeScope(this);
 		if (enclosingNodeScope == null)
 		{
-			io.Write(TokenUtils.AddUnicodeEscapes(TranslateImage(t)));
+			io.Write(TokenUtils.AddUnicodeEscapes(TranslateImage(_token)));
 			return;
 		}
-		if (string.Equals(t.Image, "jjtThis"))
+		if (string.Equals(_token.Image, "jjtThis"))
 		{
 			io.Write(enclosingNodeScope.NodeVariable);
 			return;
 		}
-		if (string.Equals(t.Image, "jjtree") && string.Equals(t.Next.Image, ".") && string.Equals(t.Next.Next.Image, "currentNode") && string.Equals(t.Next.Next.Next.Image, "(") && string.Equals(t.Next.Next.Next.Next.Image, ")"))
+		if (string.Equals(_token.Image, "jjtree") && string.Equals(_token.Next.Image, ".") && string.Equals(_token.Next.Next.Image, "currentNode") && string.Equals(_token.Next.Next.Next.Image, "(") && string.Equals(_token.Next.Next.Next.Next.Image, ")"))
 		{
 			whitingOut = true;
 		}
 		if (whitingOut)
 		{
-			if (string.Equals(t.Image, "jjtree"))
+			if (string.Equals(_token.Image, "jjtree"))
 			{
 				io.Write(enclosingNodeScope.NodeVariable);
 				io.Write(" ");
 				return;
 			}
-			if (string.Equals(t.Image, ")"))
+			if (string.Equals(_token.Image, ")"))
 			{
 				io.Write(" ");
 				whitingOut = false;
 				return;
 			}
-			for (int i = 0; i < (t.Image.Length); i++)
+			for (int i = 0; i < (_token.Image.Length); i++)
 			{
 				io.Write(" ");
 			}
 		}
 		else
 		{
-			io.Write(TokenUtils.AddUnicodeEscapes(TranslateImage(t)));
+			io.Write(TokenUtils.AddUnicodeEscapes(TranslateImage(_token)));
 		}
 	}
 
@@ -100,7 +100,7 @@ public class JJTreeNode : SimpleNode
 
     internal virtual string TranslateImage(Token token) => token.Image;
 
-    internal virtual string getIndentation(JJTreeNode node, int idx)
+    internal virtual string GetIndentation(JJTreeNode node, int idx)
 	{
 		var text = "";
 		for (int i = idx + 1; i < node.FirstToken.BeginColumn; i++)
@@ -111,8 +111,8 @@ public class JJTreeNode : SimpleNode
 	}
 
 
-	public JJTreeNode(JJTreeParser jjtp, int i)
-		: this(i) { }
+	public JJTreeNode(JJTreeParser jjtp, int id)
+		: this(id) { }
 
 
     public static Node jjtCreate(int i) => new JJTreeNode(i);
@@ -125,12 +125,12 @@ public class JJTreeNode : SimpleNode
 
     public virtual int Ordinal1 => ordinal;
 
-    internal virtual string WhiteOut(Token P_0)
+    internal virtual string WhiteOut(Token token)
 	{
-		var stringBuilder = new StringBuilder(P_0.Image.Length);
-		for (int i = 0; i < P_0.Image.Length; i++)
+		var stringBuilder = new StringBuilder(token.Image.Length);
+		for (int i = 0; i < token.Image.Length; i++)
 		{
-			int num = P_0.Image[i];
+			int num = token.Image[i];
 			if (num != 9 && num != 10 && num != 13 && num != 12)
 			{
 				stringBuilder.Append(' ');
@@ -144,21 +144,21 @@ public class JJTreeNode : SimpleNode
 	}
 
 
-	internal static void OpenJJTreeComment(IO P_0, string P_1)
+	internal static void OpenJJTreeComment(IO io, string comment)
 	{
-		if (P_1 != null)
+		if (comment != null)
 		{
-			P_0.Write(("/*@bgen(jjtree) ")+(P_1)+(" */"));
+			io.Write(("/*@bgen(jjtree) ")+(comment)+(" */"));
 		}
 		else
 		{
-			P_0.Write("/*@bgen(jjtree)*/");
+			io.Write("/*@bgen(jjtree)*/");
 		}
 	}
 
 
-    internal static void CloseJJTreeComment(IO P_0) => P_0.Write("/*@egen*/");
+    internal static void CloseJJTreeComment(IO io) => io.Write("/*@egen*/");
 
 
-    internal virtual string GetIndentation(JJTreeNode P_0) => getIndentation(P_0, 0);
+    internal virtual string GetIndentation(JJTreeNode node) => GetIndentation(node, 0);
 }

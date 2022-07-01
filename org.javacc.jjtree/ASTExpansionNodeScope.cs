@@ -1,18 +1,18 @@
 namespace org.javacc.jjtree;
 public class ASTExpansionNodeScope : JJTreeNode
 {
-	internal NodeScope node_scope;
-	internal JJTreeNode expansion_unit;
+	internal NodeScope nodeScope;
+	internal JJTreeNode expUnit;
 
 	internal ASTExpansionNodeScope(int id) : base(id) { }
 
 	public override void Write(IO io)
 	{
-		string indentation = GetIndentation(expansion_unit);
-		JJTreeNode.OpenJJTreeComment(io, node_scope.getNodeDescriptor().Descriptor);
+		string indentation = GetIndentation(expUnit);
+		JJTreeNode.OpenJJTreeComment(io, nodeScope.NodeDescriptor.Descriptor);
 		io.WriteLine();
-		node_scope.insertOpenNodeAction(io, indentation);
-		node_scope.tryExpansionUnit(io, indentation, expansion_unit);
+		nodeScope.insertOpenNodeAction(io, indentation);
+		nodeScope.tryExpansionUnit(io, indentation, expUnit);
 		((ASTNodeDescriptor)jjtGetChild(1)).Write(io);
 	}
 }

@@ -1,140 +1,124 @@
-using System.Collections;
 using System.Collections.Generic;
-
 namespace org.javacc.jjtree;
-
 
 public class JJTJJTreeParserState
 {
-	private List<Node> nodes;
+	private List<Node> Nodes = new();
 
-	private List<int> marks;
+	private List<int> Marks = new();
 
-	private int sp;
+	private int SP = 0;
 
-	private int mk;
+	private int MK = 0;
 
-	private bool node_created;
+	private bool _NodeCreated = false;
 
 	
-	public virtual Node popNode()
+	public virtual Node PopNode()
 	{
-		int num = sp - 1;
-		sp = num;
-		if (num < mk)
+		int num = SP - 1;
+		SP = num;
+		if (num < MK)
 		{
-			mk = marks[marks.Count - 1];
+			MK = Marks[Marks.Count - 1];
 			
-			marks.RemoveAt(marks.Count - 1);
+			Marks.RemoveAt(Marks.Count - 1);
 		}
-		var n = nodes[nodes.Count - 1];
-		nodes.RemoveAt(nodes.Count - 1);
+		var n = Nodes[Nodes.Count - 1];
+		Nodes.RemoveAt(Nodes.Count - 1);
 		return n;
 	}
 
 	
-	public virtual void pushNode(Node n)
+	public virtual void PushNode(Node n)
 	{
-		nodes.Add(n);
-		sp++;
+		Nodes.Add(n);
+		SP++;
 	}
 
-	public virtual int nodeArity()
+    public virtual int NodeArity => SP - MK;
+
+
+    public JJTJJTreeParserState()
 	{
-		return sp - mk;
 	}
 
-	
-	public JJTJJTreeParserState()
+    public virtual bool NodeCreated => _NodeCreated;
+
+
+    public virtual void Reset()
 	{
-		nodes = new ();
-		marks = new ();
-		sp = 0;
-		mk = 0;
+		Nodes.Clear();
+		Marks.Clear();
+		SP = 0;
+		MK = 0;
 	}
 
-	public virtual bool nodeCreated()
-	{
-		return node_created;
-	}
 
-	
-	public virtual void reset()
-	{
-		nodes.Clear();
-		marks.Clear();
-		sp = 0;
-		mk = 0;
-	}
+    public virtual Node RootNode => Nodes[0];
 
-	
-	public virtual Node rootNode()
-	{
-		return (Node)nodes.get(0);
-	}
 
-	
-	public virtual Node peekNode()
-	{
-		return (Node)nodes.get(nodes.Count - 1);
-	}
+    public virtual Node PeekNode => Nodes[(Nodes.Count - 1)];
 
-	
-	public virtual void clearNodeScope(Node n)
+
+    public virtual void ClearNodeScope(Node n)
 	{
-		while (sp > mk)
+		while (SP > MK)
 		{
-			popNode();
+			PopNode();
 		}
-		mk = ((int)marks.remove(marks.Count - 1)).intValue();
+		MK = Marks[Marks.Count - 1];
+		Marks.RemoveAt(Marks.Count - 1);
 	}
 
 	
-	public virtual void openNodeScope(Node n)
+	public virtual void OpenNodeScope(Node n)
 	{
-		List<int> list = marks;
-		;
-		list.Add((mk));
-		mk = sp;
+		var list = Marks;
+		list.Add((MK));
+		MK = SP;
 		n.jjtOpen();
 	}
 
 	
-	public virtual void closeNodeScope(Node n, int i)
+	public virtual void CloseNodeScope(Node n, int i)
 	{
-		mk = ((int)marks.remove(marks.Count - 1)).intValue();
+		MK = Marks[Marks.Count - 1];
+		Marks.RemoveAt(Marks.Count - 1);
 		while (i-- > 0)
 		{
-			Node node = popNode();
+			Node node = PopNode();
 			node.jjtSetParent(n);
 			n.jjtAddChild(node, i);
 		}
 		n.jjtClose();
-		pushNode(n);
-		node_created = true;
+		PushNode(n);
+		_NodeCreated = true;
 	}
 
 	
-	public virtual void closeNodeScope(Node n, bool b)
+	public virtual void CloseNodeScope(Node n, bool b)
 	{
 		if (b)
 		{
-			int i = nodeArity();
-			mk = ((int)marks.remove(marks.Count - 1)).intValue();
+			int i = NodeArity;
+			MK = Marks[Marks.Count - 1];
+			Marks.RemoveAt(Marks.Count - 1);
 			while (i-- > 0)
 			{
-				Node node = popNode();
+				Node node = PopNode();
 				node.jjtSetParent(n);
 				n.jjtAddChild(node, i);
 			}
 			n.jjtClose();
-			pushNode(n);
-			node_created = true;
+			PushNode(n);
+			_NodeCreated = true;
 		}
 		else
 		{
-			mk = ((int)marks.remove(marks.Count - 1)).intValue();
-			node_created = false;
+			MK = Marks[Marks.Count - 1];
+			Marks.RemoveAt(Marks.Count - 1);
+			_NodeCreated = false;
 		}
 	}
 }

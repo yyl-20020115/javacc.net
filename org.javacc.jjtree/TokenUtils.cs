@@ -1,6 +1,6 @@
-using System.Text;
 using javacc.net;
 using org.javacc.parser;
+using System.Text;
 namespace org.javacc.jjtree;
 
 public sealed class TokenUtils
@@ -14,8 +14,8 @@ public sealed class TokenUtils
 			int num = P_0[i];
 			if ((num < 32 || num > 126) && num != 9 && num != 10 && num != 13 && num != 12)
 			{
-				string @this = new StringBuilder().Append("0000").Append(Utils.ToString(num, 16)).ToString();
-				stringBuilder.Append(new StringBuilder().Append("\\u").Append(@this.Substring(@this.Length - 4, @this.Length)).ToString());
+				string @this = ("0000")+(Utils.ToString(num, 16));
+				stringBuilder.Append(("\\u")+(@this.Substring(@this.Length - 4, @this.Length)));
 			}
 			else
 			{
@@ -157,16 +157,16 @@ public sealed class TokenUtils
 						}
 					}
 				}
-				JavaCCErrors.Parse_Error(token, new StringBuilder().Append("Encountered non-hex character '").Append((char)num2).Append("' at position ")
-					.Append(num)
-					.Append(" of string - Unicode escape must have 4 hex digits after it.")
-					.ToString());
+				JavaCCErrors.Parse_Error(token, ("Encountered non-hex character '")+((char)num2)+("' at position ")
+					+(num)
+					+(" of string - Unicode escape must have 4 hex digits after it.")
+					);
 				return text;
 			}
-			JavaCCErrors.Parse_Error(token, new StringBuilder().Append("Illegal escape sequence '\\").Append((char)num2).Append("' at position ")
-				.Append(num)
-				.Append(" of string.")
-				.ToString());
+			JavaCCErrors.Parse_Error(token, ("Illegal escape sequence '\\")+((char)num2)+("' at position ")
+				+(num)
+				+(" of string.")
+				);
 			return text;
 		}
 		return text;

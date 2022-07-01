@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using System.Text;
 using javacc.net;
 namespace org.javacc.jjtree;
@@ -59,8 +58,8 @@ public class TokenMgrError : System.Exception
 			int num;
 			if ((num = str[i]) < 32 || num > 126)
 			{
-				string @this = new StringBuilder().Append("0000").Append(Utils.ToString(num, 16)).ToString();
-				stringBuilder.Append(new StringBuilder().Append("\\u").Append((@this.Substring(@this.Length - 4, @this.Length))).ToString());
+				string @this = ("0000")+(Utils.ToString(num, 16));
+				stringBuilder.Append(("\\u")+((@this.Substring(@this.Length - 4, @this.Length))));
 			}
 			else
 			{
@@ -71,26 +70,21 @@ public class TokenMgrError : System.Exception
 	}
 
 
-	protected internal static string LexicalError(bool b, int i1, int i2, int i3, string str, char ch)
-	{
-		string result = new StringBuilder().Append("Lexical error at line ").Append(i2).Append(", column ")
-			.Append(i3)
-			.Append(".  Encountered: ")
-			.Append((!b) ? new StringBuilder().Append("\"").Append(AddEscapes((ch.ToString()))).Append("\"")
-				.Append(" (")
-				.Append((int)ch)
-				.Append("), ")
-				.ToString() : "<EOF> ")
-			.Append("after : \"")
-			.Append(AddEscapes(str))
-			.Append("\"")
-			.ToString();
-
-		return result;
-	}
+    protected internal static string LexicalError(bool b, int i1, int i2, int i3, string str, char ch) => "Lexical error at line " + (i2) + (", column ")
+            + (i3)
+            + (".  Encountered: ")
+            + ((!b) ? ("\"") + (AddEscapes((ch.ToString()))) + ("\"")
+                + (" (")
+                + ((int)ch)
+                + ("), ")
+                : "<EOF> ")
+            + ("after : \"")
+            + (AddEscapes(str))
+            + ("\"")
+            ;
 
 
-	public override string Message => base.Message;
+    public override string Message => base.Message;
 
 	public TokenMgrError() { }
 }

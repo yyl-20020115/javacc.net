@@ -1,6 +1,6 @@
 namespace org.javacc.jjtree;
 public class ASTBNFSequence : JJTreeNode
 {	
-	public ASTBNFSequence(int i) : base(i) { }
-	public ASTBNFSequence(JJTreeParser jjtp, int i) : base(jjtp, i) { }
+	public ASTBNFSequence(int id) : base(id) { }
+	public ASTBNFSequence(JJTreeParser jjtp, int id) : base(jjtp, id) { }
 }

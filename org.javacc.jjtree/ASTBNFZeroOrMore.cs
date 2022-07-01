@@ -1,6 +1,6 @@
 namespace org.javacc.jjtree;
 public class ASTBNFZeroOrMore : JJTreeNode
 {	
-	public ASTBNFZeroOrMore(int i) : base(i) { }	
-	public ASTBNFZeroOrMore(JJTreeParser jjtp, int i) : base(jjtp, i) { }
+	public ASTBNFZeroOrMore(int id) : base(id) { }	
+	public ASTBNFZeroOrMore(JJTreeParser jjtp, int id) : base(jjtp, id) { }
 }

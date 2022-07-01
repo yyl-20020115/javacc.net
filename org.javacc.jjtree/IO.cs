@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Text;
 using org.javacc.parser;
 namespace org.javacc.jjtree;
 
@@ -12,41 +11,30 @@ public class IO
 	private TextWriter writer;
 	private TextWriter message;
 	private TextWriter error;
-
-	internal virtual void Write(string text)
-	{
-		writer.Write(text);
-	}
-
-	internal virtual void WriteLine()
-	{
-		writer.WriteLine();
-	}
-
-	internal virtual void WriteLine(string text) => writer.WriteLine(text);
-
-
-	private string CreateOutputFileName(string P_0)
+    internal virtual void Write(string text) => writer.Write(text);
+    internal virtual void WriteLine() => writer.WriteLine();
+    internal virtual void WriteLine(string text) => writer.WriteLine(text);
+	private string CreateOutputFileName(string _text)
 	{
 		string text = JJTreeOptions.OutputFile;
 		if (string.Equals(text, ""))
 		{
-			int num = (P_0.LastIndexOf(Path.DirectorySeparatorChar));
+			int num = (_text.LastIndexOf(Path.DirectorySeparatorChar));
 			if (num >= 0)
 			{
-				P_0 = P_0.Substring(num + 1);
+				_text = _text.Substring(num + 1);
 			}
-			int num2 = (P_0.LastIndexOf((char)46));
+			int num2 = (_text.LastIndexOf((char)46));
 			if (num2 == -1)
 			{
-				text = new StringBuilder().Append(P_0).Append(".jj").ToString();
+				text += ".jj";
 			}
 			else
 			{
-				string @this = P_0.Substring(num2);
+				string @this = _text.Substring(num2);
 				text = (!string.Equals(@this, ".jj"))
-					? (P_0.Substring(0, num2) + (".jj"))
-					: P_0 + ".jj";
+					? (_text.Substring(0, num2) + (".jj"))
+					: _text + ".jj";
 			}
 		}
 		return text;

@@ -1,29 +1,28 @@
-using System.Text;
 namespace org.javacc.jjtree;
 public class ASTBNFDeclaration : JJTreeNode
 {
-	internal NodeScope node_scope;
-	internal ASTBNFDeclaration(int P_0)
-		: base(P_0) { }
+	internal NodeScope nodeScope;
+	internal ASTBNFDeclaration(int id)
+		: base(id) { }
 	public override void Write(IO io)
 	{
-		if (!node_scope.IsVoid)
+		if (!nodeScope.IsVoid)
 		{
 			string text = "";
 			if (TokenUtils.HasTokens(this))
 			{
 				for (int i = 1; i < FirstToken.BeginColumn; i++)
 				{
-					text = new StringBuilder().Append(text).Append(" ").ToString();
+					text += " ";
 				}
 			}
 			else
 			{
 				text = "  ";
 			}
-			JJTreeNode.OpenJJTreeComment(io, node_scope.getNodeDescriptorText());
+			JJTreeNode.OpenJJTreeComment(io, nodeScope.NodeDescriptorText);
 			io.WriteLine();
-			node_scope.insertOpenNodeCode(io, text);
+			nodeScope.insertOpenNodeCode(io, text);
 			JJTreeNode.CloseJJTreeComment(io);
 		}
 		base.Write(io);

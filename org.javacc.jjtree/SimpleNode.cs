@@ -1,16 +1,15 @@
 using System;
-using System.Text;
 namespace org.javacc.jjtree;
 
 public class SimpleNode: Node
 {
 	protected internal Node parent;
-	protected internal Node[] children;
-	protected internal int id;
-	protected internal object value;
+	protected internal Node[] children=Array.Empty<Node>();
+	protected internal int id = 0;
+	protected internal object value =new();
 	protected internal JJTreeParser parser;
 
-	public SimpleNode(int i) { id = i; }
+	public SimpleNode(int id) { this.id = id; }
 
     public override string ToString() => JJTreeParserTreeConstants.jjtNodeName[id];
 
@@ -44,17 +43,11 @@ public class SimpleNode: Node
 	{
 	}
 
-	public virtual void jjtSetParent(Node n)
-	{
-		parent = n;
-	}
+    public virtual void jjtSetParent(Node n) => parent = n;
 
-	public virtual Node jjtGetParent()
-	{
-		return parent;
-	}
+    public virtual Node jjtGetParent() => parent;
 
-	public virtual void jjtAddChild(Node n, int i)
+    public virtual void jjtAddChild(Node n, int i)
 	{
 		if (children == null)
 		{
@@ -69,23 +62,11 @@ public class SimpleNode: Node
 		children[i] = n;
 	}
 
-	public virtual Node jjtGetChild(int i)
-	{
-		return children[i];
-	}
+    public virtual Node jjtGetChild(int i) => children[i];
 
-	public virtual int jjtGetNumChildren()
-	{
-		return (int)((children != null) ? children.LongLength : 0);
-	}
+    public virtual int jjtGetNumChildren() => ((children != null) ? children.Length : 0);
 
-	public virtual void jjtSetValue(object obj)
-	{
-		value = obj;
-	}
+    public virtual void jjtSetValue(object obj) => value = obj;
 
-	public virtual object jjtGetValue()
-	{
-		return value;
-	}
+    public virtual object jjtGetValue() => value;
 }

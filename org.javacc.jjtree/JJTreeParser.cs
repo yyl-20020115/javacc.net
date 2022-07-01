@@ -133,7 +133,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTGrammar aSTGrammar = new ASTGrammar(0);
 		int num = 1;
-		jjtree.openNodeScope(aSTGrammar);
+		jjtree.OpenNodeScope(aSTGrammar);
 		jjtreeOpenNodeScope(aSTGrammar);
 		ASTCompilationUnit aSTCompilationUnit;
 		int num2;
@@ -147,7 +147,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				javacc_options();
 				aSTCompilationUnit = new ASTCompilationUnit(1);
 				num2 = 1;
-				jjtree.openNodeScope(aSTCompilationUnit);
+				jjtree.OpenNodeScope(aSTCompilationUnit);
 				jjtreeOpenNodeScope(aSTCompilationUnit);
 				try
 				{
@@ -163,7 +163,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						jj_consume_token(85);
 						identifier();
 						jj_consume_token(86);
-						jjtree.closeNodeScope(aSTCompilationUnit, b: true);
+						jjtree.CloseNodeScope(aSTCompilationUnit, b: true);
 						num2 = 0;
 						jjtreeCloseNodeScope(aSTCompilationUnit);
 						if (string.Equals(JJTreeOptions.NodePackage, ""))
@@ -188,7 +188,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				if (num2 != 0)
 				{
-					jjtree.closeNodeScope(aSTCompilationUnit, b: true);
+					jjtree.CloseNodeScope(aSTCompilationUnit, b: true);
 					jjtreeCloseNodeScope(aSTCompilationUnit);
 				}
 				goto IL_022d;
@@ -205,7 +205,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTGrammar, b: true);
+				jjtree.CloseNodeScope(aSTGrammar, b: true);
 				jjtreeCloseNodeScope(aSTGrammar);
 			}
 			throw;
@@ -223,12 +223,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					System.Exception ex5 = ex4;
 					if (num2 != 0)
 					{
-						jjtree.clearNodeScope(aSTCompilationUnit);
+						jjtree.ClearNodeScope(aSTCompilationUnit);
 						num2 = 0;
 					}
 					else
 					{
-						jjtree.popNode();
+						jjtree.PopNode();
 					}
 					if (ex5 is System.Exception)
 					{
@@ -256,7 +256,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTGrammar, b: true);
+				jjtree.CloseNodeScope(aSTGrammar, b: true);
 				jjtreeCloseNodeScope(aSTGrammar);
 			}
 			throw;
@@ -278,7 +278,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			{
 				aSTProductions = new ASTProductions(2);
 				num3 = 1;
-				jjtree.openNodeScope(aSTProductions);
+				jjtree.OpenNodeScope(aSTProductions);
 				jjtreeOpenNodeScope(aSTProductions);
 				try
 				{
@@ -306,7 +306,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				if (num3 != 0)
 				{
-					jjtree.closeNodeScope(aSTProductions, b: true);
+					jjtree.CloseNodeScope(aSTProductions, b: true);
 					jjtreeCloseNodeScope(aSTProductions);
 				}
 				goto IL_04d6;
@@ -323,7 +323,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTGrammar, b: true);
+				jjtree.CloseNodeScope(aSTGrammar, b: true);
 				jjtreeCloseNodeScope(aSTGrammar);
 			}
 			throw;
@@ -341,12 +341,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					System.Exception ex13 = ex12;
 					if (num3 != 0)
 					{
-						jjtree.clearNodeScope(aSTProductions);
+						jjtree.ClearNodeScope(aSTProductions);
 						num3 = 0;
 					}
 					else
 					{
-						jjtree.popNode();
+						jjtree.PopNode();
 					}
 					if (ex13 is System.Exception)
 					{
@@ -374,7 +374,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTGrammar, b: true);
+				jjtree.CloseNodeScope(aSTGrammar, b: true);
 				jjtreeCloseNodeScope(aSTGrammar);
 			}
 			throw;
@@ -403,14 +403,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTGrammar, b: true);
+				jjtree.CloseNodeScope(aSTGrammar, b: true);
 				jjtreeCloseNodeScope(aSTGrammar);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTGrammar, b: true);
+			jjtree.CloseNodeScope(aSTGrammar, b: true);
 			jjtreeCloseNodeScope(aSTGrammar);
 		}
 		return;
@@ -430,7 +430,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				System.Exception ex18 = ex17;
 				if (num2 != 0)
 				{
-					jjtree.closeNodeScope(aSTCompilationUnit, b: true);
+					jjtree.CloseNodeScope(aSTCompilationUnit, b: true);
 					jjtreeCloseNodeScope(aSTCompilationUnit);
 				}
 				throw new System.Exception(ex18);
@@ -445,7 +445,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTGrammar, b: true);
+				jjtree.CloseNodeScope(aSTGrammar, b: true);
 				jjtreeCloseNodeScope(aSTGrammar);
 			}
 			throw;
@@ -462,12 +462,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex20 = ex19;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTGrammar);
+				jjtree.ClearNodeScope(aSTGrammar);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex20 is RuntimeException)
 			{
@@ -484,7 +484,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTGrammar, b: true);
+				jjtree.CloseNodeScope(aSTGrammar, b: true);
 				jjtreeCloseNodeScope(aSTGrammar);
 			}
 			throw;
@@ -505,7 +505,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				System.Exception ex22 = ex21;
 				if (num3 != 0)
 				{
-					jjtree.closeNodeScope(aSTProductions, b: true);
+					jjtree.CloseNodeScope(aSTProductions, b: true);
 					jjtreeCloseNodeScope(aSTProductions);
 				}
 				throw new System.Exception(ex22);
@@ -520,7 +520,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTGrammar, b: true);
+				jjtree.CloseNodeScope(aSTGrammar, b: true);
 				jjtreeCloseNodeScope(aSTGrammar);
 			}
 			throw;
@@ -541,7 +541,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				continue;
 			}
 			Token obj = token;
-			Token nextToken = token_source.getNextToken();
+			Token nextToken = token_source.GetNextToken();
 			Token token2 = obj;
 			token2.Next = nextToken;
 			token = nextToken;
@@ -564,7 +564,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		}
 		ASTOptions aSTOptions = new ASTOptions(4);
 		int num = 1;
-		jjtree.openNodeScope(aSTOptions);
+		jjtree.OpenNodeScope(aSTOptions);
 		jjtreeOpenNodeScope(aSTOptions);
 		System.Exception ex;
 		try
@@ -596,14 +596,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTOptions, b: true);
+				jjtree.CloseNodeScope(aSTOptions, b: true);
 				jjtreeCloseNodeScope(aSTOptions);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTOptions, b: true);
+			jjtree.CloseNodeScope(aSTOptions, b: true);
 			jjtreeCloseNodeScope(aSTOptions);
 		}
 		return;
@@ -614,12 +614,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex3 = ex2;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTOptions);
+				jjtree.ClearNodeScope(aSTOptions);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex3 is RuntimeException)
 			{
@@ -636,7 +636,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTOptions, b: true);
+				jjtree.CloseNodeScope(aSTOptions, b: true);
 				jjtreeCloseNodeScope(aSTOptions);
 			}
 			throw;
@@ -654,7 +654,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		else
 		{
 			Token obj = this.token;
-			Token nextToken = token_source.getNextToken();
+			Token nextToken = token_source.GetNextToken();
 			Token token2 = obj;
 			token2.Next = nextToken;
 			this.token = nextToken;
@@ -778,7 +778,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		if (obj == null)
 		{
 			Token obj2 = this.token;
-			next = token_source.getNextToken();
+			next = token_source.GetNextToken();
 			Token token = obj2;
 			Token obj3 = next;
 			token.Next = next;
@@ -798,7 +798,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTOptionBinding aSTOptionBinding = new ASTOptionBinding(5);
 		int num = 1;
-		jjtree.openNodeScope(aSTOptionBinding);
+		jjtree.OpenNodeScope(aSTOptionBinding);
 		jjtreeOpenNodeScope(aSTOptionBinding);
 		System.Exception ex;
 		try
@@ -875,14 +875,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTOptionBinding, b: true);
+				jjtree.CloseNodeScope(aSTOptionBinding, b: true);
 				jjtreeCloseNodeScope(aSTOptionBinding);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTOptionBinding, b: true);
+			jjtree.CloseNodeScope(aSTOptionBinding, b: true);
 			jjtreeCloseNodeScope(aSTOptionBinding);
 		}
 		return;
@@ -893,12 +893,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex3 = ex2;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTOptionBinding);
+				jjtree.ClearNodeScope(aSTOptionBinding);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex3 is RuntimeException)
 			{
@@ -915,7 +915,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTOptionBinding, b: true);
+				jjtree.CloseNodeScope(aSTOptionBinding, b: true);
 				jjtreeCloseNodeScope(aSTOptionBinding);
 			}
 			throw;
@@ -956,7 +956,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTJavacode aSTJavacode = new ASTJavacode(6);
 		int num = 1;
-		jjtree.openNodeScope(aSTJavacode);
+		jjtree.OpenNodeScope(aSTJavacode);
 		jjtreeOpenNodeScope(aSTJavacode);
 		ASTNodeDescriptor aSTNodeDescriptor = null;
 		ASTJavacode aSTJavacode2;
@@ -979,12 +979,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				{
 					jj_consume_token(67);
 					string obj = Name();
-					aSTJavacode2.throws_list.Add(obj);
+					aSTJavacode2.ThrowsList.Add(obj);
 					while (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 92)
 					{
 						jj_consume_token(92);
 						obj = Name();
-						aSTJavacode2.throws_list.Add(obj);
+						aSTJavacode2.ThrowsList.Add(obj);
 					}
 					jj_la1[5] = jj_gen;
 				}
@@ -1001,11 +1001,11 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					jj_la1[7] = jj_gen;
 				}
 				Token stmBeginLoc = jj_consume_token(87);
-				aSTJavacode2.name = token.Image;
+				aSTJavacode2.Name = token.Image;
 				aSTJavacode2.stmBeginLoc = stmBeginLoc;
 				aSTJavacodeBody = new ASTJavacodeBody(7);
 				num2 = 1;
-				jjtree.openNodeScope(aSTJavacodeBody);
+				jjtree.OpenNodeScope(aSTJavacodeBody);
 				jjtreeOpenNodeScope(aSTJavacodeBody);
 				try
 				{
@@ -1017,10 +1017,10 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 							{
 							default:
 								jj_la1[8] = jj_gen;
-								jjtree.closeNodeScope(aSTJavacodeBody, b: true);
+								jjtree.CloseNodeScope(aSTJavacodeBody, b: true);
 								num2 = 0;
 								jjtreeCloseNodeScope(aSTJavacodeBody);
-								aSTJavacodeBody.node_scope = new NodeScope(aSTJavacode2, aSTNodeDescriptor);
+								aSTJavacodeBody.nodeScope = new NodeScope(aSTJavacode2, aSTNodeDescriptor);
 								goto end_IL_015f;
 							case 1:
 							case 2:
@@ -1104,7 +1104,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				if (num2 != 0)
 				{
-					jjtree.closeNodeScope(aSTJavacodeBody, b: true);
+					jjtree.CloseNodeScope(aSTJavacodeBody, b: true);
 					jjtreeCloseNodeScope(aSTJavacodeBody);
 				}
 				goto IL_054d;
@@ -1121,7 +1121,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTJavacode, b: true);
+				jjtree.CloseNodeScope(aSTJavacode, b: true);
 				jjtreeCloseNodeScope(aSTJavacode);
 			}
 			throw;
@@ -1139,12 +1139,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					System.Exception ex5 = ex4;
 					if (num2 != 0)
 					{
-						jjtree.clearNodeScope(aSTJavacodeBody);
+						jjtree.ClearNodeScope(aSTJavacodeBody);
 						num2 = 0;
 					}
 					else
 					{
-						jjtree.popNode();
+						jjtree.PopNode();
 					}
 					if (ex5 is RuntimeException)
 					{
@@ -1172,7 +1172,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTJavacode, b: true);
+				jjtree.CloseNodeScope(aSTJavacode, b: true);
 				jjtreeCloseNodeScope(aSTJavacode);
 			}
 			throw;
@@ -1189,10 +1189,10 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			try
 			{
 				jj_consume_token(88);
-				jjtree.closeNodeScope(aSTJavacode, b: true);
+				jjtree.CloseNodeScope(aSTJavacode, b: true);
 				num = 0;
 				jjtreeCloseNodeScope(aSTJavacode);
-				JJTreeGlobals.productions.Add(aSTJavacode2.name, aSTJavacode2);
+				JJTreeGlobals.productions.Add(aSTJavacode2.Name, aSTJavacode2);
 			}
 			catch (System.Exception x6)
 			{
@@ -1205,14 +1205,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTJavacode, b: true);
+				jjtree.CloseNodeScope(aSTJavacode, b: true);
 				jjtreeCloseNodeScope(aSTJavacode);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTJavacode, b: true);
+			jjtree.CloseNodeScope(aSTJavacode, b: true);
 			jjtreeCloseNodeScope(aSTJavacode);
 		}
 		return;
@@ -1229,7 +1229,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				System.Exception ex11 = ex10;
 				if (num2 != 0)
 				{
-					jjtree.closeNodeScope(aSTJavacodeBody, b: true);
+					jjtree.CloseNodeScope(aSTJavacodeBody, b: true);
 					jjtreeCloseNodeScope(aSTJavacodeBody);
 				}
 				throw new System.Exception(ex11);
@@ -1244,7 +1244,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTJavacode, b: true);
+				jjtree.CloseNodeScope(aSTJavacode, b: true);
 				jjtreeCloseNodeScope(aSTJavacode);
 			}
 			throw;
@@ -1258,12 +1258,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex13 = ex12;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTJavacode);
+				jjtree.ClearNodeScope(aSTJavacode);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex13 is RuntimeException)
 			{
@@ -1280,7 +1280,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTJavacode, b: true);
+				jjtree.CloseNodeScope(aSTJavacode, b: true);
 				jjtreeCloseNodeScope(aSTJavacode);
 			}
 			throw;
@@ -1298,7 +1298,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTRE aSTRE = new ASTRE(11);
 		int num = 1;
-		jjtree.openNodeScope(aSTRE);
+		jjtree.OpenNodeScope(aSTRE);
 		jjtreeOpenNodeScope(aSTRE);
 		System.Exception ex;
 		try
@@ -1370,14 +1370,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTRE, b: true);
+				jjtree.CloseNodeScope(aSTRE, b: true);
 				jjtreeCloseNodeScope(aSTRE);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTRE, b: true);
+			jjtree.CloseNodeScope(aSTRE, b: true);
 			jjtreeCloseNodeScope(aSTRE);
 		}
 		return;
@@ -1388,12 +1388,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex3 = ex2;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTRE);
+				jjtree.ClearNodeScope(aSTRE);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex3 is RuntimeException)
 			{
@@ -1410,7 +1410,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTRE, b: true);
+				jjtree.CloseNodeScope(aSTRE, b: true);
 				jjtreeCloseNodeScope(aSTRE);
 			}
 			throw;
@@ -1422,7 +1422,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTTokenDecls aSTTokenDecls = new ASTTokenDecls(12);
 		int num = 1;
-		jjtree.openNodeScope(aSTTokenDecls);
+		jjtree.OpenNodeScope(aSTTokenDecls);
 		jjtreeOpenNodeScope(aSTTokenDecls);
 		System.Exception ex;
 		try
@@ -1444,14 +1444,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTTokenDecls, b: true);
+				jjtree.CloseNodeScope(aSTTokenDecls, b: true);
 				jjtreeCloseNodeScope(aSTTokenDecls);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTTokenDecls, b: true);
+			jjtree.CloseNodeScope(aSTTokenDecls, b: true);
 			jjtreeCloseNodeScope(aSTTokenDecls);
 		}
 		return;
@@ -1462,12 +1462,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex3 = ex2;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTTokenDecls);
+				jjtree.ClearNodeScope(aSTTokenDecls);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex3 is RuntimeException)
 			{
@@ -1484,7 +1484,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTTokenDecls, b: true);
+				jjtree.CloseNodeScope(aSTTokenDecls, b: true);
 				jjtreeCloseNodeScope(aSTTokenDecls);
 			}
 			throw;
@@ -1496,7 +1496,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTBNF aSTBNF = new ASTBNF(8);
 		int num = 1;
-		jjtree.openNodeScope(aSTBNF);
+		jjtree.OpenNodeScope(aSTBNF);
 		jjtreeOpenNodeScope(aSTBNF);
 		ASTNodeDescriptor aSTNodeDescriptor = null;
 		ASTBNF aSTBNF2;
@@ -1519,12 +1519,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				{
 					jj_consume_token(67);
 					string obj = Name();
-					aSTBNF2.throws_list.Add(obj);
+					aSTBNF2.ThrowsList.Add(obj);
 					while (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 92)
 					{
 						jj_consume_token(92);
 						obj = Name();
-						aSTBNF2.throws_list.Add(obj);
+						aSTBNF2.ThrowsList.Add(obj);
 					}
 					jj_la1[9] = jj_gen;
 				}
@@ -1542,12 +1542,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				jj_consume_token(99);
 				Token declBeginLoc = jj_consume_token(87);
-				aSTBNF2.name = token.Image;
-				aSTBNF2.declBeginLoc = declBeginLoc;
+				aSTBNF2.Name = token.Image;
+				aSTBNF2.DeclBeginLoc = declBeginLoc;
 				node_scope = new NodeScope(aSTBNF2, aSTNodeDescriptor);
 				aSTBNFDeclaration = new ASTBNFDeclaration(9);
 				num2 = 1;
-				jjtree.openNodeScope(aSTBNFDeclaration);
+				jjtree.OpenNodeScope(aSTBNFDeclaration);
 				jjtreeOpenNodeScope(aSTBNFDeclaration);
 				try
 				{
@@ -1559,10 +1559,10 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 							{
 							default:
 								jj_la1[12] = jj_gen;
-								jjtree.closeNodeScope(aSTBNFDeclaration, b: true);
+								jjtree.CloseNodeScope(aSTBNFDeclaration, b: true);
 								num2 = 0;
 								jjtreeCloseNodeScope(aSTBNFDeclaration);
-								aSTBNFDeclaration.node_scope = node_scope;
+								aSTBNFDeclaration.nodeScope = node_scope;
 								goto end_IL_016d;
 							case 1:
 							case 2:
@@ -1646,7 +1646,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				if (num2 != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFDeclaration, b: true);
+					jjtree.CloseNodeScope(aSTBNFDeclaration, b: true);
 					jjtreeCloseNodeScope(aSTBNFDeclaration);
 				}
 				goto IL_0557;
@@ -1663,7 +1663,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNF, b: true);
+				jjtree.CloseNodeScope(aSTBNF, b: true);
 				jjtreeCloseNodeScope(aSTBNF);
 			}
 			throw;
@@ -1681,12 +1681,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					System.Exception ex5 = ex4;
 					if (num2 != 0)
 					{
-						jjtree.clearNodeScope(aSTBNFDeclaration);
+						jjtree.ClearNodeScope(aSTBNFDeclaration);
 						num2 = 0;
 					}
 					else
 					{
-						jjtree.popNode();
+						jjtree.PopNode();
 					}
 					if (ex5 is RuntimeException)
 					{
@@ -1714,7 +1714,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNF, b: true);
+				jjtree.CloseNodeScope(aSTBNF, b: true);
 				jjtreeCloseNodeScope(aSTBNF);
 			}
 			throw;
@@ -1738,18 +1738,18 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				jj_consume_token(87);
 				aSTBNFNodeScope = new ASTBNFNodeScope(10);
 				num3 = 1;
-				jjtree.openNodeScope(aSTBNFNodeScope);
+				jjtree.OpenNodeScope(aSTBNFNodeScope);
 				jjtreeOpenNodeScope(aSTBNFNodeScope);
 				try
 				{
 					try
 					{
 						JJTreeNode jJTreeNode = expansion_choices(aSTBNF2);
-						jjtree.closeNodeScope(aSTBNFNodeScope, b: true);
+						jjtree.CloseNodeScope(aSTBNFNodeScope, b: true);
 						num3 = 0;
 						jjtreeCloseNodeScope(aSTBNFNodeScope);
-						aSTBNFNodeScope.node_scope = node_scope;
-						aSTBNFNodeScope.expansion_unit = jJTreeNode;
+						aSTBNFNodeScope.nodeScope = node_scope;
+						aSTBNFNodeScope.expUnit = jJTreeNode;
 					}
 					catch (System.Exception x6)
 					{
@@ -1764,7 +1764,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				if (num3 != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFNodeScope, b: true);
+					jjtree.CloseNodeScope(aSTBNFNodeScope, b: true);
 					jjtreeCloseNodeScope(aSTBNFNodeScope);
 				}
 				goto IL_0724;
@@ -1781,7 +1781,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNF, b: true);
+				jjtree.CloseNodeScope(aSTBNF, b: true);
 				jjtreeCloseNodeScope(aSTBNF);
 			}
 			throw;
@@ -1799,12 +1799,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					System.Exception ex13 = ex12;
 					if (num3 != 0)
 					{
-						jjtree.clearNodeScope(aSTBNFNodeScope);
+						jjtree.ClearNodeScope(aSTBNFNodeScope);
 						num3 = 0;
 					}
 					else
 					{
-						jjtree.popNode();
+						jjtree.PopNode();
 					}
 					if (ex13 is RuntimeException)
 					{
@@ -1832,7 +1832,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNF, b: true);
+				jjtree.CloseNodeScope(aSTBNF, b: true);
 				jjtreeCloseNodeScope(aSTBNF);
 			}
 			throw;
@@ -1849,10 +1849,10 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			try
 			{
 				jj_consume_token(88);
-				jjtree.closeNodeScope(aSTBNF, b: true);
+				jjtree.CloseNodeScope(aSTBNF, b: true);
 				num = 0;
 				jjtreeCloseNodeScope(aSTBNF);
-				JJTreeGlobals.productions.Add(aSTBNF2.name, aSTBNF2);
+				JJTreeGlobals.productions.Add(aSTBNF2.Name, aSTBNF2);
 			}
 			catch (System.Exception x11)
 			{
@@ -1865,14 +1865,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNF, b: true);
+				jjtree.CloseNodeScope(aSTBNF, b: true);
 				jjtreeCloseNodeScope(aSTBNF);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTBNF, b: true);
+			jjtree.CloseNodeScope(aSTBNF, b: true);
 			jjtreeCloseNodeScope(aSTBNF);
 		}
 		return;
@@ -1892,7 +1892,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				System.Exception ex18 = ex17;
 				if (num2 != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFDeclaration, b: true);
+					jjtree.CloseNodeScope(aSTBNFDeclaration, b: true);
 					jjtreeCloseNodeScope(aSTBNFDeclaration);
 				}
 				throw new System.Exception(ex18);
@@ -1907,7 +1907,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNF, b: true);
+				jjtree.CloseNodeScope(aSTBNF, b: true);
 				jjtreeCloseNodeScope(aSTBNF);
 			}
 			throw;
@@ -1924,12 +1924,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex20 = ex19;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTBNF);
+				jjtree.ClearNodeScope(aSTBNF);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex20 is RuntimeException)
 			{
@@ -1946,7 +1946,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNF, b: true);
+				jjtree.CloseNodeScope(aSTBNF, b: true);
 				jjtreeCloseNodeScope(aSTBNF);
 			}
 			throw;
@@ -1967,7 +1967,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				System.Exception ex22 = ex21;
 				if (num3 != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFNodeScope, b: true);
+					jjtree.CloseNodeScope(aSTBNFNodeScope, b: true);
 					jjtreeCloseNodeScope(aSTBNFNodeScope);
 				}
 				throw new System.Exception(ex22);
@@ -1982,7 +1982,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNF, b: true);
+				jjtree.CloseNodeScope(aSTBNF, b: true);
 				jjtreeCloseNodeScope(aSTBNF);
 			}
 			throw;
@@ -2132,7 +2132,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTNodeDescriptor aSTNodeDescriptor = new ASTNodeDescriptor(39);
 		int num = 1;
-		jjtree.openNodeScope(aSTNodeDescriptor);
+		jjtree.OpenNodeScope(aSTNodeDescriptor);
 		jjtreeOpenNodeScope(aSTNodeDescriptor);
 		
 		
@@ -2186,14 +2186,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						jj_la1[49] = jj_gen;
 					}
 					node_descriptor_expression();
-					aSTNodeDescriptor.expression = (ASTNodeDescriptorExpression)jjtree.peekNode();
+					aSTNodeDescriptor.expression = (ASTNodeDescriptorExpression)jjtree.PeekNode;
 					jj_consume_token(86);
 				}
 				else
 				{
 					jj_la1[50] = jj_gen;
 				}
-				jjtree.closeNodeScope(aSTNodeDescriptor, b: true);
+				jjtree.CloseNodeScope(aSTNodeDescriptor, b: true);
 				num = 0;
 				jjtreeCloseNodeScope(aSTNodeDescriptor);
 				aSTNodeDescriptor.SetNodeId();
@@ -2210,14 +2210,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTNodeDescriptor, b: true);
+				jjtree.CloseNodeScope(aSTNodeDescriptor, b: true);
 				jjtreeCloseNodeScope(aSTNodeDescriptor);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTNodeDescriptor, b: true);
+			jjtree.CloseNodeScope(aSTNodeDescriptor, b: true);
 			jjtreeCloseNodeScope(aSTNodeDescriptor);
 		}
 		return result;
@@ -2228,12 +2228,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex3 = ex2;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTNodeDescriptor);
+				jjtree.ClearNodeScope(aSTNodeDescriptor);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex3 is RuntimeException)
 			{
@@ -2250,7 +2250,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTNodeDescriptor, b: true);
+				jjtree.CloseNodeScope(aSTNodeDescriptor, b: true);
 				jjtreeCloseNodeScope(aSTNodeDescriptor);
 			}
 			throw;
@@ -2334,7 +2334,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTBNFChoice aSTBNFChoice = new ASTBNFChoice(14);
 		int num = 1;
-		jjtree.openNodeScope(aSTBNFChoice);
+		jjtree.OpenNodeScope(aSTBNFChoice);
 		jjtreeOpenNodeScope(aSTBNFChoice);
 		JJTreeNode result;
 		System.Exception ex;
@@ -2349,10 +2349,10 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					expansion(astp);
 				}
 				jj_la1[23] = jj_gen;
-				jjtree.closeNodeScope(aSTBNFChoice, jjtree.nodeArity() > 1);
+				jjtree.CloseNodeScope(aSTBNFChoice, jjtree.NodeArity> 1);
 				num = 0;
 				jjtreeCloseNodeScope(aSTBNFChoice);
-				result = (JJTreeNode)jjtree.peekNode();
+				result = (JJTreeNode)jjtree.PeekNode;
 			}
 			catch (System.Exception x)
 			{
@@ -2365,14 +2365,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNFChoice, jjtree.nodeArity() > 1);
+				jjtree.CloseNodeScope(aSTBNFChoice, jjtree.NodeArity> 1);
 				jjtreeCloseNodeScope(aSTBNFChoice);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTBNFChoice, jjtree.nodeArity() > 1);
+			jjtree.CloseNodeScope(aSTBNFChoice, jjtree.NodeArity> 1);
 			jjtreeCloseNodeScope(aSTBNFChoice);
 		}
 		return result;
@@ -2383,12 +2383,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex3 = ex2;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTBNFChoice);
+				jjtree.ClearNodeScope(aSTBNFChoice);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex3 is RuntimeException)
 			{
@@ -2405,7 +2405,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNFChoice, jjtree.nodeArity() > 1);
+				jjtree.CloseNodeScope(aSTBNFChoice, jjtree.NodeArity> 1);
 				jjtreeCloseNodeScope(aSTBNFChoice);
 			}
 			throw;
@@ -2480,7 +2480,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTRESpec aSTRESpec = new ASTRESpec(13);
 		int num = 1;
-		jjtree.openNodeScope(aSTRESpec);
+		jjtree.OpenNodeScope(aSTRESpec);
 		jjtreeOpenNodeScope(aSTRESpec);
 		System.Exception ex;
 		try
@@ -2517,14 +2517,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTRESpec, b: true);
+				jjtree.CloseNodeScope(aSTRESpec, b: true);
 				jjtreeCloseNodeScope(aSTRESpec);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTRESpec, b: true);
+			jjtree.CloseNodeScope(aSTRESpec, b: true);
 			jjtreeCloseNodeScope(aSTRESpec);
 		}
 		return;
@@ -2535,12 +2535,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex3 = ex2;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTRESpec);
+				jjtree.ClearNodeScope(aSTRESpec);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex3 is RuntimeException)
 			{
@@ -2557,7 +2557,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTRESpec, b: true);
+				jjtree.CloseNodeScope(aSTRESpec, b: true);
 				jjtreeCloseNodeScope(aSTRESpec);
 			}
 			throw;
@@ -2631,7 +2631,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		{
 			aSTREStringLiteral = new ASTREStringLiteral(26);
 			num = 1;
-			jjtree.openNodeScope(aSTREStringLiteral);
+			jjtree.OpenNodeScope(aSTREStringLiteral);
 			jjtreeOpenNodeScope(aSTREStringLiteral);
 			try
 			{
@@ -2650,14 +2650,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num != 0)
 				{
-					jjtree.closeNodeScope(aSTREStringLiteral, b: true);
+					jjtree.CloseNodeScope(aSTREStringLiteral, b: true);
 					jjtreeCloseNodeScope(aSTREStringLiteral);
 				}
 				throw;
 			}
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTREStringLiteral, b: true);
+				jjtree.CloseNodeScope(aSTREStringLiteral, b: true);
 				jjtreeCloseNodeScope(aSTREStringLiteral);
 			}
 			return;
@@ -2670,7 +2670,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		{
 			aSTRENamed = new ASTRENamed(27);
 			num2 = 1;
-			jjtree.openNodeScope(aSTRENamed);
+			jjtree.OpenNodeScope(aSTRENamed);
 			jjtreeOpenNodeScope(aSTRENamed);
 			try
 			{
@@ -2709,14 +2709,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num2 != 0)
 				{
-					jjtree.closeNodeScope(aSTRENamed, b: true);
+					jjtree.CloseNodeScope(aSTRENamed, b: true);
 					jjtreeCloseNodeScope(aSTRENamed);
 				}
 				throw;
 			}
 			if (num2 != 0)
 			{
-				jjtree.closeNodeScope(aSTRENamed, b: true);
+				jjtree.CloseNodeScope(aSTRENamed, b: true);
 				jjtreeCloseNodeScope(aSTRENamed);
 			}
 			return;
@@ -2727,7 +2727,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		{
 			aSTREReference = new ASTREReference(28);
 			num2 = 1;
-			jjtree.openNodeScope(aSTREReference);
+			jjtree.OpenNodeScope(aSTREReference);
 			jjtreeOpenNodeScope(aSTREReference);
 			try
 			{
@@ -2748,14 +2748,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num2 != 0)
 				{
-					jjtree.closeNodeScope(aSTREReference, b: true);
+					jjtree.CloseNodeScope(aSTREReference, b: true);
 					jjtreeCloseNodeScope(aSTREReference);
 				}
 				throw;
 			}
 			if (num2 != 0)
 			{
-				jjtree.closeNodeScope(aSTREReference, b: true);
+				jjtree.CloseNodeScope(aSTREReference, b: true);
 				jjtreeCloseNodeScope(aSTREReference);
 			}
 			return;
@@ -2764,7 +2764,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		{
 			ASTREEOF aSTREEOF = new ASTREEOF(29);
 			num2 = 1;
-			jjtree.openNodeScope(aSTREEOF);
+			jjtree.OpenNodeScope(aSTREEOF);
 			jjtreeOpenNodeScope(aSTREEOF);
 			try
 			{
@@ -2777,14 +2777,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num2 != 0)
 				{
-					jjtree.closeNodeScope(aSTREEOF, b: true);
+					jjtree.CloseNodeScope(aSTREEOF, b: true);
 					jjtreeCloseNodeScope(aSTREEOF);
 				}
 				throw;
 			}
 			if (num2 != 0)
 			{
-				jjtree.closeNodeScope(aSTREEOF, b: true);
+				jjtree.CloseNodeScope(aSTREEOF, b: true);
 				jjtreeCloseNodeScope(aSTREEOF);
 			}
 			return;
@@ -2800,12 +2800,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex4 = ex2;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTREStringLiteral);
+				jjtree.ClearNodeScope(aSTREStringLiteral);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex4 is RuntimeException)
 			{
@@ -2822,7 +2822,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTREStringLiteral, b: true);
+				jjtree.CloseNodeScope(aSTREStringLiteral, b: true);
 				jjtreeCloseNodeScope(aSTREStringLiteral);
 			}
 			throw;
@@ -2834,12 +2834,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex6 = ex5;
 			if (num2 != 0)
 			{
-				jjtree.clearNodeScope(aSTREReference);
+				jjtree.ClearNodeScope(aSTREReference);
 				num2 = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex6 is RuntimeException)
 			{
@@ -2856,7 +2856,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num2 != 0)
 			{
-				jjtree.closeNodeScope(aSTREReference, b: true);
+				jjtree.CloseNodeScope(aSTREReference, b: true);
 				jjtreeCloseNodeScope(aSTREReference);
 			}
 			throw;
@@ -2868,12 +2868,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex6 = ex3;
 			if (num2 != 0)
 			{
-				jjtree.clearNodeScope(aSTRENamed);
+				jjtree.ClearNodeScope(aSTRENamed);
 				num2 = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex6 is RuntimeException)
 			{
@@ -2890,7 +2890,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num2 != 0)
 			{
-				jjtree.closeNodeScope(aSTRENamed, b: true);
+				jjtree.CloseNodeScope(aSTRENamed, b: true);
 				jjtreeCloseNodeScope(aSTRENamed);
 			}
 			throw;
@@ -2981,7 +2981,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTBNFSequence aSTBNFSequence = new ASTBNFSequence(15);
 		int num = 1;
-		jjtree.openNodeScope(aSTBNFSequence);
+		jjtree.OpenNodeScope(aSTBNFSequence);
 		jjtreeOpenNodeScope(aSTBNFSequence);
 		ASTNodeDescriptor aSTNodeDescriptor = null;
 		ASTBNFLookahead aSTBNFLookahead;
@@ -2997,7 +2997,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				{
 					aSTBNFLookahead = new ASTBNFLookahead(16);
 					num2 = 1;
-					jjtree.openNodeScope(aSTBNFLookahead);
+					jjtree.OpenNodeScope(aSTBNFLookahead);
 					jjtreeOpenNodeScope(aSTBNFLookahead);
 					try
 					{
@@ -3021,7 +3021,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					}
 					if (num2 != 0)
 					{
-						jjtree.closeNodeScope(aSTBNFLookahead, b: true);
+						jjtree.CloseNodeScope(aSTBNFLookahead, b: true);
 						jjtreeCloseNodeScope(aSTBNFLookahead);
 					}
 					goto IL_0264;
@@ -3038,7 +3038,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNFSequence, jjtree.nodeArity() > 1);
+				jjtree.CloseNodeScope(aSTBNFSequence, jjtree.NodeArity> 1);
 				jjtreeCloseNodeScope(aSTBNFSequence);
 			}
 			throw;
@@ -3061,7 +3061,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNFSequence, jjtree.nodeArity() > 1);
+				jjtree.CloseNodeScope(aSTBNFSequence, jjtree.NodeArity> 1);
 				jjtreeCloseNodeScope(aSTBNFSequence);
 			}
 			throw;
@@ -3089,7 +3089,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				{
 					aSTExpansionNodeScope = new ASTExpansionNodeScope(17);
 					num2 = 1;
-					jjtree.openNodeScope(aSTExpansionNodeScope);
+					jjtree.OpenNodeScope(aSTExpansionNodeScope);
 					jjtreeOpenNodeScope(aSTExpansionNodeScope);
 					try
 					{
@@ -3104,13 +3104,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 							{
 								jj_la1[25] = jj_gen;
 							}
-							jjtree.closeNodeScope(aSTExpansionNodeScope, jjtree.nodeArity() > 1);
+							jjtree.CloseNodeScope(aSTExpansionNodeScope, jjtree.NodeArity> 1);
 							num2 = 0;
 							jjtreeCloseNodeScope(aSTExpansionNodeScope);
-							if (jjtree.nodeCreated())
+							if (jjtree.NodeCreated)
 							{
-								aSTExpansionNodeScope.node_scope = new NodeScope(astp, aSTNodeDescriptor);
-								aSTExpansionNodeScope.expansion_unit = jJTreeNode;
+								aSTExpansionNodeScope.nodeScope = new NodeScope(astp, aSTNodeDescriptor);
+								aSTExpansionNodeScope.expUnit = jJTreeNode;
 							}
 						}
 						catch (System.Exception x5)
@@ -3126,7 +3126,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					}
 					if (num2 != 0)
 					{
-						jjtree.closeNodeScope(aSTExpansionNodeScope, jjtree.nodeArity() > 1);
+						jjtree.CloseNodeScope(aSTExpansionNodeScope, jjtree.NodeArity> 1);
 						jjtreeCloseNodeScope(aSTExpansionNodeScope);
 					}
 					goto IL_04bf;
@@ -3143,7 +3143,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFSequence, jjtree.nodeArity() > 1);
+					jjtree.CloseNodeScope(aSTBNFSequence, jjtree.NodeArity> 1);
 					jjtreeCloseNodeScope(aSTBNFSequence);
 				}
 				throw;
@@ -3161,12 +3161,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						System.Exception ex11 = ex10;
 						if (num2 != 0)
 						{
-							jjtree.clearNodeScope(aSTExpansionNodeScope);
+							jjtree.ClearNodeScope(aSTExpansionNodeScope);
 							num2 = 0;
 						}
 						else
 						{
-							jjtree.popNode();
+							jjtree.PopNode();
 						}
 						if (ex11 is RuntimeException)
 						{
@@ -3194,7 +3194,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFSequence, jjtree.nodeArity() > 1);
+					jjtree.CloseNodeScope(aSTBNFSequence, jjtree.NodeArity> 1);
 					jjtreeCloseNodeScope(aSTBNFSequence);
 				}
 				throw;
@@ -3211,7 +3211,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					System.Exception ex15 = ex14;
 					if (num2 != 0)
 					{
-						jjtree.closeNodeScope(aSTExpansionNodeScope, jjtree.nodeArity() > 1);
+						jjtree.CloseNodeScope(aSTExpansionNodeScope, jjtree.NodeArity> 1);
 						jjtreeCloseNodeScope(aSTExpansionNodeScope);
 					}
 					throw new System.Exception(ex15);
@@ -3226,7 +3226,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFSequence, jjtree.nodeArity() > 1);
+					jjtree.CloseNodeScope(aSTBNFSequence, jjtree.NodeArity> 1);
 					jjtreeCloseNodeScope(aSTBNFSequence);
 				}
 				throw;
@@ -3264,14 +3264,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFSequence, jjtree.nodeArity() > 1);
+					jjtree.CloseNodeScope(aSTBNFSequence, jjtree.NodeArity> 1);
 					jjtreeCloseNodeScope(aSTBNFSequence);
 				}
 				throw;
 			}
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNFSequence, jjtree.nodeArity() > 1);
+				jjtree.CloseNodeScope(aSTBNFSequence, jjtree.NodeArity> 1);
 				jjtreeCloseNodeScope(aSTBNFSequence);
 			}
 			return;
@@ -3287,12 +3287,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex18 = ex17;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTBNFSequence);
+				jjtree.ClearNodeScope(aSTBNFSequence);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex18 is RuntimeException)
 			{
@@ -3309,7 +3309,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNFSequence, jjtree.nodeArity() > 1);
+				jjtree.CloseNodeScope(aSTBNFSequence, jjtree.NodeArity> 1);
 				jjtreeCloseNodeScope(aSTBNFSequence);
 			}
 			throw;
@@ -3328,7 +3328,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				System.Exception ex21 = ex20;
 				if (num2 != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFLookahead, b: true);
+					jjtree.CloseNodeScope(aSTBNFLookahead, b: true);
 					jjtreeCloseNodeScope(aSTBNFLookahead);
 				}
 				throw new System.Exception(ex21);
@@ -3343,7 +3343,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNFSequence, jjtree.nodeArity() > 1);
+				jjtree.CloseNodeScope(aSTBNFSequence, jjtree.NodeArity> 1);
 				jjtreeCloseNodeScope(aSTBNFSequence);
 			}
 			throw;
@@ -3363,12 +3363,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					System.Exception ex11 = ex22;
 					if (num2 != 0)
 					{
-						jjtree.clearNodeScope(aSTBNFLookahead);
+						jjtree.ClearNodeScope(aSTBNFLookahead);
 						num2 = 0;
 					}
 					else
 					{
-						jjtree.popNode();
+						jjtree.PopNode();
 					}
 					if (ex11 is RuntimeException)
 					{
@@ -3396,7 +3396,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTBNFSequence, jjtree.nodeArity() > 1);
+				jjtree.CloseNodeScope(aSTBNFSequence, jjtree.NodeArity> 1);
 				jjtreeCloseNodeScope(aSTBNFSequence);
 			}
 			throw;
@@ -3477,7 +3477,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		case 1:
 			aSTBNFLookahead = new ASTBNFLookahead(16);
 			num6 = 1;
-			jjtree.openNodeScope(aSTBNFLookahead);
+			jjtree.OpenNodeScope(aSTBNFLookahead);
 			jjtreeOpenNodeScope(aSTBNFLookahead);
 			try
 			{
@@ -3499,21 +3499,21 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num6 != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFLookahead, b: true);
+					jjtree.CloseNodeScope(aSTBNFLookahead, b: true);
 					jjtreeCloseNodeScope(aSTBNFLookahead);
 				}
 				throw;
 			}
 			if (num6 != 0)
 			{
-				jjtree.closeNodeScope(aSTBNFLookahead, b: true);
+				jjtree.CloseNodeScope(aSTBNFLookahead, b: true);
 				jjtreeCloseNodeScope(aSTBNFLookahead);
 			}
 			break;
 		case 87:
 			aSTBNFAction = new ASTBNFAction(18);
 			num5 = 1;
-			jjtree.openNodeScope(aSTBNFAction);
+			jjtree.OpenNodeScope(aSTBNFAction);
 			jjtreeOpenNodeScope(aSTBNFAction);
 			try
 			{
@@ -3532,21 +3532,21 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num5 != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFAction, b: true);
+					jjtree.CloseNodeScope(aSTBNFAction, b: true);
 					jjtreeCloseNodeScope(aSTBNFAction);
 				}
 				throw;
 			}
 			if (num5 != 0)
 			{
-				jjtree.closeNodeScope(aSTBNFAction, b: true);
+				jjtree.CloseNodeScope(aSTBNFAction, b: true);
 				jjtreeCloseNodeScope(aSTBNFAction);
 			}
 			break;
 		case 89:
 			aSTBNFZeroOrOne2 = new ASTBNFZeroOrOne(19);
 			num7 = 1;
-			jjtree.openNodeScope(aSTBNFZeroOrOne2);
+			jjtree.OpenNodeScope(aSTBNFZeroOrOne2);
 			jjtreeOpenNodeScope(aSTBNFZeroOrOne2);
 			try
 			{
@@ -3567,21 +3567,21 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num7 != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFZeroOrOne2, b: true);
+					jjtree.CloseNodeScope(aSTBNFZeroOrOne2, b: true);
 					jjtreeCloseNodeScope(aSTBNFZeroOrOne2);
 				}
 				throw;
 			}
 			if (num7 != 0)
 			{
-				jjtree.closeNodeScope(aSTBNFZeroOrOne2, b: true);
+				jjtree.CloseNodeScope(aSTBNFZeroOrOne2, b: true);
 				jjtreeCloseNodeScope(aSTBNFZeroOrOne2);
 			}
 			break;
 		case 70:
 			aSTBNFTryBlock = new ASTBNFTryBlock(20);
 			num8 = 1;
-			jjtree.openNodeScope(aSTBNFTryBlock);
+			jjtree.OpenNodeScope(aSTBNFTryBlock);
 			jjtreeOpenNodeScope(aSTBNFTryBlock);
 			try
 			{
@@ -3622,14 +3622,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num8 != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFTryBlock, b: true);
+					jjtree.CloseNodeScope(aSTBNFTryBlock, b: true);
 					jjtreeCloseNodeScope(aSTBNFTryBlock);
 				}
 				throw;
 			}
 			if (num8 != 0)
 			{
-				jjtree.closeNodeScope(aSTBNFTryBlock, b: true);
+				jjtree.CloseNodeScope(aSTBNFTryBlock, b: true);
 				jjtreeCloseNodeScope(aSTBNFTryBlock);
 			}
 			break;
@@ -3640,7 +3640,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				{
 					aSTBNFAssignment = new ASTBNFAssignment(22);
 					num = 1;
-					jjtree.openNodeScope(aSTBNFAssignment);
+					jjtree.OpenNodeScope(aSTBNFAssignment);
 					jjtreeOpenNodeScope(aSTBNFAssignment);
 					try
 					{
@@ -3669,7 +3669,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 							case 137:
 								aSTBNFNonTerminal = new ASTBNFNonTerminal(21);
 								num2 = 1;
-								jjtree.openNodeScope(aSTBNFNonTerminal);
+								jjtree.OpenNodeScope(aSTBNFNonTerminal);
 								jjtreeOpenNodeScope(aSTBNFNonTerminal);
 								try
 								{
@@ -3691,7 +3691,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 								}
 								if (num2 != 0)
 								{
-									jjtree.closeNodeScope(aSTBNFNonTerminal, b: true);
+									jjtree.CloseNodeScope(aSTBNFNonTerminal, b: true);
 									jjtreeCloseNodeScope(aSTBNFNonTerminal);
 								}
 								goto end_IL_054c;
@@ -3710,14 +3710,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						//try-fault
 						if (num != 0)
 						{
-							jjtree.closeNodeScope(aSTBNFAssignment, jjtree.nodeArity() > 1);
+							jjtree.CloseNodeScope(aSTBNFAssignment, jjtree.NodeArity> 1);
 							jjtreeCloseNodeScope(aSTBNFAssignment);
 						}
 						throw;
 					}
 					if (num != 0)
 					{
-						jjtree.closeNodeScope(aSTBNFAssignment, jjtree.nodeArity() > 1);
+						jjtree.CloseNodeScope(aSTBNFAssignment, jjtree.NodeArity> 1);
 						jjtreeCloseNodeScope(aSTBNFAssignment);
 					}
 					break;
@@ -3733,7 +3733,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					{
 						ASTBNFOneOrMore aSTBNFOneOrMore = new ASTBNFOneOrMore(23);
 						num = 1;
-						jjtree.openNodeScope(aSTBNFOneOrMore);
+						jjtree.OpenNodeScope(aSTBNFOneOrMore);
 						jjtreeOpenNodeScope(aSTBNFOneOrMore);
 						try
 						{
@@ -3744,14 +3744,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 							//try-fault
 							if (num != 0)
 							{
-								jjtree.closeNodeScope(aSTBNFOneOrMore, 1);
+								jjtree.CloseNodeScope(aSTBNFOneOrMore, 1);
 								jjtreeCloseNodeScope(aSTBNFOneOrMore);
 							}
 							throw;
 						}
 						if (num != 0)
 						{
-							jjtree.closeNodeScope(aSTBNFOneOrMore, 1);
+							jjtree.CloseNodeScope(aSTBNFOneOrMore, 1);
 							jjtreeCloseNodeScope(aSTBNFOneOrMore);
 						}
 						break;
@@ -3760,7 +3760,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					{
 						ASTBNFZeroOrMore aSTBNFZeroOrMore = new ASTBNFZeroOrMore(24);
 						num2 = 1;
-						jjtree.openNodeScope(aSTBNFZeroOrMore);
+						jjtree.OpenNodeScope(aSTBNFZeroOrMore);
 						jjtreeOpenNodeScope(aSTBNFZeroOrMore);
 						try
 						{
@@ -3771,14 +3771,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 							//try-fault
 							if (num2 != 0)
 							{
-								jjtree.closeNodeScope(aSTBNFZeroOrMore, 1);
+								jjtree.CloseNodeScope(aSTBNFZeroOrMore, 1);
 								jjtreeCloseNodeScope(aSTBNFZeroOrMore);
 							}
 							throw;
 						}
 						if (num2 != 0)
 						{
-							jjtree.closeNodeScope(aSTBNFZeroOrMore, 1);
+							jjtree.CloseNodeScope(aSTBNFZeroOrMore, 1);
 							jjtreeCloseNodeScope(aSTBNFZeroOrMore);
 						}
 						break;
@@ -3787,7 +3787,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					{
 						ASTBNFZeroOrOne aSTBNFZeroOrOne = new ASTBNFZeroOrOne(19);
 						int num4 = 1;
-						jjtree.openNodeScope(aSTBNFZeroOrOne);
+						jjtree.OpenNodeScope(aSTBNFZeroOrOne);
 						jjtreeOpenNodeScope(aSTBNFZeroOrOne);
 						try
 						{
@@ -3798,14 +3798,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 							//try-fault
 							if (num4 != 0)
 							{
-								jjtree.closeNodeScope(aSTBNFZeroOrOne, 1);
+								jjtree.CloseNodeScope(aSTBNFZeroOrOne, 1);
 								jjtreeCloseNodeScope(aSTBNFZeroOrOne);
 							}
 							throw;
 						}
 						if (num4 != 0)
 						{
-							jjtree.closeNodeScope(aSTBNFZeroOrOne, 1);
+							jjtree.CloseNodeScope(aSTBNFZeroOrOne, 1);
 							jjtreeCloseNodeScope(aSTBNFZeroOrOne);
 						}
 						break;
@@ -3815,11 +3815,11 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						jj_la1[31] = jj_gen;
 						ASTBNFParenthesized aSTBNFParenthesized = new ASTBNFParenthesized(25);
 						int num3 = 1;
-						jjtree.openNodeScope(aSTBNFParenthesized);
+						jjtree.OpenNodeScope(aSTBNFParenthesized);
 						jjtreeOpenNodeScope(aSTBNFParenthesized);
 						try
 						{
-							jjtree.closeNodeScope(aSTBNFParenthesized, 1);
+							jjtree.CloseNodeScope(aSTBNFParenthesized, 1);
 							num3 = 0;
 							jjtreeCloseNodeScope(aSTBNFParenthesized);
 						}
@@ -3828,20 +3828,20 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 							//try-fault
 							if (num3 != 0)
 							{
-								jjtree.closeNodeScope(aSTBNFParenthesized, 1);
+								jjtree.CloseNodeScope(aSTBNFParenthesized, 1);
 								jjtreeCloseNodeScope(aSTBNFParenthesized);
 							}
 							throw;
 						}
 						if (num3 != 0)
 						{
-							jjtree.closeNodeScope(aSTBNFParenthesized, 1);
+							jjtree.CloseNodeScope(aSTBNFParenthesized, 1);
 							jjtreeCloseNodeScope(aSTBNFParenthesized);
 						}
 						break;
 					}
 					}
-					((JJTreeNode)jjtree.peekNode()).FirstToken = firstToken;
+					((JJTreeNode)jjtree.PeekNode).FirstToken = firstToken;
 					break;
 				}
 				jj_la1[33] = jj_gen;
@@ -3856,12 +3856,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				System.Exception ex6 = ex4;
 				if (num6 != 0)
 				{
-					jjtree.clearNodeScope(aSTBNFLookahead);
+					jjtree.ClearNodeScope(aSTBNFLookahead);
 					num6 = 0;
 				}
 				else
 				{
-					jjtree.popNode();
+					jjtree.PopNode();
 				}
 				if (ex6 is RuntimeException)
 				{
@@ -3878,7 +3878,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num6 != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFLookahead, b: true);
+					jjtree.CloseNodeScope(aSTBNFLookahead, b: true);
 					jjtreeCloseNodeScope(aSTBNFLookahead);
 				}
 				throw;
@@ -3902,12 +3902,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 						System.Exception ex10 = ex9;
 						if (num2 != 0)
 						{
-							jjtree.clearNodeScope(aSTBNFNonTerminal);
+							jjtree.ClearNodeScope(aSTBNFNonTerminal);
 							num2 = 0;
 						}
 						else
 						{
-							jjtree.popNode();
+							jjtree.PopNode();
 						}
 						if (ex10 is RuntimeException)
 						{
@@ -3935,7 +3935,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFAssignment, jjtree.nodeArity() > 1);
+					jjtree.CloseNodeScope(aSTBNFAssignment, jjtree.NodeArity> 1);
 					jjtreeCloseNodeScope(aSTBNFAssignment);
 				}
 				throw;
@@ -3952,7 +3952,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					System.Exception ex14 = ex13;
 					if (num2 != 0)
 					{
-						jjtree.closeNodeScope(aSTBNFNonTerminal, b: true);
+						jjtree.CloseNodeScope(aSTBNFNonTerminal, b: true);
 						jjtreeCloseNodeScope(aSTBNFNonTerminal);
 					}
 					throw new System.Exception(ex14);
@@ -3967,7 +3967,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFAssignment, jjtree.nodeArity() > 1);
+					jjtree.CloseNodeScope(aSTBNFAssignment, jjtree.NodeArity> 1);
 					jjtreeCloseNodeScope(aSTBNFAssignment);
 				}
 				throw;
@@ -3981,12 +3981,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				System.Exception ex16 = ex15;
 				if (num7 != 0)
 				{
-					jjtree.clearNodeScope(aSTBNFZeroOrOne2);
+					jjtree.ClearNodeScope(aSTBNFZeroOrOne2);
 					num7 = 0;
 				}
 				else
 				{
-					jjtree.popNode();
+					jjtree.PopNode();
 				}
 				if (ex16 is RuntimeException)
 				{
@@ -4003,7 +4003,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num7 != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFZeroOrOne2, b: true);
+					jjtree.CloseNodeScope(aSTBNFZeroOrOne2, b: true);
 					jjtreeCloseNodeScope(aSTBNFZeroOrOne2);
 				}
 				throw;
@@ -4031,7 +4031,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFAssignment, jjtree.nodeArity() > 1);
+					jjtree.CloseNodeScope(aSTBNFAssignment, jjtree.NodeArity> 1);
 					jjtreeCloseNodeScope(aSTBNFAssignment);
 				}
 				throw;
@@ -4045,12 +4045,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				System.Exception ex18 = ex12;
 				if (num5 != 0)
 				{
-					jjtree.clearNodeScope(aSTBNFAction);
+					jjtree.ClearNodeScope(aSTBNFAction);
 					num5 = 0;
 				}
 				else
 				{
-					jjtree.popNode();
+					jjtree.PopNode();
 				}
 				if (ex18 is RuntimeException)
 				{
@@ -4067,7 +4067,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num5 != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFAction, b: true);
+					jjtree.CloseNodeScope(aSTBNFAction, b: true);
 					jjtreeCloseNodeScope(aSTBNFAction);
 				}
 				throw;
@@ -4079,12 +4079,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				System.Exception ex20 = ex19;
 				if (num != 0)
 				{
-					jjtree.clearNodeScope(aSTBNFAssignment);
+					jjtree.ClearNodeScope(aSTBNFAssignment);
 					num = 0;
 				}
 				else
 				{
-					jjtree.popNode();
+					jjtree.PopNode();
 				}
 				if (ex20 is RuntimeException)
 				{
@@ -4101,7 +4101,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFAssignment, jjtree.nodeArity() > 1);
+					jjtree.CloseNodeScope(aSTBNFAssignment, jjtree.NodeArity> 1);
 					jjtreeCloseNodeScope(aSTBNFAssignment);
 				}
 				throw;
@@ -4113,12 +4113,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				System.Exception ex21 = ex;
 				if (num8 != 0)
 				{
-					jjtree.clearNodeScope(aSTBNFTryBlock);
+					jjtree.ClearNodeScope(aSTBNFTryBlock);
 					num8 = 0;
 				}
 				else
 				{
-					jjtree.popNode();
+					jjtree.PopNode();
 				}
 				if (ex21 is RuntimeException)
 				{
@@ -4135,13 +4135,13 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num8 != 0)
 				{
-					jjtree.closeNodeScope(aSTBNFTryBlock, b: true);
+					jjtree.CloseNodeScope(aSTBNFTryBlock, b: true);
 					jjtreeCloseNodeScope(aSTBNFTryBlock);
 				}
 				throw;
 			}
 		}
-		return (JJTreeNode)jjtree.peekNode();
+		return (JJTreeNode)jjtree.PeekNode;
 	}
 
 	
@@ -4249,7 +4249,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTPrimaryExpression aSTPrimaryExpression = new ASTPrimaryExpression(41);
 		int num = 1;
-		jjtree.openNodeScope(aSTPrimaryExpression);
+		jjtree.OpenNodeScope(aSTPrimaryExpression);
 		jjtreeOpenNodeScope(aSTPrimaryExpression);
 		System.Exception ex;
 		try
@@ -4273,14 +4273,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTPrimaryExpression, b: true);
+				jjtree.CloseNodeScope(aSTPrimaryExpression, b: true);
 				jjtreeCloseNodeScope(aSTPrimaryExpression);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTPrimaryExpression, b: true);
+			jjtree.CloseNodeScope(aSTPrimaryExpression, b: true);
 			jjtreeCloseNodeScope(aSTPrimaryExpression);
 		}
 		return;
@@ -4291,12 +4291,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex3 = ex2;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTPrimaryExpression);
+				jjtree.ClearNodeScope(aSTPrimaryExpression);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex3 is RuntimeException)
 			{
@@ -4313,7 +4313,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTPrimaryExpression, b: true);
+				jjtree.CloseNodeScope(aSTPrimaryExpression, b: true);
 				jjtreeCloseNodeScope(aSTPrimaryExpression);
 			}
 			throw;
@@ -4417,7 +4417,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTREChoice aSTREChoice = new ASTREChoice(30);
 		int num = 1;
-		jjtree.openNodeScope(aSTREChoice);
+		jjtree.OpenNodeScope(aSTREChoice);
 		jjtreeOpenNodeScope(aSTREChoice);
 		System.Exception ex;
 		try
@@ -4443,14 +4443,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTREChoice, jjtree.nodeArity() > 1);
+				jjtree.CloseNodeScope(aSTREChoice, jjtree.NodeArity> 1);
 				jjtreeCloseNodeScope(aSTREChoice);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTREChoice, jjtree.nodeArity() > 1);
+			jjtree.CloseNodeScope(aSTREChoice, jjtree.NodeArity> 1);
 			jjtreeCloseNodeScope(aSTREChoice);
 		}
 		return;
@@ -4461,12 +4461,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex3 = ex2;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTREChoice);
+				jjtree.ClearNodeScope(aSTREChoice);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex3 is RuntimeException)
 			{
@@ -4483,7 +4483,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTREChoice, jjtree.nodeArity() > 1);
+				jjtree.CloseNodeScope(aSTREChoice, jjtree.NodeArity> 1);
 				jjtreeCloseNodeScope(aSTREChoice);
 			}
 			throw;
@@ -4534,7 +4534,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTRESequence aSTRESequence = new ASTRESequence(31);
 		int num = 1;
-		jjtree.openNodeScope(aSTRESequence);
+		jjtree.OpenNodeScope(aSTRESequence);
 		jjtreeOpenNodeScope(aSTRESequence);
 		System.Exception ex;
 		try
@@ -4568,14 +4568,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTRESequence, jjtree.nodeArity() > 1);
+				jjtree.CloseNodeScope(aSTRESequence, jjtree.NodeArity> 1);
 				jjtreeCloseNodeScope(aSTRESequence);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTRESequence, jjtree.nodeArity() > 1);
+			jjtree.CloseNodeScope(aSTRESequence, jjtree.NodeArity> 1);
 			jjtreeCloseNodeScope(aSTRESequence);
 		}
 		return;
@@ -4586,12 +4586,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex3 = ex2;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTRESequence);
+				jjtree.ClearNodeScope(aSTRESequence);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex3 is RuntimeException)
 			{
@@ -4608,7 +4608,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTRESequence, jjtree.nodeArity() > 1);
+				jjtree.CloseNodeScope(aSTRESequence, jjtree.NodeArity> 1);
 				jjtreeCloseNodeScope(aSTRESequence);
 			}
 			throw;
@@ -4630,7 +4630,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		case 84:
 			aSTREStringLiteral = new ASTREStringLiteral(26);
 			num6 = 1;
-			jjtree.openNodeScope(aSTREStringLiteral);
+			jjtree.OpenNodeScope(aSTREStringLiteral);
 			jjtreeOpenNodeScope(aSTREStringLiteral);
 			try
 			{
@@ -4649,21 +4649,21 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num6 != 0)
 				{
-					jjtree.closeNodeScope(aSTREStringLiteral, b: true);
+					jjtree.CloseNodeScope(aSTREStringLiteral, b: true);
 					jjtreeCloseNodeScope(aSTREStringLiteral);
 				}
 				throw;
 			}
 			if (num6 != 0)
 			{
-				jjtree.closeNodeScope(aSTREStringLiteral, b: true);
+				jjtree.CloseNodeScope(aSTREStringLiteral, b: true);
 				jjtreeCloseNodeScope(aSTREStringLiteral);
 			}
 			break;
 		case 95:
 			aSTREReference = new ASTREReference(28);
 			num7 = 1;
-			jjtree.openNodeScope(aSTREReference);
+			jjtree.OpenNodeScope(aSTREReference);
 			jjtreeOpenNodeScope(aSTREReference);
 			try
 			{
@@ -4684,14 +4684,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num7 != 0)
 				{
-					jjtree.closeNodeScope(aSTREReference, b: true);
+					jjtree.CloseNodeScope(aSTREReference, b: true);
 					jjtreeCloseNodeScope(aSTREReference);
 				}
 				throw;
 			}
 			if (num7 != 0)
 			{
-				jjtree.closeNodeScope(aSTREReference, b: true);
+				jjtree.CloseNodeScope(aSTREReference, b: true);
 				jjtreeCloseNodeScope(aSTREReference);
 			}
 			break;
@@ -4710,7 +4710,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			{
 				ASTREOneOrMore aSTREOneOrMore = new ASTREOneOrMore(32);
 				int num3 = 1;
-				jjtree.openNodeScope(aSTREOneOrMore);
+				jjtree.OpenNodeScope(aSTREOneOrMore);
 				jjtreeOpenNodeScope(aSTREOneOrMore);
 				try
 				{
@@ -4721,14 +4721,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					//try-fault
 					if (num3 != 0)
 					{
-						jjtree.closeNodeScope(aSTREOneOrMore, 1);
+						jjtree.CloseNodeScope(aSTREOneOrMore, 1);
 						jjtreeCloseNodeScope(aSTREOneOrMore);
 					}
 					throw;
 				}
 				if (num3 != 0)
 				{
-					jjtree.closeNodeScope(aSTREOneOrMore, 1);
+					jjtree.CloseNodeScope(aSTREOneOrMore, 1);
 					jjtreeCloseNodeScope(aSTREOneOrMore);
 				}
 				break;
@@ -4737,7 +4737,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			{
 				ASTREZeroOrMore aSTREZeroOrMore = new ASTREZeroOrMore(33);
 				int num2 = 1;
-				jjtree.openNodeScope(aSTREZeroOrMore);
+				jjtree.OpenNodeScope(aSTREZeroOrMore);
 				jjtreeOpenNodeScope(aSTREZeroOrMore);
 				try
 				{
@@ -4748,14 +4748,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					//try-fault
 					if (num2 != 0)
 					{
-						jjtree.closeNodeScope(aSTREZeroOrMore, 1);
+						jjtree.CloseNodeScope(aSTREZeroOrMore, 1);
 						jjtreeCloseNodeScope(aSTREZeroOrMore);
 					}
 					throw;
 				}
 				if (num2 != 0)
 				{
-					jjtree.closeNodeScope(aSTREZeroOrMore, 1);
+					jjtree.CloseNodeScope(aSTREZeroOrMore, 1);
 					jjtreeCloseNodeScope(aSTREZeroOrMore);
 				}
 				break;
@@ -4764,7 +4764,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			{
 				ASTREZeroOrOne aSTREZeroOrOne = new ASTREZeroOrOne(34);
 				int num5 = 1;
-				jjtree.openNodeScope(aSTREZeroOrOne);
+				jjtree.OpenNodeScope(aSTREZeroOrOne);
 				jjtreeOpenNodeScope(aSTREZeroOrOne);
 				try
 				{
@@ -4775,14 +4775,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					//try-fault
 					if (num5 != 0)
 					{
-						jjtree.closeNodeScope(aSTREZeroOrOne, 1);
+						jjtree.CloseNodeScope(aSTREZeroOrOne, 1);
 						jjtreeCloseNodeScope(aSTREZeroOrOne);
 					}
 					throw;
 				}
 				if (num5 != 0)
 				{
-					jjtree.closeNodeScope(aSTREZeroOrOne, 1);
+					jjtree.CloseNodeScope(aSTREZeroOrOne, 1);
 					jjtreeCloseNodeScope(aSTREZeroOrOne);
 				}
 				break;
@@ -4809,7 +4809,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				ASTRRepetitionRange aSTRRepetitionRange = new ASTRRepetitionRange(35);
 				int num4 = 1;
-				jjtree.openNodeScope(aSTRRepetitionRange);
+				jjtree.OpenNodeScope(aSTRRepetitionRange);
 				jjtreeOpenNodeScope(aSTRRepetitionRange);
 				try
 				{
@@ -4820,14 +4820,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					//try-fault
 					if (num4 != 0)
 					{
-						jjtree.closeNodeScope(aSTRRepetitionRange, 1);
+						jjtree.CloseNodeScope(aSTRRepetitionRange, 1);
 						jjtreeCloseNodeScope(aSTRRepetitionRange);
 					}
 					throw;
 				}
 				if (num4 != 0)
 				{
-					jjtree.closeNodeScope(aSTRRepetitionRange, 1);
+					jjtree.CloseNodeScope(aSTRRepetitionRange, 1);
 					jjtreeCloseNodeScope(aSTRRepetitionRange);
 				}
 				break;
@@ -4837,11 +4837,11 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				jj_la1[42] = jj_gen;
 				ASTREParenthesized aSTREParenthesized = new ASTREParenthesized(36);
 				int num = 1;
-				jjtree.openNodeScope(aSTREParenthesized);
+				jjtree.OpenNodeScope(aSTREParenthesized);
 				jjtreeOpenNodeScope(aSTREParenthesized);
 				try
 				{
-					jjtree.closeNodeScope(aSTREParenthesized, 1);
+					jjtree.CloseNodeScope(aSTREParenthesized, 1);
 					num = 0;
 					jjtreeCloseNodeScope(aSTREParenthesized);
 				}
@@ -4850,20 +4850,20 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					//try-fault
 					if (num != 0)
 					{
-						jjtree.closeNodeScope(aSTREParenthesized, 1);
+						jjtree.CloseNodeScope(aSTREParenthesized, 1);
 						jjtreeCloseNodeScope(aSTREParenthesized);
 					}
 					throw;
 				}
 				if (num != 0)
 				{
-					jjtree.closeNodeScope(aSTREParenthesized, 1);
+					jjtree.CloseNodeScope(aSTREParenthesized, 1);
 					jjtreeCloseNodeScope(aSTREParenthesized);
 				}
 				break;
 			}
 			}
-			((JJTreeNode)jjtree.peekNode()).FirstToken = firstToken;
+			((JJTreeNode)jjtree.PeekNode).FirstToken = firstToken;
 			break;
 		}
 		default:
@@ -4880,12 +4880,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				System.Exception ex3 = ex2;
 				if (num6 != 0)
 				{
-					jjtree.clearNodeScope(aSTREStringLiteral);
+					jjtree.ClearNodeScope(aSTREStringLiteral);
 					num6 = 0;
 				}
 				else
 				{
-					jjtree.popNode();
+					jjtree.PopNode();
 				}
 				if (ex3 is RuntimeException)
 				{
@@ -4902,7 +4902,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num6 != 0)
 				{
-					jjtree.closeNodeScope(aSTREStringLiteral, b: true);
+					jjtree.CloseNodeScope(aSTREStringLiteral, b: true);
 					jjtreeCloseNodeScope(aSTREStringLiteral);
 				}
 				throw;
@@ -4914,12 +4914,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				System.Exception ex5 = ex4;
 				if (num7 != 0)
 				{
-					jjtree.clearNodeScope(aSTREReference);
+					jjtree.ClearNodeScope(aSTREReference);
 					num7 = 0;
 				}
 				else
 				{
-					jjtree.popNode();
+					jjtree.PopNode();
 				}
 				if (ex5 is RuntimeException)
 				{
@@ -4936,7 +4936,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				//try-fault
 				if (num7 != 0)
 				{
-					jjtree.closeNodeScope(aSTREReference, b: true);
+					jjtree.CloseNodeScope(aSTREReference, b: true);
 					jjtreeCloseNodeScope(aSTREReference);
 				}
 				throw;
@@ -4949,7 +4949,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTRECharList aSTRECharList = new ASTRECharList(37);
 		int num = 1;
-		jjtree.openNodeScope(aSTRECharList);
+		jjtree.OpenNodeScope(aSTRECharList);
 		jjtreeOpenNodeScope(aSTRECharList);
 		System.Exception ex;
 		try
@@ -4992,14 +4992,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTRECharList, b: true);
+				jjtree.CloseNodeScope(aSTRECharList, b: true);
 				jjtreeCloseNodeScope(aSTRECharList);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTRECharList, b: true);
+			jjtree.CloseNodeScope(aSTRECharList, b: true);
 			jjtreeCloseNodeScope(aSTRECharList);
 		}
 		return;
@@ -5010,12 +5010,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex3 = ex2;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTRECharList);
+				jjtree.ClearNodeScope(aSTRECharList);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex3 is RuntimeException)
 			{
@@ -5032,7 +5032,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTRECharList, b: true);
+				jjtree.CloseNodeScope(aSTRECharList, b: true);
 				jjtreeCloseNodeScope(aSTRECharList);
 			}
 			throw;
@@ -5044,7 +5044,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTCharDescriptor aSTCharDescriptor = new ASTCharDescriptor(38);
 		int num = 1;
-		jjtree.openNodeScope(aSTCharDescriptor);
+		jjtree.OpenNodeScope(aSTCharDescriptor);
 		jjtreeOpenNodeScope(aSTCharDescriptor);
 		System.Exception ex;
 		try
@@ -5073,14 +5073,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTCharDescriptor, b: true);
+				jjtree.CloseNodeScope(aSTCharDescriptor, b: true);
 				jjtreeCloseNodeScope(aSTCharDescriptor);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTCharDescriptor, b: true);
+			jjtree.CloseNodeScope(aSTCharDescriptor, b: true);
 			jjtreeCloseNodeScope(aSTCharDescriptor);
 		}
 		return;
@@ -5091,12 +5091,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex3 = ex2;
 			if (num != 0)
 			{
-				jjtree.clearNodeScope(aSTCharDescriptor);
+				jjtree.ClearNodeScope(aSTCharDescriptor);
 				num = 0;
 			}
 			else
 			{
-				jjtree.popNode();
+				jjtree.PopNode();
 			}
 			if (ex3 is RuntimeException)
 			{
@@ -5113,7 +5113,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTCharDescriptor, b: true);
+				jjtree.CloseNodeScope(aSTCharDescriptor, b: true);
 				jjtreeCloseNodeScope(aSTCharDescriptor);
 			}
 			throw;
@@ -5125,7 +5125,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	{
 		ASTNodeDescriptorExpression aSTNodeDescriptorExpression = new ASTNodeDescriptorExpression(40);
 		int num = 1;
-		jjtree.openNodeScope(aSTNodeDescriptorExpression);
+		jjtree.OpenNodeScope(aSTNodeDescriptorExpression);
 		jjtreeOpenNodeScope(aSTNodeDescriptorExpression);
 		try
 		{
@@ -5158,14 +5158,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			//try-fault
 			if (num != 0)
 			{
-				jjtree.closeNodeScope(aSTNodeDescriptorExpression, b: true);
+				jjtree.CloseNodeScope(aSTNodeDescriptorExpression, b: true);
 				jjtreeCloseNodeScope(aSTNodeDescriptorExpression);
 			}
 			throw;
 		}
 		if (num != 0)
 		{
-			jjtree.closeNodeScope(aSTNodeDescriptorExpression, b: true);
+			jjtree.CloseNodeScope(aSTNodeDescriptorExpression, b: true);
 			jjtreeCloseNodeScope(aSTNodeDescriptorExpression);
 		}
 	}
@@ -5180,7 +5180,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		else
 		{
 			Token obj = this.token;
-			Token nextToken = token_source.getNextToken();
+			Token nextToken = token_source.GetNextToken();
 			Token token = obj;
 			token.Next = nextToken;
 			this.token = nextToken;
@@ -7432,7 +7432,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	
 		public void RSIGNEDSHIFT()
 	{
-		if (getToken(1).Kind != 126 || ((Token.GTToken)getToken(1)).realKind != 125)
+		if (getToken(1).Kind != 126 || ((Token.GTToken)getToken(1)).RealKind != 125)
 		{
 			jj_consume_token(-1);
 			
@@ -7484,7 +7484,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	
 		public void RUNSIGNEDSHIFT()
 	{
-		if (getToken(1).Kind != 126 || ((Token.GTToken)getToken(1)).realKind != 124)
+		if (getToken(1).Kind != 126 || ((Token.GTToken)getToken(1)).RealKind != 124)
 		{
 			jj_consume_token(-1);
 			
@@ -10772,7 +10772,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			if (jj_scanpos.Next == null)
 			{
 				Token obj = jj_scanpos;
-				Token nextToken = token_source.getNextToken();
+				Token nextToken = token_source.GetNextToken();
 				Token token = obj;
 				Token obj2 = nextToken;
 				token.Next = nextToken;
@@ -11598,7 +11598,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	private bool jj_3R_84()
 	{
 		lookingAhead = true;
-		jj_semLA = ((getToken(1).Kind == 126 && ((Token.GTToken)getToken(1)).realKind == 124) ? true : false);
+		jj_semLA = ((getToken(1).Kind == 126 && ((Token.GTToken)getToken(1)).RealKind == 124) ? true : false);
 		lookingAhead = false;
 		if (!jj_semLA || jj_3R_114())
 		{
@@ -11709,7 +11709,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	private bool jj_3R_83()
 	{
 		lookingAhead = true;
-		jj_semLA = ((getToken(1).Kind == 126 && ((Token.GTToken)getToken(1)).realKind == 125) ? true : false);
+		jj_semLA = ((getToken(1).Kind == 126 && ((Token.GTToken)getToken(1)).RealKind == 125) ? true : false);
 		lookingAhead = false;
 		if (!jj_semLA || jj_3R_113())
 		{
@@ -15291,7 +15291,7 @@ ex=x;
 		token_source.ReInit(jj_input_stream);
 		token = new Token();
 		this.m_jj_ntk = -1;
-		jjtree.reset();
+		jjtree.Reset();
 		jj_gen = 0;
 		for (int i = 0; i < 178; i++)
 		{
@@ -15834,7 +15834,7 @@ ex=x;
 		token_source.ReInit(jj_input_stream);
 		token = new Token();
 		this.m_jj_ntk = -1;
-		jjtree.reset();
+		jjtree.Reset();
 		jj_gen = 0;
 		for (int i = 0; i < 178; i++)
 		{
@@ -15879,7 +15879,7 @@ ex=x;
 		token_source = jjtptm;
 		token = new Token();
 		this.m_jj_ntk = -1;
-		jjtree.reset();
+		jjtree.Reset();
 		jj_gen = 0;
 		for (int i = 0; i < 178; i++)
 		{

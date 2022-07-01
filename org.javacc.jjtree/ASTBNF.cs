@@ -2,12 +2,12 @@ namespace org.javacc.jjtree;
 
 public class ASTBNF : ASTProduction
 {
-	internal Token declBeginLoc;
-	internal ASTBNF(int P_0) : base(P_0)
+	internal Token DeclBeginLoc;
+	internal ASTBNF(int id) : base(id)
 	{
-		throws_list.Add("ParseException");
-		throws_list.Add("RuntimeException");
+		ThrowsList.Add("ParseException");
+		ThrowsList.Add("RuntimeException");
 	}
 
-    public override string ToString() => base.ToString() + ": " + (name);
+    public override string ToString() => base.ToString() + ": " + (Name);
 }

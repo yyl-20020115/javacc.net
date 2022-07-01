@@ -2,15 +2,15 @@ namespace org.javacc.jjtree;
 
 public class ASTBNFAction : JJTreeNode
 {
-	private Node getScopingParent(NodeScope ns)
+	private Node GetScopingParent(NodeScope scope)
 	{
 		for (var node = jjtGetParent(); node != null; node = node.jjtGetParent())
 		{
 			if (node is ASTBNFNodeScope atbs)
 			{
-				if (atbs.node_scope == ns) return node;
+				if (atbs.nodeScope == scope) return node;
 			}
-			else if (node is ASTExpansionNodeScope ntbs && ntbs.node_scope == ns)
+			else if (node is ASTExpansionNodeScope ntbs && ntbs.nodeScope == scope)
 			{
 				return node;
 			}
@@ -27,7 +27,7 @@ public class ASTBNFAction : JJTreeNode
 		if (enclosingNodeScope != null && !enclosingNodeScope.IsVoid)
 		{
 			int num = 1;
-			var scopingParent = getScopingParent(enclosingNodeScope);
+			var scopingParent = GetScopingParent(enclosingNodeScope);
 			JJTreeNode jJTreeNode = this;
 			while (true)
 			{

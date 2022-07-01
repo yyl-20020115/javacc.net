@@ -1,7 +1,6 @@
 namespace org.javacc.jjtree;
 public class ASTREEOF : JJTreeNode
 {
-	public ASTREEOF(int i) : base(i) { }
-	
-	public ASTREEOF(JJTreeParser jjtp, int i) : base(jjtp, i) { }
+	public ASTREEOF(int id) : base(id) { }
+	public ASTREEOF(JJTreeParser jjtp, int id) : base(jjtp, id) { }
 }

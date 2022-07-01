@@ -1,6 +1,5 @@
 using System;
 using System.Text;
-using System.Runtime.Serialization;
 using javacc.net;
 
 namespace org.javacc.jjtree;
@@ -72,9 +71,9 @@ public class ParseException : System.Exception
 			int num;
 			if ((num = str[i]) < 32 || num > 126)
 			{
-				string @this = new StringBuilder().Append("0000").Append(Utils.ToString(num, 16)).ToString();
-				stringBuilder.Append(new StringBuilder().Append("\\u").Append(
-					@this.Substring(@this.Length - 4, @this.Length)).ToString());
+				string @this = ("0000")+(Utils.ToString(num, 16));
+				stringBuilder.Append(("\\u")+(
+					@this.Substring(@this.Length - 4, @this.Length)));
 			}
 			else
 			{
@@ -111,11 +110,11 @@ public class ParseException : System.Exception
 				{
 					num = expectedTokenSequences[i].Length;
 				}
-				for (int j = 0; j < (nint)expectedTokenSequences[i].LongLength; j++)
+				for (int j = 0; j < expectedTokenSequences[i].Length; j++)
 				{
 					stringBuilder.Append(tokenImage[expectedTokenSequences[i][j]]).Append(' ');
 				}
-				if (expectedTokenSequences[i][(nint)expectedTokenSequences[i].LongLength - 1] != 0)
+				if (expectedTokenSequences[i][expectedTokenSequences[i].LongLength - 1] != 0)
 				{
 					stringBuilder.Append("...");
 				}
@@ -140,17 +139,16 @@ public class ParseException : System.Exception
 				str +=" \"";
 				next = next.Next;
 			}
-			str = new StringBuilder().Append(str).Append("\" at line ").Append(currentToken.Next.BeginLine)
-				.Append(", column ")
-				.Append(currentToken.Next.BeginColumn)
-				.ToString();
-			str = new StringBuilder().Append(str).Append(".").Append(eol)
-				.ToString();
-			str = (((nint)expectedTokenSequences.LongLength != 1) ? new StringBuilder().Append(str).Append("Was expecting one of:").Append(eol)
-				.Append("    ")
-				.ToString() : new StringBuilder().Append(str).Append("Was expecting:").Append(eol)
-				.Append("    ")
-				.ToString());
+			str =(str)+("\" at line ")+(currentToken.Next.BeginLine)
+				+(", column ")
+				+(currentToken.Next.BeginColumn)
+				;
+			str = (str)+(".")+(eol);
+			str = (((nint)expectedTokenSequences.LongLength != 1) ? (str)+("Was expecting one of:")+(eol)
+				+("    ")
+				: (str)+("Was expecting:")+(eol)
+				+("    ")
+				);
 			return str+stringBuilder.ToString();
 		}
 	}

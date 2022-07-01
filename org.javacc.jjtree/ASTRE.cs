@@ -1,6 +1,6 @@
 namespace org.javacc.jjtree;
 public class ASTRE : JJTreeNode
 {	
-	public ASTRE(int i) : base(i) { }	
-	public ASTRE(JJTreeParser jjtp, int i) : base(jjtp, i) { }
+	public ASTRE(int id) : base(id) { }	
+	public ASTRE(JJTreeParser jjtp, int id) : base(jjtp, id) { }
 }

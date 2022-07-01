@@ -1,6 +1,6 @@
 namespace org.javacc.jjtree;
 public class ASTBNFChoice : JJTreeNode
 {
-	public ASTBNFChoice(int i) : base(i) { }
-	public ASTBNFChoice(JJTreeParser jjtp, int i) : base(jjtp, i) { }
+	public ASTBNFChoice(int id) : base(id) { }
+	public ASTBNFChoice(JJTreeParser jjtp, int id) : base(jjtp, id) { }
 }

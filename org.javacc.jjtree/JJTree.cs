@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Text;
 using org.javacc.parser;
 namespace org.javacc.jjtree;
 
@@ -11,7 +9,6 @@ public class JJTree
 	{
 		io.Msg.WriteLine(text);
 	}
-
 	
 	private void InitializeOptions()
 	{
@@ -19,7 +16,6 @@ public class JJTree
 		JJTreeGlobals.Initialize();
 	}
 
-	
 	private void HelpMessage()
 	{
 		WriteLine("Usage:");
@@ -74,7 +70,6 @@ public class JJTree
 		WriteLine("    https://javacc.dev.java.net/doc/JJTree.html ");
 		WriteLine("");
 	}
-
 	
 	public JJTree()
 	{
@@ -83,9 +78,9 @@ public class JJTree
 	
 	public virtual int Main(string[] strarr)
 	{
-		ASTNodeDescriptor.nodeIds = new ArrayList();
-		ASTNodeDescriptor.nodeNames = new ArrayList();
-		ASTNodeDescriptor.nodeSeen = new Hashtable();
+		ASTNodeDescriptor.nodeIds = new ();
+		ASTNodeDescriptor.nodeNames = new ();
+		ASTNodeDescriptor.nodeSeen = new ();
 		EntryPoint.reInitAll();
 		JavaCCGlobals.bannerLine("Tree Builder", "");
 		io = new IO();
@@ -115,8 +110,7 @@ public class JJTree
 			text = strarr[strarr.Length - 1];
 			if (Options.IsOption(text))
 			{
-				WriteLine(new StringBuilder().Append("Last argument \"").Append(text).Append("\" is not a filename")
-					.ToString());
+				WriteLine(("Last argument \"")+(text)+("\" is not a filename"));
 				result2 = 1;
 				goto IL_00d9;
 			}
@@ -146,8 +140,7 @@ public class JJTree
 				{
 					if (!Options.IsOption(strarr[result2]))
 					{
-						WriteLine(new StringBuilder().Append("Argument \"").Append(strarr[result2]).Append("\" must be an option setting.")
-							.ToString());
+						WriteLine(("Argument \"")+(strarr[result2])+("\" must be an option setting."));
 						result3 = 1;
 						goto IL_0153;
 					}
@@ -203,8 +196,7 @@ public class JJTree
 		JJTreeIOException ex2;
 		try
 		{
-			WriteLine(new StringBuilder().Append("Reading from file ").Append(io.InputFileName).Append(" . . .")
-				.ToString());
+			WriteLine(("Reading from file ")+(io.InputFileName)+(" . . ."));
 			JJTreeGlobals.toolList = JavaCCGlobals.getToolNames(text);
 			JJTreeGlobals.toolList.Add("JJTree");
 			try
@@ -213,7 +205,7 @@ public class JJTree
 				{
 					JJTreeParser jJTreeParser = new JJTreeParser(io.In);
 					jJTreeParser.javacc_input();
-					aSTGrammar = (ASTGrammar)jJTreeParser.jjtree.rootNode();
+					aSTGrammar = (ASTGrammar)jJTreeParser.jjtree.RootNode;
 					//if (java.lang.Boolean.getBoolean("jjtree-dump"))
 					//{
 					//	aSTGrammar.dump(" ");
@@ -264,7 +256,7 @@ public class JJTree
 					NodeFiles.GenerateTreeConstants_java();
 					NodeFiles.GenerateVisitor_java();
 					JJTreeState.generateTreeState_java();
-					WriteLine(new StringBuilder().Append("Annotated grammar generated successfully in ").Append(io.OutputFileName).ToString());
+					WriteLine(("Annotated grammar generated successfully in ")+(io.OutputFileName));
 				}
 				catch (ParseException x5)
 				{
@@ -306,7 +298,7 @@ public class JJTree
 		try
 		{
 			System.Exception @this = ex11;
-			WriteLine(new StringBuilder().Append("Error parsing input: ").Append((@this)).ToString());
+			WriteLine(("Error parsing input: ")+((@this)));
 			//Throwable.instancehelper_printStackTrace(@this, io.getMsg());
 			result3 = 1;
 		}
@@ -330,7 +322,7 @@ public class JJTree
 		try
 		{
 			ParseException this2 = ex14;
-			WriteLine(new StringBuilder().Append("Error parsing input: ").Append((this2)).ToString());
+			WriteLine(("Error parsing input: ")+((this2)));
 			result3 = 1;
 		}
 		catch
@@ -361,8 +353,8 @@ public class JJTree
 		try
 		{
 			JJTreeIOException this3 = ex2;
-			WriteLine(new StringBuilder().Append("Error setting input: ").Append(
-				(this3.Message)).ToString());
+			WriteLine(("Error setting input: ")+(
+				(this3.Message)));
 			result3 = 1;
 		}
 		catch
@@ -385,8 +377,8 @@ public class JJTree
 				try
 				{
 					JJTreeIOException this4 = ex15;
-					WriteLine(new StringBuilder().Append("Error setting output: ").Append(
-						(this4.Message)).ToString());
+					WriteLine(("Error setting output: ")+(
+						(this4.Message)));
 					result4 = 1;
 				}
 				catch (ParseException x7)

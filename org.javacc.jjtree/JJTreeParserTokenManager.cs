@@ -294,7 +294,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 	}
 
 	
-	public virtual Token getNextToken()
+	public virtual Token GetNextToken()
 	{
 		Token token = null;
 		int num = 0;
@@ -352,7 +352,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 				{
 					if (jjmatchedPos + 1 < num)
 					{
-						input_stream.backup(num - jjmatchedPos - 1);
+						input_stream.Backup(num - jjmatchedPos - 1);
 					}
 					if ((jjtoToken[jjmatchedKind >> 6] & (1L << jjmatchedKind)) != 0)
 					{
@@ -378,7 +378,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 					jjmatchedKind = int.MaxValue;
 					try
 					{
-						curChar = input_stream.readChar();
+						curChar = input_stream.ReadChar();
 					}
 					catch (IOException)
 					{
@@ -388,14 +388,14 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 				}
 				goto IL_02b0;
 				IL_02b0:
-				int num2 = input_stream.getEndLine();
-				int num3 = input_stream.getEndColumn();
+				int num2 = input_stream.EndLine;
+				int num3 = input_stream.EndColumn;
 				string text = null;
 				int num4 = 0;
 				try
 				{
-					input_stream.readChar();
-					input_stream.backup(1);
+					input_stream.ReadChar();
+					input_stream.Backup(1);
 				}
 				catch (IOException)
 				{
@@ -408,7 +408,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 				IL_0336:
 				if (num4 == 0)
 				{
-					input_stream.backup(1);
+					input_stream.Backup(1);
 					text = ((num > 1) ? input_stream.GetImage() : "");
 				}
 				int b = num4;
@@ -1372,7 +1372,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 			}
 			try
 			{
-				curChar = input_stream.readChar();
+				curChar = input_stream.ReadChar();
 			}
 			catch (IOException)
 			{
@@ -1395,7 +1395,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 	{
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -1573,7 +1573,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		jjmatchedPos = P_0;
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -1594,7 +1594,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		}
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -1720,7 +1720,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		}
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -1851,7 +1851,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		}
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -1967,7 +1967,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		}
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -2068,7 +2068,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		}
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -2149,7 +2149,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		}
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -2216,7 +2216,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		}
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -2279,7 +2279,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		}
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -2332,7 +2332,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		}
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -2371,7 +2371,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		}
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -2410,7 +2410,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		}
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -2443,7 +2443,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		}
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -2469,7 +2469,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 		}
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -2738,7 +2738,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 	{
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -2864,7 +2864,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 			}
 			try
 			{
-				curChar = input_stream.readChar();
+				curChar = input_stream.ReadChar();
 			}
 			catch (IOException)
 			{
@@ -2880,7 +2880,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 	{
 		try
 		{
-			curChar = input_stream.readChar();
+			curChar = input_stream.ReadChar();
 		}
 		catch (IOException)
 		{
@@ -2918,10 +2918,10 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 	{
 		string text = ___003C_003EjjstrLiteralImages[jjmatchedKind];
 		string str = ((text != null) ? text : input_stream.GetImage());
-		int beginLine = input_stream.getBeginLine();
-		int beginColumn = input_stream.getBeginColumn();
-		int endLine = input_stream.getEndLine();
-		int endColumn = input_stream.getEndColumn();
+		int beginLine = input_stream.BeginLine;
+		int beginColumn = input_stream.BeginColumn;
+		int endLine = input_stream.EndLine;
+		int endColumn = input_stream.EndColumn;
 		Token token = Token.NewToken(jjmatchedKind, str);
 		token.BeginLine = beginLine;
 		token.EndLine = endLine;
@@ -3331,8 +3331,8 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 			}
 			image.Append(___003C_003EjjstrLiteralImages[124]);
 			P_0.Kind = 126;
-			((Token.GTToken)P_0).realKind = 124;
-			input_stream.backup(2);
+			((Token.GTToken)P_0).RealKind = 124;
+			input_stream.Backup(2);
 			P_0.Image = ">";
 			break;
 		case 125:
@@ -3342,8 +3342,8 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 			}
 			image.Append(___003C_003EjjstrLiteralImages[125]);
 			P_0.Kind = 126;
-			((Token.GTToken)P_0).realKind = 125;
-			input_stream.backup(1);
+			((Token.GTToken)P_0).RealKind = 125;
+			input_stream.Backup(1);
 			P_0.Image = ">";
 			break;
 		}
@@ -3369,13 +3369,13 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 			}
 			image.Append(input_stream.GetSuffix(jjimageLen));
 			jjimageLen = 0;
-			input_stream.backup(1);
+			input_stream.Backup(1);
 		}
 	}
 
-	public virtual void setDebugStream(TextWriter ps)
+	public virtual void SetDebugStream(TextWriter writer)
 	{
-		debugStream = ps;
+		debugStream = writer;
 	}
 
 	

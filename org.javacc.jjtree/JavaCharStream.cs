@@ -8,46 +8,43 @@ public class JavaCharStream
 {
 	public const bool staticFlag = false;
 
-	public int bufpos;
+	public int bufpos = 0;
 
-	internal int bufsize;
+	internal int bufsize = 0;
 
-	internal int available;
+	internal int available = 0;
 
-	internal int tokenBegin;
+	internal int tokenBegin = 0;
 
-	protected internal int[] bufline;
+	protected internal int[] bufline = Array.Empty<int>();
 
-	protected internal int[] bufcolumn;
+	protected internal int[] bufcolumn = Array.Empty<int>();
 
-	protected internal int column;
+	protected internal int column = 0;
 
-	protected internal int line;
+	protected internal int line = 0;
 
-	protected internal bool prevCharIsCR;
+	protected internal bool prevCharIsCR = false;
 
-	protected internal bool prevCharIsLF;
+	protected internal bool prevCharIsLF = false;
 
 	protected internal TextReader inputStream;
 
-	protected internal char[] nextCharBuf;
+	protected internal char[] nextCharBuf = Array.Empty<char>();
 
-	protected internal char[] buffer;
+	protected internal char[] buffer = Array.Empty<char>();
 
-	protected internal int maxNextCharInd;
+	protected internal int maxNextCharInd = 0;
 
-	protected internal int nextCharInd;
+	protected internal int nextCharInd = 0;
 
-	protected internal int inBuf;
+	protected internal int inBuf = 0;
 
-	protected internal int tabSize;
+	protected internal int tabSize = 0;
 
 
 	public JavaCharStream(Stream @is, string str, int i1, int i2)
-	: this(@is, str, i1, i2, 4096)
-	{
-	}
-
+		: this(@is, str, i1, i2, 4096) { }
 
 	public virtual void ReInit(Stream @is, string str, int i1, int i2)
 	{
@@ -56,10 +53,7 @@ public class JavaCharStream
 
 
 	public JavaCharStream(TextReader r, int i1, int i2)
-		: this(r, i1, i2, 4096)
-	{
-	}
-
+		: this(r, i1, i2, 4096) { }
 
 	public virtual void ReInit(TextReader r, int i1, int i2)
 	{
@@ -67,7 +61,7 @@ public class JavaCharStream
 	}
 
 
-	public virtual char readChar()
+	public virtual char ReadChar()
 	{
 		//Discarded unreachable code: IL_0132
 		int num;
@@ -152,7 +146,7 @@ public class JavaCharStream
 			IL_0126:
 				try
 				{
-					backup(num8);
+					Backup(num8);
 					return '\\';
 				}
 				catch (IOException)
@@ -166,7 +160,7 @@ public class JavaCharStream
 			IL_0141:
 				if (num8 > 1)
 				{
-					backup(num8 - 1);
+					Backup(num8 - 1);
 				}
 				return '\\';
 			}
@@ -176,7 +170,7 @@ public class JavaCharStream
 				{
 					column++;
 				}
-				buffer[bufpos] = (char)(num5 = (ushort)((hexval((char)num5) << 12) | (hexval(ReadByte()) << 8) | (hexval(ReadByte()) << 4) | hexval(ReadByte())));
+				buffer[bufpos] = (char)(num5 = (ushort)((HexVal((char)num5) << 12) | (HexVal(ReadByte()) << 8) | (HexVal(ReadByte()) << 4) | HexVal(ReadByte())));
 				column += 4;
 			}
 			catch (IOException)
@@ -187,7 +181,7 @@ public class JavaCharStream
 			{
 				return (char)num5;
 			}
-			backup(num8 - 1);
+			Backup(num8 - 1);
 			return '\\';
 		}
 		UpdateLineColumn((char)num5);
@@ -209,31 +203,19 @@ public class JavaCharStream
 		{
 			return new string(buffer, tokenBegin, bufpos - tokenBegin + 1);
 		}
-		return new StringBuilder().Append(new string(buffer, tokenBegin, bufsize - tokenBegin)).Append(new string(buffer, 0, bufpos + 1)).ToString();
+		return (new string(buffer, tokenBegin, bufsize - tokenBegin)+(new string(buffer, 0, bufpos + 1)));
 	}
 
-	public virtual int getBeginLine()
-	{
-		return bufline[tokenBegin];
-	}
+    public virtual int BeginLine => bufline[tokenBegin];
 
-	public virtual int getBeginColumn()
-	{
-		return bufcolumn[tokenBegin];
-	}
+    public virtual int BeginColumn => bufcolumn[tokenBegin];
 
-	public virtual int getEndLine()
-	{
-		return bufline[bufpos];
-	}
+    public virtual int EndLine => bufline[bufpos];
 
-	public virtual int getEndColumn()
-	{
-		return bufcolumn[bufpos];
-	}
+    public virtual int EndColumn => bufcolumn[bufpos];
 
 
-	public virtual char BeginToken()
+    public virtual char BeginToken()
 	{
 		if (inBuf > 0)
 		{
@@ -249,12 +231,12 @@ public class JavaCharStream
 		}
 		tokenBegin = 0;
 		bufpos = -1;
-		char result = readChar();
+		char result = ReadChar();
 
 		return result;
 	}
 
-	public virtual void backup(int i)
+	public virtual void Backup(int i)
 	{
 		inBuf += i;
 		int num = bufpos - i;
@@ -310,7 +292,7 @@ public class JavaCharStream
 		if (bufpos != 0)
 		{
 			bufpos--;
-			backup(0);
+			Backup(0);
 		}
 		else
 		{
@@ -462,56 +444,29 @@ public class JavaCharStream
 		bufcolumn[bufpos] = column;
 	}
 
-	internal static int hexval(char P_0)
-	{
-		switch (P_0)
-		{
-			case '0':
-				return 0;
-			case '1':
-				return 1;
-			case '2':
-				return 2;
-			case '3':
-				return 3;
-			case '4':
-				return 4;
-			case '5':
-				return 5;
-			case '6':
-				return 6;
-			case '7':
-				return 7;
-			case '8':
-				return 8;
-			case '9':
-				return 9;
-			case 'A':
-			case 'a':
-				return 10;
-			case 'B':
-			case 'b':
-				return 11;
-			case 'C':
-			case 'c':
-				return 12;
-			case 'D':
-			case 'd':
-				return 13;
-			case 'E':
-			case 'e':
-				return 14;
-			case 'F':
-			case 'f':
-				return 15;
-			default:
-
-				throw new IOException();
-		}
-	}
+    internal static int HexVal(char c) => c switch
+    {
+        '0' => 0,
+        '1' => 1,
+        '2' => 2,
+        '3' => 3,
+        '4' => 4,
+        '5' => 5,
+        '6' => 6,
+        '7' => 7,
+        '8' => 8,
+        '9' => 9,
+        'A' or 'a' => 10,
+        'B' or 'b' => 11,
+        'C' or 'c' => 12,
+        'D' or 'd' => 13,
+        'E' or 'e' => 14,
+        'F' or 'f' => 15,
+        _ => throw new IOException(),
+    };
 
 
-	public JavaCharStream(TextReader r, int i1, int i2, int i3)
+    public JavaCharStream(TextReader r, int i1, int i2, int i3)
 	{
 		bufpos = -1;
 		column = 0;
@@ -569,15 +524,11 @@ public class JavaCharStream
 
 
 	public JavaCharStream(Stream @is, string str, int i1, int i2, int i3)
-	: this((str != null) ? new StreamReader(@is) : new StreamReader(@is), i1, i2, i3)
-	{
-	}
+	: this((str != null) ? new StreamReader(@is) : new StreamReader(@is), i1, i2, i3) { }
 
 
 	public JavaCharStream(Stream @is, int i1, int i2, int i3)
-		: this(new StreamReader(@is), i1, i2, 4096)
-	{
-	}
+		: this(new StreamReader(@is), i1, i2, 4096) { }
 
 
 	public virtual void ReInit(Stream @is, string str, int i1, int i2, int i3)
@@ -591,32 +542,15 @@ public class JavaCharStream
 		ReInit(new StreamReader(@is), i1, i2, i3);
 	}
 
-	protected internal virtual void setTabSize(int i)
-	{
-		tabSize = i;
-	}
+    protected internal virtual int TabSize { get => tabSize; set => tabSize = value; }
 
-	protected internal virtual int getTabSize(int i)
-	{
-		return tabSize;
-	}
+    public virtual int Column => bufcolumn[bufpos];
 
-	public virtual int getColumn()
-	{
-		return bufcolumn[bufpos];
-	}
-
-	public virtual int getLine()
-	{
-		return bufline[bufpos];
-	}
+    public virtual int Line => bufline[bufpos];
 
 
-	public JavaCharStream(TextReader r)
-		: this(r, 1, 1, 4096)
-	{
-	}
-
+    public JavaCharStream(TextReader r)
+		: this(r, 1, 1, 4096) { }
 
 	public virtual void ReInit(TextReader r)
 	{
@@ -625,22 +559,14 @@ public class JavaCharStream
 
 
 	public JavaCharStream(Stream @is, int i1, int i2)
-		: this(@is, i1, i2, 4096)
-	{
-	}
-
+		: this(@is, i1, i2, 4096) { }
 
 	public JavaCharStream(Stream @is, string str)
-	: this(@is, str, 1, 1, 4096)
-	{
-	}
+		: this(@is, str, 1, 1, 4096) { }
 
 
 	public JavaCharStream(Stream @is)
-		: this(@is, 1, 1, 4096)
-	{
-	}
-
+		: this(@is, 1, 1, 4096) { }
 
 	public virtual void ReInit(Stream @is, int i1, int i2)
 	{
@@ -667,7 +593,7 @@ public class JavaCharStream
 		bufcolumn = null;
 	}
 
-	public virtual void adjustBeginLineColumn(int i1, int i2)
+	public virtual void AdjustBeginLineColumn(int i1, int i2)
 	{
 		int num = tokenBegin;
 		int num2 = ((bufpos < tokenBegin) ? (bufsize - tokenBegin + bufpos + 1 + inBuf) : (bufpos - tokenBegin + inBuf + 1));

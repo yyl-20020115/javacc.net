@@ -1,7 +1,7 @@
 namespace org.javacc.jjtree;
 public class ASTCompilationUnit : JJTreeNode
 {
-	internal ASTCompilationUnit(int P_0) : base(P_0) { }
+	internal ASTCompilationUnit(int id) : base(id) { }
 	public override void Write(IO io)
 	{
 		var token = FirstToken;

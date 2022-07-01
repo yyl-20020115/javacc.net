@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Text;
+using System.Collections.Generic;
+
 namespace org.javacc.jjtree;
 public class ASTNodeDescriptor : JJTreeNode
 {
 	private bool Faked = false;
-	internal static ArrayList nodeIds = new();
-	internal static ArrayList nodeNames = new();
-	internal static Hashtable nodeSeen = new();
+	internal static List<string> nodeIds = new();
+	internal static List<string> nodeNames = new();
+	internal static Dictionary<string,string> nodeSeen = new();
 	internal string Name = "";
 	internal bool isGT =false;
 	internal ASTNodeDescriptorExpression expression;
@@ -57,8 +57,7 @@ public class ASTNodeDescriptor : JJTreeNode
 		var token = expression.FirstToken;
 		while (true)
 		{
-			text = new StringBuilder().Append(text).Append(" ").Append(token.Image)
-				.ToString();
+			text +=(" ")+(token.Image);
 			if (token == expression.LastToken) break;
 			token = token.Next;
 		}
@@ -66,19 +65,19 @@ public class ASTNodeDescriptor : JJTreeNode
 	}
 
 	
-	internal static ASTNodeDescriptor Indefinite(string P_0)
+	internal static ASTNodeDescriptor Indefinite(string name)
 	{
 		var aSTNodeDescriptor = new ASTNodeDescriptor(39)
 		{
-			Name = P_0,
+			Name = name,
 			Faked = true
         };
         aSTNodeDescriptor.SetNodeId();
 		return aSTNodeDescriptor;
 	}
 
-    internal static ArrayList NodeIds => nodeIds;
-    internal static ArrayList NodeNames => nodeNames;
+    internal static List<string> NodeIds => nodeIds;
+    internal static List<string> NodeNames => nodeNames;
     internal virtual bool IsVoid => string.Equals(Name, "void");
     public override string ToString() => Faked ? "(faked) " + Name : base.ToString() + ": " + Name;
 
@@ -104,11 +103,4 @@ public class ASTNodeDescriptor : JJTreeNode
 
 
     internal override string TranslateImage(Token P_0) => WhiteOut(P_0);
-
-    static ASTNodeDescriptor()
-	{
-		nodeIds = new ArrayList();
-		nodeNames = new ArrayList();
-		nodeSeen = new Hashtable();
-	}
 }

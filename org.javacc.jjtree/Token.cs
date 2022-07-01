@@ -3,7 +3,7 @@ public class Token
 {
 	public class GTToken : Token
 	{
-		internal int realKind = 126;
+		internal int RealKind = 126;
 
 		public GTToken(int i, string str)
 			: base(i, str) { }

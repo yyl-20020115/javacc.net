@@ -1,7 +1,7 @@
 namespace org.javacc.jjtree;
 public class ASTRECharList : JJTreeNode
 {	
-	public ASTRECharList(int i) : base(i) { }
+	public ASTRECharList(int id) : base(id) { }
 
-	public ASTRECharList(JJTreeParser jjtp, int i) : base(jjtp, i) { }
+	public ASTRECharList(JJTreeParser jjtp, int id) : base(jjtp, id) { }
 }
