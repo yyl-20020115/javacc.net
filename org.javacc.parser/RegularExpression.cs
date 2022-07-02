@@ -6,11 +6,11 @@ namespace org.javacc.parser;
 
 public abstract class RegularExpression : Expansion
 {
-	public string label;
+	public string label = "";
+	
+	internal new int ordinal = 0;
 
-	internal new int ordinal;
-
-	public ArrayList lhsTokens;
+	public List<Token> lhsTokens = new();
 
 	public Token rhsToken;
 
@@ -27,7 +27,7 @@ public abstract class RegularExpression : Expansion
 	public RegularExpression()
 	{
 		label = "";
-		lhsTokens = new ArrayList();
+		lhsTokens = new ();
 		private_rexp = false;
 		tpContext = null;
 		walkStatus = 0;
@@ -38,8 +38,7 @@ public abstract class RegularExpression : Expansion
 	{
 		var stringBuilder = base.Dump(i, s);
 		s.Add(this);
-		stringBuilder+(' ')+(label);
+		stringBuilder.Append(' ').Append(label);
 		return stringBuilder;
 	}
-
 }

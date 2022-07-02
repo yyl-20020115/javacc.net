@@ -1,5 +1,6 @@
 using System.Collections;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace org.javacc.parser;
@@ -47,9 +48,9 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 		{
 			goto IL_00aa;
 		}
-		var vector = JavaCCGlobals.toolNames.Clone() as ArrayList;
+		var vector = JavaCCGlobals.toolNames.ToList();
 		vector.Add("JavaCC");
-		ostr.WriteLine(("/* ")+(JavaCCGlobals.getIdString(vector, (JavaCCGlobals.cu_name)+("Constants.java")))+(" */")
+		ostr.WriteLine(("/* ")+(JavaCCGlobals.GetIdStringList(vector, (JavaCCGlobals.cu_name)+("Constants.java")))+(" */")
 			);
 		if (JavaCCGlobals.cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.cu_to_insertion_point_1[0]).kind == 60)
 		{
@@ -57,13 +58,13 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 			{
 				if (((Token)JavaCCGlobals.cu_to_insertion_point_1[i]).kind == 97)
 				{
-					JavaCCGlobals.printTokenSetup((Token)JavaCCGlobals.cu_to_insertion_point_1[0]);
+					JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.cu_to_insertion_point_1[0]);
 					for (int j = 0; j <= i; j++)
 					{
 						t = (Token)JavaCCGlobals.cu_to_insertion_point_1[j];
-						JavaCCGlobals.printToken(t, ostr);
+						JavaCCGlobals.PrintToken(t, ostr);
 					}
-					JavaCCGlobals.printTrailingComments(t, ostr);
+					JavaCCGlobals.PrintTrailingComments(t, ostr);
 					ostr.WriteLine("");
 					ostr.WriteLine("");
 					break;
@@ -112,7 +113,7 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 				RegularExpression regularExpression = regExprSpec.rexp;
 				if (regularExpression is RStringLiteral)
 				{
-					ostr.WriteLine(("    \"\\\"")+(JavaCCGlobals.add_escapes(JavaCCGlobals.add_escapes(((RStringLiteral)regularExpression).image)))+("\\\"\",")
+					ostr.WriteLine(("    \"\\\"")+(JavaCCGlobals.AddEscapes(JavaCCGlobals.AddEscapes(((RStringLiteral)regularExpression).image)))+("\\\"\",")
 						);
 					continue;
 				}

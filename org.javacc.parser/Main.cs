@@ -35,7 +35,7 @@ public static class EntryPoint
 	{
 		//Discarded unreachable code: IL_0349
 		reInitAll();
-		JavaCCGlobals.bannerLine("Parser Generator", "");
+		JavaCCGlobals.BannerLine("Parser Generator", "");
 
 		if (strarr.Length == 0)
 		{
@@ -98,17 +98,17 @@ public static class EntryPoint
 				Console.WriteLine(("Reading from file ")+(strarr[strarr.Length - 1])+(" . . .")
 					);
 				JavaCCGlobals.fileName = (JavaCCGlobals.origFileName = strarr[strarr.Length - 1]);
-				JavaCCGlobals.jjtreeGenerated = JavaCCGlobals.isGeneratedBy("JJTree", strarr[strarr.Length - 1]);
-				JavaCCGlobals.toolNames = JavaCCGlobals.getToolNames(strarr[strarr.Length - 1]);
+				JavaCCGlobals.jjtreeGenerated = JavaCCGlobals.IsGeneratedBy("JJTree", strarr[strarr.Length - 1]);
+				JavaCCGlobals.toolNames = JavaCCGlobals.GetToolNames(strarr[strarr.Length - 1]);
 				javaCCParser.javacc_input();
-				JavaCCGlobals.createOutputDir(Options.getOutputDirectory());
+				JavaCCGlobals.CreateOutputDir(Options.getOutputDirectory());
 				if (Options.getUnicodeInput())
 				{
 					NfaState.unicodeWarningGiven = true;
 					Console.WriteLine("Note: UNICODE_INPUT option is specified. Please make sure you create the parser/lexer using a TextReader with the correct character encoding.");
 				}
 				Semanticize.start();
-				ParseGen.start();
+				ParseGen.Start();
 				LexGen.start();
 				OtherFilesGen.start();
 				if (JavaCCErrors._Error_Count == 0 && (Options.getBuildParser() || Options.getBuildTokenManager()))

@@ -7,7 +7,7 @@ public class ASTGrammar : JJTreeNode
 
 	internal virtual void Generate(IO io)
 	{
-		io.WriteLine(("/*@bgen(jjtree) ")+(JavaCCGlobals.GetIdString(JJTreeGlobals.ToolList, io.OutputFileName))+(" */"));
+		io.WriteLine(("/*@bgen(jjtree) ")+(JavaCCGlobals.GetIdStringList(JJTreeGlobals.ToolList, io.OutputFileName))+(" */"));
 		io.Write("/*@egen*/");
 		Write(io);
 	}

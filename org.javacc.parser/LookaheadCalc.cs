@@ -110,7 +110,7 @@ public class LookaheadCalc : JavaCCGlobals
 				+(">")
 				.ToString() : (text)+(" <")+(regularExpression.label)
 				+(">")
-				.ToString()) : (text)+(" \"")+(JavaCCGlobals.add_escapes(((RStringLiteral)regularExpression).image))
+				.ToString()) : (text)+(" \"")+(JavaCCGlobals.AddEscapes(((RStringLiteral)regularExpression).image))
 				+("\"")
 				.ToString());
 		}

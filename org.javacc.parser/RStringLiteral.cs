@@ -730,7 +730,7 @@ public class RStringLiteral : RegularExpression
 							int i2;
 							if (intermediateKinds != null && intermediateKinds[j * 64 + l] != null && intermediateKinds[j * 64 + l][i] < j * 64 + l && intermediateMatchedPos != null && intermediateMatchedPos[j * 64 + l][i] == i)
 							{
-								JavaCCErrors.Warning((" \"")+(JavaCCGlobals.add_escapes(allImages[j * 64 + l]))+("\" cannot be matched as a string literal token ")
+								JavaCCErrors.Warning((" \"")+(JavaCCGlobals.AddEscapes(allImages[j * 64 + l]))+("\" cannot be matched as a string literal token ")
 									+("at line ")
 									+(GetLine(j * 64 + l))
 									+(", column ")
@@ -743,7 +743,7 @@ public class RStringLiteral : RegularExpression
 							}
 							else if (i == 0 && LexGen.canMatchAnyChar[LexGen.lexStateIndex] >= 0 && LexGen.canMatchAnyChar[LexGen.lexStateIndex] < j * 64 + l)
 							{
-								JavaCCErrors.Warning((" \"")+(JavaCCGlobals.add_escapes(allImages[j * 64 + l]))+("\" cannot be matched as a string literal token ")
+								JavaCCErrors.Warning((" \"")+(JavaCCGlobals.AddEscapes(allImages[j * 64 + l]))+("\" cannot be matched as a string literal token ")
 									+("at line ")
 									+(GetLine(j * 64 + l))
 									+(", column ")
@@ -1241,7 +1241,7 @@ public class RStringLiteral : RegularExpression
 		var regularExpression = LexGen.rexprs[P_0];
 		if (regularExpression is RStringLiteral)
 		{
-			string result = (" \"")+(JavaCCGlobals.add_escapes(((RStringLiteral)regularExpression).image))+("\"")
+			string result = (" \"")+(JavaCCGlobals.AddEscapes(((RStringLiteral)regularExpression).image))+("\"")
 				;
 			
 			return result;

@@ -82,7 +82,7 @@ public class JJTree
 		ASTNodeDescriptor.nodeNames = new ();
 		ASTNodeDescriptor.nodeSeen = new ();
 		EntryPoint.reInitAll();
-		JavaCCGlobals.bannerLine("Tree Builder", "");
+		JavaCCGlobals.BannerLine("Tree Builder", "");
 		io = new IO();
 		int result;
 		try
@@ -197,7 +197,7 @@ public class JJTree
 		try
 		{
 			WriteLine(("Reading from file ")+(io.InputFileName)+(" . . ."));
-			JJTreeGlobals.ToolList = JavaCCGlobals.getToolNames(text);
+			JJTreeGlobals.ToolList = JavaCCGlobals.GetToolNames(text);
 			JJTreeGlobals.ToolList.Add("JJTree");
 			try
 			{

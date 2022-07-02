@@ -123,7 +123,7 @@ public class JJDoc : JJDocGlobals
 			JavaCCGlobals.ccol = P_0.BeginColumn;
 			while (P_0 != null)
 			{
-				text +=(JavaCCGlobals.printTokenOnly(P_0));
+				text +=(JavaCCGlobals.PrintTokenOnly(P_0));
 				P_0 = P_0.next;
 			}
 		}
@@ -175,17 +175,17 @@ public class JJDoc : JJDocGlobals
 				{
 					text +=("\"");
 					char[] value = new char[1] { ((SingleCharacter)obj).ch };
-					text +=(JavaCCGlobals.add_escapes(new string(value)));
+					text +=(JavaCCGlobals.AddEscapes(new string(value)));
 					text +=("\"");
 				}
 				else if (obj is CharacterRange)
 				{
 					text +=("\"");
 					char[] value = new char[1] { ((CharacterRange)obj).Left };
-					text +=(JavaCCGlobals.add_escapes(new string(value)));
+					text +=(JavaCCGlobals.AddEscapes(new string(value)));
 					text +=("\"-\"");
 					value[0] = ((CharacterRange)obj).Right;
-					text +=(JavaCCGlobals.add_escapes(new string(value)));
+					text +=(JavaCCGlobals.AddEscapes(new string(value)));
 					text +=("\"");
 				}
 				else
@@ -256,7 +256,7 @@ public class JJDoc : JJDocGlobals
 		else if (re is RStringLiteral)
 		{
 			RStringLiteral rStringLiteral = (RStringLiteral)re;
-			text +=("\"")+(JavaCCGlobals.add_escapes(rStringLiteral.image))
+			text +=("\"")+(JavaCCGlobals.AddEscapes(rStringLiteral.image))
 				+("\"")
 				;
 		}
