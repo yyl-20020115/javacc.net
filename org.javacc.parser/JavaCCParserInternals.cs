@@ -49,7 +49,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 
 	protected internal static void AddCuname(string str)
 	{
-		JavaCCGlobals.cu_name = str;
+		JavaCCGlobals.Cu_name = str;
 	}
 
 	
@@ -60,7 +60,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 			JavaCCErrors.Parse_Error(t, ("Name ")+(str2)+(" must be the same as that used at PARSER_BEGIN (")
 				+(str1)
 				+(")")
-				.ToString());
+				);
 		}
 	}
 
@@ -82,12 +82,12 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 			else
 			{
 				insertionpoint1set = true;
-				add_cu_token_here = JavaCCGlobals.cu_to_insertion_point_2;
+				add_cu_token_here = JavaCCGlobals.Cu_to_insertion_point_2;
 			}
 		}
 		else
 		{
-			add_cu_token_here = JavaCCGlobals.cu_from_insertion_point_2;
+			add_cu_token_here = JavaCCGlobals.Cu_from_insertion_point_2;
 			insertionpoint2set = true;
 		}
 		first_cu_token = t;
@@ -143,7 +143,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 				if (string.Equals(tp.LexStates[i], tp.LexStates[j]))
 				{
 					JavaCCErrors.Parse_Error(tp, ("Multiple occurrence of \"")+(tp.LexStates[i])+("\" in lexical state list.")
-						.ToString());
+						);
 				}
 			}
 			if (!JavaCCGlobals.lexstate_S2I.TryGetValue(tp.LexStates[i], out var _))
@@ -157,7 +157,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 	}
 
 	
-	protected internal static void add_token_manager_decls(Token t, ArrayList v)
+	protected internal static void add_token_manager_decls(Token t, List<Token> v)
 	{
 		if (JavaCCGlobals.token_mgr_decls != null)
 		{
@@ -200,7 +200,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 		{
 			if (str[num] != '\\')
 			{
-				text = (text)+(str[num]).ToString();
+				text = (text)+(str[num]);
 				num++;
 				continue;
 			}
@@ -209,35 +209,35 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 			switch (num2)
 			{
 			case 98:
-				text = (text)+('\b').ToString();
+				text = (text)+('\b');
 				num++;
 				continue;
 			case 116:
-				text = (text)+('\t').ToString();
+				text = (text)+('\t');
 				num++;
 				continue;
 			case 110:
-				text = (text)+('\n').ToString();
+				text = (text)+('\n');
 				num++;
 				continue;
 			case 102:
-				text = (text)+('\f').ToString();
+				text = (text)+('\f');
 				num++;
 				continue;
 			case 114:
-				text = (text)+('\r').ToString();
+				text = (text)+('\r');
 				num++;
 				continue;
 			case 34:
-				text = (text)+('"').ToString();
+				text = (text)+('"');
 				num++;
 				continue;
 			case 39:
-				text = (text)+('\'').ToString();
+				text = (text)+('\'');
 				num++;
 				continue;
 			case 92:
-				text = (text)+('\\').ToString();
+				text = (text)+('\\');
 				num++;
 				continue;
 			case 48:
@@ -263,7 +263,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 						num++;
 					}
 				}
-				text = (text)+((char)num3).ToString();
+				text = (text)+((char)num3);
 				continue;
 			}
 			}
@@ -299,13 +299,13 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 					+(num)
 					+(" of string ")
 					+("- Unicode escape must have 4 hex digits after it.")
-					.ToString());
+					);
 				return text;
 			}
 			JavaCCErrors.Parse_Error(t, ("Illegal escape sequence '\\")+((char)num2)+("' at position ")
 				+(num)
 				+(" of string.")
-				.ToString());
+				);
 			return text;
 		}
 		return text;
@@ -337,7 +337,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 			JavaCCErrors.Parse_Error(t, ("Right end of character range '")+(str1)+("' has a lower ordinal value than the left end of character range '")
 				+(str2)
 				+("'.")
-				.ToString());
+				);
 			char result = str2[0];
 			
 			return result;
@@ -370,7 +370,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 
 	public new static void ReInit()
 	{
-		add_cu_token_here = JavaCCGlobals.cu_to_insertion_point_1;
+		add_cu_token_here = JavaCCGlobals.Cu_to_insertion_point_1;
 		first_cu_token = null;
 		insertionpoint1set = false;
 		insertionpoint2set = false;
@@ -380,7 +380,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 	static JavaCCParserInternals()
 	{
 		
-		add_cu_token_here = JavaCCGlobals.cu_to_insertion_point_1;
+		add_cu_token_here = JavaCCGlobals.Cu_to_insertion_point_1;
 		insertionpoint1set = false;
 		insertionpoint2set = false;
 		nextFreeLexState = 1;

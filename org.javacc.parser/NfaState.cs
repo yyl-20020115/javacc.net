@@ -41,7 +41,7 @@ public class NfaState
 
 	internal static Hashtable lohiByteTab;
 
-	internal static Hashtable stateNameForComposite;
+	internal static Dictionary<string,int> stateNameForComposite;
 
 	internal static Hashtable compositeStateTable;
 
@@ -1795,7 +1795,7 @@ public class NfaState
 		int num = 0;
 		for (int i = 0; i < (nint)P_0.LongLength; i++)
 		{
-			NfaState nfaState = (NfaState)allStates.elementAt(P_0[i]);
+			NfaState nfaState = (NfaState)allStates[P_0[i]];
 			if (nfaState.asciiMoves[P_1] != 0)
 			{
 				int num2 = NumberOfBitsSet(nfaState.asciiMoves[P_1]);
@@ -3269,22 +3269,22 @@ public class NfaState
 		generatedStates = 0;
 		idCnt = 0;
 		dummyStateIndex = -1;
-		allStates = new ArrayList();
-		indexedAllStates = new ArrayList();
-		nonAsciiTableForMethod = new ArrayList();
-		equivStatesTable = new Hashtable();
-		allNextStates = new Hashtable();
-		lohiByteTab = new Hashtable();
-		stateNameForComposite = new Hashtable();
-		compositeStateTable = new Hashtable();
-		stateBlockTable = new Hashtable();
-		stateSetsToFix = new Hashtable();
+		allStates = new ();
+		indexedAllStates = new ();
+		nonAsciiTableForMethod = new ();
+		equivStatesTable = new ();
+		allNextStates = new ();
+		lohiByteTab = new ();
+		stateNameForComposite = new ();
+		compositeStateTable = new ();
+		stateBlockTable = new ();
+		stateSetsToFix = new ();
 		jjCheckNAddStatesUnaryNeeded = false;
-		allBitVectors = new ArrayList();
+		allBitVectors = new ();
 		tmpIndices = new int[512];
 		allBits = "{\n   0xffffffffffffffffL, 0xffffffffffffffffL, 0xffffffffffffffffL, 0xffffffffffffffffL\n};";
-		tableToDump = new Hashtable();
-		orderedStateSet = new ArrayList();
+		tableToDump = new ();
+		orderedStateSet = new ();
 		lastIndex = 0;
 	}
 }

@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.IO;
-using System.Text;
 
 namespace org.javacc.parser;
 
@@ -57,9 +56,9 @@ public class ParseEngine : JavaCCGlobals
 		{
 			return false;
 		}
-		if (P_0 is NonTerminal)
+		if (P_0 is NonTerminal terminal)
 		{
-			NormalProduction prod = ((NonTerminal)P_0).prod;
+			NormalProduction prod = terminal.prod;
 			if (prod is JavaCodeProduction)
 			{
 				return true;
@@ -68,72 +67,67 @@ public class ParseEngine : JavaCCGlobals
 			
 			return result;
 		}
-		if (P_0 is Choice)
-		{
-			Choice choice = (Choice)P_0;
-			for (int i = 0; i < choice.Choices.Count; i++)
-			{
-				if (javaCodeCheck((Expansion)choice.Choices[i]))
-				{
-					return true;
-				}
-			}
-			return false;
-		}
-		if (P_0 is Sequence)
-		{
-			Sequence sequence = (Sequence)P_0;
-			for (int i = 0; i < sequence.Units.Count; i++)
-			{
-				Expansion[] array = (Expansion[])sequence.Units.ToArray();
-				if (array[i] is Lookahead && ((Lookahead)array[i]).isExplicit)
-				{
-					return false;
-				}
-				if (javaCodeCheck(array[i]))
-				{
-					return true;
-				}
-				if (!Semanticize.EmptyExpansionExists(array[i]))
-				{
-					return false;
-				}
-			}
-			return false;
-		}
-		if (P_0 is OneOrMore)
-		{
-			OneOrMore oneOrMore = (OneOrMore)P_0;
-			bool result2 = javaCodeCheck(oneOrMore.expansion);
-			
-			return result2;
-		}
-		if (P_0 is ZeroOrMore)
+        if (P_0 is Choice choice)
+        {
+            for (int i = 0; i < choice.Choices.Count; i++)
+            {
+                if (javaCodeCheck((Expansion)choice.Choices[i]))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        if (P_0 is Sequence sequence)
+        {
+            for (int i = 0; i < sequence.Units.Count; i++)
+            {
+                Expansion[] array = (Expansion[])sequence.Units.ToArray();
+                if (array[i] is Lookahead && ((Lookahead)array[i]).isExplicit)
+                {
+                    return false;
+                }
+                if (javaCodeCheck(array[i]))
+                {
+                    return true;
+                }
+                if (!Semanticize.EmptyExpansionExists(array[i]))
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+        if (P_0 is OneOrMore oneOrMore)
+        {
+            bool result2 = javaCodeCheck(oneOrMore.expansion);
+
+            return result2;
+        }
+        if (P_0 is ZeroOrMore)
 		{
 			ZeroOrMore zeroOrMore = (ZeroOrMore)P_0;
 			bool result3 = javaCodeCheck(zeroOrMore.expansion);
 			
 			return result3;
 		}
-		if (P_0 is ZeroOrOne)
-		{
-			ZeroOrOne zeroOrOne = (ZeroOrOne)P_0;
-			bool result4 = javaCodeCheck(zeroOrOne.expansion);
-			
-			return result4;
-		}
-		if (P_0 is TryBlock)
-		{
-			TryBlock tryBlock = (TryBlock)P_0;
-			bool result5 = javaCodeCheck(tryBlock.exp);
-			
-			return result5;
-		}
-		return false;
+        if (P_0 is ZeroOrOne zeroOrOne)
+        {
+            bool result4 = javaCodeCheck(zeroOrOne.expansion);
+
+            return result4;
+        }
+        if (P_0 is TryBlock tryBlock)
+        {
+            bool result5 = javaCodeCheck(tryBlock.exp);
+
+            return result5;
+        }
+        return false;
 	}
 
 	
-	private static void genFirstSet(Expansion P_0)
+	private static void GenFirstSet(Expansion P_0)
 	{
 		if (P_0 is RegularExpression)
 		{
@@ -143,7 +137,7 @@ public class ParseEngine : JavaCCGlobals
 		{
 			if (!(((NonTerminal)P_0).prod is JavaCodeProduction))
 			{
-				genFirstSet(((BNFProduction)((NonTerminal)P_0).prod).Expansion);
+				GenFirstSet(((BNFProduction)((NonTerminal)P_0).prod).Expansion);
 			}
 		}
 		else if (P_0 is Choice)
@@ -151,7 +145,7 @@ public class ParseEngine : JavaCCGlobals
 			Choice choice = (Choice)P_0;
 			for (int i = 0; i < choice.Choices.Count; i++)
 			{
-				genFirstSet((Expansion)choice.Choices[i]);
+				GenFirstSet((Expansion)choice.Choices[i]);
 			}
 		}
 		else if (P_0 is Sequence)
@@ -170,12 +164,12 @@ public class ParseEngine : JavaCCGlobals
 					if (j > 0 && sequence.Units[j-1] is Lookahead)
 					{
 						Lookahead lookahead = (Lookahead)sequence.Units[j-1];
-						genFirstSet(lookahead.la_expansion);
+						GenFirstSet(lookahead.la_expansion);
 					}
 				}
 				else
 				{
-					genFirstSet((Expansion)sequence.Units[j]);
+					GenFirstSet((Expansion)sequence.Units[j]);
 				}
 				if (!Semanticize.EmptyExpansionExists((Expansion)sequence.Units[j]))
 				{
@@ -186,27 +180,27 @@ public class ParseEngine : JavaCCGlobals
 		else if (P_0 is OneOrMore)
 		{
 			OneOrMore oneOrMore = (OneOrMore)P_0;
-			genFirstSet(oneOrMore.expansion);
+			GenFirstSet(oneOrMore.expansion);
 		}
 		else if (P_0 is ZeroOrMore)
 		{
 			ZeroOrMore zeroOrMore = (ZeroOrMore)P_0;
-			genFirstSet(zeroOrMore.expansion);
+			GenFirstSet(zeroOrMore.expansion);
 		}
 		else if (P_0 is ZeroOrOne)
 		{
 			ZeroOrOne zeroOrOne = (ZeroOrOne)P_0;
-			genFirstSet(zeroOrOne.expansion);
+			GenFirstSet(zeroOrOne.expansion);
 		}
 		else if (P_0 is TryBlock)
 		{
 			TryBlock tryBlock = (TryBlock)P_0;
-			genFirstSet(tryBlock.exp);
+			GenFirstSet(tryBlock.exp);
 		}
 	}
 
 	
-	internal static void phase1NewLine()
+	internal static void Phase1NewLine()
 	{
 		ostr.WriteLine("");
 		for (int i = 0; i < indentamt; i++)
@@ -491,7 +485,7 @@ public class ParseEngine : JavaCCGlobals
 			case 13:
 				if (num2 != 0)
 				{
-					phase1NewLine();
+					Phase1NewLine();
 				}
 				else
 				{
@@ -556,7 +550,7 @@ public class ParseEngine : JavaCCGlobals
 							;
 						JavaCCGlobals.maskindex++;
 					}
-					JavaCCGlobals.maskVals.Add(array2);
+					JavaCCGlobals.MaskVals.Add(array2);
 					text = (text)+("\nif (");
 					num2++;
 					break;
@@ -583,7 +577,7 @@ public class ParseEngine : JavaCCGlobals
 				{
 					firstSet[i] = false;
 				}
-				genFirstSet(lookahead.la_expansion);
+				GenFirstSet(lookahead.la_expansion);
 				if (!jj2LA)
 				{
 					int num5 = num;
@@ -659,7 +653,7 @@ public class ParseEngine : JavaCCGlobals
 							;
 						JavaCCGlobals.maskindex++;
 					}
-					JavaCCGlobals.maskVals.Add(array2);
+					JavaCCGlobals.MaskVals.Add(array2);
 					text = (text)+("\nif (");
 					num2++;
 					break;
@@ -706,7 +700,7 @@ public class ParseEngine : JavaCCGlobals
 				text = (text)+("\njj_la1[")+(JavaCCGlobals.maskindex)
 					+("] = jj_gen;")
 					;
-				JavaCCGlobals.maskVals.Add(array2);
+				JavaCCGlobals.MaskVals.Add(array2);
 				JavaCCGlobals.maskindex++;
 			}
 			text = (text)+(P_1[num4]);
@@ -729,7 +723,7 @@ public class ParseEngine : JavaCCGlobals
 			{
 				if (expansion is Sequence && ((Sequence)expansion).Units.Count == 2)
 				{
-					expansion = (Expansion)((Sequence)expansion).Units.elementAt(1);
+					expansion = (Expansion)((Sequence)expansion).Units[1];
 					continue;
 				}
 				if (!(expansion is NonTerminal))
@@ -737,7 +731,7 @@ public class ParseEngine : JavaCCGlobals
 					break;
 				}
 				NonTerminal nonTerminal = (NonTerminal)expansion;
-				NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.production_table.get(nonTerminal.name);
+				NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.Production_table.get(nonTerminal.name);
 				if (normalProduction is JavaCodeProduction)
 				{
 					break;
@@ -753,7 +747,7 @@ public class ParseEngine : JavaCCGlobals
 			gensymindex++;
 			P_0.internal_name = ("R_")+(gensymindex);
 		}
-		Phase3Data phase3Data = (Phase3Data)phase3table.get(P_0);
+		Phase3Data phase3Data = (Phase3Data)phase3table[(P_0)];
 		if (phase3Data == null || phase3Data.count < P_1.count)
 		{
 			phase3Data = new Phase3Data(P_0, P_1.count);
@@ -773,56 +767,56 @@ public class ParseEngine : JavaCCGlobals
 		if (exp is NonTerminal)
 		{
 			NonTerminal nonTerminal = (NonTerminal)exp;
-			NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.production_table.get(nonTerminal.name);
+			NormalProduction normalProduction = (NormalProduction)
+				JavaCCGlobals.Production_table.get(nonTerminal.name);
 			if (!(normalProduction is JavaCodeProduction))
 			{
 				generate3R(normalProduction.Expansion, P_0);
 			}
 		}
-		else if (exp is Choice)
-		{
-			Choice choice = (Choice)exp;
-			for (int i = 0; i < choice.Choices.Count; i++)
-			{
-				generate3R((Expansion)choice.Choices[i], P_0);
-			}
-		}
-		else if (exp is Sequence)
-		{
-			Sequence sequence = (Sequence)exp;
-			int i = P_0.count;
-			for (int j = 1; j < sequence.Units.Count; j++)
-			{
-				Expansion expansion = (Expansion)sequence.Units[j];
-				setupPhase3Builds(new Phase3Data(expansion, i));
-				i -= minimumSize(expansion);
-				if (i <= 0)
-				{
-					break;
-				}
-			}
-		}
-		else if (exp is TryBlock)
-		{
-			TryBlock tryBlock = (TryBlock)exp;
-			setupPhase3Builds(new Phase3Data(tryBlock.exp, P_0.count));
-		}
-		else if (exp is OneOrMore)
-		{
-			OneOrMore oneOrMore = (OneOrMore)exp;
-			generate3R(oneOrMore.expansion, P_0);
-		}
-		else if (exp is ZeroOrMore)
-		{
-			ZeroOrMore zeroOrMore = (ZeroOrMore)exp;
-			generate3R(zeroOrMore.expansion, P_0);
-		}
-		else if (exp is ZeroOrOne)
-		{
-			ZeroOrOne zeroOrOne = (ZeroOrOne)exp;
-			generate3R(zeroOrOne.expansion, P_0);
-		}
-	}
+		else if (exp is Choice choice)
+        {
+            for (int i = 0; i < choice.Choices.Count; i++)
+            {
+                generate3R((Expansion)choice.Choices[i], P_0);
+            }
+        }
+        else if (exp is Sequence)
+        {
+            Sequence sequence = (Sequence)exp;
+            int i = P_0.count;
+            for (int j = 1; j < sequence.Units.Count; j++)
+            {
+                Expansion expansion = (Expansion)sequence.Units[j];
+                setupPhase3Builds(new Phase3Data(expansion, i));
+                i -= minimumSize(expansion);
+                if (i <= 0)
+                {
+                    break;
+                }
+            }
+        }
+        else if (exp is TryBlock)
+        {
+            TryBlock tryBlock = (TryBlock)exp;
+            setupPhase3Builds(new Phase3Data(tryBlock.exp, P_0.count));
+        }
+        else if (exp is OneOrMore)
+        {
+            OneOrMore oneOrMore = (OneOrMore)exp;
+            generate3R(oneOrMore.expansion, P_0);
+        }
+        else if (exp is ZeroOrMore)
+        {
+            ZeroOrMore zeroOrMore = (ZeroOrMore)exp;
+            generate3R(zeroOrMore.expansion, P_0);
+        }
+        else if (exp is ZeroOrOne)
+        {
+            ZeroOrOne zeroOrOne = (ZeroOrOne)exp;
+            generate3R(zeroOrOne.expansion, P_0);
+        }
+    }
 
 	
 	internal static int minimumSize(Expansion P_0)
@@ -935,7 +929,7 @@ public class ParseEngine : JavaCCGlobals
 		else if (exp is NonTerminal)
 		{
 			NonTerminal nonTerminal = (NonTerminal)exp;
-			NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.production_table.get(nonTerminal.name);
+			NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.Production_table.get(nonTerminal.name);
 			if (normalProduction is JavaCodeProduction)
 			{
 				ostr.WriteLine(("    if (true) { jj_la = 0; jj_scanpos = jj_lastpos; ")+(genReturn(false))+("}")
@@ -1091,7 +1085,7 @@ public class ParseEngine : JavaCCGlobals
 		else if (P_0 is NonTerminal)
 		{
 			NonTerminal nonTerminal = (NonTerminal)P_0;
-			NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.production_table.get(nonTerminal.name);
+			NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.Production_table.get(nonTerminal.name);
 			if (normalProduction is JavaCodeProduction)
 			{
 				result = int.MaxValue;
@@ -1210,15 +1204,11 @@ public class ParseEngine : JavaCCGlobals
 			JavaCCGlobals.PrintTrailingComments(token, ostr);
 		}
 		ostr.Write(") throws ParseException");
-		enumeration = P_0.ThrowsList.elements();
-		while (enumeration.hasMoreElements())
+		foreach(var tl in P_0.ThrowsList)
 		{
 			ostr.Write(", ");
-			ArrayList vector = (ArrayList)enumeration.nextElement();
-			Enumeration enumeration2 = vector.elements();
-			while (enumeration2.hasMoreElements())
-			{
-				token = (Token)enumeration2.nextElement();
+			foreach(var token in tl)
+            {
 				ostr.Write(token.image);
 			}
 		}

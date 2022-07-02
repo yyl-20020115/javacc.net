@@ -99,7 +99,7 @@ public class LookaheadCalc : JavaCCGlobals
 		{
 			if (P_0.match[i] == 0)
 			{
-				text = (text)+(" <EOF>").ToString();
+				text = (text)+(" <EOF>");
 				continue;
 			}
 			Hashtable hashtable = JavaCCGlobals.rexps_of_tokens;
@@ -108,11 +108,11 @@ public class LookaheadCalc : JavaCCGlobals
 
 			text = ((!(regularExpression is RStringLiteral)) ? ((regularExpression.label == null || string.Equals(regularExpression.label, "")) ? (text)+(" <token of kind ")+(i)
 				+(">")
-				.ToString() : (text)+(" <")+(regularExpression.label)
+				 : (text)+(" <")+(regularExpression.label)
 				+(">")
-				.ToString()) : (text)+(" \"")+(JavaCCGlobals.AddEscapes(((RStringLiteral)regularExpression).image))
+				) : (text)+(" \"")+(JavaCCGlobals.AddEscapes(((RStringLiteral)regularExpression).image))
 				+("\"")
-				.ToString());
+				);
 		}
 		if (P_0.firstFreeLoc == 0)
 		{
@@ -220,26 +220,26 @@ public class LookaheadCalc : JavaCCGlobals
 				if (array3[i] > Options.ChoiceAmbiguityCheck)
 				{
 					JavaCCErrors.Warning("Choice conflict involving two expansions at");
-					Console.Error.Write(("         line ")+(((Expansion)c.Choices[i]).Line).ToString());
-					Console.Error.Write((", column ")+(((Expansion)c.Choices[i]).Column).ToString());
-					Console.Error.Write((" and line ")+(((Expansion)c.Choices[(array5[i])]).Line).ToString());
-					Console.Error.Write((", column ")+(((Expansion)c.Choices[(array5[i])]).Column).ToString());
+					Console.Error.Write(("         line ")+(((Expansion)c.Choices[i]).Line));
+					Console.Error.Write((", column ")+(((Expansion)c.Choices[i]).Column));
+					Console.Error.Write((" and line ")+(((Expansion)c.Choices[(array5[i])]).Line));
+					Console.Error.Write((", column ")+(((Expansion)c.Choices[(array5[i])]).Column));
 					Console.Error.WriteLine(" respectively.");
-					Console.Error.WriteLine(("         A common prefix is: ")+(image(array4[i])).ToString());
+					Console.Error.WriteLine(("         A common prefix is: ")+(image(array4[i])));
 					Console.Error.WriteLine(("         Consider using a lookahead of ")+(array3[i])+(" or more for earlier expansion.")
-						.ToString());
+						);
 				}
 				else if (array3[i] > 1)
 				{
 					JavaCCErrors.Warning("Choice conflict involving two expansions at");
-					Console.Error.Write(("         line ")+(((Expansion)c.Choices[i]).Line).ToString());
-					Console.Error.Write((", column ")+(((Expansion)c.Choices[i]).Column).ToString());
-					Console.Error.Write((" and line ")+(((Expansion)c.Choices[(array5[i])]).Line).ToString());
-					Console.Error.Write((", column ")+(((Expansion)c.Choices[(array5[i])]).Column).ToString());
+					Console.Error.Write(("         line ")+(((Expansion)c.Choices[i]).Line));
+					Console.Error.Write((", column ")+(((Expansion)c.Choices[i]).Column));
+					Console.Error.Write((" and line ")+(((Expansion)c.Choices[(array5[i])]).Line));
+					Console.Error.Write((", column ")+(((Expansion)c.Choices[(array5[i])]).Column));
 					Console.Error.WriteLine(" respectively.");
-					Console.Error.WriteLine(("         A common prefix is: ")+(image(array4[i])).ToString());
+					Console.Error.WriteLine(("         A common prefix is: ")+(image(array4[i])));
 					Console.Error.WriteLine(("         Consider using a lookahead of ")+(array3[i])+(" for earlier expansion.")
-						.ToString());
+						);
 				}
 			}
 		}
@@ -269,7 +269,7 @@ public class LookaheadCalc : JavaCCGlobals
 			{
 				JavaCCErrors.Warning(e2, ("JAVACODE non-terminal within ")+(image(e1))+(" construct will force this construct to be entered in favor of ")
 					+("expansions occurring after construct.")
-					.ToString());
+					);
 			}
 			if ((matchInfo2 = overlap(sizeLimitedMatches, sizeLimitedMatches2)) == null)
 			{
@@ -285,11 +285,11 @@ public class LookaheadCalc : JavaCCGlobals
 				+(", column ")
 				+(e1.Column)
 				+(".")
-				.ToString());
+				);
 			Console.Error.WriteLine("         Expansion nested within construct and expansion following construct");
-			Console.Error.WriteLine(("         have common prefixes, one of which is: ")+(image(matchInfo)).ToString());
+			Console.Error.WriteLine(("         have common prefixes, one of which is: ")+(image(matchInfo)));
 			Console.Error.WriteLine(("         Consider using a lookahead of ")+(i)+(" or more for nested expansion.")
-				.ToString());
+				);
 		}
 		else if (i > 1)
 		{
@@ -299,11 +299,11 @@ public class LookaheadCalc : JavaCCGlobals
 				+(", column ")
 				+(e1.Column)
 				+(".")
-				.ToString());
+				);
 			Console.Error.WriteLine("         Expansion nested within construct and expansion following construct");
-			Console.Error.WriteLine(("         have common prefixes, one of which is: ")+(image(matchInfo)).ToString());
+			Console.Error.WriteLine(("         have common prefixes, one of which is: ")+(image(matchInfo)));
 			Console.Error.WriteLine(("         Consider using a lookahead of ")+(i)+(" for nested expansion.")
-				.ToString());
+				);
 		}
 	}
 }

@@ -22,9 +22,7 @@ public sealed class TokenUtils
 				stringBuilder.Append((char)num);
 			}
 		}
-		string result = stringBuilder.ToString();
-		
-		return result;
+		return stringBuilder.ToString();
 	}
 
     internal static bool HasTokens(JJTreeNode node) => node.LastToken.Next != node.FirstToken;

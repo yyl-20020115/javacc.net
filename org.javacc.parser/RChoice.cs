@@ -22,13 +22,13 @@ public class RChoice : RegularExpression
 				{
 					JavaCCErrors.Warning(this, ("Regular Expression choice : ")+(regularExpression.label)+(" can never be matched as : ")
 						+(label)
-						.ToString());
+						);
 				}
 				else
 				{
 					JavaCCErrors.Warning(this, ("Regular Expression choice : ")+(regularExpression.label)+(" can never be matched as token of kind : ")
 						+(ordinal)
-						.ToString());
+						);
 				}
 			}
 			if (!regularExpression.private_rexp && regularExpression is RStringLiteral)

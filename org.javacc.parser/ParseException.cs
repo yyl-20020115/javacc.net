@@ -75,16 +75,16 @@ public class ParseException : System.Exception
 			int num;
 			if ((num = str[i]) < 32 || num > 126)
 			{
-				string @this = ("0000")+(Utils.ToString(num, 16)).ToString();
+				string @this = ("0000")+(Utils.ToString(num, 16));
 				stringBuilder.Append(("\\u")+(
-					(@this.Substring(@this.Length - 4, @this.Length))).ToString());
+					(@this.Substring(@this.Length - 4, @this.Length))));
 			}
 			else
 			{
 				stringBuilder.Append((char)num);
 			}
 		}
-		string result = stringBuilder.ToString();
+		string result = stringBuilder;
 
 		return result;
 	}
@@ -122,32 +122,32 @@ public class ParseException : System.Exception
 			{
 				if (k != 0)
 				{
-					str = (str)+(" ").ToString();
+					str = (str)+(" ");
 				}
 				if (next.kind == 0)
 				{
-					str = (str)+(tokenImage[0]).ToString();
+					str = (str)+(tokenImage[0]);
 					break;
 				}
 				str = (str)+(" ")+(tokenImage[next.kind])
-					.ToString();
-				str = (str)+(" \"").ToString();
-				str = (str)+(add_escapes(next.image)).ToString();
-				str = (str)+(" \"").ToString();
+					;
+				str = (str)+(" \"");
+				str = (str)+(add_escapes(next.image));
+				str = (str)+(" \"");
 				next = next.next;
 			}
 			str = (str)+("\" at line ")+(currentToken.next.BeginLine)
 				+(", column ")
 				+(currentToken.next.BeginColumn)
-				.ToString();
+				;
 			str = (str)+(".")+(eol)
-				.ToString();
+				;
 			str = (((nint)expectedTokenSequences.LongLength != 1) ? (str)+("Was expecting one of:")+(eol)
 				+("    ")
-				.ToString() : (str)+("Was expecting:")+(eol)
+				 : (str)+("Was expecting:")+(eol)
 				+("    ")
-				.ToString());
-			return (str)+(stringBuilder.ToString()).ToString();
+				);
+			return (str)+(stringBuilder.ToString());
 		}
 	}
 

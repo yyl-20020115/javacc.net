@@ -133,17 +133,17 @@ public class OutputFile
 	{
 		if (pw == null)
 		{
-			MessageDigest instance;
-			try
-			{
-				instance = MessageDigest.getInstance("MD5");
-			}
-			catch (Exception x)
-			{
-				goto IL_0025;
-			}
+			//MessageDigest instance;
+			//try
+			//{
+			//	instance = MessageDigest.getInstance("MD5");
+			//}
+			//catch (Exception x)
+			//{
+			//	goto IL_0025;
+			//}
 
-			dos = new DigestOutputStream(new BufferedOutputStream(new FileOutputStream(file)), instance);
+			dos =File.OpenRead(file.FullName);
 			pw = new TrapClosePrintWriter(this, dos);
 			string str = ((compatibleVersion != null) ? compatibleVersion : "4.1d1");
 			pw.WriteLine(("/* ")+(JavaCCGlobals.getIdString(toolName, file.Name))+(" Version ")
@@ -184,24 +184,23 @@ public class OutputFile
 		if (f.Exists)
 		{
 			var bufferedReader = (new StreamReader(f.FullName));
-			MessageDigest instance;
-			try
-			{
-				instance = MessageDigest.getInstance("MD5");
-			}
-			catch (NoSuchAlgorithmException x)
-			{
-				ex = ByteCodeHelper.MapException<NoSuchAlgorithmException>(x, ByteCodeHelper.MapFlags.NoRemapping);
-				goto IL_0060;
-			}
-			DigestOutputStream digestOutputStream = new DigestOutputStream(new NullOutputStream(null), instance);
-			TextWriter printWriter = new TextWriter(digestOutputStream);
+			//MessageDigest instance;
+			//try
+			//{
+			//	instance = MessageDigest.getInstance("MD5");
+			//}
+			//catch (NoSuchAlgorithmException x)
+			//{
+			//	ex = x;
+			//	goto IL_0060;
+			//}
+			var digestOutputStream = new Stream(new NullOutputStream(null), instance);
+			var printWriter = new StreamWriter(digestOutputStream);
 			string text = null;
 			string text2;
-			CharSequence charSequence = default(CharSequence);
 			while ((text2 = bufferedReader.ReadLine()) != null)
 			{
-				if (String.instancehelper_startsWith(text2, "/* JavaCC - OriginalChecksum="))
+				if (text2.StartsWith( "/* JavaCC - OriginalChecksum="))
 				{
 					object __003Cref_003E = "";
 					//object obj = (charSequence.___003Cref_003E = "/* JavaCC - OriginalChecksum=");
@@ -249,7 +248,7 @@ public class OutputFile
 		return;
 	IL_0060:
 		NoSuchAlgorithmException cause = ex;
-		throw new System.Exception((IOException)Throwable.instancehelper_initCause(new IOException("No MD5 implementation"), cause));
+		throw new System.Exception("No MD5 implementation");
 	}
 
 	public virtual void setToolName(string str)

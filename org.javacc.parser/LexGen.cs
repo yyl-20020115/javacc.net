@@ -15,7 +15,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 
 	private static string tokMgrClassName;
 
-	internal static Dictionary<string, TokenProduction> allTpsForState = new();
+	internal static Dictionary<string, List<TokenProduction>> allTpsForState = new();
 
 	public static int lexStateIndex;
 
@@ -105,34 +105,34 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				Path.Combine(Options.OutputDirectory.FullName, tokMgrClassName)+(".java"));
 		
 			ostr = new StreamWriter(file.FullName);
-			var vector = JavaCCGlobals.toolNames.ToList();
+			var vector = JavaCCGlobals.ToolNames.ToList();
 			vector.Add("JavaCC");
 			ostr.WriteLine(("/* ")+(JavaCCGlobals.GetIdStringList(vector, (tokMgrClassName)+(".java")))+(" */")
 				);
 			int num = 0;
 			int i = 1;
-			while (JavaCCGlobals.cu_to_insertion_point_1.Count > num)
+			while (JavaCCGlobals.Cu_to_insertion_point_1.Count > num)
 			{
-				int kind = ((Token)JavaCCGlobals.cu_to_insertion_point_1[num]).kind;
+				int kind = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[num]).kind;
 				if (kind != 60 && kind != 52)
 				{
 					break;
 				}
-				for (; i < JavaCCGlobals.cu_to_insertion_point_1.Count; i++)
+				for (; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
 				{
-					kind = ((Token)JavaCCGlobals.cu_to_insertion_point_1[i]).kind;
+					kind = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).kind;
 					if (kind == 97 || kind == 27 || kind == 45 || kind == 63 || kind == 35 || kind == 55)
 					{
-						JavaCCGlobals.cline = ((Token)JavaCCGlobals.cu_to_insertion_point_1[num]).BeginLine;
-						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.cu_to_insertion_point_1[num]).BeginColumn;
+						JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[num]).BeginLine;
+						JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[num]).BeginColumn;
 						int j;
 						for (j = num; j < i; j++)
 						{
-							JavaCCGlobals.PrintToken((Token)JavaCCGlobals.cu_to_insertion_point_1[j], ostr);
+							JavaCCGlobals.PrintToken((Token)JavaCCGlobals.Cu_to_insertion_point_1[j], ostr);
 						}
 						if (kind == 97)
 						{
-							JavaCCGlobals.PrintToken((Token)JavaCCGlobals.cu_to_insertion_point_1[j], ostr);
+							JavaCCGlobals.PrintToken((Token)JavaCCGlobals.Cu_to_insertion_point_1[j], ostr);
 						}
 						ostr.WriteLine("");
 						break;
@@ -144,7 +144,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			ostr.WriteLine("");
 			ostr.WriteLine("/** Token Manager. */");
 			ostr.WriteLine(("public class ")+(tokMgrClassName)+(" implements ")
-				+(JavaCCGlobals.cu_name)
+				+(JavaCCGlobals.Cu_name)
 				+("Constants")
 				);
 			ostr.WriteLine("{");
@@ -194,7 +194,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		{
 			ostr.WriteLine("");
 			ostr.WriteLine("  /** The parser. */");
-			ostr.WriteLine(("  public ")+(JavaCCGlobals.cu_name)+(" parser = null;")
+			ostr.WriteLine(("  public ")+(JavaCCGlobals.Cu_name)+(" parser = null;")
 				);
 		}
 		return;
@@ -492,7 +492,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			ostr.WriteLine("");
 			ostr.WriteLine("/** Constructor with parser. */");
 			ostr.WriteLine(("public ")+(tokMgrClassName)+("(")
-				+(JavaCCGlobals.cu_name)
+				+(JavaCCGlobals.Cu_name)
 				+(" parserArg, ")
 				+(str)
 				+(" stream){")
@@ -531,7 +531,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			ostr.WriteLine("");
 			ostr.WriteLine("/** Constructor with parser. */");
 			ostr.WriteLine(("public ")+(tokMgrClassName)+("(")
-				+(JavaCCGlobals.cu_name)
+				+(JavaCCGlobals.Cu_name)
 				+(" parserArg, ")
 				+(str)
 				+(" stream, int lexState){")
@@ -1377,7 +1377,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		keepLineCol = Options.KeepLineColumn;
 		ArrayList vector = new ArrayList();
 		staticString = ((!Options.getStatic()) ? "" : "static ");
-		tokMgrClassName = (JavaCCGlobals.cu_name)+("TokenManager");
+		tokMgrClassName = (JavaCCGlobals.Cu_name)+("TokenManager");
 		PrintClassHead();
 		BuildLexStatesTable();
 		var enumeration = allTpsForState.keys();

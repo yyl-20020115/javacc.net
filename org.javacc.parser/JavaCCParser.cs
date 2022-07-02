@@ -674,7 +674,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
     public void token_manager_decls()
     {
-        ArrayList v = new ();
+        var v = new List<Token> ();
         Token t = jj_consume_token(10);
         jj_consume_token(105);
         ClassOrInterfaceBody(b: false, v);
@@ -1106,7 +1106,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     }
 
 
-    public void ClassOrInterfaceBody(bool b, ArrayList v)
+    public void ClassOrInterfaceBody(bool b, List<Token> v)
     {
         jj_consume_token(93);
         Token token = getToken(1);

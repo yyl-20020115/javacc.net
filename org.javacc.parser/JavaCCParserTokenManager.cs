@@ -2992,7 +2992,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
 		if (i >= 5 || i < 0)
 		{
 			string str = ("Error: Ignoring invalid lexical state : ")+(i)+(". State unchanged.")
-				.ToString();
+				;
 			
 			throw new TokenMgrError(str, 2);
 		}

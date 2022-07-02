@@ -268,7 +268,7 @@ public class Semanticize : JavaCCGlobals
         {
             if (exp is NonTerminal nonTerminal)
             {
-                NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.production_table.get(nonTerminal.name);
+                NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.Production_table.get(nonTerminal.name);
                 NonTerminal nonTerminal2 = nonTerminal;
                 nonTerminal2.prod = normalProduction;
                 if (normalProduction == null)
@@ -290,9 +290,9 @@ public class Semanticize : JavaCCGlobals
         }
     }
 
-    internal static List<Node> removeList = new();
+    internal static List<List<RegExprSpec>> removeList = new();
 
-    internal static List<Node> itemList = new();
+    internal static List<RegExprSpec> itemList = new();
 
     public static RegularExpression other;
 
@@ -376,7 +376,7 @@ public class Semanticize : JavaCCGlobals
         while (enumeration.hasMoreElements())
         {
             NormalProduction normalProduction = (NormalProduction)enumeration.nextElement();
-            if (JavaCCGlobals.production_table.Add(normalProduction.lhs, normalProduction) != null)
+            if (JavaCCGlobals.Production_table.Add(normalProduction.lhs, normalProduction) != null)
             {
                 JavaCCErrors.Semantic_Error(normalProduction, (normalProduction.lhs) + (" occurs on the left hand side of more than one production."));
             }
@@ -802,7 +802,7 @@ public class Semanticize : JavaCCGlobals
     }
 
 
-    internal static void prepareToRemove(List<RegExprSpec> P_0, object P_1)
+    internal static void prepareToRemove(List<RegExprSpec> P_0, RegExprSpec P_1)
     {
         removeList.Add(P_0);
         itemList.Add(P_1);

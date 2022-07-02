@@ -267,7 +267,7 @@ public class JavaCharStream
 		string message = ("Invalid escape character at line ")+(line)+(" column ")
 			+(column)
 			+(".")
-			.ToString();
+			;
 
 		throw new System.Exception(message);
 	}
@@ -283,7 +283,7 @@ public class JavaCharStream
 		}
 		string result2 = (
 			new string(buffer, tokenBegin, bufsize - tokenBegin))+(
-			new string(buffer, 0, bufpos + 1)).ToString();
+			new string(buffer, 0, bufpos + 1));
 
 		return result2;
 	}

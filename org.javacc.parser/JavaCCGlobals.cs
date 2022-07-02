@@ -15,25 +15,25 @@ public class JavaCCGlobals
 
 	public static bool jjtreeGenerated = false;
 
-	public static List<string> toolNames = new();
+	public static List<string> ToolNames = new();
 
-	public static string cu_name = "";
+	public static string Cu_name = "";
 
-	public static List<Token> cu_to_insertion_point_1 = new();
+	public static List<Token> Cu_to_insertion_point_1 = new();
 
-	public static List<Token> cu_to_insertion_point_2 = new();
+	public static List<Token> Cu_to_insertion_point_2 = new();
 
-	public static List<Token> cu_from_insertion_point_2 = new();
+	public static List<Token> Cu_from_insertion_point_2 = new();
 
 	public static List<NormalProduction> BNFProductions = new();
 
-	public static Hashtable production_table = new();
+	public static Dictionary<string, NormalProduction> Production_table = new();
 
 	public static Dictionary<string,int> lexstate_S2I = new();
 
-	public static Hashtable lexstate_I2S = new();
+	public static Dictionary<int,string> lexstate_I2S = new();
 
-	public static ArrayList token_mgr_decls = new();
+	public static List<Token> token_mgr_decls = new();
 
 	public static List<TokenProduction> rexprlist = new();
 
@@ -53,7 +53,7 @@ public class JavaCCGlobals
 
 	protected internal static int jj2index = 0;
 
-	protected internal static ArrayList maskVals = new();
+	protected internal static List<int[]> MaskVals = new();
 
 	internal static Action actForEof = new();
 
@@ -701,13 +701,13 @@ public class JavaCCGlobals
 		FileName = null;
 		OrigFileName = null;
 		jjtreeGenerated = false;
-		toolNames = null;
-		cu_name = null;
-		cu_to_insertion_point_1 = new ();
-		cu_to_insertion_point_2 = new ();
-		cu_from_insertion_point_2 = new ();
+		ToolNames = null;
+		Cu_name = null;
+		Cu_to_insertion_point_1 = new ();
+		Cu_to_insertion_point_2 = new ();
+		Cu_from_insertion_point_2 = new ();
 		BNFProductions = new ();
-		production_table = new ();
+		Production_table = new ();
 		lexstate_S2I = new ();
 		lexstate_I2S = new ();
 		token_mgr_decls = null;
@@ -720,7 +720,7 @@ public class JavaCCGlobals
 		simple_tokens_table = new();
 		maskindex = 0;
 		jj2index = 0;
-		maskVals = new();
+		MaskVals = new();
 		cline = 0;
 		ccol = 0;
 		actForEof = null;
@@ -729,11 +729,11 @@ public class JavaCCGlobals
 
 	static JavaCCGlobals()
 	{
-		cu_to_insertion_point_1 = new();
-		cu_to_insertion_point_2 = new();
-		cu_from_insertion_point_2 = new();
+		Cu_to_insertion_point_1 = new();
+		Cu_to_insertion_point_2 = new();
+		Cu_from_insertion_point_2 = new();
 		BNFProductions = new();
-		production_table = new();
+		Production_table = new();
 		lexstate_S2I = new ();
 		lexstate_I2S = new();
 		rexprlist = new();
@@ -744,6 +744,6 @@ public class JavaCCGlobals
 		simple_tokens_table = new();
 		maskindex = 0;
 		jj2index = 0;
-		maskVals = new();
+		MaskVals = new();
 	}
 }

@@ -1945,7 +1945,6 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		System.Exception ex21 = ex15;
 		try
 		{
-			ex21 = ex21;
 			try
 			{
 				System.Exception ex22 = ex21;
@@ -2106,7 +2105,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			jj_consume_token(93);
 			string str = JavaIdentifier();
 			text = (text)+(".")+(str)
-				.ToString();
+				;
 		}
 		return text;
 	}
@@ -3187,7 +3186,6 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex14 = ex13;
 			try
 			{
-				ex14 = ex14;
 				try
 				{
 					System.Exception ex15 = ex14;
@@ -3304,7 +3302,6 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		System.Exception ex20 = ex6;
 		try
 		{
-			ex20 = ex20;
 			try
 			{
 				System.Exception ex21 = ex20;
@@ -3336,10 +3333,8 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		System.Exception ex22 = ex;
 		try
 		{
-			ex22 = ex22;
 			try
 			{
-				ex22 = ex22;
 				try
 				{
 					System.Exception ex11 = ex22;
@@ -3928,7 +3923,6 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			ex13 = ex8;
 			try
 			{
-				ex13 = ex13;
 				try
 				{
 					System.Exception ex14 = ex13;

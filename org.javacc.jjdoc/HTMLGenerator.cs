@@ -85,17 +85,15 @@ public class HTMLGenerator : TextGenerator, Generator
 		if (!string.Equals("", JJDocOptions.CSS))
 		{
 			WriteLine(
-				
 				("<LINK REL=\"stylesheet\" type=\"text/css\" href=\"")
 				+(JJDocOptions.CSS)
 				+("\"/>")
-				.ToString());
+				);
 		}
 		if (JJDocGlobals.input_file != null)
 		{
-			WriteLine(
-				new StringBuilder()
-				+("<TITLE>BNF for ")
+			WriteLine(	
+				("<TITLE>BNF for ")
 				+(JJDocGlobals.input_file)
 				+("</TITLE>")
 				);

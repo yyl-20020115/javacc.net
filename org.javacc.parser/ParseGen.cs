@@ -1,5 +1,4 @@
 using javacc.net;
-using System.Collections;
 using System.IO;
 using System.Linq;
 
@@ -15,7 +14,6 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		Token token = null;
 		if (JavaCCErrors._Error_Count != 0)
 		{
-			
 			throw new MetaParseException();
 		}
 		if (!Options.BuildParser)
@@ -25,30 +23,28 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		try
 		{
 			
-			writer = new StreamWriter(Path.Combine(Options.OutputDirectory.FullName, (JavaCCGlobals.cu_name)+(".java")));
+			writer = new StreamWriter(Path.Combine(Options.OutputDirectory.FullName, (JavaCCGlobals.Cu_name)+(".java")));
 		}
 		catch (IOException)
 		{
 			goto IL_006c;
 		}
-		var vector = JavaCCGlobals.toolNames.ToList();
+		var vector = JavaCCGlobals.ToolNames.ToList();
 		vector.Add("JavaCC");
-		writer.WriteLine(("/* ")+(JavaCCGlobals.GetIdStringList(vector, (JavaCCGlobals.cu_name)+(".java").ToString()))+(" */")
-			.ToString());
+		writer.WriteLine(("/* ")+(JavaCCGlobals.GetIdStringList(vector, (JavaCCGlobals.Cu_name)+(".java")))+(" */")
+			);
 		int num = 0;
-		if (JavaCCGlobals.cu_to_insertion_point_1.Count != 0)
+		if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0)
 		{
-			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.cu_to_insertion_point_1[0]);
+			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]);
 			JavaCCGlobals.ccol = 1;
-			Enumeration enumeration = JavaCCGlobals.cu_to_insertion_point_1.elements();
-			while (enumeration.hasMoreElements())
+			foreach(var _token in JavaCCGlobals.Cu_to_insertion_point_1)
 			{
-				token = (Token)enumeration.nextElement();
-				if (token.kind == 51)
+				if (_token.kind == 51)
 				{
 					num = 1;
 				}
-				else if (token.kind == 35)
+				else if (_token.kind == 35)
 				{
 					num = 0;
 				}
@@ -63,15 +59,14 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		{
 			writer.Write(" implements ");
 		}
-		writer.Write((JavaCCGlobals.cu_name)+("Constants ").ToString());
-		if (JavaCCGlobals.cu_to_insertion_point_2.Count != 0)
+		writer.Write((JavaCCGlobals.Cu_name)+("Constants "));
+		if (JavaCCGlobals.Cu_to_insertion_point_2.Count != 0)
 		{
-			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.cu_to_insertion_point_2[0]);
-			Enumeration enumeration = JavaCCGlobals.cu_to_insertion_point_2.elements();
-			while (enumeration.hasMoreElements())
+			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.Cu_to_insertion_point_2[0]);
+
+			foreach(var _token in JavaCCGlobals.Cu_to_insertion_point_2)
 			{
-				token = (Token)enumeration.nextElement();
-				JavaCCGlobals.PrintToken(token, writer);
+				JavaCCGlobals.PrintToken(_token, writer);
 			}
 		}
 		writer.WriteLine("");
@@ -85,85 +80,82 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		{
 			writer.WriteLine("  /** User defined Token Manager. */");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("public TokenManager token_source;")
-				.ToString());
+				);
 		}
 		else
 		{
 			writer.WriteLine("  /** Generated Token Manager. */");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("public ")
-				+(JavaCCGlobals.cu_name)
+				+(JavaCCGlobals.Cu_name)
 				+("TokenManager token_source;")
-				.ToString());
+				);
 			if (!Options.UserCharStream)
 			{
 				if (Options.JavaUnicodeEscape)
 				{
 					writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("JavaCharStream jj_input_stream;")
-						.ToString());
+						);
 				}
 				else
 				{
 					writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("SimpleCharStream jj_input_stream;")
-						.ToString());
+						);
 				}
 			}
 		}
 		writer.WriteLine("  /** Current token. */");
 		writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("public Token token;")
-			.ToString());
+			);
 		writer.WriteLine("  /** Next token. */");
 		writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("public Token jj_nt;")
-			.ToString());
+			);
 		if (!Options.CacheTokens)
 		{
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private int jj_ntk;")
-				.ToString());
+				);
 		}
 		if (JavaCCGlobals.jj2index != 0)
 		{
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private Token jj_scanpos, jj_lastpos;")
-				.ToString());
+				);
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private int jj_la;")
-				.ToString());
+				);
 			writer.WriteLine("  /** Whether we are looking ahead. */");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private boolean jj_lookingAhead = false;")
-				.ToString());
+				);
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private boolean jj_semLA;")
-				.ToString());
+				);
 		}
 		if (Options.ErrorReporting)
 		{
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private int jj_gen;")
-				.ToString());
+				);
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("final private int[] jj_la1 = new int[")
 				+(JavaCCGlobals.maskindex)
 				+("];")
-				.ToString());
+				);
 			int num2 = (JavaCCGlobals.tokenCount - 1) / 32 + 1;
 			for (int i = 0; i < num2; i++)
 			{
 				writer.WriteLine(("  static private int[] jj_la1_")+(i)+(";")
-					.ToString());
+					);
 			}
 			writer.WriteLine("  static {");
 			for (int i = 0; i < num2; i++)
 			{
 				writer.WriteLine(("      jj_la1_init_")+(i)+("();")
-					.ToString());
+					);
 			}
 			writer.WriteLine("   }");
 			for (int i = 0; i < num2; i++)
 			{
 				writer.WriteLine(("   private static void jj_la1_init_")+(i)+("() {")
-					.ToString());
-				writer.Write(("      jj_la1_")+(i)+(" = new int[] {")
-					.ToString());
-				Enumeration enumeration2 = JavaCCGlobals.maskVals.elements();
-				while (enumeration2.hasMoreElements())
+					);
+				writer.Write(("      jj_la1_")+(i)+(" = new int[] {"));
+				foreach(var array in JavaCCGlobals.MaskVals)
 				{
-					int[] array = (int[])enumeration2.nextElement();
-					writer.Write(("0x")+(Utils.ToString(array[i],16))+(",")
-						.ToString());
+				writer.Write(("0x")+(Utils.ToString(array[i],16))+(",")
+						);
 				}
 				writer.WriteLine("};");
 				writer.WriteLine("   }");
@@ -174,11 +166,11 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("final private JJCalls[] jj_2_rtns = new JJCalls[")
 				+(JavaCCGlobals.jj2index)
 				+("];")
-				.ToString());
+				);
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private boolean jj_rescan = false;")
-				.ToString());
+				);
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private int jj_gc = 0;")
-				.ToString());
+				);
 		}
 		writer.WriteLine("");
 		if (!Options.UserTokenManager)
@@ -186,8 +178,8 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			if (Options.UserCharStream)
 			{
 				writer.WriteLine("  /** Constructor with user supplied CharStream. */");
-				writer.WriteLine(("  public ")+(JavaCCGlobals.cu_name)+("(CharStream stream) {")
-					.ToString());
+				writer.WriteLine(("  public ")+(JavaCCGlobals.Cu_name)+("(CharStream stream) {")
+					);
 				if (Options.getStatic())
 				{
 					writer.WriteLine("    if (jj_initialized_once) {");
@@ -200,13 +192,13 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				}
 				if (Options.TokenManagerUsesParser && !Options.getStatic())
 				{
-					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.cu_name)+("TokenManager(this, stream);")
-						.ToString());
+					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.Cu_name)+("TokenManager(this, stream);")
+						);
 				}
 				else
 				{
-					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.cu_name)+("TokenManager(stream);")
-						.ToString());
+					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.Cu_name)+("TokenManager(stream);")
+						);
 				}
 				writer.WriteLine("    token = new Token();");
 				if (Options.CacheTokens)
@@ -221,7 +213,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				{
 					writer.WriteLine("    jj_gen = 0;");
 					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
-						.ToString());
+						);
 					if (JavaCCGlobals.jj2index != 0)
 					{
 						writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
@@ -231,7 +223,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				writer.WriteLine("");
 				writer.WriteLine("  /** Reinitialise. */");
 				writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("public void ReInit(CharStream stream) {")
-					.ToString());
+					);
 				writer.WriteLine("    token_source.ReInit(stream);");
 				writer.WriteLine("    token = new Token();");
 				if (Options.CacheTokens)
@@ -251,7 +243,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				{
 					writer.WriteLine("    jj_gen = 0;");
 					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
-						.ToString());
+						);
 					if (JavaCCGlobals.jj2index != 0)
 					{
 						writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
@@ -262,13 +254,13 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			else
 			{
 				writer.WriteLine("  /** Constructor with Stream. */");
-				writer.WriteLine(("  public ")+(JavaCCGlobals.cu_name)+("(java.io.Stream stream) {")
-					.ToString());
+				writer.WriteLine(("  public ")+(JavaCCGlobals.Cu_name)+("(java.io.Stream stream) {")
+					);
 				writer.WriteLine("     this(stream, null);");
 				writer.WriteLine("  }");
 				writer.WriteLine("  /** Constructor with Stream and supplied encoding */");
-				writer.WriteLine(("  public ")+(JavaCCGlobals.cu_name)+("(java.io.Stream stream, String encoding) {")
-					.ToString());
+				writer.WriteLine(("  public ")+(JavaCCGlobals.Cu_name)+("(java.io.Stream stream, String encoding) {")
+					);
 				if (Options.getStatic())
 				{
 					writer.WriteLine("    if (jj_initialized_once) {");
@@ -300,13 +292,13 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				}
 				if (Options.TokenManagerUsesParser && !Options.getStatic())
 				{
-					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.cu_name)+("TokenManager(this, jj_input_stream);")
-						.ToString());
+					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.Cu_name)+("TokenManager(this, jj_input_stream);")
+						);
 				}
 				else
 				{
-					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.cu_name)+("TokenManager(jj_input_stream);")
-						.ToString());
+					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.Cu_name)+("TokenManager(jj_input_stream);")
+						);
 				}
 				writer.WriteLine("    token = new Token();");
 				if (Options.CacheTokens)
@@ -321,7 +313,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				{
 					writer.WriteLine("    jj_gen = 0;");
 					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
-						.ToString());
+						);
 					if (JavaCCGlobals.jj2index != 0)
 					{
 						writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
@@ -331,12 +323,12 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				writer.WriteLine("");
 				writer.WriteLine("  /** Reinitialise. */");
 				writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("public void ReInit(java.io.Stream stream) {")
-					.ToString());
+					);
 				writer.WriteLine("     ReInit(stream, null);");
 				writer.WriteLine("  }");
 				writer.WriteLine("  /** Reinitialise. */");
 				writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("public void ReInit(java.io.Stream stream, String encoding) {")
-					.ToString());
+					);
 				if (string.Equals(Options.JdkVersion, "1.3"))
 				{
 					writer.WriteLine("    try { jj_input_stream.ReInit(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e.getMessage()); }");
@@ -363,7 +355,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				{
 					writer.WriteLine("    jj_gen = 0;");
 					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
-						.ToString());
+						);
 					if (JavaCCGlobals.jj2index != 0)
 					{
 						writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
@@ -372,8 +364,8 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				writer.WriteLine("  }");
 				writer.WriteLine("");
 				writer.WriteLine("  /** Constructor. */");
-				writer.WriteLine(("  public ")+(JavaCCGlobals.cu_name)+("(java.io.TextReader stream) {")
-					.ToString());
+				writer.WriteLine(("  public ")+(JavaCCGlobals.Cu_name)+("(java.io.TextReader stream) {")
+					);
 				if (Options.getStatic())
 				{
 					writer.WriteLine("    if (jj_initialized_once) {");
@@ -394,13 +386,13 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				}
 				if (Options.TokenManagerUsesParser && !Options.getStatic())
 				{
-					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.cu_name)+("TokenManager(this, jj_input_stream);")
-						.ToString());
+					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.Cu_name)+("TokenManager(this, jj_input_stream);")
+						);
 				}
 				else
 				{
-					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.cu_name)+("TokenManager(jj_input_stream);")
-						.ToString());
+					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.Cu_name)+("TokenManager(jj_input_stream);")
+						);
 				}
 				writer.WriteLine("    token = new Token();");
 				if (Options.CacheTokens)
@@ -415,7 +407,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				{
 					writer.WriteLine("    jj_gen = 0;");
 					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
-						.ToString());
+						);
 					if (JavaCCGlobals.jj2index != 0)
 					{
 						writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
@@ -425,7 +417,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				writer.WriteLine("");
 				writer.WriteLine("  /** Reinitialise. */");
 				writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("public void ReInit(java.io.TextReader stream) {")
-					.ToString());
+					);
 				if (Options.JavaUnicodeEscape)
 				{
 					writer.WriteLine("    jj_input_stream.ReInit(stream, 1, 1);");
@@ -452,7 +444,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				{
 					writer.WriteLine("    jj_gen = 0;");
 					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
-						.ToString());
+						);
 					if (JavaCCGlobals.jj2index != 0)
 					{
 						writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
@@ -465,16 +457,16 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		if (Options.UserTokenManager)
 		{
 			writer.WriteLine("  /** Constructor with user supplied Token Manager. */");
-			writer.WriteLine(("  public ")+(JavaCCGlobals.cu_name)+("(TokenManager tm) {")
-				.ToString());
+			writer.WriteLine(("  public ")+(JavaCCGlobals.Cu_name)+("(TokenManager tm) {")
+				);
 		}
 		else
 		{
 			writer.WriteLine("  /** Constructor with generated Token Manager. */");
-			writer.WriteLine(("  public ")+(JavaCCGlobals.cu_name)+("(")
-				+(JavaCCGlobals.cu_name)
+			writer.WriteLine(("  public ")+(JavaCCGlobals.Cu_name)+("(")
+				+(JavaCCGlobals.Cu_name)
 				+("TokenManager tm) {")
-				.ToString());
+				);
 		}
 		if (Options.getStatic())
 		{
@@ -500,7 +492,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		{
 			writer.WriteLine("    jj_gen = 0;");
 			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
-				.ToString());
+				);
 			if (JavaCCGlobals.jj2index != 0)
 			{
 				writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
@@ -516,8 +508,8 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		else
 		{
 			writer.WriteLine("  /** Reinitialise. */");
-			writer.WriteLine(("  public void ReInit(")+(JavaCCGlobals.cu_name)+("TokenManager tm) {")
-				.ToString());
+			writer.WriteLine(("  public void ReInit(")+(JavaCCGlobals.Cu_name)+("TokenManager tm) {")
+				);
 		}
 		writer.WriteLine("    token_source = tm;");
 		writer.WriteLine("    token = new Token();");
@@ -537,7 +529,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		{
 			writer.WriteLine("    jj_gen = 0;");
 			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
-				.ToString());
+				);
 			if (JavaCCGlobals.jj2index != 0)
 			{
 				writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
@@ -546,7 +538,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		writer.WriteLine("  }");
 		writer.WriteLine("");
 		writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private Token jj_consume_token(int kind) throws ParseException {")
-			.ToString());
+			);
 		if (Options.CacheTokens)
 		{
 			writer.WriteLine("    Token oldToken = token;");
@@ -600,9 +592,9 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		{
 			writer.WriteLine("  static private final class LookaheadSuccess extends java.lang.Error { }");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("final private LookaheadSuccess jj_ls = new LookaheadSuccess();")
-				.ToString());
+				);
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private boolean jj_scan_token(int kind) {")
-				.ToString());
+				);
 			writer.WriteLine("    if (jj_scanpos == jj_lastpos) {");
 			writer.WriteLine("      jj_la--;");
 			writer.WriteLine("      if (jj_scanpos.next == null) {");
@@ -639,7 +631,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		writer.WriteLine("");
 		writer.WriteLine("/** Get the next Token. */");
 		writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("final public Token getNextToken() {")
-			.ToString());
+			);
 		if (Options.CacheTokens)
 		{
 			writer.WriteLine("    if ((token = jj_nt).next != null) jj_nt = jj_nt.next;");
@@ -664,7 +656,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		writer.WriteLine("");
 		writer.WriteLine("/** Get the specific Token. */");
 		writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("final public Token getToken(int index) {")
-			.ToString());
+			);
 		if (JavaCCGlobals.jj2index != 0)
 		{
 			writer.WriteLine("    Token t = jj_lookingAhead ? jj_scanpos : token;");
@@ -683,7 +675,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		if (!Options.CacheTokens)
 		{
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private int jj_ntk() {")
-				.ToString());
+				);
 			writer.WriteLine("    if ((jj_nt=token.next) == null)");
 			writer.WriteLine("      return (jj_ntk = (token.next=token_source.getNextToken()).kind);");
 			writer.WriteLine("    else");
@@ -696,26 +688,26 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			if (!string.Equals(Options.JdkVersion, "1.5"))
 			{
 				writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private java.util.List jj_expentries = new java.util.ArrayList();")
-					.ToString());
+					);
 			}
 			else
 			{
 				writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private java.util.List<int[]> jj_expentries = new java.util.ArrayList<int[]>();")
-					.ToString());
+					);
 			}
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private int[] jj_expentry;")
-				.ToString());
+				);
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private int jj_kind = -1;")
-				.ToString());
+				);
 			if (JavaCCGlobals.jj2index != 0)
 			{
 				writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private int[] jj_lasttokens = new int[100];")
-					.ToString());
+					);
 				writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private int jj_endpos;")
-					.ToString());
+					);
 				writer.WriteLine("");
 				writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private void jj_add_error_token(int kind, int pos) {")
-					.ToString());
+					);
 				writer.WriteLine("    if (pos >= 100) return;");
 				writer.WriteLine("    if (pos == jj_endpos + 1) {");
 				writer.WriteLine("      jj_lasttokens[jj_endpos++] = kind;");
@@ -746,26 +738,26 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine("");
 			writer.WriteLine("  /** Generate ParseException. */");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("public ParseException generateParseException() {")
-				.ToString());
+				);
 			writer.WriteLine("    jj_expentries.Clear();");
 			writer.WriteLine(("    boolean[] la1tokens = new boolean[")+(JavaCCGlobals.tokenCount)+("];")
-				.ToString());
+				);
 			writer.WriteLine("    if (jj_kind >= 0) {");
 			writer.WriteLine("      la1tokens[jj_kind] = true;");
 			writer.WriteLine("      jj_kind = -1;");
 			writer.WriteLine("    }");
 			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) {")
-				.ToString());
+				);
 			writer.WriteLine("      if (jj_la1[i] == jj_gen) {");
 			writer.WriteLine("        for (int j = 0; j < 32; j++) {");
 			for (int num2 = 0; num2 < (JavaCCGlobals.tokenCount - 1) / 32 + 1; num2++)
 			{
 				writer.WriteLine(("          if ((jj_la1_")+(num2)+("[i] & (1<<j)) != 0) {")
-					.ToString());
+					);
 				writer.Write("            la1tokens[");
 				if (num2 != 0)
 				{
-					writer.Write((32 * num2)+("+").ToString());
+					writer.Write((32 * num2)+("+"));
 				}
 				writer.WriteLine("j] = true;");
 				writer.WriteLine("          }");
@@ -774,7 +766,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine("      }");
 			writer.WriteLine("    }");
 			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.tokenCount)+("; i++) {")
-				.ToString());
+				);
 			writer.WriteLine("      if (la1tokens[i]) {");
 			writer.WriteLine("        jj_expentry = new int[1];");
 			writer.WriteLine("        jj_expentry[0] = i;");
@@ -805,7 +797,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		{
 			writer.WriteLine("  /** Generate ParseException. */");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("public ParseException generateParseException() {")
-				.ToString());
+				);
 			writer.WriteLine("    Token errortok = token.next;");
 			if (Options.KeepLineColumn)
 			{
@@ -826,24 +818,24 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		if (Options.DebugParser)
 		{
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private int trace_indent = 0;")
-				.ToString());
+				);
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private boolean trace_enabled = true;")
-				.ToString());
+				);
 			writer.WriteLine("");
 			writer.WriteLine("/** Enable tracing. */");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("final public void enable_tracing() {")
-				.ToString());
+				);
 			writer.WriteLine("    trace_enabled = true;");
 			writer.WriteLine("  }");
 			writer.WriteLine("");
 			writer.WriteLine("/** Disable tracing. */");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("final public void disable_tracing() {")
-				.ToString());
+				);
 			writer.WriteLine("    trace_enabled = false;");
 			writer.WriteLine("  }");
 			writer.WriteLine("");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private void trace_call(String s) {")
-				.ToString());
+				);
 			writer.WriteLine("    if (trace_enabled) {");
 			writer.WriteLine("      for (int i = 0; i < trace_indent; i++) { System.out.Write(\" \"); }");
 			writer.WriteLine("      System.out.WriteLine(\"Call:   \" + s);");
@@ -852,7 +844,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine("  }");
 			writer.WriteLine("");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private void trace_return(String s) {")
-				.ToString());
+				);
 			writer.WriteLine("    trace_indent = trace_indent - 2;");
 			writer.WriteLine("    if (trace_enabled) {");
 			writer.WriteLine("      for (int i = 0; i < trace_indent; i++) { System.out.Write(\" \"); }");
@@ -861,7 +853,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine("  }");
 			writer.WriteLine("");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private void trace_token(Token t, String where) {")
-				.ToString());
+				);
 			writer.WriteLine("    if (trace_enabled) {");
 			writer.WriteLine("      for (int i = 0; i < trace_indent; i++) { System.out.Write(\" \"); }");
 			writer.WriteLine("      System.out.Write(\"Consumed token: <\" + tokenImage[t.kind]);");
@@ -873,7 +865,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine("  }");
 			writer.WriteLine("");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private void trace_scan(Token t1, int t2) {")
-				.ToString());
+				);
 			writer.WriteLine("    if (trace_enabled) {");
 			writer.WriteLine("      for (int i = 0; i < trace_indent; i++) { System.out.Write(\" \"); }");
 			writer.WriteLine("      System.out.Write(\"Visited token: <\" + tokenImage[t1.kind]);");
@@ -889,22 +881,22 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		{
 			writer.WriteLine("  /** Enable tracing. */");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("final public void enable_tracing() {")
-				.ToString());
+				);
 			writer.WriteLine("  }");
 			writer.WriteLine("");
 			writer.WriteLine("  /** Disable tracing. */");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("final public void disable_tracing() {")
-				.ToString());
+				);
 			writer.WriteLine("  }");
 			writer.WriteLine("");
 		}
 		if (JavaCCGlobals.jj2index != 0 && Options.ErrorReporting)
 		{
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private void jj_rescan_token() {")
-				.ToString());
+				);
 			writer.WriteLine("    jj_rescan = true;");
 			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.jj2index)+("; i++) {")
-				.ToString());
+				);
 			writer.WriteLine("    try {");
 			writer.WriteLine("      JJCalls p = jj_2_rtns[i];");
 			writer.WriteLine("      do {");
@@ -916,7 +908,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				writer.WriteLine(("            case ")+(num2)+(": jj_3_")
 					+(num2 + 1)
 					+("(); break;")
-					.ToString());
+					);
 			}
 			writer.WriteLine("          }");
 			writer.WriteLine("        }");
@@ -928,7 +920,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine("  }");
 			writer.WriteLine("");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private void jj_save(int index, int xla) {")
-				.ToString());
+				);
 			writer.WriteLine("    JJCalls p = jj_2_rtns[index];");
 			writer.WriteLine("    while (p.gen > jj_gen) {");
 			writer.WriteLine("      if (p.next == null) { p = p.next = new JJCalls(); break; }");
@@ -948,15 +940,14 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine("  }");
 			writer.WriteLine("");
 		}
-		if (JavaCCGlobals.cu_from_insertion_point_2.Count != 0)
+		if (JavaCCGlobals.Cu_from_insertion_point_2.Count != 0)
 		{
-			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.cu_from_insertion_point_2[0]);
+			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.Cu_from_insertion_point_2[0]);
 			JavaCCGlobals.ccol = 1;
-			Enumeration enumeration = JavaCCGlobals.cu_from_insertion_point_2.elements();
-			while (enumeration.hasMoreElements())
+			foreach (var _token in JavaCCGlobals.Cu_from_insertion_point_2)
 			{
-				token = (Token)enumeration.nextElement();
 				JavaCCGlobals.PrintToken(token, writer);
+				token = _token;
 			}
 			JavaCCGlobals.PrintTrailingComments(token, writer);
 		}
@@ -965,8 +956,8 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		return;
 		IL_006c:
 		
-		JavaCCErrors.Semantic_Error(("Could not open file ")+(JavaCCGlobals.cu_name)+(".java for writing.")
-			.ToString());
+		JavaCCErrors.Semantic_Error(("Could not open file ")+(JavaCCGlobals.Cu_name)+(".java for writing.")
+			);
 		
 		throw new System.Exception();
 	}

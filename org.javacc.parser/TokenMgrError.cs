@@ -74,9 +74,7 @@ public class TokenMgrError : System.Exception
                 stringBuilder.Append((char)num);
             }
         }
-        string result = stringBuilder.ToString();
-
-        return result;
+        return stringBuilder.ToString();
     }
 
 
@@ -91,7 +89,7 @@ public class TokenMgrError : System.Exception
                 +(" (")
                 +((int)ch)
                 +("), ")
-                .ToString() : "<EOF> ")
+                 : "<EOF> ")
             +("after : \"")
             +(addEscapes(str))
             +("\"")

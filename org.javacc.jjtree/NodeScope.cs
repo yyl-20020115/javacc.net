@@ -122,8 +122,7 @@ public class NodeScope
 		P_0.WriteLine();
 		var dict = new Dictionary<string,string>();
 		findThrown(dict, P_2);
-		var enumeration = dict.GetEnumerator();
-		insertCatchBlocks(P_0, enumeration, P_1);
+		insertCatchBlocks(P_0, dict.Keys, P_1);
 		P_0.WriteLine((P_1)+("} finally {"));
 		if (usesCloseNodeVar())
 		{
@@ -231,7 +230,8 @@ public class NodeScope
 	
 	private void insertCatchBlocks(IO io, IEnumerable<string> P_1, string P_2)
 	{
-		if (P_1.hasMoreElements())
+		var em = P_1.GetEnumerator();
+		if (em.MoveNext())
 		{
 			io.WriteLine((P_2)+("} catch (Throwable ")+(ExceptionVar)
 				+(") {")
@@ -251,9 +251,9 @@ public class NodeScope
 				io.WriteLine((P_2)+("    jjtree.popNode();"));
 				io.WriteLine((P_2)+("  }"));
 			}
-			while (P_1.hasMoreElements())
+			while (em.MoveNext())
 			{
-				string str = (string)P_1.nextElement();
+				string str = em.Current;
 				io.WriteLine((P_2)+("  if (")+(ExceptionVar)
 					+(" instanceof ")
 					+(str)
