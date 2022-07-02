@@ -32,7 +32,7 @@ public class NfaState
 
 	internal static List<NfaState> indexedAllStates = new();
 
-	internal static ArrayList nonAsciiTableForMethod = new();
+	internal static List<NfaState> nonAsciiTableForMethod = new();
 
 	internal static Dictionary<string, NfaState> equivStatesTable =new();
 
@@ -110,9 +110,9 @@ public class NfaState
 
 	internal static string allBits;
 
-	internal static Dictionary<string,int[]> tableToDump;
+	internal static Dictionary<string,int[]> tableToDump =new();
 
-	internal static ArrayList orderedStateSet;
+	internal static List<int[]> orderedStateSet = new();
 
 	internal static int lastIndex;
 
@@ -494,7 +494,7 @@ public class NfaState
 		{
 			for (int i = 0; i < nonAsciiTableForMethod.Count; i++)
 			{
-				NfaState nfaState = (NfaState)nonAsciiTableForMethod[i];
+				NfaState nfaState = nonAsciiTableForMethod[i];
 				nfaState.DumpNonAsciiMoveMethod(pw);
 			}
 		}
@@ -1779,11 +1779,11 @@ public class NfaState
 	}
 
 	
-	private static ArrayList PartitionStatesSetForAscii(int[] P_0, int P_1)
+	private static List<List<NfaState>> PartitionStatesSetForAscii(int[] P_0, int P_1)
 	{
 		int[] array = new int[P_0.Length];
 		var vector = new List<NfaState>();
-		ArrayList vector2 = new ArrayList();
+		List<List<NfaState>> vector2 = new ();
 		vector.AddRange(Enumerable.Repeat<NfaState>(new NfaState(), P_0.Length));
 		int num = 0;
 		for (int i = 0; i < P_0.Length; i++)
@@ -1812,7 +1812,7 @@ public class NfaState
 			NfaState nfaState = (NfaState)vector[0];
 			vector.Remove(nfaState);
 			long num3 = nfaState.asciiMoves[P_1];
-			ArrayList vector3 = new ArrayList();
+			List<NfaState> vector3 = new ();
 			vector3.Add(nfaState);
 			for (int k = 0; k < vector.Count; k++)
 			{
@@ -1972,7 +1972,7 @@ public class NfaState
 			nfaState.DumpAsciiMove(P_0, P_2, P_3);
 			return;
 		}
-		ArrayList vector = PartitionStatesSetForAscii(array, P_2);
+		List<List<NfaState>> vector = PartitionStatesSetForAscii(array, P_2);
 		if (!string.Equals(text, ""))
 		{
 			P_0.Write(text);
@@ -1986,7 +1986,7 @@ public class NfaState
 		}
 		for (int i = 0; i < vector.Count; i++)
 		{
-			ArrayList vector2 = (ArrayList)vector[i];
+			var vector2 = vector[i];
 			for (int j = 0; j < vector2.Count; j++)
 			{
 				NfaState nfaState3 = (NfaState)vector2[j];
@@ -2508,10 +2508,10 @@ public class NfaState
 						+(text)
 						);
 				}
-				var hashtable = lohiByteTab;
+				var dict = lohiByteTab;
 				string key = text;
-				;
-				hashtable.Add(key, integer = (lohiByteCnt++));
+				
+				dict.Add(key, integer = (lohiByteCnt++));
 			}
 			int[] array15 = tmpIndices;
 			int num33 = num;
@@ -2537,10 +2537,10 @@ public class NfaState
 						+(text)
 						);
 				}
-				var hashtable2 = lohiByteTab;
+				var dict2 = lohiByteTab;
 				string key2 = text;
-				;
-				hashtable2.Add(key2, integer = (lohiByteCnt++));
+				
+				dict2.Add(key2, integer = (lohiByteCnt++));
 			}
 			int[] array16 = tmpIndices;
 			int num34 = num;
@@ -2577,9 +2577,9 @@ public class NfaState
 						+(text2)
 						);
 				}
-				var hashtable3 = lohiByteTab;
+				var dict3 = lohiByteTab;
 				;
-				hashtable3.Add(text2, obj9 = (lohiByteCnt++));
+				dict3.Add(text2, obj9 = (lohiByteCnt++));
 			}
 			if (loByteVec == null)
 			{
@@ -2594,7 +2594,7 @@ public class NfaState
 	
 	private static void FixStateSets()
 	{
-		var hashtable = new Dictionary<string, int[]>();
+		var dict = new Dictionary<string, int[]>();
 		int[] array = new int[generatedStates];
 		foreach(var pair in stateSetsToFix)
 		{
@@ -2612,15 +2612,14 @@ public class NfaState
 			}
 			int[] array3 = new int[num];
 			Array.Copy(array, 0, array3, 0, num);
-			hashtable.Add(key, array3);
+			dict.Add(key, array3);
 			allNextStates.Add(key, array3);
 		}
 		for (int i = 0; i < allStates.Count; i++)
 		{
 			NfaState nfaState = (NfaState)allStates[i];
-			int[] array2;
 			if (nfaState.next != null && nfaState.next.usefulEpsilonMoves != 0 && 
-				hashtable.TryGetValue(nfaState.next.epsilonMovesString,out var array3))
+				dict.TryGetValue(nfaState.next.epsilonMovesString,out var array3))
 			{
 				nfaState.FixNextStates(array3);
 			}
@@ -2889,7 +2888,7 @@ public class NfaState
 	}
 
 	
-	internal static string GetStateSetString(ArrayList P_0)
+	internal static string GetStateSetString(List<NfaState> P_0)
 	{
 		if (P_0 == null || P_0.Count == 0)
 		{
@@ -3093,8 +3092,8 @@ public class NfaState
 		{
 			return false;
 		}
-		var hashtable = new Dictionary<string, int[]>();
-		NfaState nfaState = (NfaState)allStates[array[0]];
+		var dict = new Dictionary<string, int[]>();
+		var nfaState = allStates[array[0]];
 		for (int i = 1; i < array.Length; i++)
 		{
 			NfaState nfaState2 = (NfaState)allStates[array[i]];
@@ -3128,7 +3127,7 @@ public class NfaState
 			{
 				if (array2.Length > array.Length)
 				{
-					hashtable.Add(key2, array2);
+					dict.Add(key2, array2);
 				}
 				if (compositeStateTable.ContainsKey(key2) || stateSetsToFix.ContainsKey(key2))
 				{
@@ -3140,7 +3139,7 @@ public class NfaState
 				return false; 
 			}
 		}
-		foreach(var pair in hashtable)
+		foreach(var pair in dict)
 		{
 			string key2 = pair.Key;
 			int[] array2 = pair.Value;
@@ -3164,7 +3163,7 @@ public class NfaState
 	
 	private static void FindStatesWithNoBreak()
 	{
-		Hashtable hashtable = new Hashtable();
+		Dictionary<string,string> dict = new ();
 		bool[] array = new bool[generatedStates];
 		int num = 0;
 		int num2 = 0;
@@ -3177,11 +3176,11 @@ public class NfaState
 				continue;
 			}
 			string text = nfaState2.next.epsilonMovesString;
-			if (compositeStateTable.ContainsKey(text) || hashtable.ContainsKey(text))
+			if (compositeStateTable.ContainsKey(text) || dict.ContainsKey(text))
 			{
 				continue;
 			}
-			hashtable.Add(text, text);
+			dict.Add(text, text);
 			
 			if (allNextStates.TryGetValue(text, out var array2) && array2.Length == 1)
 			{

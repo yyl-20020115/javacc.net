@@ -14,9 +14,9 @@ public class ParseEngine : JavaCCGlobals
 
 	private static bool jj2LA;
 
-	private static ArrayList phase2list;
+	private static List<Lookahead> phase2list =new();
 
-	private static ArrayList phase3list;
+	private static List<Phase3Data> phase3list = new();
 
 	private static Dictionary<Expansion,Phase3Data> phase3table =new();
 
@@ -31,8 +31,6 @@ public class ParseEngine : JavaCCGlobals
 	private static bool xsp_declared;
 
 	internal static Expansion jj3_expansion;
-
-	internal static Hashtable generated;
 
 	
 	public new static void ReInit()
@@ -233,12 +231,12 @@ public class ParseEngine : JavaCCGlobals
 				 : ");");
 			if (string.Equals(regularExpression.label, ""))
 			{
-				var hashtable = JavaCCGlobals.names_of_tokens;
+				var dict = JavaCCGlobals.names_of_tokens;
 				;
-				var obj = hashtable.ContainsKey((regularExpression.ordinal));
+				var obj = dict.ContainsKey((regularExpression.ordinal));
 				text = ((obj) ? (text)+("jj_consume_token(")+(regularExpression.ordinal)
 					+(str)
-					 : (text)+("jj_consume_token(")+(hashtable[regularExpression.ordinal])
+					 : (text)+("jj_consume_token(")+(dict[regularExpression.ordinal])
 					+ (str)
 					);
 			}
@@ -900,12 +898,12 @@ public class ParseEngine : JavaCCGlobals
 			RegularExpression regularExpression = (RegularExpression)exp;
 			if (string.Equals(regularExpression.label, ""))
 			{
-				var hashtable = JavaCCGlobals.names_of_tokens;
+				var dict = JavaCCGlobals.names_of_tokens;
 				;
-				var obj = hashtable.ContainsKey((regularExpression.ordinal));
+				var obj = dict.ContainsKey((regularExpression.ordinal));
 				if (obj )
 				{
-					ostr.WriteLine(("    if (jj_scan_token(") + ((hashtable[regularExpression.ordinal]) +(")) ")
+					ostr.WriteLine(("    if (jj_scan_token(") + ((dict[regularExpression.ordinal]) +(")) ")
 						+(genReturn(true))
 						));
 				}
@@ -1387,12 +1385,11 @@ public class ParseEngine : JavaCCGlobals
 	}
 
 	static ParseEngine()
-	{
-		
+	{	
 		gensymindex = 0;
 		phase2list = new ();
 		phase3list = new ();
 		phase3table = new ();
-		generated = new ();
+		//generated = new ();
 	}
 }

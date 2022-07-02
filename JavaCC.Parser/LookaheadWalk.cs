@@ -1,17 +1,17 @@
 namespace JavaCC.Parser;
-using System.Collections;
+using System.Collections.Generic;
 
 public sealed class LookaheadWalk
 {
     public static bool considerSemanticLA;
-    public static ArrayList sizeLimitedMatches;
+    public static List<MatchInfo> sizeLimitedMatches;
 
-    public static ArrayList GenFirstSet(ArrayList v, Expansion e)
+    public static List<MatchInfo> GenFirstSet(List<MatchInfo> v, Expansion e)
     {
-        ArrayList vector;
+        List<MatchInfo> vector;
         if (e is RegularExpression re)
         {
-            vector = new ArrayList();
+            vector = new ();
             for (int i = 0; i < v.Count; i++)
             {
                 MatchInfo matchInfo = (MatchInfo)v[i];
@@ -42,21 +42,17 @@ public sealed class LookaheadWalk
             NormalProduction prod = n.prod;
             if (prod is JavaCodeProduction)
             {
-                ArrayList result = new ArrayList();
-
-                return result;
+                return new();
             }
-            ArrayList result2 = GenFirstSet(v, prod.Expansion);
-
-            return result2;
+            return GenFirstSet(v, prod.Expansion);
         }
         if (e is Choice)
         {
-            vector = new ArrayList();
+            vector = new ();
             Choice choice = (Choice)e;
             for (int k = 0; k < choice.Choices.Count; k++)
             {
-                ArrayList v2 = GenFirstSet(v, (Expansion)choice.Choices[k]);
+                var v2 = GenFirstSet(v, (Expansion)choice.Choices[k]);
                 VectorAppend(vector, v2);
             }
             return vector;
@@ -77,8 +73,8 @@ public sealed class LookaheadWalk
         }
         if (e is OneOrMore)
         {
-            vector = new ArrayList();
-            ArrayList vector2 = v;
+            vector = new ();
+            var vector2 = v;
             OneOrMore oneOrMore = (OneOrMore)e;
             while (true)
             {
@@ -93,9 +89,9 @@ public sealed class LookaheadWalk
         }
         if (e is ZeroOrMore)
         {
-            vector = new ArrayList();
+            vector = new ();
             VectorAppend(vector, v);
-            ArrayList vector2 = v;
+            var vector2 = v;
             ZeroOrMore zeroOrMore = (ZeroOrMore)e;
             while (true)
             {
@@ -110,51 +106,46 @@ public sealed class LookaheadWalk
         }
         if (e is ZeroOrOne)
         {
-            vector = new ArrayList();
+            vector = new ();
             VectorAppend(vector, v);
             VectorAppend(vector, GenFirstSet(v, ((ZeroOrOne)e).expansion));
             return vector;
         }
         if (e is TryBlock)
         {
-            ArrayList result3 = GenFirstSet(v, ((TryBlock)e).exp);
-
-            return result3;
+            return GenFirstSet(v, ((TryBlock)e).exp);
         }
         if (considerSemanticLA && e is Lookahead && ((Lookahead)e).action_tokens.Count != 0)
         {
-            ArrayList result4 = new ArrayList();
-
-            return result4;
+            return new();
         }
-        vector = new ArrayList();
+        vector = new ();
         VectorAppend(vector, v);
         return vector;
     }
 
 
-    public static ArrayList GenFollowSet(ArrayList v, Expansion e, long l)
+    public static List<MatchInfo> GenFollowSet(List<MatchInfo> v, Expansion e, long l)
     {
         if (e.myGeneration == l)
         {
-            ArrayList result = new ArrayList();
-
-            return result;
+           
+            return new();
         }
         e.myGeneration = l;
         if (e.parent == null)
         {
-            ArrayList vector = new ArrayList();
+            List<MatchInfo> vector = new ();
             VectorAppend(vector, v);
             return vector;
         }
         if (e.parent is NormalProduction)
         {
             var vector = ((NormalProduction)e.parent).parents;
-            ArrayList vector2 = new ArrayList();
+            var vector2 = new List<MatchInfo>();
             for (int i = 0; i < vector.Count; i++)
             {
-                ArrayList v2 = GenFollowSet(v, (Expansion)vector[i], l);
+                var v2 = GenFollowSet(v, (Expansion)vector[i], l);
                 VectorAppend(vector2, v2);
             }
             return vector2;
@@ -162,7 +153,7 @@ public sealed class LookaheadWalk
         if (e.parent is Sequence)
         {
             Sequence sequence = (Sequence)e.parent;
-            ArrayList vector2 = v;
+            var vector2 = v;
             for (int i = e.ordinal + 1; i < sequence.Units.Count; i++)
             {
                 vector2 = GenFirstSet(vector2, (Expansion)sequence.Units[i]);
@@ -171,8 +162,8 @@ public sealed class LookaheadWalk
                     return vector2;
                 }
             }
-            ArrayList vector3 = new ArrayList();
-            ArrayList v2 = new ArrayList();
+            List<MatchInfo> vector3 = new ();
+            List<MatchInfo> v2 = new ();
             VectorSplit(vector2, v, vector3, v2);
             if (vector3.Count != 0)
             {
@@ -187,9 +178,9 @@ public sealed class LookaheadWalk
         }
         if (e.parent is OneOrMore || e.parent is ZeroOrMore)
         {
-            ArrayList vector = new ArrayList();
+            List<MatchInfo> vector = new ();
             VectorAppend(vector, v);
-            ArrayList vector2 = v;
+            var vector2 = v;
             while (true)
             {
                 vector2 = GenFirstSet(vector2, e);
@@ -199,8 +190,8 @@ public sealed class LookaheadWalk
                 }
                 VectorAppend(vector, vector2);
             }
-            ArrayList vector3 = new ArrayList();
-            ArrayList v2 = new ArrayList();
+            List<MatchInfo> vector3 = new ();
+            List<MatchInfo> v2 = new ();
             VectorSplit(vector, v, vector3, v2);
             if (vector3.Count != 0)
             {
@@ -213,13 +204,11 @@ public sealed class LookaheadWalk
             VectorAppend(v2, vector3);
             return v2;
         }
-        ArrayList result2 = GenFollowSet(v, (Expansion)e.parent, l);
-
-        return result2;
+        return GenFollowSet(v, (Expansion)e.parent, l);
     }
 
 
-    public static void VectorAppend(ArrayList v1, ArrayList v2)
+    public static void VectorAppend(List<MatchInfo> v1, List<MatchInfo> v2)
     {
         for (int i = 0; i < v2.Count; i++)
         {
@@ -228,7 +217,7 @@ public sealed class LookaheadWalk
     }
 
 
-    public static void VectorSplit(ArrayList v1, ArrayList v2, ArrayList v3, ArrayList v4)
+    public static void VectorSplit(List<MatchInfo> v1, List<MatchInfo> v2, List<MatchInfo> v3, List<MatchInfo> v4)
     {
         for (int i = 0; i < v1.Count; i++)
         {

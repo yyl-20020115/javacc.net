@@ -108,7 +108,7 @@ public static class EntryPoint
                 }
                 Semanticize.start();
                 ParseGen.Start();
-                LexGen.start();
+                LexGen.Start();
                 OtherFilesGen.start();
                 if (JavaCCErrors._Error_Count == 0 && (Options.BuildParser || Options.BuildTokenManager))
                 {

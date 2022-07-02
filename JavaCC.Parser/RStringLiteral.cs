@@ -86,19 +86,19 @@ public class RStringLiteral : RegularExpression
                 NfaState.unicodeWarningGiven = true;
                 JavaCCErrors.Warning(LexGen.curRE, "Non-ASCII characters used in regular expression.Please make sure you use the correct TextReader when you create the parser, one that can handle your character set.");
             }
-            Dictionary<string, KindInfo> hashtable;
+            Dictionary<string, KindInfo> dict;
             if (j >= charPosKind.Count)
             {
-                charPosKind.Add(hashtable = new ());
+                charPosKind.Add(dict = new ());
             }
             else
             {
-                hashtable = charPosKind[j];
+                dict = charPosKind[j];
             }
             KindInfo kindInfo;
-            if (!hashtable.TryGetValue(key, out kindInfo))
+            if (!dict.TryGetValue(key, out kindInfo))
             {
-                hashtable.Add(key, kindInfo = new KindInfo(LexGen.maxOrdinal));
+                dict.Add(key, kindInfo = new KindInfo(LexGen.maxOrdinal));
             }
             if (j + 1 == num)
             {
@@ -113,15 +113,15 @@ public class RStringLiteral : RegularExpression
                 key = char.ToLower(image[j]).ToString();
                 if (j >= charPosKind.Count)
                 {
-                    charPosKind.Add(hashtable = new ());
+                    charPosKind.Add(dict = new ());
                 }
                 else
                 {
-                    hashtable = charPosKind[j];
+                    dict = charPosKind[j];
                 }
-                if (!hashtable.TryGetValue(key, out kindInfo))
+                if (!dict.TryGetValue(key, out kindInfo))
                 {
-                    hashtable.Add(key, kindInfo = new KindInfo(LexGen.maxOrdinal));
+                    dict.Add(key, kindInfo = new KindInfo(LexGen.maxOrdinal));
                 }
                 if (j + 1 == num)
                 {
@@ -137,15 +137,15 @@ public class RStringLiteral : RegularExpression
                 key = (("") + (image[j])).ToUpper();
                 if (j >= charPosKind.Count)
                 {
-                    charPosKind.Add(hashtable = new());
+                    charPosKind.Add(dict = new());
                 }
                 else
                 {
-                    hashtable = charPosKind[j];
+                    dict = charPosKind[j];
                 }
-                if (!hashtable.TryGetValue(key,out kindInfo))
+                if (!dict.TryGetValue(key,out kindInfo))
                 {
-                    hashtable.Add(key, kindInfo = new KindInfo(LexGen.maxOrdinal));
+                    dict.Add(key, kindInfo = new KindInfo(LexGen.maxOrdinal));
                 }
                 if (j + 1 == num)
                 {
@@ -205,9 +205,8 @@ public class RStringLiteral : RegularExpression
     internal static void GenerateNfaStartStates(TextWriter P_0, NfaState P_1)
     {
         bool[] array = new bool[NfaState.generatedStates];
-        Hashtable hashtable = new Hashtable();
+        Dictionary<string,string> dict = new ();
         string text = "";
-        _ = 0;
         int num = maxStrKind / 64 + 1;
         List<NfaState> vector = new();
         List<NfaState> vector2 = null;
@@ -325,15 +324,15 @@ public class RStringLiteral : RegularExpression
                         array2[num4] = num3;
                         i2 = num16;
                     }
-                    text = NfaState.GetStateSetString(vector.Select(v=>v.id).ToArray());
+                    text = NfaState.GetStateSetString(vector);
                 }
                 if (num6 == int.MaxValue && (vector == null || vector.Count == 0))
                 {
                     continue;
                 }
-                if (!hashtable.ContainsKey(text))
+                if (!dict.ContainsKey(text))
                 {
-                    hashtable.Add(text, text);
+                    dict.Add(text, text);
                     for (int k = 0; k < vector.Count; k++)
                     {
                         if (array[((NfaState)vector[k]).stateName])
@@ -408,8 +407,8 @@ public class RStringLiteral : RegularExpression
         {
             int num2 = 0;
             int num3 = 0;
-            var hashtable = charPosKind[i];
-            string[] array = ReArrange(hashtable);
+            var dict = charPosKind[i];
+            string[] array = ReArrange(dict);
             P_0.Write(((!Options.getStatic()) ? "" : "static ") + ("private int ") + ("jjMoveStringLiteralDfa")
                 + (i)
                 + (LexGen.lexStateSuffix)
@@ -648,7 +647,7 @@ public class RStringLiteral : RegularExpression
             for (int k = 0; k < array.Length; k++)
             {
                 string text = array[k];
-                hashtable.TryGetValue(text, out var kindInfo);
+                dict.TryGetValue(text, out var kindInfo);
                 int num4 = 0;
                 int num5 = text[0];
                 int num6;
@@ -1256,12 +1255,12 @@ public class RStringLiteral : RegularExpression
         {
             return -1;
         }
-        var hashtable = statesForPos[P_0];
-        if (hashtable == null)
+        var dict = statesForPos[P_0];
+        if (dict == null)
         {
             return -1;
         }
-        foreach(var pair in hashtable)
+        foreach(var pair in dict)
         {
             string text = pair.Key;
             long[] array = pair.Value;

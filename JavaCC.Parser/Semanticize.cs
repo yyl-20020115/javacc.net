@@ -129,7 +129,7 @@ public class Semanticize : JavaCCGlobals
             {
                 if (Options.Lookahead == 1 || Options.ForceLaCheck)
                 {
-                    LookaheadCalc.choiceCalc(choice);
+                    LookaheadCalc.ChoiceCalc(choice);
                 }
             }
             else if (P_0 is OneOrMore oneOrMore)
@@ -489,18 +489,18 @@ public class Semanticize : JavaCCGlobals
                 {
                     for (int j = 0; j < array.Length; j++)
                     {
-                        if (!array[j].TryGetValue(rStringLiteral.image.ToUpper(),out var hashtable))
+                        if (!array[j].TryGetValue(rStringLiteral.image.ToUpper(),out var dict))
                         {
                             if (rStringLiteral.ordinal == 0)
                             {
                                 rStringLiteral.ordinal = JavaCCGlobals.tokenCount++;
                             }
-                            hashtable = new();
-                            hashtable.Add(rStringLiteral.image, rStringLiteral);
-                            array[j].Add((rStringLiteral.image).ToUpper(), hashtable);
+                            dict = new();
+                            dict.Add(rStringLiteral.image, rStringLiteral);
+                            array[j].Add((rStringLiteral.image).ToUpper(), dict);
                             continue;
                         }
-                        if (hasIgnoreCase(hashtable, rStringLiteral.image))
+                        if (hasIgnoreCase(dict, rStringLiteral.image))
                         {
                             if (!rStringLiteral.tpContext.isExplicit)
                             {
@@ -525,7 +525,7 @@ public class Semanticize : JavaCCGlobals
                         {
                             string str = "";
                             int num3 = 0;
-                            foreach(var pair in hashtable)
+                            foreach(var pair in dict)
                             {
                                 RegularExpression regularExpression = pair.Value;
                                 if (num3 != 0)
@@ -550,16 +550,16 @@ public class Semanticize : JavaCCGlobals
                             {
                                 rStringLiteral.ordinal = JavaCCGlobals.tokenCount++;
                             }
-                            hashtable.Add(rStringLiteral.image, rStringLiteral);
+                            dict.Add(rStringLiteral.image, rStringLiteral);
                             continue;
                         }
-                        if (!hashtable.TryGetValue(rStringLiteral.image,out var regularExpression2))
+                        if (!dict.TryGetValue(rStringLiteral.image,out var regularExpression2))
                         {
                             if (rStringLiteral.ordinal == 0)
                             {
                                 rStringLiteral.ordinal = JavaCCGlobals.tokenCount++;
                             }
-                            hashtable.Add(rStringLiteral.image, rStringLiteral);
+                            dict.Add(rStringLiteral.image, rStringLiteral);
                         }
                         else if (tokenProduction.isExplicit)
                         {
@@ -601,15 +601,15 @@ public class Semanticize : JavaCCGlobals
                 }
                 if (!(regExprSpec2.rexp is RJustName) && !string.Equals(regExprSpec2.rexp.label, ""))
                 {
-                    var hashtable2 = JavaCCGlobals.names_of_tokens;
+                    var dict2 = JavaCCGlobals.names_of_tokens;
                     ;
-                    hashtable2.Add((regExprSpec2.rexp.ordinal), regExprSpec2.rexp.label);
+                    dict2.Add((regExprSpec2.rexp.ordinal), regExprSpec2.rexp.label);
                 }
                 if (!(regExprSpec2.rexp is RJustName))
                 {
-                    var hashtable3 = JavaCCGlobals.rexps_of_tokens;
+                    var dict3 = JavaCCGlobals.rexps_of_tokens;
                     ;
-                    hashtable3.Add((regExprSpec2.rexp.ordinal), regExprSpec2.rexp);
+                    dict3.Add((regExprSpec2.rexp.ordinal), regExprSpec2.rexp);
                 }
             }
         }
@@ -645,9 +645,9 @@ public class Semanticize : JavaCCGlobals
                             rJustName.ordinal = JavaCCGlobals.tokenCount++;
                             JavaCCGlobals.named_tokens_table.Add(rJustName.label, rJustName);
                             JavaCCGlobals.ordered_named_tokens.Add(rJustName);
-                            var hashtable4 = JavaCCGlobals.names_of_tokens;
+                            var dict4 = JavaCCGlobals.names_of_tokens;
                             ;
-                            hashtable4.Add((rJustName.ordinal), rJustName.label);
+                            dict4.Add((rJustName.ordinal), rJustName.label);
                         }
                         else
                         {

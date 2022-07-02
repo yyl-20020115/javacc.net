@@ -32,7 +32,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 
     public static Action[] actions;
 
-    public static Hashtable initStates;
+    public static Dictionary<string,NfaState> initStates;
 
     public static int stateSetSize;
 
@@ -1366,14 +1366,14 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
     }
 
 
-    public static void start()
+    public static void Start()
     {
         if (!Options.BuildTokenManager || Options.UserTokenManager || JavaCCErrors._Error_Count > 0)
         {
             return;
         }
         keepLineCol = Options.KeepLineColumn;
-        ArrayList vector = new ArrayList();
+        List<RegularExpression> vector = new ();
         staticString = ((!Options.getStatic()) ? "" : "static ");
         tokMgrClassName = (JavaCCGlobals.Cu_name) + ("TokenManager");
         PrintClassHead();

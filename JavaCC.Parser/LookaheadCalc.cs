@@ -1,10 +1,10 @@
 namespace JavaCC.Parser;
 using System;
-using System.Collections;
+using System.Collections.Generic;
 
 public class LookaheadCalc : JavaCCGlobals
 {
-    internal static int firstChoice(Choice P_0)
+    internal static int FirstChoice(Choice P_0)
     {
         if (Options.ForceLaCheck)
         {
@@ -23,7 +23,7 @@ public class LookaheadCalc : JavaCCGlobals
     }
 
 
-    internal static bool javaCodeCheck(ArrayList P_0)
+    internal static bool JavaCodeCheck(List<MatchInfo> P_0)
     {
         for (int i = 0; i < P_0.Count; i++)
         {
@@ -36,7 +36,7 @@ public class LookaheadCalc : JavaCCGlobals
     }
 
 
-    internal static MatchInfo overlap(ArrayList P_0, ArrayList P_1)
+    internal static MatchInfo overlap(List<MatchInfo> P_0, List<MatchInfo> P_1)
     {
         for (int i = 0; i < P_0.Count; i++)
         {
@@ -76,7 +76,7 @@ public class LookaheadCalc : JavaCCGlobals
 
     internal static bool explicitLA(Expansion P_0)
     {
-        if (!(P_0 is Sequence))
+        if (P_0 is not Sequence)
         {
             return false;
         }
@@ -101,9 +101,9 @@ public class LookaheadCalc : JavaCCGlobals
                 text = (text) + (" <EOF>");
                 continue;
             }
-            var hashtable = JavaCCGlobals.rexps_of_tokens;
+            var dict = JavaCCGlobals.rexps_of_tokens;
             
-            RegularExpression regularExpression = hashtable[P_0.match[i]];
+            var regularExpression = dict[P_0.match[i]];
 
             text = ((!(regularExpression is RStringLiteral)) ? ((regularExpression.label == null || string.Equals(regularExpression.label, "")) ? (text) + (" <token of kind ") + (i)
                 + (">")
@@ -117,9 +117,7 @@ public class LookaheadCalc : JavaCCGlobals
         {
             return "";
         }
-        string result = text.Substring(1);// String.instancehelper_substring(text, 1);
-
-        return result;
+        return text.Substring(1);// String.instancehelper_substring(text, 1);
     }
 
     private static string image(Expansion P_0)
@@ -141,11 +139,11 @@ public class LookaheadCalc : JavaCCGlobals
     }
 
 
-    public static void choiceCalc(Choice c)
+    public static void ChoiceCalc(Choice c)
     {
-        int num = firstChoice(c);
-        ArrayList[] array = new ArrayList[c.Choices.Count];
-        ArrayList[] array2 = new ArrayList[c.Choices.Count];
+        int num = FirstChoice(c);
+        var array = new List<MatchInfo>[c.Choices.Count];
+        var array2 = new List<MatchInfo>[c.Choices.Count];
         int[] array3 = new int[c.Choices.Count - 1];
         MatchInfo[] array4 = new MatchInfo[c.Choices.Count - 1];
         int[] array5 = new int[c.Choices.Count - 1];
@@ -155,10 +153,10 @@ public class LookaheadCalc : JavaCCGlobals
             LookaheadWalk.considerSemanticLA = ((!Options.ForceLaCheck) ? true : false);
             for (int j = num; j < c.Choices.Count - 1; j++)
             {
-                LookaheadWalk.sizeLimitedMatches = new ArrayList();
+                LookaheadWalk.sizeLimitedMatches = new ();
                 MatchInfo matchInfo = new MatchInfo();
                 matchInfo.firstFreeLoc = 0;
-                ArrayList vector = new ArrayList();
+                List<MatchInfo> vector = new ();
                 vector.Add(matchInfo);
                 LookaheadWalk.GenFirstSet(vector, (Expansion)c.Choices[j]);
                 array[j] = LookaheadWalk.sizeLimitedMatches;
@@ -166,10 +164,10 @@ public class LookaheadCalc : JavaCCGlobals
             LookaheadWalk.considerSemanticLA = false;
             for (int j = num + 1; j < c.Choices.Count; j++)
             {
-                LookaheadWalk.sizeLimitedMatches = new ArrayList();
+                LookaheadWalk.sizeLimitedMatches = new ();
                 MatchInfo matchInfo = new MatchInfo();
                 matchInfo.firstFreeLoc = 0;
-                ArrayList vector = new ArrayList();
+                List<MatchInfo> vector = new ();
                 vector.Add(matchInfo);
                 LookaheadWalk.GenFirstSet(vector, (Expansion)c.Choices[j]);
                 array2[j] = LookaheadWalk.sizeLimitedMatches;
@@ -184,7 +182,7 @@ public class LookaheadCalc : JavaCCGlobals
                         JavaCCErrors.Warning(expansion, "This choice can expand to the empty token sequence and will therefore always be taken in favor of the choices appearing later.");
                         break;
                     }
-                    if (javaCodeCheck(array[j]))
+                    if (JavaCodeCheck(array[j]))
                     {
                         JavaCCErrors.Warning(expansion, "JAVACODE non-terminal will force this choice to be taken in favor of the choices appearing later.");
                         break;
@@ -252,19 +250,19 @@ public class LookaheadCalc : JavaCCGlobals
         for (i = 1; i <= Options.OtherAmbiguityCheck; i++)
         {
             MatchInfo.laLimit = i;
-            LookaheadWalk.sizeLimitedMatches = new ArrayList();
+            LookaheadWalk.sizeLimitedMatches = new ();
             MatchInfo matchInfo2 = new MatchInfo();
             matchInfo2.firstFreeLoc = 0;
-            ArrayList vector = new ArrayList();
+            List<MatchInfo> vector = new ();
             vector.Add(matchInfo2);
             LookaheadWalk.considerSemanticLA = ((!Options.ForceLaCheck) ? true : false);
             LookaheadWalk.GenFirstSet(vector, e2);
-            ArrayList sizeLimitedMatches = LookaheadWalk.sizeLimitedMatches;
-            LookaheadWalk.sizeLimitedMatches = new ArrayList();
+            var sizeLimitedMatches = LookaheadWalk.sizeLimitedMatches;
+            LookaheadWalk.sizeLimitedMatches = new ();
             LookaheadWalk.considerSemanticLA = false;
             LookaheadWalk.GenFollowSet(vector, e1, Expansion.NextGenerationIndex++);
-            ArrayList sizeLimitedMatches2 = LookaheadWalk.sizeLimitedMatches;
-            if (i == 1 && javaCodeCheck(sizeLimitedMatches))
+            var sizeLimitedMatches2 = LookaheadWalk.sizeLimitedMatches;
+            if (i == 1 && JavaCodeCheck(sizeLimitedMatches))
             {
                 JavaCCErrors.Warning(e2, ("JAVACODE non-terminal within ") + (image(e1)) + (" construct will force this construct to be entered in favor of ")
                     + ("expansions occurring after construct.")

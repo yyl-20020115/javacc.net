@@ -614,7 +614,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     throw new ParseException();
                 }
                 jj_consume_token(101);
-                ArrayList vector = new ArrayList();
+                List<string> vector = new ();
                 token2 = jj_consume_token(140);
                 vector.Add(token2.image);
                 while (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 98)
@@ -2221,7 +2221,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     {
                         case 35:
                         case 55:
-                            ClassOrInterfaceDeclaration(i, new());
+                            ClassOrInterfaceDeclaration(i);
                             break;
                         case 42:
                             EnumDeclaration(i);
@@ -2374,7 +2374,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     }
 
 
-    public void ClassOrInterfaceDeclaration(int i, ArrayList v)
+    public void ClassOrInterfaceDeclaration(int i)
     {
         int b = 0;
         class_nesting++;
@@ -2713,7 +2713,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     {
                         case 35:
                         case 55:
-                            ClassOrInterfaceDeclaration(i, new());
+                            ClassOrInterfaceDeclaration(i);
                             break;
                         case 42:
                             EnumDeclaration(i);
@@ -3479,7 +3479,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 return;
             case 35:
             case 55:
-                ClassOrInterfaceDeclaration(0, new());
+                ClassOrInterfaceDeclaration(0);
                 return;
         }
         jj_la1[143] = jj_gen;
@@ -6812,7 +6812,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     {
                         case 35:
                         case 55:
-                            ClassOrInterfaceDeclaration(i, new());
+                            ClassOrInterfaceDeclaration(i);
                             break;
                         case 42:
                             EnumDeclaration(i);
