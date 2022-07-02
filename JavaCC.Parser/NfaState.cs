@@ -1857,11 +1857,11 @@ public class NfaState
 	}
 
 	
-	private static int[] GetStateSetIndicesForUse(string P_0)
+	private static int[] GetStateSetIndicesForUse(string text)
 	{
-		allNextStates.TryGetValue(P_0, out var array);
+		allNextStates.TryGetValue(text, out var array);
 		
-		if (!tableToDump.TryGetValue(P_0, out var array2))
+		if (!tableToDump.TryGetValue(text, out var array2))
 		{
 			array2 = new int[2]
 			{
@@ -1869,38 +1869,38 @@ public class NfaState
 				(int)(lastIndex + array.Length - 1)
 			};
 			lastIndex = (int)(lastIndex + array.Length);
-			tableToDump.Add(P_0, array2);
+			tableToDump.Add(text, array2);
 			orderedStateSet.Add(array);
 		}
 		return array2;
 	}
 
 	
-	private static void DumpHeadForCase(TextWriter P_0, int P_1)
+	private static void DumpHeadForCase(TextWriter writer, int P_1)
 	{
 		switch (P_1)
 		{
 		case 0:
-			P_0.WriteLine("         long l = 1L << curChar;");
+			writer.WriteLine("         long l = 1L << curChar;");
 			break;
 		case 1:
-			P_0.WriteLine("         long l = 1L << (curChar & 077);");
+			writer.WriteLine("         long l = 1L << (curChar & 077);");
 			break;
 		default:
 			if (Options.JavaUnicodeEscape || unicodeWarningGiven)
 			{
-				P_0.WriteLine("         int hiByte = (int)(curChar >> 8);");
-				P_0.WriteLine("         int i1 = hiByte >> 6;");
-				P_0.WriteLine("         long l1 = 1L << (hiByte & 077);");
+				writer.WriteLine("         int hiByte = (int)(curChar >> 8);");
+				writer.WriteLine("         int i1 = hiByte >> 6;");
+				writer.WriteLine("         long l1 = 1L << (hiByte & 077);");
 			}
-			P_0.WriteLine("         int i2 = (curChar & 0xff) >> 6;");
-			P_0.WriteLine("         long l2 = 1L << (curChar & 077);");
+			writer.WriteLine("         int i2 = (curChar & 0xff) >> 6;");
+			writer.WriteLine("         long l2 = 1L << (curChar & 077);");
 			break;
 		}
-		P_0.WriteLine("         do");
-		P_0.WriteLine("         {");
-		P_0.WriteLine("            switch(jjstateSet[--i])");
-		P_0.WriteLine("            {");
+		writer.WriteLine("         do");
+		writer.WriteLine("         {");
+		writer.WriteLine("            switch(jjstateSet[--i])");
+		writer.WriteLine("            {");
 	}
 
 	
@@ -2256,32 +2256,32 @@ public class NfaState
 	}
 
 	
-	internal virtual void DumpNonAsciiMoveMethod(TextWriter P_0)
+	internal virtual void DumpNonAsciiMoveMethod(TextWriter writer)
 	{
-		P_0.WriteLine(("private static final boolean jjCanMove_")+(nonAsciiMethod)+("(int hiByte, int i1, int i2, long l1, long l2)")
+		writer.WriteLine(("private static final boolean jjCanMove_")+(nonAsciiMethod)+("(int hiByte, int i1, int i2, long l1, long l2)")
 			);
-		P_0.WriteLine("{");
-		P_0.WriteLine("   switch(hiByte)");
-		P_0.WriteLine("   {");
+		writer.WriteLine("{");
+		writer.WriteLine("   switch(hiByte)");
+		writer.WriteLine("   {");
 		if (loByteVec != null && loByteVec.Count > 0)
 		{
 			for (int i = 0; i < loByteVec.Count; i += 2)
 			{
-				P_0.WriteLine(("      case ")+(((int)loByteVec[i]))+(":")
+				writer.WriteLine(("      case ")+(((int)loByteVec[i]))+(":")
 					);
 				if (!AllBitsSet((string)allBitVectors[(int)loByteVec[i+1]]))
 				{
-					P_0.WriteLine(("         return ((jjbitVec")+(((int)loByteVec[i+1]))+("[i2")
+					writer.WriteLine(("         return ((jjbitVec")+(((int)loByteVec[i+1]))+("[i2")
 						+("] & l2) != 0L);")
 						);
 				}
 				else
 				{
-					P_0.WriteLine("            return true;");
+					writer.WriteLine("            return true;");
 				}
 			}
 		}
-		P_0.WriteLine("      default : ");
+		writer.WriteLine("      default : ");
 		if (nonAsciiMoveIndices != null)
 		{
 			int intPtr = nonAsciiMoveIndices.Length;
@@ -2292,25 +2292,25 @@ public class NfaState
 				{
 					if (!AllBitsSet((string)allBitVectors[(nonAsciiMoveIndices[i - 2])]))
 					{
-						P_0.WriteLine(("         if ((jjbitVec")+(nonAsciiMoveIndices[i - 2])+("[i1] & l1) != 0L)")
+						writer.WriteLine(("         if ((jjbitVec")+(nonAsciiMoveIndices[i - 2])+("[i1] & l1) != 0L)")
 							);
 					}
 					if (!AllBitsSet((string)allBitVectors[(nonAsciiMoveIndices[i - 1])]))
 					{
-						P_0.WriteLine(("            if ((jjbitVec")+(nonAsciiMoveIndices[i - 1])+("[i2] & l2) == 0L)")
+						writer.WriteLine(("            if ((jjbitVec")+(nonAsciiMoveIndices[i - 1])+("[i2] & l2) == 0L)")
 							);
-						P_0.WriteLine("               return false;");
-						P_0.WriteLine("            else");
+						writer.WriteLine("               return false;");
+						writer.WriteLine("            else");
 					}
-					P_0.WriteLine("            return true;");
+					writer.WriteLine("            return true;");
 					i += -2;
 				}
 				while (i > 0);
 			}
 		}
-		P_0.WriteLine("         return false;");
-		P_0.WriteLine("   }");
-		P_0.WriteLine("}");
+		writer.WriteLine("         return false;");
+		writer.WriteLine("   }");
+		writer.WriteLine("}");
 	}
 
 	
@@ -2626,14 +2626,14 @@ public class NfaState
 	}
 
 	
-	private static void DumpAsciiMoves(TextWriter P_0, int P_1)
+	private static void DumpAsciiMoves(TextWriter writer, int P_1)
 	{
 		bool[] array = new bool[Math.Max(generatedStates, dummyStateIndex + 1)];
-		DumpHeadForCase(P_0, P_1);
+		DumpHeadForCase(writer, P_1);
 
 		foreach(var key in compositeStateTable.Keys)
 		{
-			DumpCompositeStatesAsciiMoves(P_0, key, P_1, array);
+			DumpCompositeStatesAsciiMoves(writer, key, P_1, array);
 		}
 		for (int i = 0; i < allStates.Count; i++)
 		{
@@ -2649,12 +2649,12 @@ public class NfaState
 				{
 					continue;
 				}
-				text = nfaState.stateForCase.PrintNoBreak(P_0, P_1, array);
+				text = nfaState.stateForCase.PrintNoBreak(writer, P_1, array);
 				if (nfaState.asciiMoves[P_1] == 0)
 				{
 					if (string.Equals(text, ""))
 					{
-						P_0.WriteLine("                  break;");
+						writer.WriteLine("                  break;");
 					}
 					continue;
 				}
@@ -2663,17 +2663,17 @@ public class NfaState
 			{
 				if (!string.Equals(text, ""))
 				{
-					P_0.Write(text);
+					writer.Write(text);
 				}
 				array[nfaState.stateName] = true;
-				P_0.WriteLine(("               case ")+(nfaState.stateName)+(":")
+				writer.WriteLine(("               case ")+(nfaState.stateName)+(":")
 					);
-				nfaState.DumpAsciiMove(P_0, P_1, array);
+				nfaState.DumpAsciiMove(writer, P_1, array);
 			}
 		}
-		P_0.WriteLine("               default : break;");
-		P_0.WriteLine("            }");
-		P_0.WriteLine("         } while(i != startsAt);");
+		writer.WriteLine("               default : break;");
+		writer.WriteLine("            }");
+		writer.WriteLine("         } while(i != startsAt);");
 	}
 
 	
@@ -2887,19 +2887,19 @@ public class NfaState
 	}
 
 	
-	internal static string GetStateSetString(List<NfaState> P_0)
+	internal static string GetStateSetString(List<NfaState> status)
 	{
-		if (P_0 == null || P_0.Count == 0)
+		if (status == null || status.Count == 0)
 		{
 			return "null;";
 		}
-		int[] array = new int[P_0.Count];
+		int[] array = new int[status.Count];
 		string str = "{ ";
 		int num = 0;
-		while (num < P_0.Count)
+		while (num < status.Count)
 		{
 			int num2;
-			str = (str)+(num2 = ((NfaState)P_0[num]).stateName)+(", ")
+			str = (str)+(num2 = ((NfaState)status[num]).stateName)+(", ")
 				;
 			array[num] = num2;
 			int num3 = num;

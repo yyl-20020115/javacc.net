@@ -25,7 +25,7 @@ internal sealed class JJTreeState
         try
         {
             var outputFile = new OutputFile(f);
-            var printWriter = outputFile.getPrintWriter();
+            var printWriter = outputFile.PrintWriter;
             NodeFiles.GeneratePrologue(printWriter);
             InsertState(printWriter);
             outputFile.Close();

@@ -7,20 +7,20 @@ internal class KindInfo
     internal int validKindCnt;
     internal int finalKindCnt;
 
-    internal KindInfo(int P_0)
+    internal KindInfo(int length)
     {
         validKindCnt = 0;
         finalKindCnt = 0;
-        validKinds = new long[P_0 / 64 + 1];
-        finalKinds = new long[P_0 / 64 + 1];
+        validKinds = new long[length / 64 + 1];
+        finalKinds = new long[length / 64 + 1];
     }
 
-    public virtual void InsertValidKind(int P_0)
+    public virtual void InsertValidKind(int kid)
     {
         long[] array = validKinds;
-        int num = P_0 / 64;
+        int num = kid / 64;
         long[] array2 = array;
-        array2[num] |= 1L << ((64 != -1) ? (P_0 % 64) : 0);
+        array2[num] |= 1L << ((64 != -1) ? (kid % 64) : 0);
         validKindCnt++;
     }
 

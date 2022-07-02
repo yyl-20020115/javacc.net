@@ -50,7 +50,7 @@ public class OutputFile
 		}
 
 
-		public virtual void Write(int P_0)
+		public virtual void Write(int b4)
 		{
 		}
 		public override void Close()
@@ -66,11 +66,11 @@ public class OutputFile
 
 		private OutputFile this_00240;
 
-		public override Encoding Encoding => throw new System.NotImplementedException();
+		public override Encoding Encoding => Encoding.Default;
 
-		public TrapClosePrintWriter(OutputFile P_0, Stream P_1)
+		public TrapClosePrintWriter(OutputFile output, Stream stream)
 		{
-			this_00240 = P_0;
+			this_00240 = output;
 		}
 
 
@@ -127,44 +127,46 @@ public class OutputFile
 	}
 
 
-	public virtual TextWriter getPrintWriter()
-	{
-		if (pw == null)
-		{
-			//MessageDigest instance;
-			//try
-			//{
-			//	instance = MessageDigest.getInstance("MD5");
-			//}
-			//catch (Exception x)
-			//{
-			//	goto IL_0025;
-			//}
+    public virtual TextWriter PrintWriter
+    {
+        get
+        {
+            if (pw == null)
+            {
+                //MessageDigest instance;
+                //try
+                //{
+                //	instance = MessageDigest.getInstance("MD5");
+                //}
+                //catch (Exception x)
+                //{
+                //	goto IL_0025;
+                //}
 
-			dos =File.OpenRead(file.FullName);
-			pw = new TrapClosePrintWriter(this, dos);
-			string str = ((compatibleVersion != null) ? compatibleVersion : "4.1d1");
-			pw.WriteLine(("/* ")+(JavaCCGlobals.getIdString(toolName, file.Name))+(" Version ")
-				+(str)
-				+(" */")
-				);
-			if (options != null)
-			{
-				pw.WriteLine(("/* JavaCCOptions:")+(Options.getOptionsString(options))+(" */")
-					);
-			}
-		}
-		return pw;
-	//IL_0025:
-	//	throw (new IOException("No MD5 implementation"));
-	}
+                dos = File.OpenRead(file.FullName);
+                pw = new TrapClosePrintWriter(this, dos);
+                string str = ((compatibleVersion != null) ? compatibleVersion : "4.1d1");
+                pw.WriteLine(("/* ") + (JavaCCGlobals.getIdString(toolName, file.Name)) + (" Version ")
+                    + (str)
+                    + (" */")
+                    );
+                if (options != null)
+                {
+                    pw.WriteLine(("/* JavaCCOptions:") + (Options.getOptionsString(options)) + (" */")
+                        );
+                }
+            }
+            return pw;
+            //IL_0025:
+            //	throw (new IOException("No MD5 implementation"));
+        }
+    }
 
-
-	public virtual void Close()
+    public virtual void Close()
 	{
 		if (pw != null)
 		{
-			pw.WriteLine(("/* JavaCC - OriginalChecksum=")+(getMD5sum())+(" (do not edit this line) */")
+			pw.WriteLine(("/* JavaCC - OriginalChecksum=")+(GetMD5sum())+(" (do not edit this line) */")
 				);
 			pw.ClosePrintWriter();
 		}
@@ -227,19 +229,19 @@ public class OutputFile
 	//	throw new System.Exception("No MD5 implementation");
 	}
 
-	public virtual void setToolName(string str)
+	public virtual void SetToolName(string str)
 	{
 		toolName = str;
 	}
 
 
 
-	private static string toHexString(byte[] P_0)
+	private static string ToHexString(byte[] bytes)
 	{
 		var stringBuilder = new StringBuilder(32);
-		for (int i = 0; i < P_0.Length; i++)
+		for (int i = 0; i < bytes.Length; i++)
 		{
-			int num = P_0[i];
+			int num = bytes[i];
 			stringBuilder.Append(HEX_DIGITS[(num & 0xF0) >> 4]).Append(HEX_DIGITS[num & 0xF]);
 		}
 		return stringBuilder.ToString();
@@ -337,7 +339,7 @@ public class OutputFile
 	}
 
 
-	private string getMD5sum()
+	private string GetMD5sum()
 	{
 		//TODO:
 		pw.Flush();
@@ -347,7 +349,7 @@ public class OutputFile
 		return "";
 	}
 
-	public virtual string getToolName()
+	public virtual string GetToolName()
 	{
 		return toolName;
 	}

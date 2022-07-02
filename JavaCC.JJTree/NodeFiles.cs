@@ -21,7 +21,7 @@ internal sealed class NodeFiles
         try
         {
             OutputFile outputFile = new OutputFile(f);
-            TextWriter printWriter = outputFile.getPrintWriter();
+            TextWriter printWriter = outputFile.PrintWriter;
             var nodeIds = ASTNodeDescriptor.NodeIds;
             var nodeNames = ASTNodeDescriptor.NodeNames;
             GeneratePrologue(printWriter);
@@ -73,7 +73,7 @@ internal sealed class NodeFiles
         try
         {
             var outputFile = new OutputFile(f);
-            var printWriter = outputFile.getPrintWriter();
+            var printWriter = outputFile.PrintWriter;
             var nodeNames = ASTNodeDescriptor.NodeNames;
             GeneratePrologue(printWriter);
             printWriter.WriteLine(("public interface ") + (str));
@@ -164,7 +164,7 @@ internal sealed class NodeFiles
         {
             string[] strarr = new string[7] { "MULTI", "NODE_USES_PARSER", "VISITOR", "TRACK_TOKENS", "NODE_PREFIX", "NODE_EXTENDS", "NODE_FACTORY" };
             OutputFile outputFile = new OutputFile(file, "4.1", strarr);
-            outputFile.setToolName("JJTree");
+            outputFile.SetToolName("JJTree");
             nodesGenerated.Add(file.FullName);
             if (outputFile.needToWrite)
             {
@@ -197,7 +197,7 @@ internal sealed class NodeFiles
 
     private static void GenerateNode_java(OutputFile writer)
     {
-        var printWriter = writer.getPrintWriter();
+        var printWriter = writer.PrintWriter;
         GeneratePrologue(printWriter);
         printWriter.WriteLine("/* All AST nodes must implement this interface.  It provides basic");
         printWriter.WriteLine("   machinery for constructing the parent and child relationships");
@@ -251,7 +251,7 @@ internal sealed class NodeFiles
 
     private static void GenerateSimpleNode_java(OutputFile output)
     {
-        TextWriter printWriter = output.getPrintWriter();
+        TextWriter printWriter = output.PrintWriter;
         GeneratePrologue(printWriter);
         printWriter.Write("public class SimpleNode");
         if (!string.Equals(JJTreeOptions.NodeExtends, ""))
@@ -397,7 +397,7 @@ internal sealed class NodeFiles
 
     private static void GenerateMULTINode_java(OutputFile output, string name)
     {
-        TextWriter printWriter = output.getPrintWriter();
+        TextWriter printWriter = output.PrintWriter;
         GeneratePrologue(printWriter);
         if ((JJTreeOptions.NodeClass.Length) > 0)
         {

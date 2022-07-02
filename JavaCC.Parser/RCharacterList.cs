@@ -27,9 +27,9 @@ public class RCharacterList : RegularExpression
         for (int i = 0; i < num; i++)
         {
             int ch;
-            if (descriptors[i] is SingleCharacter)
+            if (descriptors[i] is SingleCharacter character)
             {
-                ch = ((SingleCharacter)descriptors[i]).ch;
+                ch = character.ch;
                 if (ch != char.ToLower((char)ch))
                 {
                     descriptors.Add(new SingleCharacter(char.ToLower((char)ch)));
