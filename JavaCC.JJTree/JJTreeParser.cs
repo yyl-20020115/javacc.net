@@ -1650,10 +1650,8 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
         System.Exception ex6;
         try
         {
-            ex4 = ex4;
             try
             {
-                ex4 = ex4;
                 try
                 {
                     System.Exception ex5 = ex4;
@@ -1768,10 +1766,8 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
         System.Exception ex14;
         try
         {
-            ex12 = ex12;
             try
             {
-                ex12 = ex12;
                 try
                 {
                     System.Exception ex13 = ex12;
@@ -1864,7 +1860,6 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
         System.Exception ex17 = ex7;
         try
         {
-            ex17 = ex17;
             try
             {
                 System.Exception ex18 = ex17;

@@ -117,7 +117,7 @@ public class Options
 		{
 			return Type.GetType(P_0);
 		}
-		catch (Exception x)
+		catch
 		{
 		}
 		throw new System.Exception("Type Not Found");

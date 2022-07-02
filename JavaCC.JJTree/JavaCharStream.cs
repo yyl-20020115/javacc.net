@@ -150,10 +150,8 @@ public class JavaCharStream
                 catch (IOException)
                 {
                 }
-                object obj = null;
                 goto IL_0141;
             IL_0121:
-                obj = null;
                 goto IL_0141;
             IL_0141:
                 if (num8 > 1)

@@ -155,8 +155,8 @@ public class OutputFile
 			}
 		}
 		return pw;
-	IL_0025:
-		throw (new IOException("No MD5 implementation"));
+	//IL_0025:
+	//	throw (new IOException("No MD5 implementation"));
 	}
 
 
@@ -184,7 +184,7 @@ public class OutputFile
 		{
 			var bufferedReader = (new StreamReader(f.FullName));
 			var printWriter = new StreamWriter(f.FullName+".diag");
-			string text = null;
+			//string text = null;
 			string text2;
 			while ((text2 = bufferedReader.ReadLine()) != null)
 			{
@@ -223,8 +223,8 @@ public class OutputFile
 			needToWrite = true;
 		}
 		return;
-	IL_0060:
-		throw new System.Exception("No MD5 implementation");
+	//IL_0060:
+	//	throw new System.Exception("No MD5 implementation");
 	}
 
 	public virtual void setToolName(string str)

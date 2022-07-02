@@ -232,7 +232,7 @@ public class RStringLiteral : RegularExpression
                     return;
                 }
             }
-            catch (System.Exception x)
+            catch
             {
                 goto IL_00e1;
             }

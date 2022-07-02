@@ -370,10 +370,8 @@ public class JJTree
         int result4;
         try
         {
-            ex15 = ex15;
             try
             {
-                ex15 = ex15;
                 try
                 {
                     JJTreeIOException this4 = ex15;

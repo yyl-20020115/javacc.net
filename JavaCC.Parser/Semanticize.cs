@@ -755,7 +755,7 @@ public class Semanticize : JavaCCGlobals
     }
 
 
-    public new static void ReInitReInit()
+    public new static void ReInit()
     {
         removeList = new();
         itemList = new();
