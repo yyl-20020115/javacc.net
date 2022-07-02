@@ -265,9 +265,8 @@ public class Semanticize : JavaCCGlobals
 
         public virtual void Action(Expansion exp)
         {
-            if (exp is NonTerminal nonTerminal)
+            if (exp is NonTerminal nonTerminal && JavaCCGlobals.Production_table.TryGetValue(nonTerminal.name,out var normalProduction))
             {
-                NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.Production_table.get(nonTerminal.name);
                 NonTerminal nonTerminal2 = nonTerminal;
                 nonTerminal2.prod = normalProduction;
                 if (normalProduction == null)
@@ -371,32 +370,28 @@ public class Semanticize : JavaCCGlobals
         {
             ExpansionTreeWalker.postOrderWalk(b.Expansion, new LookaheadFixer());
         }
-        enumeration = JavaCCGlobals.BNFProductions.elements();
-        while (enumeration.hasMoreElements())
+        foreach(var normalProduction in JavaCCGlobals.BNFProductions)
         {
-            NormalProduction normalProduction = (NormalProduction)enumeration.nextElement();
-            if (JavaCCGlobals.Production_table.Add(normalProduction.lhs, normalProduction) != null)
+            if (JavaCCGlobals.Production_table.ContainsKey(normalProduction.lhs))
             {
-                JavaCCErrors.Semantic_Error(normalProduction, (normalProduction.lhs) + (" occurs on the left hand side of more than one production."));
+                JavaCCErrors.Semantic_Error(normalProduction, (normalProduction.lhs) 
+                    + (" occurs on the left hand side of more than one production."));
             }
+            JavaCCGlobals.Production_table.Add(normalProduction.lhs, normalProduction);
         }
-        enumeration = JavaCCGlobals.BNFProductions.elements();
-        while (enumeration.hasMoreElements())
+        foreach (var normalProduction in JavaCCGlobals.BNFProductions)
         {
-            ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration.nextElement()).Expansion, new ProductionDefinedChecker());
+            ExpansionTreeWalker.PreOrderWalk(normalProduction.Expansion, new ProductionDefinedChecker());
         }
-        enumeration = JavaCCGlobals.rexprlist.elements();
-        while (enumeration.hasMoreElements())
+        foreach (var tokenProduction in JavaCCGlobals.rexprlist)
         {
-            TokenProduction tokenProduction = (TokenProduction)enumeration.nextElement();
-            var respecs = tokenProduction.Respecs;
-            Enumeration enumeration2 = respecs.elements();
-            while (enumeration2.hasMoreElements())
+            foreach (var regExprSpec in tokenProduction.Respecs)
             {
-                RegExprSpec regExprSpec = (RegExprSpec)enumeration2.nextElement();
-                if (regExprSpec.nextState != null && JavaCCGlobals.lexstate_S2I.get(regExprSpec.nextState) == null)
+                if (regExprSpec.nextState != null && !JavaCCGlobals.lexstate_S2I.TryGetValue(
+                    regExprSpec.nextState,out var _))
                 {
-                    JavaCCErrors.Semantic_Error(regExprSpec.nsTok, ("Lexical state \"") + (regExprSpec.nextState) + ("\" has not been defined.")
+                    JavaCCErrors.Semantic_Error(regExprSpec.nsTok, ("Lexical state \"") 
+                        + (regExprSpec.nextState) + ("\" has not been defined.")
                         );
                 }
                 if (regExprSpec.rexp is REndOfFile)
@@ -415,7 +410,7 @@ public class Semanticize : JavaCCGlobals
                     }
                     JavaCCGlobals.actForEof = regExprSpec.act;
                     JavaCCGlobals.nextStateForEof = regExprSpec.nextState;
-                    prepareToRemove(respecs, regExprSpec);
+                    prepareToRemove(tokenProduction.Respecs, regExprSpec);
                 }
                 else if (tokenProduction.isExplicit && Options.UserTokenManager)
                 {
@@ -425,7 +420,7 @@ public class Semanticize : JavaCCGlobals
                 {
                     JavaCCErrors.Warning(regExprSpec.rexp, ("Ignoring free-standing regular expression reference.  If you really want this, you must give it a different label as <NEWLABEL:<") + (regExprSpec.rexp.label) + (">>.")
                         );
-                    prepareToRemove(respecs, regExprSpec);
+                    prepareToRemove(tokenProduction.Respecs, regExprSpec);
                 }
                 else if (!tokenProduction.isExplicit && regExprSpec.rexp.private_rexp)
                 {
@@ -434,20 +429,18 @@ public class Semanticize : JavaCCGlobals
             }
         }
         removePreparedItems();
-        enumeration = JavaCCGlobals.rexprlist.elements();
-        while (enumeration.hasMoreElements())
+        foreach(var tokenProduction in JavaCCGlobals.rexprlist)
         {
-            TokenProduction tokenProduction = (TokenProduction)enumeration.nextElement();
             var respecs = tokenProduction.Respecs;
-            Enumeration enumeration2 = respecs.elements();
-            while (enumeration2.hasMoreElements())
+            foreach(var regExprSpec in respecs)
             {
-                RegExprSpec regExprSpec = (RegExprSpec)enumeration2.nextElement();
-                if (!(regExprSpec.rexp is RJustName) && !string.Equals(regExprSpec.rexp.label, ""))
+                if (regExprSpec.rexp is not RJustName && !string.Equals(regExprSpec.rexp.label, ""))
                 {
                     string label = regExprSpec.rexp.label;
-                    object obj = JavaCCGlobals.named_tokens_table.Add(label, regExprSpec.rexp);
-                    if (obj != null)
+                    bool obj = JavaCCGlobals.named_tokens_table.ContainsKey(label);
+                    
+                    JavaCCGlobals.named_tokens_table.Add(label, regExprSpec.rexp);
+                    if (obj)
                     {
                         JavaCCErrors.Semantic_Error(regExprSpec.rexp, ("Multiply defined lexical token name \"") + (label) + ("\".")
                             );
@@ -456,7 +449,7 @@ public class Semanticize : JavaCCGlobals
                     {
                         JavaCCGlobals.ordered_named_tokens.Add(regExprSpec.rexp);
                     }
-                    if (JavaCCGlobals.lexstate_S2I.get(label) != null)
+                    if (JavaCCGlobals.lexstate_S2I.ContainsKey(label))
                     {
                         JavaCCErrors.Semantic_Error(regExprSpec.rexp, ("Lexical token name \"") + (label) + ("\" is the same as ")
                             + ("that of a lexical state.")
@@ -466,46 +459,43 @@ public class Semanticize : JavaCCGlobals
             }
         }
         JavaCCGlobals.tokenCount = 1;
-        enumeration = JavaCCGlobals.rexprlist.elements();
-        while (enumeration.hasMoreElements())
+
+        foreach(var tokenProduction in JavaCCGlobals.rexprlist)
         {
-            TokenProduction tokenProduction = (TokenProduction)enumeration.nextElement();
             var respecs = tokenProduction.Respecs;
-            Enumeration enumeration3;
+
             if (tokenProduction.LexStates == null)
             {
                 tokenProduction.LexStates = new string[JavaCCGlobals.lexstate_I2S.Count];
                 int num = 0;
-                enumeration3 = JavaCCGlobals.lexstate_I2S.elements();
-                while (enumeration3.hasMoreElements())
+                foreach(var pair in JavaCCGlobals.lexstate_I2S)
                 {
                     string[] lexStates = tokenProduction.LexStates;
                     int num2 = num;
                     num++;
-                    lexStates[num2] = (string)enumeration3.nextElement();
+                    lexStates[num2] = (string)pair.Value;
                 }
             }
-            Hashtable[] array = new Hashtable[(nint)tokenProduction.LexStates.LongLength];
-            for (int i = 0; i < (nint)tokenProduction.LexStates.LongLength; i++)
+            var array = new Dictionary<string, Dictionary<string, RegularExpression>>[tokenProduction.LexStates.Length];
+            for (int i = 0; i < tokenProduction.LexStates.Length; i++)
             {
-                array[i] = (Hashtable)JavaCCGlobals.simple_tokens_table.get(tokenProduction.LexStates[i]);
+                JavaCCGlobals.simple_tokens_table.TryGetValue(tokenProduction.LexStates[i],out var d);
+                array[i] = d;
             }
-            enumeration3 = respecs.elements();
-            while (enumeration3.hasMoreElements())
+
+            foreach(var regExprSpec2 in respecs)
             {
-                RegExprSpec regExprSpec2 = (RegExprSpec)enumeration3.nextElement();
                 if (regExprSpec2.rexp is RStringLiteral rStringLiteral)
                 {
                     for (int j = 0; j < array.Length; j++)
                     {
-                        Hashtable hashtable = (Hashtable)array[j].get((rStringLiteral.image).ToUpper());
-                        if (hashtable == null)
+                        if (!array[j].TryGetValue(rStringLiteral.image.ToUpper(),out var hashtable))
                         {
                             if (rStringLiteral.ordinal == 0)
                             {
                                 rStringLiteral.ordinal = JavaCCGlobals.tokenCount++;
                             }
-                            hashtable = new Hashtable();
+                            hashtable = new();
                             hashtable.Add(rStringLiteral.image, rStringLiteral);
                             array[j].Add((rStringLiteral.image).ToUpper(), hashtable);
                             continue;
@@ -535,10 +525,9 @@ public class Semanticize : JavaCCGlobals
                         {
                             string str = "";
                             int num3 = 0;
-                            Enumeration enumeration4 = hashtable.elements();
-                            while (enumeration4.hasMoreElements())
+                            foreach(var pair in hashtable)
                             {
-                                RegularExpression regularExpression = (RegularExpression)enumeration4.nextElement();
+                                RegularExpression regularExpression = pair.Value;
                                 if (num3 != 0)
                                 {
                                     str = (str) + (",");
@@ -564,8 +553,7 @@ public class Semanticize : JavaCCGlobals
                             hashtable.Add(rStringLiteral.image, rStringLiteral);
                             continue;
                         }
-                        RegularExpression regularExpression2 = (RegularExpression)hashtable.get(rStringLiteral.image);
-                        if (regularExpression2 == null)
+                        if (!hashtable.TryGetValue(rStringLiteral.image,out var regularExpression2))
                         {
                             if (rStringLiteral.ordinal == 0)
                             {
@@ -619,7 +607,7 @@ public class Semanticize : JavaCCGlobals
                 }
                 if (!(regExprSpec2.rexp is RJustName))
                 {
-                    Hashtable hashtable3 = JavaCCGlobals.rexps_of_tokens;
+                    var hashtable3 = JavaCCGlobals.rexps_of_tokens;
                     ;
                     hashtable3.Add((regExprSpec2.rexp.ordinal), regExprSpec2.rexp);
                 }
@@ -629,15 +617,11 @@ public class Semanticize : JavaCCGlobals
         if (!Options.UserTokenManager)
         {
             FixRJustNames fixRJustNames = new FixRJustNames();
-            Enumeration enumeration5 = JavaCCGlobals.rexprlist.elements();
-            while (enumeration5.hasMoreElements())
+            foreach(var tokenProduction2 in JavaCCGlobals.rexprlist)
             {
-                TokenProduction tokenProduction2 = (TokenProduction)enumeration5.nextElement();
                 var respecs2 = tokenProduction2.Respecs;
-                Enumeration enumeration3 = respecs2.elements();
-                while (enumeration3.hasMoreElements())
+                foreach(var regExprSpec2 in respecs2)
                 {
-                    RegExprSpec regExprSpec2 = (RegExprSpec)enumeration3.nextElement();
                     fixRJustNames.root = regExprSpec2.rexp;
                     ExpansionTreeWalker.PreOrderWalk(regExprSpec2.rexp, fixRJustNames);
                     if (regExprSpec2.rexp is RJustName)
@@ -650,32 +634,25 @@ public class Semanticize : JavaCCGlobals
         removePreparedItems();
         if (Options.UserTokenManager)
         {
-            enumeration = JavaCCGlobals.rexprlist.elements();
-            while (enumeration.hasMoreElements())
+            foreach(var tokenProduction in JavaCCGlobals.rexprlist)
             {
-                TokenProduction tokenProduction = (TokenProduction)enumeration.nextElement();
-                var respecs = tokenProduction.Respecs;
-                Enumeration enumeration2 = respecs.elements();
-                while (enumeration2.hasMoreElements())
+                foreach(var regExprSpec in tokenProduction.Respecs)
                 {
-                    RegExprSpec regExprSpec = (RegExprSpec)enumeration2.nextElement();
-                    if (regExprSpec.rexp is RJustName)
+                    if (regExprSpec.rexp is RJustName rJustName)
                     {
-                        RJustName rJustName = (RJustName)regExprSpec.rexp;
-                        RegularExpression regularExpression3 = (RegularExpression)JavaCCGlobals.named_tokens_table.get(rJustName.label);
-                        if (regularExpression3 == null)
+                        if (!JavaCCGlobals.named_tokens_table.TryGetValue(rJustName.label, out var regularExpression3))
                         {
                             rJustName.ordinal = JavaCCGlobals.tokenCount++;
                             JavaCCGlobals.named_tokens_table.Add(rJustName.label, rJustName);
                             JavaCCGlobals.ordered_named_tokens.Add(rJustName);
-                            Hashtable hashtable4 = JavaCCGlobals.names_of_tokens;
+                            var hashtable4 = JavaCCGlobals.names_of_tokens;
                             ;
                             hashtable4.Add((rJustName.ordinal), rJustName.label);
                         }
                         else
                         {
                             rJustName.ordinal = regularExpression3.ordinal;
-                            prepareToRemove(respecs, regExprSpec);
+                            prepareToRemove(tokenProduction.Respecs, regExprSpec);
                         }
                     }
                 }
@@ -684,20 +661,16 @@ public class Semanticize : JavaCCGlobals
         removePreparedItems();
         if (Options.UserTokenManager)
         {
-            enumeration = JavaCCGlobals.rexprlist.elements();
-            while (enumeration.hasMoreElements())
+            foreach(var tokenProduction in JavaCCGlobals.rexprlist)
             {
-                TokenProduction tokenProduction = (TokenProduction)enumeration.nextElement();
-                ArrayList respecs = tokenProduction.Respecs;
-                Enumeration enumeration2 = respecs.elements();
-                while (enumeration2.hasMoreElements())
+                var respecs = tokenProduction.Respecs;
+                foreach(var regExprSpec in respecs)
                 {
-                    RegExprSpec regExprSpec = (RegExprSpec)enumeration2.nextElement();
-                    ;
                     int key = (regExprSpec.rexp.ordinal);
-                    if (JavaCCGlobals.names_of_tokens.get(key) == null)
+                    if (!JavaCCGlobals.names_of_tokens.ContainsKey(key))
                     {
-                        JavaCCErrors.Warning(regExprSpec.rexp, "Unlabeled regular expression cannot be referred to by user generated token manager.");
+                        JavaCCErrors.Warning(regExprSpec.rexp, 
+                            "Unlabeled regular expression cannot be referred to by user generated token manager.");
                     }
                 }
             }
@@ -711,10 +684,8 @@ public class Semanticize : JavaCCGlobals
         while (num4 != 0)
         {
             num4 = 0;
-            Enumeration enumeration5 = JavaCCGlobals.BNFProductions.elements();
-            while (enumeration5.hasMoreElements())
+            foreach (var normalProduction2 in JavaCCGlobals.BNFProductions)
             {
-                NormalProduction normalProduction2 = (NormalProduction)enumeration5.nextElement();
                 if (EmptyExpansionExists(normalProduction2.Expansion) && !normalProduction2.emptyPossible)
                 {
                     NormalProduction normalProduction3 = normalProduction2;
@@ -727,21 +698,16 @@ public class Semanticize : JavaCCGlobals
         }
         if (Options.SanityCheck && JavaCCErrors._Error_Count == 0)
         {
-            Enumeration enumeration5 = JavaCCGlobals.BNFProductions.elements();
-            while (enumeration5.hasMoreElements())
+            foreach (var normalProduction2 in JavaCCGlobals.BNFProductions)
             {
-                ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration5.nextElement()).Expansion, new EmptyChecker());
+                ExpansionTreeWalker.PreOrderWalk(normalProduction2.Expansion, new EmptyChecker());
             }
-            enumeration5 = JavaCCGlobals.BNFProductions.elements();
-            while (enumeration5.hasMoreElements())
+            foreach (var normalProduction2 in JavaCCGlobals.BNFProductions)
             {
-                NormalProduction normalProduction2 = (NormalProduction)enumeration5.nextElement();
                 addLeftMost(normalProduction2, normalProduction2.Expansion);
             }
-            enumeration5 = JavaCCGlobals.BNFProductions.elements();
-            while (enumeration5.hasMoreElements())
+            foreach(var normalProduction2 in JavaCCGlobals.BNFProductions)
             {
-                NormalProduction normalProduction2 = (NormalProduction)enumeration5.nextElement();
                 if (normalProduction2.walkStatus == 0)
                 {
                     ProdWalk(normalProduction2);
@@ -749,15 +715,13 @@ public class Semanticize : JavaCCGlobals
             }
             if (!Options.UserTokenManager)
             {
-                enumeration5 = JavaCCGlobals.rexprlist.elements();
-                while (enumeration5.hasMoreElements())
+                foreach(var tp in JavaCCGlobals.rexprlist)
                 {
-                    TokenProduction tokenProduction2 = (TokenProduction)enumeration5.nextElement();
-                    ArrayList respecs2 = tokenProduction2.Respecs;
-                    Enumeration enumeration3 = respecs2.elements();
-                    while (enumeration3.hasMoreElements())
+                    TokenProduction tokenProduction2 = tp;
+                    var respecs2 = tokenProduction2.Respecs;
+                    foreach(var rp in respecs2)
                     {
-                        RegExprSpec regExprSpec2 = (RegExprSpec)enumeration3.nextElement();
+                        RegExprSpec regExprSpec2 = rp;
                         RegularExpression regularExpression3 = regExprSpec2.rexp;
                         if (regularExpression3.walkStatus == 0)
                         {
@@ -777,10 +741,9 @@ public class Semanticize : JavaCCGlobals
             }
             if (JavaCCErrors._Error_Count == 0)
             {
-                enumeration5 = JavaCCGlobals.BNFProductions.elements();
-                while (enumeration5.hasMoreElements())
+                foreach(var p in JavaCCGlobals.BNFProductions)
                 {
-                    ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration5.nextElement()).Expansion, new LookaheadChecker());
+                    ExpansionTreeWalker.PreOrderWalk(p.Expansion, new LookaheadChecker());
                 }
             }
         }
@@ -822,15 +785,14 @@ public class Semanticize : JavaCCGlobals
 
     public static bool hasIgnoreCase(Dictionary<string, RegularExpression> h, string str)
     {
-        RegularExpression regularExpression = (RegularExpression)h.get(str);
-        if (regularExpression != null && !regularExpression.tpContext.ignoreCase)
+        if (h.TryGetValue(str,out var regularExpression) && !regularExpression.tpContext.ignoreCase)
         {
             return false;
         }
-        Enumeration enumeration = h.elements();
-        while (enumeration.hasMoreElements())
+       
+        foreach(var pair in h)
         {
-            regularExpression = (RegularExpression)enumeration.nextElement();
+            regularExpression=pair.Value;
             if (regularExpression.tpContext.ignoreCase)
             {
                 other = regularExpression;
@@ -852,7 +814,7 @@ public class Semanticize : JavaCCGlobals
                     return;
                 }
             }
-            if ((nint)P_0.leIndex == (nint)P_0.leftExpansions.LongLength)
+            if (P_0.leIndex == P_0.leftExpansions.Length)
             {
                 NormalProduction[] array = new NormalProduction[P_0.leIndex * 2];
                 Array.Copy(P_0.leftExpansions, 0, array, 0, P_0.leIndex);

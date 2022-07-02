@@ -27,7 +27,7 @@ public class JJDocMain : JJDocGlobals
                 );
             return 1;
         }
-        for (int i = 0; i < (nint)args.LongLength - 1; i++)
+        for (int i = 0; i < args.Length - 1; i++)
         {
             if (!Options.IsOption(args[i]))
             {

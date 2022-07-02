@@ -97,17 +97,17 @@ public class ParseException : System.Exception
 			}
 			var stringBuilder = new StringBuilder();
 			int num = 0;
-			for (int i = 0; i < (nint)expectedTokenSequences.LongLength; i++)
+			for (int i = 0; i < expectedTokenSequences.Length; i++)
 			{
-				if (num < (nint)expectedTokenSequences[i].LongLength)
+				if (num < expectedTokenSequences[i].Length)
 				{
 					num = expectedTokenSequences[i].Length;
 				}
-				for (int j = 0; j < (nint)expectedTokenSequences[i].LongLength; j++)
+				for (int j = 0; j < expectedTokenSequences[i].Length; j++)
 				{
 					stringBuilder.Append(tokenImage[expectedTokenSequences[i][j]]).Append(' ');
 				}
-				if (expectedTokenSequences[i][(nint)expectedTokenSequences[i].LongLength - 1] != 0)
+				if (expectedTokenSequences[i][expectedTokenSequences[i].Length - 1] != 0)
 				{
 					stringBuilder.Append("...");
 				}
@@ -139,7 +139,7 @@ public class ParseException : System.Exception
 				;
 			str = (str)+(".")+(eol)
 				;
-			str = (((nint)expectedTokenSequences.LongLength != 1) ? (str)+("Was expecting one of:")+(eol)
+			str = ((expectedTokenSequences.Length != 1) ? (str)+("Was expecting one of:")+(eol)
 				+("    ")
 				 : (str)+("Was expecting:")+(eol)
 				+("    ")

@@ -136,7 +136,7 @@ public class JJTree
         {
             try
             {
-                if (result2 < (nint)strarr.LongLength - 1)
+                if (result2 < strarr.Length - 1)
                 {
                     if (!Options.IsOption(strarr[result2]))
                     {

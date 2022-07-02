@@ -213,7 +213,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
         foreach (var tokenProduction in JavaCCGlobals.rexprlist)
         {
             var respecs = tokenProduction.Respecs;
-            for (int i = 0; i < (nint)tokenProduction.LexStates.LongLength; i++)
+            for (int i = 0; i < tokenProduction.LexStates.Length; i++)
             {
                 if (!allTpsForState.TryGetValue(tokenProduction.LexStates[i], out var vector))
                 {
@@ -272,7 +272,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 
     internal static int GetIndex(string P_0)
     {
-        for (int i = 0; i < (nint)lexStateName.LongLength; i++)
+        for (int i = 0; i < lexStateName.Length; i++)
         {
             if (lexStateName[i] != null && string.Equals(lexStateName[i], P_0))
             {
@@ -1443,7 +1443,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
                         nfa.End.kind = curRE.ordinal;
                         initialState.AddMove(nfa.Start);
                     }
-                    if ((nint)kinds.LongLength < curRE.ordinal)
+                    if (kinds.Length < curRE.ordinal)
                     {
                         int[] dest = new int[curRE.ordinal + 1];
                         Array.Copy(kinds, 0, dest, 0, kinds.Length);

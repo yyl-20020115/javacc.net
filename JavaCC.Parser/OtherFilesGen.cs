@@ -89,7 +89,7 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 		ostr.WriteLine("");
 		if (!Options.UserTokenManager && Options.BuildTokenManager)
 		{
-			for (int j = 0; j < (nint)LexGen.lexStateName.LongLength; j++)
+			for (int j = 0; j < LexGen.lexStateName.Length; j++)
 			{
 				ostr.WriteLine("  /** Lexical state. */");
 				ostr.WriteLine(("  int ")+(LexGen.lexStateName[j])+(" = ")

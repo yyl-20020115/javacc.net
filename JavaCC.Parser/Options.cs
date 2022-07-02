@@ -46,11 +46,11 @@ public class Options
 		else
 		{
 			text = (@this.Substring( 0, num3)).ToUpper();
-			if (String.instancehelper_equalsIgnoreCase(@this.Substring(num3 + 1), "TRUE"))
+			if (string.Equals(@this.Substring(num3 + 1), "TRUE", StringComparison.OrdinalIgnoreCase))
 			{
 				obj = true;
 			}
-			else if (String.instancehelper_equalsIgnoreCase(@this.Substring(num3 + 1), "FALSE"))
+			else if (string.Equals(@this.Substring(num3 + 1), "FALSE", StringComparison.OrdinalIgnoreCase))
 			{
 				obj = false;
 			}
@@ -58,8 +58,8 @@ public class Options
 			{
 				try
 				{
-					int num4 = int.parseInt(@this.Substring( num3 + 1));
-					if (num4 <= 0)
+					bool numr = int.TryParse(@this.Substring(num3 + 1),out var num4);
+					if (!numr)
 					{
 						Console.WriteLine(("Warning: Bad option value in \"")+(str)+("\" will be ignored.")
 							);
@@ -89,8 +89,9 @@ public class Options
 				);
 			return;
 		}
-		object this2 = OptionValues.get(text);
-		if (Object.instancehelper_getClass(obj) != Object.instancehelper_getClass(this2))
+		;
+		if (OptionValues.TryGetValue(text, out var this2) 
+			&&obj.GetType() != this2.GetType())
 		{
 			Console.WriteLine(("Warning: Bad option value in \"")+(str)+("\" will be ignored.")
 				);
@@ -125,9 +126,7 @@ public class Options
 	
 	public static object upgradeValue(string str, object obj)
 	{
-		if (String.Equals(str, "NODE_FACTORY", StringComparison.OrdinalIgnoreCase) && 
-			Object.instancehelper_getClass(obj) == ((class_0024java_0024lang_0024Boolean != null) ? 
-			class_0024java_0024lang_0024Boolean : (class_0024java_0024lang_0024Boolean = class_0024("java.lang.Boolean"))))
+		if (string.Equals(str, "NODE_FACTORY", StringComparison.OrdinalIgnoreCase))
 		{
 			obj = (!(obj is bool b && b) ? "" : "*");
 		}
@@ -187,7 +186,7 @@ public class Options
 	public static string getOptionsString(string[] strarr)
 	{
 		var stringBuilder = new StringBuilder();
-		for (int i = 0; i < (nint)strarr.LongLength; i++)
+		for (int i = 0; i < strarr.Length; i++)
 		{
 			string text = strarr[i];
 			stringBuilder.Append(text);
@@ -196,7 +195,7 @@ public class Options
             {
 				stringBuilder.Append(val);
 			}
-			if (i != (nint)strarr.LongLength - 1)
+			if (i != strarr.Length - 1)
 			{
 				stringBuilder.Append(',');
 			}
@@ -214,11 +213,14 @@ public class Options
 				);
 			return;
 		}
-		object obj4 = OptionValues.get(text);
+		if(OptionValues.TryGetValue(text, out var obj4))
+        {
+
+        }
 		obj3 = upgradeValue(str, obj3);
 		if (obj4 != null)
 		{
-			if (Object.instancehelper_getClass(obj4) != Object.instancehelper_getClass(obj3) || (obj3 is int && ((int)obj3) <= 0))
+			if (obj4.GetType() != obj3.GetType() || (obj3 is int && ((int)obj3) <= 0))
 			{
 				JavaCCErrors.Warning(obj2, ("Bad option value \"")+(obj3)+("\" for \"")
 					+(str)
@@ -234,7 +236,7 @@ public class Options
 			}
 			if (cmdLineSetting.Contains(text))
 			{
-				if (!Object.instancehelper_equals(obj4, obj3))
+				if (!object.ReferenceEquals(obj4, obj3))
 				{
 					JavaCCErrors.Warning(obj1, ("Command line setting of \"")+(str)+("\" modifies option value in file.")
 						);

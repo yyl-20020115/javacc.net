@@ -18,7 +18,7 @@ public class RStringLiteral : RegularExpression
 
     internal static int charCnt;
 
-    internal static ArrayList charPosKind;
+    internal static List<Dictionary<string, KindInfo>> charPosKind =new();
 
     internal static int[] maxLenForActive;
 
@@ -34,7 +34,7 @@ public class RStringLiteral : RegularExpression
 
     internal static bool[] subStringAtPos;
 
-    internal static Hashtable[] statesForPos;
+    internal static Dictionary<string, long[]>[] statesForPos = Array.Empty<Dictionary<string, long[]>>();
 
     private static bool boilerPlateDumped;
 
@@ -55,7 +55,7 @@ public class RStringLiteral : RegularExpression
         boilerPlateDumped = false;
         maxStrKind = 0;
         maxLen = 0;
-        charPosKind = new ArrayList();
+        charPosKind = new ();
         maxLenForActive = new int[100];
         intermediateKinds = null;
         intermediateMatchedPos = null;
@@ -89,7 +89,7 @@ public class RStringLiteral : RegularExpression
             Hashtable hashtable;
             if (j >= charPosKind.Count)
             {
-                charPosKind.Add(hashtable = new Hashtable());
+                charPosKind.Add(hashtable = new ());
             }
             else
             {
@@ -110,7 +110,7 @@ public class RStringLiteral : RegularExpression
             }
             if (!Options.IgnoreCase && LexGen.ignoreCase[ordinal] && num2 != Char.ToLower((char)num2))
             {
-                key = Char.ToLower(image[j]);
+                key = char.ToLower(image[j]).ToString();
                 if (j >= charPosKind.Count)
                 {
                     charPosKind.Add(hashtable = new Hashtable());
@@ -211,7 +211,7 @@ public class RStringLiteral : RegularExpression
         int num = maxStrKind / 64 + 1;
         List<NfaState> vector = new();
         List<NfaState> vector2 = null;
-        statesForPos = new Hashtable[maxLen];
+        statesForPos = new Dictionary<string, long[]>[maxLen];
         intermediateKinds = new int[maxStrKind + 1][];
         intermediateMatchedPos = new int[maxStrKind + 1][];
         for (int i = 0; i < maxStrKind; i++)
@@ -331,7 +331,7 @@ public class RStringLiteral : RegularExpression
                 {
                     continue;
                 }
-                if (hashtable.get(text) == null)
+                if (!hashtable.ContainsKey(text))
                 {
                     hashtable.Add(text, text);
                     for (int k = 0; k < vector.Count; k++)
@@ -353,12 +353,12 @@ public class RStringLiteral : RegularExpression
                         array[((NfaState)vector[k]).stateName] = true;
                     }
                 }
-                ArrayList vector3 = vector2;
+                var vector3 = vector2;
                 vector2 = vector;
                 (vector = vector3).Clear();
                 if (statesForPos[j] == null)
                 {
-                    statesForPos[j] = new Hashtable();
+                    statesForPos[j] = new ();
                 }
                 long[] array3;
                 if ((array3 = (long[])statesForPos[j].get((num6) + (", ") + (i2)
@@ -412,7 +412,7 @@ public class RStringLiteral : RegularExpression
         {
             int num2 = 0;
             int num3 = 0;
-            Hashtable hashtable = (Hashtable)charPosKind[i];
+            var hashtable = charPosKind[i];
             string[] array = ReArrange(hashtable);
             P_0.Write(((!Options.getStatic()) ? "" : "static ") + ("private int ") + ("jjMoveStringLiteralDfa")
                 + (i)
@@ -649,7 +649,7 @@ public class RStringLiteral : RegularExpression
             }
             P_0.WriteLine("   switch(curChar)");
             P_0.WriteLine("   {");
-            for (int k = 0; k < (nint)array.LongLength; k++)
+            for (int k = 0; k < array.Length; k++)
             {
                 string text = array[k];
                 KindInfo kindInfo = (KindInfo)hashtable.get(text);
@@ -1019,7 +1019,7 @@ public class RStringLiteral : RegularExpression
         }
         allImages[0] = "";
         int i;
-        for (i = 0; i < (nint)allImages.LongLength; i++)
+        for (i = 0; i < allImages.Length; i++)
         {
             string @this;
             if ((@this = allImages[i]) != null)
@@ -1193,16 +1193,15 @@ public class RStringLiteral : RegularExpression
     }
 
 
-    internal static string[] ReArrange(Hashtable P_0)
+    internal static string[] ReArrange(Dictionary<string, KindInfo> P_0)
     {
         string[] array = new string[P_0.Count];
-        Enumeration enumeration = P_0.keys();
         int num = 0;
-        while (enumeration.hasMoreElements())
+        foreach(var pair in P_0)
         {
             int i = 0;
             string text;
-            for (int num2 = (text = (string)enumeration.nextElement())[0]; i < num && array[i][0] < num2; i++)
+            for (int num2 = (text = pair.Key)[0]; i < num && array[i][0] < num2; i++)
             {
             }
             if (i < num)
@@ -1261,16 +1260,15 @@ public class RStringLiteral : RegularExpression
         {
             return -1;
         }
-        Hashtable hashtable = statesForPos[P_0];
+        var hashtable = statesForPos[P_0];
         if (hashtable == null)
         {
             return -1;
         }
-        Enumeration enumeration = hashtable.keys();
-        while (enumeration.hasMoreElements())
+        foreach(var pair in hashtable)
         {
-            string text = (string)enumeration.nextElement();
-            long[] array = (long[])hashtable.get(text);
+            string text = pair.Key;
+            long[] array = pair.Value;
             text = text.Substring(text.IndexOf(", ") + 2);
             text = text.Substring(text.IndexOf(", ") + 2);
             if (!string.Equals(text, "null;") && array != null)
@@ -1287,7 +1285,7 @@ public class RStringLiteral : RegularExpression
     }
 
 
-    internal static void DumpNfaStartStatesCode(Hashtable[] P_0, TextWriter P_1)
+    internal static void DumpNfaStartStatesCode(Dictionary<string, long[]>[] P_0, TextWriter P_1)
     {
         if (maxStrKind == 0)
         {
@@ -1321,11 +1319,10 @@ public class RStringLiteral : RegularExpression
             }
             P_1.WriteLine(("      case ") + (i) + (":")
                 );
-            Enumeration enumeration = P_0[i].keys();
-            while (enumeration.hasMoreElements())
+            foreach(var pair in P_0[i])
             {
-                string text = (string)enumeration.nextElement();
-                long[] array = (long[])P_0[i].get(text);
+                string text = pair.Key;
+                long[] array = pair.Value;
                 for (int j = 0; j < num; j++)
                 {
                     if (array[j] != 0)
@@ -1353,7 +1350,7 @@ public class RStringLiteral : RegularExpression
                 int num3;
                 string text2 = text.Substring(0, num3 = text.IndexOf(", "));
                 string @this = text.Substring(num3 + 2);
-                int num4 = int.parseInt((@this.Substring(0, (@this.IndexOf(", ")))));
+                int.TryParse((@this.Substring(0, (@this.IndexOf(", ")))),out var num4);
                 if (!string.Equals(text2, int.MaxValue.ToString()))
                 {
                     P_1.WriteLine("         {");
@@ -1553,7 +1550,7 @@ public class RStringLiteral : RegularExpression
         maxStrKind = 0;
         maxLen = 0;
         charCnt = 0;
-        charPosKind = new ArrayList();
+        charPosKind = new ();
         maxLenForActive = new int[100];
         startStateCnt = 0;
         boilerPlateDumped = false;

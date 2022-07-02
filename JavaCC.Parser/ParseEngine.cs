@@ -1,6 +1,7 @@
 namespace JavaCC.Parser;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 public class ParseEngine : JavaCCGlobals
@@ -17,7 +18,7 @@ public class ParseEngine : JavaCCGlobals
 
 	private static ArrayList phase3list;
 
-	private static Hashtable phase3table;
+	private static Dictionary<Expansion,Phase3Data> phase3table =new();
 
 	private static bool[] firstSet;
 
@@ -40,9 +41,9 @@ public class ParseEngine : JavaCCGlobals
 		gensymindex = 0;
 		indentamt = 0;
 		jj2LA = false;
-		phase2list = new ArrayList();
-		phase3list = new ArrayList();
-		phase3table = new Hashtable();
+		phase2list = new ();
+		phase3list = new ();
+		phase3table = new ();
 		firstSet = null;
 		xsp_declared = false;
 		jj3_expansion = null;
@@ -212,7 +213,7 @@ public class ParseEngine : JavaCCGlobals
 	internal static string phase1ExpansionGen(Expansion P_0)
 	{
 		string text = "";
-		Token t;
+		Token t = null;
 		if (P_0 is RegularExpression)
 		{
 			RegularExpression regularExpression = (RegularExpression)P_0;
@@ -232,13 +233,13 @@ public class ParseEngine : JavaCCGlobals
 				 : ");");
 			if (string.Equals(regularExpression.label, ""))
 			{
-				Hashtable hashtable = JavaCCGlobals.names_of_tokens;
+				var hashtable = JavaCCGlobals.names_of_tokens;
 				;
-				object obj = hashtable.get((regularExpression.ordinal));
-				text = ((obj == null) ? (text)+("jj_consume_token(")+(regularExpression.ordinal)
+				var obj = hashtable.ContainsKey((regularExpression.ordinal));
+				text = ((obj) ? (text)+("jj_consume_token(")+(regularExpression.ordinal)
 					+(str)
-					 : (text)+("jj_consume_token(")+((string)obj)
-					+(str)
+					 : (text)+("jj_consume_token(")+(hashtable[regularExpression.ordinal])
+					+ (str)
 					);
 			}
 			else
@@ -266,8 +267,8 @@ public class ParseEngine : JavaCCGlobals
 				;
 			if (nonTerminal.argument_tokens.Count != 0)
 			{
-				Token t = nonTerminal.argument_tokens[0];
-				JavaCCGlobals.PrintTokenSetup(t);
+				Token t2 = nonTerminal.argument_tokens[0];
+				JavaCCGlobals.PrintTokenSetup(t2);
 				foreach (var token in nonTerminal.argument_tokens) 
 				{
 					text = (text)+(JavaCCGlobals.PrintToken(token));
@@ -285,11 +286,10 @@ public class ParseEngine : JavaCCGlobals
 			{
 				JavaCCGlobals.PrintTokenSetup((Token)action.ActionTokens[0]);
 				JavaCCGlobals.ccol = 1;
-				Enumeration enumeration = action.ActionTokens.elements();
-				while (enumeration.hasMoreElements())
+				foreach(var _t in action.ActionTokens)
 				{
-					t = (Token)enumeration.nextElement();
-					text = (text)+(JavaCCGlobals.PrintToken(t));
+					text = (text)+(JavaCCGlobals.PrintToken(_t));
+					t = _t;
 				}
 				text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
 			}
@@ -436,11 +436,10 @@ public class ParseEngine : JavaCCGlobals
                 {
                     JavaCCGlobals.PrintTokenSetup((Token)vector[0]);
                     JavaCCGlobals.ccol = 1;
-                    Enumeration enumeration2 = vector.elements();
-                    while (enumeration2.hasMoreElements())
+                    foreach(var _t in vector)
                     {
-                        t = (Token)enumeration2.nextElement();
-                        text = (text) + (JavaCCGlobals.PrintToken(t));
+                        text = (text) + (JavaCCGlobals.PrintToken(_t));
+						t = _t;
                     }
                     text = (text) + (JavaCCGlobals.PrintTrailingComments(t));
                 }
@@ -453,11 +452,10 @@ public class ParseEngine : JavaCCGlobals
                 {
                     JavaCCGlobals.PrintTokenSetup((Token)tryBlock.finallyblk[0]);
                     JavaCCGlobals.ccol = 1;
-                    Enumeration enumeration3 = tryBlock.finallyblk.elements();
-                    while (enumeration3.hasMoreElements())
-                    {
-                        t = (Token)enumeration3.nextElement();
-                        text = (text) + (JavaCCGlobals.PrintToken(t));
+                    foreach(var _t in tryBlock.finallyblk)
+					{
+                        text = (text) + (JavaCCGlobals.PrintToken(_t));
+						t = _t;
                     }
                     text = (text) + (JavaCCGlobals.PrintTrailingComments(t));
                 }
@@ -523,7 +521,7 @@ public class ParseEngine : JavaCCGlobals
 		int num3 = (JavaCCGlobals.tokenCount - 1) / 32 + 1;
 		int[] array2 = null;
 		int num4;
-		for (num4 = 0; num4 < (nint)P_0.LongLength; num4++)
+		for (num4 = 0; num4 < P_0.Length; num4++)
 		{
 			Lookahead lookahead = P_0[num4];
 			jj2LA = false;
@@ -557,11 +555,11 @@ public class ParseEngine : JavaCCGlobals
 					break;
 				}
 				JavaCCGlobals.PrintTokenSetup((Token)lookahead.action_tokens[0]);
-				Enumeration enumeration = lookahead.action_tokens.elements();
-				while (enumeration.hasMoreElements())
+				
+				foreach(var _t in lookahead.action_tokens)
 				{
-					t = (Token)enumeration.nextElement();
-					text = (text)+(JavaCCGlobals.PrintToken(t));
+					text = (text)+(JavaCCGlobals.PrintToken(_t));
+					t = _t;
 				}
 				text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
 				text = (text)+(") {\u0001")+(P_1[num4])
@@ -624,7 +622,7 @@ public class ParseEngine : JavaCCGlobals
 					int num9 = num6;
 					int[] array4 = array3;
 					array4[num9] |= 1 << num8;
-					string text2 = (string)JavaCCGlobals.names_of_tokens.get((i));
+					string text2 = (string)JavaCCGlobals.names_of_tokens[i];
 					text = ((text2 != null) ? (text)+(text2) : (text)+(i));
 					text = (text)+(":\u0001");
 				}
@@ -671,11 +669,11 @@ public class ParseEngine : JavaCCGlobals
 				{
 					text = (text)+(" && (");
 					JavaCCGlobals.PrintTokenSetup((Token)lookahead.action_tokens[0]);
-					Enumeration enumeration = lookahead.action_tokens.elements();
-					while (enumeration.hasMoreElements())
+					
+					foreach(var _t in lookahead.action_tokens)
 					{
-						t = (Token)enumeration.nextElement();
 						text = (text)+(JavaCCGlobals.PrintToken(t));
+						t = _t;
 					}
 					text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
 					text = (text)+(")");
@@ -732,8 +730,8 @@ public class ParseEngine : JavaCCGlobals
 					break;
 				}
 				NonTerminal nonTerminal = (NonTerminal)expansion;
-				NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.Production_table.get(nonTerminal.name);
-				if (normalProduction is JavaCodeProduction)
+
+				if (JavaCCGlobals.Production_table.TryGetValue(nonTerminal.name,out var normalProduction)&& normalProduction is JavaCodeProduction)
 				{
 					break;
 				}
@@ -768,9 +766,8 @@ public class ParseEngine : JavaCCGlobals
 		if (exp is NonTerminal)
 		{
 			NonTerminal nonTerminal = (NonTerminal)exp;
-			NormalProduction normalProduction = (NormalProduction)
-				JavaCCGlobals.Production_table.get(nonTerminal.name);
-			if (!(normalProduction is JavaCodeProduction))
+			if (JavaCCGlobals.Production_table.TryGetValue(nonTerminal.name, out var normalProduction) 
+				&&normalProduction is not JavaCodeProduction)
 			{
 				generate3R(normalProduction.Expansion, P_0);
 			}
@@ -857,7 +854,7 @@ public class ParseEngine : JavaCCGlobals
 	
 	private static string genjj_3Call(Expansion P_0)
 	{
-		if (String.instancehelper_startsWith(P_0.internal_name, "jj_scan_token"))
+		if (P_0.internal_name.StartsWith("jj_scan_token"))
 		{
 			return P_0.internal_name;
 		}
@@ -871,7 +868,7 @@ public class ParseEngine : JavaCCGlobals
 	{
 		Expansion exp = P_0.exp;
 		Token t = null;
-		if (String.instancehelper_startsWith(exp.internal_name, "jj_scan_token"))
+		if (exp.internal_name.StartsWith("jj_scan_token"))
 		{
 			return;
 		}
@@ -903,14 +900,14 @@ public class ParseEngine : JavaCCGlobals
 			RegularExpression regularExpression = (RegularExpression)exp;
 			if (string.Equals(regularExpression.label, ""))
 			{
-				Hashtable hashtable = JavaCCGlobals.names_of_tokens;
+				var hashtable = JavaCCGlobals.names_of_tokens;
 				;
-				object obj = hashtable.get((regularExpression.ordinal));
-				if (obj != null)
+				var obj = hashtable.ContainsKey((regularExpression.ordinal));
+				if (obj )
 				{
-					ostr.WriteLine(("    if (jj_scan_token(")+((string)obj)+(")) ")
+					ostr.WriteLine(("    if (jj_scan_token(") + ((hashtable[regularExpression.ordinal]) +(")) ")
 						+(genReturn(true))
-						);
+						));
 				}
 				else
 				{
@@ -929,8 +926,7 @@ public class ParseEngine : JavaCCGlobals
 		else if (exp is NonTerminal)
 		{
 			NonTerminal nonTerminal = (NonTerminal)exp;
-			NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.Production_table.get(nonTerminal.name);
-			if (normalProduction is JavaCodeProduction)
+			if (JavaCCGlobals.Production_table.TryGetValue(nonTerminal.name,out var normalProduction)&& normalProduction is JavaCodeProduction)
 			{
 				ostr.WriteLine(("    if (true) { jj_la = 0; jj_scanpos = jj_lastpos; ")+(genReturn(false))+("}")
 					);
@@ -964,11 +960,10 @@ public class ParseEngine : JavaCCGlobals
 					ostr.WriteLine("    jj_lookingAhead = true;");
 					ostr.Write("    jj_semLA = ");
 					JavaCCGlobals.PrintTokenSetup((Token)lookahead.action_tokens[0]);
-					Enumeration enumeration = lookahead.action_tokens.elements();
-					while (enumeration.hasMoreElements())
+					foreach(var _t in lookahead.action_tokens)
 					{
-						t = (Token)enumeration.nextElement();
-						JavaCCGlobals.PrintToken(t, ostr);
+						JavaCCGlobals.PrintToken(_t, ostr);
+						t = _t;
 					}
 					JavaCCGlobals.PrintTrailingComments(t, ostr);
 					ostr.WriteLine(";");
@@ -1085,8 +1080,8 @@ public class ParseEngine : JavaCCGlobals
 		else if (P_0 is NonTerminal)
 		{
 			NonTerminal nonTerminal = (NonTerminal)P_0;
-			NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.Production_table.get(nonTerminal.name);
-			if (normalProduction is JavaCodeProduction)
+			if (JavaCCGlobals.Production_table.TryGetValue(nonTerminal.name,out var normalProduction)
+				&& normalProduction is JavaCodeProduction)
 			{
 				result = int.MaxValue;
 			}
@@ -1191,15 +1186,13 @@ public class ParseEngine : JavaCCGlobals
 		JavaCCGlobals.PrintTrailingComments(token, ostr);
 		ostr.Write((" ")+(P_0.lhs)+("(")
 			);
-		Enumeration enumeration;
+		
 		if (P_0.parameter_list_tokens.Count != 0)
 		{
 			JavaCCGlobals.PrintTokenSetup((Token)P_0.parameter_list_tokens[0]);
-			enumeration = P_0.parameter_list_tokens.elements();
-			while (enumeration.hasMoreElements())
+			foreach(var _t in P_0.parameter_list_tokens)
 			{
-				token = (Token)enumeration.nextElement();
-				JavaCCGlobals.PrintToken(token, ostr);
+				JavaCCGlobals.PrintToken(token = _t, ostr);
 			}
 			JavaCCGlobals.PrintTrailingComments(token, ostr);
 		}
@@ -1207,9 +1200,9 @@ public class ParseEngine : JavaCCGlobals
 		foreach(var tl in P_0.ThrowsList)
 		{
 			ostr.Write(", ");
-			foreach(var token in tl)
+			foreach(var _token in tl)
             {
-				ostr.Write(token.image);
+				ostr.Write(_token.image);
 			}
 		}
 		ostr.Write(" {");
@@ -1226,11 +1219,11 @@ public class ParseEngine : JavaCCGlobals
 		{
 			JavaCCGlobals.PrintTokenSetup((Token)P_0.DeclarationTokens[0]);
 			JavaCCGlobals.cline--;
-			enumeration = P_0.DeclarationTokens.elements();
-			while (enumeration.hasMoreElements())
+
+			foreach(var _t in P_0.DeclarationTokens)
 			{
-				token = (Token)enumeration.nextElement();
-				JavaCCGlobals.PrintToken(token, ostr);
+				JavaCCGlobals.PrintToken(_t, ostr);
+				token = _t;
 			}
 			JavaCCGlobals.PrintTrailingComments(token, ostr);
 		}
@@ -1266,8 +1259,9 @@ public class ParseEngine : JavaCCGlobals
 		ostr.WriteLine("    catch(LookaheadSuccess ls) { return true; }");
 		if (Options.ErrorReporting)
 		{
+			int.TryParse((la_expansion.internal_name.Substring(1)), out var x);
 			ostr.WriteLine(("    finally { jj_save(")+(
-				int.parseInt((la_expansion.internal_name.Substring(1))) - 1)+(", xla); }")
+				x - 1)+(", xla); }")
 				);
 		}
 		ostr.WriteLine("  }");
@@ -1285,7 +1279,7 @@ public class ParseEngine : JavaCCGlobals
 	
 	private static void dumpLookaheads(Lookahead[] P_0, string[] P_1)
 	{
-		for (int i = 0; i < (nint)P_0.LongLength; i++)
+		for (int i = 0; i < P_0.Length; i++)
 		{
 			Console.Error.WriteLine(("Lookahead: ")+(i));
 			Console.Error.WriteLine(P_0[i].Dump(0, new()));
@@ -1298,14 +1292,10 @@ public class ParseEngine : JavaCCGlobals
 	{
 		
 		ostr = P_0;
-		Enumeration enumeration = JavaCCGlobals.BNFProductions.elements();
-		Enumeration enumeration2;
-		while (enumeration.hasMoreElements())
+		foreach(var normalProduction in JavaCCGlobals.BNFProductions)
 		{
-			NormalProduction normalProduction = (NormalProduction)enumeration.nextElement();
-			if (normalProduction is JavaCodeProduction)
+			if (normalProduction is JavaCodeProduction javaCodeProduction)
 			{
-				JavaCodeProduction javaCodeProduction = (JavaCodeProduction)normalProduction;
 				Token token = (Token)javaCodeProduction.return_type_tokens[0];
 				JavaCCGlobals.PrintTokenSetup(token);
 				JavaCCGlobals.ccol = 1;
@@ -1326,25 +1316,21 @@ public class ParseEngine : JavaCCGlobals
 				if (javaCodeProduction.parameter_list_tokens.Count != 0)
 				{
 					JavaCCGlobals.PrintTokenSetup((Token)javaCodeProduction.parameter_list_tokens[0]);
-					enumeration2 = javaCodeProduction.parameter_list_tokens.elements();
-					while (enumeration2.hasMoreElements())
+					foreach(var _t in javaCodeProduction.parameter_list_tokens)
 					{
-						token = (Token)enumeration2.nextElement();
-						JavaCCGlobals.PrintToken(token, ostr);
+						JavaCCGlobals.PrintToken(_t, ostr);
+						token = _t;
 					}
 					JavaCCGlobals.PrintTrailingComments(token, ostr);
 				}
 				ostr.Write(") throws ParseException");
-				enumeration2 = javaCodeProduction.ThrowsList.elements();
-				while (enumeration2.hasMoreElements())
+				foreach(var vector in javaCodeProduction.ThrowsList)
 				{
 					ostr.Write(", ");
-					ArrayList vector = (ArrayList)enumeration2.nextElement();
-					Enumeration enumeration3 = vector.elements();
-					while (enumeration3.hasMoreElements())
-					{
-						token = (Token)enumeration3.nextElement();
-						ostr.Write(token.image);
+	
+					foreach(var t in vector)
+					{		
+						ostr.Write(t.image);
 					}
 				} 
 				ostr.Write(" {");
@@ -1394,10 +1380,9 @@ public class ParseEngine : JavaCCGlobals
 				setupPhase3Builds((Phase3Data)phase3list[j]);
 			}
 		}
-		enumeration2 = phase3table.elements();
-		while (enumeration2.hasMoreElements())
+		foreach(var p3 in phase3table)
 		{
-			buildPhase3Routine((Phase3Data)enumeration2.nextElement(), false);
+			buildPhase3Routine(p3.Value, false);
 		}
 	}
 
@@ -1405,9 +1390,9 @@ public class ParseEngine : JavaCCGlobals
 	{
 		
 		gensymindex = 0;
-		phase2list = new ArrayList();
-		phase3list = new ArrayList();
-		phase3table = new Hashtable();
-		generated = new Hashtable();
+		phase2list = new ();
+		phase3list = new ();
+		phase3table = new ();
+		generated = new ();
 	}
 }

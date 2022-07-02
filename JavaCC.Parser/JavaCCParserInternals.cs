@@ -1,5 +1,4 @@
 namespace JavaCC.Parser;
-using System.Collections;
 using System.Collections.Generic;
 
 public abstract class JavaCCParserInternals : JavaCCGlobals
@@ -41,7 +40,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
         int integer = (0);
         JavaCCGlobals.lexstate_S2I.Add("DEFAULT", integer);
         JavaCCGlobals.lexstate_I2S.Add(integer, "DEFAULT");
-        JavaCCGlobals.simple_tokens_table.Add("DEFAULT", new Hashtable());
+        JavaCCGlobals.simple_tokens_table.Add("DEFAULT", new ());
     }
 
     protected internal static void AddCuname(string str)
@@ -125,7 +124,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
     protected internal static void addregexpr(TokenProduction tp)
     {
         JavaCCGlobals.rexprlist.Add(tp);
-        if (Options.UserTokenManager && (tp.LexStates == null || (nint)tp.LexStates.LongLength != 1 || !string.Equals(tp.LexStates[0], "DEFAULT")))
+        if (Options.UserTokenManager && (tp.LexStates == null || tp.LexStates.Length != 1 || !string.Equals(tp.LexStates[0], "DEFAULT")))
         {
             JavaCCErrors.Warning(tp, "Ignoring lexical state specifications since option USER_TOKEN_MANAGER has been set to true.");
         }
@@ -133,7 +132,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
         {
             return;
         }
-        for (int i = 0; i < (nint)tp.LexStates.LongLength; i++)
+        for (int i = 0; i < tp.LexStates.Length; i++)
         {
             for (int j = 0; j < i; j++)
             {
@@ -148,7 +147,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
                 int integer = (nextFreeLexState++);
                 JavaCCGlobals.lexstate_S2I.Add(tp.LexStates[i], integer);
                 JavaCCGlobals.lexstate_I2S.Add(integer, tp.LexStates[i]);
-                JavaCCGlobals.simple_tokens_table.Add(tp.LexStates[i], new Hashtable());
+                JavaCCGlobals.simple_tokens_table.Add(tp.LexStates[i], new ());
             }
         }
     }

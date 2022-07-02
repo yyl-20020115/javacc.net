@@ -173,43 +173,23 @@ public class OutputFile
 
 	public OutputFile(FileInfo f, string str, string[] strarr)
 	{
+		//TODO:
 		toolName = "JavaCC";
 		needToWrite = true;
 		file = f;
 		compatibleVersion = str;
 		options = strarr;
-		NoSuchAlgorithmException ex;
+		
 		if (f.Exists)
 		{
 			var bufferedReader = (new StreamReader(f.FullName));
-			//MessageDigest instance;
-			//try
-			//{
-			//	instance = MessageDigest.getInstance("MD5");
-			//}
-			//catch (NoSuchAlgorithmException x)
-			//{
-			//	ex = x;
-			//	goto IL_0060;
-			//}
-			var digestOutputStream = new Stream(new NullOutputStream(null), instance);
-			var printWriter = new StreamWriter(digestOutputStream);
+			var printWriter = new StreamWriter(f.FullName+".diag");
 			string text = null;
 			string text2;
 			while ((text2 = bufferedReader.ReadLine()) != null)
 			{
 				if (text2.StartsWith( "/* JavaCC - OriginalChecksum="))
 				{
-					object __003Cref_003E = "";
-					//object obj = (charSequence.___003Cref_003E = "/* JavaCC - OriginalChecksum=");
-					CharSequence target = charSequence;
-					//obj = (charSequence.___003Cref_003E = __003Cref_003E);
-					string @this = String.instancehelper_replace(text2, target, charSequence);
-					//obj = "";
-					//__003Cref_003E = (charSequence.___003Cref_003E = " (do not edit this line) */");
-					CharSequence target2 = charSequence;
-					//__003Cref_003E = (charSequence.___003Cref_003E = o bj);
-					text = @this.Replace( target2, charSequence);
 				}
 				else
 				{
@@ -217,20 +197,19 @@ public class OutputFile
 				}
 			}
 			printWriter.Close();
-			string anObject = toHexString(digestOutputStream.getMessageDigest().digest());
-			if (text == null || !string.Equals(text, anObject))
-			{
-				needToWrite = false;
-				if (str != null)
-				{
-					CheckVersion(f, str);
-				}
-				if (strarr != null)
-				{
-					CheckOptions(f, strarr);
-				}
-			}
-			else
+			//if (text == null || !string.Equals(text, anObject))
+			//{
+			//	needToWrite = false;
+			//	if (str != null)
+			//	{
+			//		CheckVersion(f, str);
+			//	}
+			//	if (strarr != null)
+			//	{
+			//		CheckOptions(f, strarr);
+			//	}
+			//}
+			//else
 			{
 				Console.WriteLine(("File \"")+(f.Name)+("\" is being rebuilt.")
 					);
@@ -245,7 +224,6 @@ public class OutputFile
 		}
 		return;
 	IL_0060:
-		NoSuchAlgorithmException cause = ex;
 		throw new System.Exception("No MD5 implementation");
 	}
 
@@ -259,7 +237,7 @@ public class OutputFile
 	private static string toHexString(byte[] P_0)
 	{
 		var stringBuilder = new StringBuilder(32);
-		for (int i = 0; i < (nint)P_0.LongLength; i++)
+		for (int i = 0; i < P_0.Length; i++)
 		{
 			int num = P_0[i];
 			stringBuilder.Append(HEX_DIGITS[(num & 0xF0) >> 4]).Append(HEX_DIGITS[num & 0xF]);
@@ -282,10 +260,13 @@ public class OutputFile
 				{
 					if (@this.StartsWith(text))
 					{
-						string text2 = String.instancehelper_replaceAll(String.instancehelper_replaceFirst(text, ".* Version ", ""), " \\*/", "");
+						//TODO:
+						string text2 =
+							text.Replace(".* Version ", "").Replace(" \\*/", "");
 						if ((object)text2 != name)
 						{
-							JavaCCErrors.Warning((info.Name)+(": File is obsolete.  Please rename or delete this file so")+(" that a new one can be generated for you.")
+							JavaCCErrors.Warning((info.Name)+
+								(": File is obsolete.  Please rename or delete this file so")+(" that a new one can be generated for you.")
 								);
 						}
 						break;
@@ -358,11 +339,12 @@ public class OutputFile
 
 	private string getMD5sum()
 	{
+		//TODO:
 		pw.Flush();
-		byte[] array = dos.GetMessageDigest().digest();
-		string result = toHexString(array);
-
-		return result;
+		//byte[] array = dos.GetMessageDigest().digest();
+		//string result = toHexString(array);
+		//return result;
+		return "";
 	}
 
 	public virtual string getToolName()

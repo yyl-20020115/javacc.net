@@ -49,7 +49,7 @@ public static class EntryPoint
                 );
             return 1;
         }
-        for (int i = 0; i < (nint)strarr.LongLength - 1; i++)
+        for (int i = 0; i < strarr.Length - 1; i++)
         {
             if (!Options.IsOption(strarr[i]))
             {

@@ -224,7 +224,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             jj_la1[i] = -1;
         }
-        for (int i = 0; i < (nint)jj_2_rtns.LongLength; i++)
+        for (int i = 0; i < jj_2_rtns.Length; i++)
         {
             jj_2_rtns[i] = new JJCalls();
         }
@@ -327,7 +327,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             if (num > 100)
             {
                 jj_gc = 0;
-                for (int i = 0; i < (nint)jj_2_rtns.LongLength; i++)
+                for (int i = 0; i < jj_2_rtns.Length; i++)
                 {
                     for (JJCalls jJCalls = jj_2_rtns[i]; jJCalls != null; jJCalls = jJCalls.next)
                     {
@@ -12370,7 +12370,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             jj_la1[i] = -1;
         }
-        for (int i = 0; i < (nint)jj_2_rtns.LongLength; i++)
+        for (int i = 0; i < jj_2_rtns.Length; i++)
         {
             jj_2_rtns[i] = new JJCalls();
         }
@@ -12402,7 +12402,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             jj_la1[i] = -1;
         }
-        for (int i = 0; i < (nint)jj_2_rtns.LongLength; i++)
+        for (int i = 0; i < jj_2_rtns.Length; i++)
         {
             jj_2_rtns[i] = new JJCalls();
         }
@@ -12502,12 +12502,12 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             foreach (var fv in jj_expentries)
             {
                 int[] array2 = fv;
-                if ((nint)array2.LongLength != (nint)jj_expentry.LongLength)
+                if (array2.Length != jj_expentry.Length)
                 {
                     continue;
                 }
                 i = 1;
-                for (int j = 0; j < (nint)jj_expentry.LongLength; j++)
+                for (int j = 0; j < jj_expentry.Length; j++)
                 {
                     if (array2[j] != jj_expentry[j])
                     {
@@ -12925,7 +12925,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             jj_la1[i] = -1;
         }
-        for (int i = 0; i < (nint)jj_2_rtns.LongLength; i++)
+        for (int i = 0; i < jj_2_rtns.Length; i++)
         {
             jj_2_rtns[i] = new JJCalls();
         }
@@ -12956,7 +12956,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             jj_la1[i] = -1;
         }
-        for (int i = 0; i < (nint)jj_2_rtns.LongLength; i++)
+        for (int i = 0; i < jj_2_rtns.Length; i++)
         {
             jj_2_rtns[i] = new JJCalls();
         }
@@ -12973,7 +12973,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             jj_la1[i] = -1;
         }
-        for (int i = 0; i < (nint)jj_2_rtns.LongLength; i++)
+        for (int i = 0; i < jj_2_rtns.Length; i++)
         {
             jj_2_rtns[i] = new JJCalls();
         }

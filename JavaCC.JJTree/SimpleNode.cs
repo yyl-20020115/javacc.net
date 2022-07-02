@@ -22,7 +22,7 @@ public class SimpleNode : Node
         Console.WriteLine(ToString(str));
         if (children != null)
         {
-            for (int i = 0; i < (nint)children.LongLength; i++)
+            for (int i = 0; i < children.Length; i++)
             {
                 ((SimpleNode)children[i])?.Dump(str + " ");
             }
@@ -53,7 +53,7 @@ public class SimpleNode : Node
         {
             children = new Node[i + 1];
         }
-        else if (i >= (nint)children.LongLength)
+        else if (i >= children.Length)
         {
             Node[] dest = new Node[i + 1];
             Array.Copy(children, 0, dest, 0, children.Length);

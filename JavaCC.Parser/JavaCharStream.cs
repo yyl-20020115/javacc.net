@@ -614,7 +614,7 @@ public class JavaCharStream
         line = i1;
         column = i2 - 1;
         int num;
-        if (buffer == null || (nint)i3 != (nint)buffer.LongLength)
+        if (buffer == null || i3 != buffer.Length)
         {
             num = i3;
             int num2 = num;

@@ -101,9 +101,9 @@ public class LookaheadCalc : JavaCCGlobals
                 text = (text) + (" <EOF>");
                 continue;
             }
-            Hashtable hashtable = JavaCCGlobals.rexps_of_tokens;
-            ;
-            RegularExpression regularExpression = (RegularExpression)hashtable[P_0.match[i]];
+            var hashtable = JavaCCGlobals.rexps_of_tokens;
+            
+            RegularExpression regularExpression = hashtable[P_0.match[i]];
 
             text = ((!(regularExpression is RStringLiteral)) ? ((regularExpression.label == null || string.Equals(regularExpression.label, "")) ? (text) + (" <token of kind ") + (i)
                 + (">")

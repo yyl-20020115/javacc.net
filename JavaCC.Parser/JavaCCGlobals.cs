@@ -45,9 +45,9 @@ public class JavaCCGlobals
 
     public static Dictionary<int, string> names_of_tokens = new();
 
-    public static Hashtable rexps_of_tokens = new();
+    public static Dictionary<int,RegularExpression> rexps_of_tokens = new();
 
-    public static Hashtable simple_tokens_table = new();
+    public static Dictionary<string, Dictionary<string, Dictionary<string, RegularExpression>>> simple_tokens_table = new();
 
     protected internal static int maskindex = 0;
 
@@ -120,7 +120,7 @@ public class JavaCCGlobals
                 {
                     fileReader = new StreamReader(str);
                     int num2;
-                    while ((num2 = fileReader.Read(array, num, (int)(array.Length - num))) != -1 && (nint)(num += num2) != array.Length)
+                    while ((num2 = fileReader.Read(array, num, (int)(array.Length - num))) != -1 && (num += num2) != array.Length)
                     {
                     }
                     result = MakeToolNameVector(new string(array, 0, num));
