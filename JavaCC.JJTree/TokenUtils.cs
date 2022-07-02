@@ -5,13 +5,13 @@ using System.Text;
 
 public sealed class TokenUtils
 {
-    internal static string AddUnicodeEscapes(string P_0)
+    internal static string AddUnicodeEscapes(string text)
     {
         ;
-        var stringBuilder = new StringBuilder(P_0.Length);
-        for (int i = 0; i < P_0.Length; i++)
+        var stringBuilder = new StringBuilder(text.Length);
+        for (int i = 0; i < text.Length; i++)
         {
-            int num = P_0[i];
+            int num = text[i];
             if ((num < 32 || num > 126) && num != 9 && num != 10 && num != 13 && num != 12)
             {
                 string @this = ("0000") + (Utils.ToString(num, 16));

@@ -14,6 +14,6 @@ public class ASTBNFNodeScope : JJTreeNode
         var indentation = GetIndentation(expUnit);
         JJTreeNode.OpenJJTreeComment(io, nodeScope.NodeDescriptor.Descriptor);
         io.WriteLine();
-        nodeScope.tryExpansionUnit(io, indentation, expUnit);
+        nodeScope.TryExpansionUnit(io, indentation, expUnit);
     }
 }

@@ -272,14 +272,14 @@ public class RCharacterList : RegularExpression
         negated_list = false;
     }
 
-    internal static bool InRange(char P_0, CharacterRange P_1)
+    internal static bool InRange(char c, CharacterRange r)
     {
-        return (P_0 >= P_1.Left && P_0 <= P_1.Right) ? true : false;
+        return (c >= r.Left && c <= r.Right) ? true : false;
     }
 
-    internal static bool SubRange(CharacterRange P_0, CharacterRange P_1)
+    internal static bool SubRange(CharacterRange r1, CharacterRange r2)
     {
-        return (P_0.Left >= P_1.Left && P_0.Right <= P_1.Right) ? true : false;
+        return (r1.Left >= r2.Left && r1.Right <= r2.Right) ? true : false;
     }
 
     internal static bool Overlaps(CharacterRange cr1, CharacterRange cr2)

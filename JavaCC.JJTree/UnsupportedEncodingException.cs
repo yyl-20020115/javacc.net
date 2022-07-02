@@ -1,19 +1,18 @@
 ﻿using System;
 
-namespace JavaCC.JJTree
+namespace JavaCC.JJTree;
+
+internal class UnsupportedEncodingException : Exception
 {
-    internal class UnsupportedEncodingException : Exception
+    public UnsupportedEncodingException()
     {
-        public UnsupportedEncodingException()
-        {
-        }
+    }
 
-        public UnsupportedEncodingException(string message) : base(message)
-        {
-        }
+    public UnsupportedEncodingException(string message) : base(message)
+    {
+    }
 
-        public UnsupportedEncodingException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
+    public UnsupportedEncodingException(string message, Exception innerException) : base(message, innerException)
+    {
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class JJTJJTreeParserState
 {
-    private List<Node> Nodes = new();
+    private List<INode> Nodes = new();
 
     private List<int> Marks = new();
 
@@ -14,7 +14,7 @@ public class JJTJJTreeParserState
     private bool _NodeCreated = false;
 
 
-    public virtual Node PopNode()
+    public virtual INode PopNode()
     {
         int num = SP - 1;
         SP = num;
@@ -30,7 +30,7 @@ public class JJTJJTreeParserState
     }
 
 
-    public virtual void PushNode(Node n)
+    public virtual void PushNode(INode n)
     {
         Nodes.Add(n);
         SP++;
@@ -55,13 +55,13 @@ public class JJTJJTreeParserState
     }
 
 
-    public virtual Node RootNode => Nodes[0];
+    public virtual INode RootNode => Nodes[0];
 
 
-    public virtual Node PeekNode => Nodes[(Nodes.Count - 1)];
+    public virtual INode PeekNode => Nodes[(Nodes.Count - 1)];
 
 
-    public virtual void ClearNodeScope(Node n)
+    public virtual void ClearNodeScope(INode n)
     {
         while (SP > MK)
         {
@@ -72,32 +72,32 @@ public class JJTJJTreeParserState
     }
 
 
-    public virtual void OpenNodeScope(Node n)
+    public virtual void OpenNodeScope(INode n)
     {
         var list = Marks;
         list.Add((MK));
         MK = SP;
-        n.jjtOpen();
+        n.JJTOpen();
     }
 
 
-    public virtual void CloseNodeScope(Node n, int i)
+    public virtual void CloseNodeScope(INode n, int i)
     {
         MK = Marks[Marks.Count - 1];
         Marks.RemoveAt(Marks.Count - 1);
         while (i-- > 0)
         {
-            Node node = PopNode();
-            node.jjtSetParent(n);
-            n.jjtAddChild(node, i);
+            INode node = PopNode();
+            node.JJTSetParent(n);
+            n.JJTAddChild(node, i);
         }
-        n.jjtClose();
+        n.JJTClose();
         PushNode(n);
         _NodeCreated = true;
     }
 
 
-    public virtual void CloseNodeScope(Node n, bool b)
+    public virtual void CloseNodeScope(INode n, bool b)
     {
         if (b)
         {
@@ -106,11 +106,11 @@ public class JJTJJTreeParserState
             Marks.RemoveAt(Marks.Count - 1);
             while (i-- > 0)
             {
-                Node node = PopNode();
-                node.jjtSetParent(n);
-                n.jjtAddChild(node, i);
+                INode node = PopNode();
+                node.JJTSetParent(n);
+                n.JJTAddChild(node, i);
             }
-            n.jjtClose();
+            n.JJTClose();
             PushNode(n);
             _NodeCreated = true;
         }

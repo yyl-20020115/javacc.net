@@ -6,11 +6,10 @@ public static class EntryPoint
 {
     public static int Main(string[] strarr)
     {
-        int status = mainProgram(strarr);
-        return status;
+        return MainProgram(strarr);
     }
 
-    public static void reInitAll()
+    public static void ReInitAll()
     {
         Expansion.ReInit();
         //JavaCCErrors.ReInit();
@@ -30,16 +29,16 @@ public static class EntryPoint
     }
 
 
-    public static int mainProgram(string[] strarr)
+    public static int MainProgram(string[] strarr)
     {
         //Discarded unreachable code: IL_0349
-        reInitAll();
+        ReInitAll();
         JavaCCGlobals.BannerLine("Parser Generator", "");
 
         if (strarr.Length == 0)
         {
             Console.WriteLine("");
-            help_message();
+            HelpMessage();
             return 1;
         }
         Console.WriteLine("(type \"javacc\" with no arguments for help)");
@@ -164,7 +163,7 @@ public static class EntryPoint
     }
 
 
-    internal static void help_message()
+    internal static void HelpMessage()
     {
         Console.WriteLine("Usage:");
         Console.WriteLine("    javacc option-settings inputfile");

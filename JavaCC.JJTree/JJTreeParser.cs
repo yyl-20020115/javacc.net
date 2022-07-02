@@ -2,7 +2,6 @@ namespace JavaCC.JJTree;
 using JavaCC.Parser;
 using System.IO;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 {
@@ -28,11 +27,6 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 
 
         public LookaheadSuccess()
-        {
-        }
-
-
-        protected LookaheadSuccess(SerializationInfo P_0, StreamingContext P_1) : base(P_0, P_1)
         {
         }
     }
@@ -528,9 +522,9 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
     }
 
 
-    internal virtual void jjtreeOpenNodeScope(Node P_0)
+    internal virtual void jjtreeOpenNodeScope(INode node)
     {
-        ((JJTreeNode)P_0).FirstToken = getToken(1);
+        ((JJTreeNode)node).FirstToken = getToken(1);
     }
 
 
@@ -696,7 +690,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
     }
 
 
-    internal virtual void jjtreeCloseNodeScope(Node P_0)
+    internal virtual void jjtreeCloseNodeScope(INode P_0)
     {
         ((JJTreeNode)P_0).LastToken = getToken(0);
     }

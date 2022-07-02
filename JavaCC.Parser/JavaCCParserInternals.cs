@@ -103,25 +103,25 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
         }
     }
 
-    protected internal static void set_initial_cu_token(Token t)
+    protected internal static void SetInitialCuToken(Token t)
     {
         first_cu_token = t;
     }
 
 
-    protected internal static void addproduction(NormalProduction np)
+    protected internal static void AddProduction(NormalProduction np)
     {
         JavaCCGlobals.BNFProductions.Add(np);
     }
 
-    protected internal static void production_addexpansion(BNFProduction bnfp, Expansion e)
+    protected internal static void ProductionAddExpansion(BNFProduction bnfp, Expansion e)
     {
         e.parent = bnfp;
         bnfp.Expansion = e;
     }
 
 
-    protected internal static void addregexpr(TokenProduction tp)
+    protected internal static void AddRegexpr(TokenProduction tp)
     {
         JavaCCGlobals.rexprlist.Add(tp);
         if (Options.UserTokenManager && (tp.LexStates == null || tp.LexStates.Length != 1 || !string.Equals(tp.LexStates[0], "DEFAULT")))
@@ -153,7 +153,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
     }
 
 
-    protected internal static void add_token_manager_decls(Token t, List<Token> v)
+    protected internal static void AddTokenManagerDecl(Token t, List<Token> v)
     {
         if (JavaCCGlobals.token_mgr_decls != null)
         {
@@ -168,27 +168,31 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
     }
 
 
-    protected internal static void add_inline_regexpr(RegularExpression re)
+    protected internal static void AddInlineRegexpr(RegularExpression re)
     {
-        if (!(re is REndOfFile))
+        if (re is not REndOfFile)
         {
-            var tokenProduction = new TokenProduction();
-            tokenProduction.isExplicit = false;
-            tokenProduction.LexStates = new string[1] { "DEFAULT" };
-            tokenProduction.Kind = 0;
-            var regExprSpec = new RegExprSpec();
-            regExprSpec.rexp = re;
+            var tokenProduction = new TokenProduction
+            {
+                isExplicit = false,
+                LexStates = new string[1] { "DEFAULT" },
+                Kind = 0
+            };
+            var regExprSpec = new RegExprSpec
+            {
+                rexp = re,
+                act = new Action(),
+                nextState = null,
+                nsTok = null
+            };
             regExprSpec.rexp.tpContext = tokenProduction;
-            regExprSpec.act = new Action();
-            regExprSpec.nextState = null;
-            regExprSpec.nsTok = null;
             tokenProduction.Respecs.Add(regExprSpec);
             JavaCCGlobals.rexprlist.Add(tokenProduction);
         }
     }
 
 
-    protected internal static string remove_escapes_and_quotes(Token t, string str)
+    protected internal static string RemoveEscapesAndQuotes(Token t, string str)
     {
         string text = "";
         int num = 1;
@@ -308,7 +312,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
     }
 
 
-    protected internal static char character_descriptor_assign(Token t, string str)
+    protected internal static char CharDescriptorAssign(Token t, string str)
     {
         if (str.Length != 1)
         {
@@ -321,7 +325,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
     }
 
 
-    protected internal static char character_descriptor_assign(Token t, string str1, string str2)
+    protected internal static char CharDescriptorAssign(Token t, string str1, string str2)
     {
         if (str1.Length != 1)
         {
@@ -344,23 +348,25 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
     }
 
 
-    protected internal static void makeTryBlock(Token t, Container c1, Container c2, List<List<Token>> v1, List<Token> v2, List<List<Token>> v3, List<Token> v4)
+    protected internal static void MakeTryBlock(Token t, Container c1, Container c2, List<List<Token>> v1, List<Token> v2, List<List<Token>> v3, List<Token> v4)
     {
         if (v3.Count == 0 && v4 == null)
         {
             JavaCCErrors.Parse_Error(t, "Try block must contain at least one catch or finally block.");
             return;
         }
-        var tryBlock = new TryBlock();
-        tryBlock.Line = t.BeginLine;
-        tryBlock.Column = t.BeginColumn;
-        tryBlock.exp = (Expansion)c2.member;
+        var tryBlock = new TryBlock
+        {
+            Line = t.BeginLine,
+            Column = t.BeginColumn,
+            exp = c2.member as Expansion,
+            types = v1,
+            ids = v2,
+            catchblks = v3,
+            finallyblk = v4
+        };
         tryBlock.exp.parent = tryBlock;
         tryBlock.exp.ordinal = 0;
-        tryBlock.types = v1;
-        tryBlock.ids = v2;
-        tryBlock.catchblks = v3;
-        tryBlock.finallyblk = v4;
         c1.member = tryBlock;
     }
 

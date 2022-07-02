@@ -8,11 +8,11 @@ public class ASTExpansionNodeScope : JJTreeNode
 
     public override void Write(IO io)
     {
-        string indentation = GetIndentation(expUnit);
+        var indentation = GetIndentation(expUnit);
         JJTreeNode.OpenJJTreeComment(io, nodeScope.NodeDescriptor.Descriptor);
         io.WriteLine();
-        nodeScope.insertOpenNodeAction(io, indentation);
-        nodeScope.tryExpansionUnit(io, indentation, expUnit);
-        ((ASTNodeDescriptor)jjtGetChild(1)).Write(io);
+        nodeScope.InsertOpenNodeAction(io, indentation);
+        nodeScope.TryExpansionUnit(io, indentation, expUnit);
+        ((ASTNodeDescriptor)JJTGetChild(1)).Write(io);
     }
 }

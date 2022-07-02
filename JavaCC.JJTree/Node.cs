@@ -1,12 +1,12 @@
 namespace JavaCC.JJTree;
 
-public interface Node
+public interface INode
 {
-    void jjtOpen();
-    void jjtClose();
-    void jjtSetParent(Node n);
-    Node jjtGetParent();
-    void jjtAddChild(Node n, int i);
-    Node jjtGetChild(int i);
-    int jjtGetNumChildren();
+    void JJTOpen();
+    void JJTClose();
+    void JJTSetParent(INode n);
+    INode JJTGetParent();
+    void JJTAddChild(INode n, int i);
+    INode JJTGetChild(int i);
+    int JJTGetNumChildren();
 }

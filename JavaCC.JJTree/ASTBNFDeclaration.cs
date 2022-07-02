@@ -8,7 +8,7 @@ public class ASTBNFDeclaration : JJTreeNode
     {
         if (!nodeScope.IsVoid)
         {
-            string text = "";
+            var text = "";
             if (TokenUtils.HasTokens(this))
             {
                 for (int i = 1; i < FirstToken.BeginColumn; i++)
@@ -22,7 +22,7 @@ public class ASTBNFDeclaration : JJTreeNode
             }
             JJTreeNode.OpenJJTreeComment(io, nodeScope.NodeDescriptorText);
             io.WriteLine();
-            nodeScope.insertOpenNodeCode(io, text);
+            nodeScope.InsertOpenNodeCode(io, text);
             JJTreeNode.CloseJJTreeComment(io);
         }
         base.Write(io);

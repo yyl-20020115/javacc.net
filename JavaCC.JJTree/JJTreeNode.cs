@@ -76,9 +76,9 @@ public class JJTreeNode : SimpleNode
         var firstToken = FirstToken;
         var token = new Token();
         token.Next = firstToken;
-        for (int i = 0; i < jjtGetNumChildren(); i++)
+        for (int i = 0; i < JJTGetNumChildren(); i++)
         {
-            var jJTreeNode = (JJTreeNode)jjtGetChild(i);
+            var jJTreeNode = (JJTreeNode)JJTGetChild(i);
             while (true)
             {
                 token = token.Next;
@@ -115,11 +115,11 @@ public class JJTreeNode : SimpleNode
         : this(id) { }
 
 
-    public static Node jjtCreate(int i) => new JJTreeNode(i);
+    public static INode JJTCreate(int i) => new JJTreeNode(i);
 
-    public override void jjtAddChild(Node n, int i)
+    public override void JJTAddChild(INode n, int i)
     {
-        base.jjtAddChild(n, i);
+        base.JJTAddChild(n, i);
         ((JJTreeNode)n).Ordinal = i;
     }
 

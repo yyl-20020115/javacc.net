@@ -1,6 +1,5 @@
 using JavaCC.NET;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -548,48 +547,48 @@ public class NfaState
 	}
 
 	
-	internal static void PrintBoilerPlate(TextWriter P_0)
+	internal static void PrintBoilerPlate(TextWriter writer)
 	{
-		P_0.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAdd(int state)")
+		writer.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAdd(int state)")
 			);
-		P_0.WriteLine("{");
-		P_0.WriteLine("   if (jjrounds[state] != jjround)");
-		P_0.WriteLine("   {");
-		P_0.WriteLine("      jjstateSet[jjnewStateCnt++] = state;");
-		P_0.WriteLine("      jjrounds[state] = jjround;");
-		P_0.WriteLine("   }");
-		P_0.WriteLine("}");
-		P_0.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjAddStates(int start, int end)")
+		writer.WriteLine("{");
+		writer.WriteLine("   if (jjrounds[state] != jjround)");
+		writer.WriteLine("   {");
+		writer.WriteLine("      jjstateSet[jjnewStateCnt++] = state;");
+		writer.WriteLine("      jjrounds[state] = jjround;");
+		writer.WriteLine("   }");
+		writer.WriteLine("}");
+		writer.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjAddStates(int start, int end)")
 			);
-		P_0.WriteLine("{");
-		P_0.WriteLine("   do {");
-		P_0.WriteLine("      jjstateSet[jjnewStateCnt++] = jjnextStates[start];");
-		P_0.WriteLine("   } while (start++ != end);");
-		P_0.WriteLine("}");
-		P_0.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAddTwoStates(int state1, int state2)")
+		writer.WriteLine("{");
+		writer.WriteLine("   do {");
+		writer.WriteLine("      jjstateSet[jjnewStateCnt++] = jjnextStates[start];");
+		writer.WriteLine("   } while (start++ != end);");
+		writer.WriteLine("}");
+		writer.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAddTwoStates(int state1, int state2)")
 			);
-		P_0.WriteLine("{");
-		P_0.WriteLine("   jjCheckNAdd(state1);");
-		P_0.WriteLine("   jjCheckNAdd(state2);");
-		P_0.WriteLine("}");
-		P_0.WriteLine("");
-		P_0.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAddStates(int start, int end)")
+		writer.WriteLine("{");
+		writer.WriteLine("   jjCheckNAdd(state1);");
+		writer.WriteLine("   jjCheckNAdd(state2);");
+		writer.WriteLine("}");
+		writer.WriteLine("");
+		writer.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAddStates(int start, int end)")
 			);
-		P_0.WriteLine("{");
-		P_0.WriteLine("   do {");
-		P_0.WriteLine("      jjCheckNAdd(jjnextStates[start]);");
-		P_0.WriteLine("   } while (start++ != end);");
-		P_0.WriteLine("}");
-		P_0.WriteLine("");
+		writer.WriteLine("{");
+		writer.WriteLine("   do {");
+		writer.WriteLine("      jjCheckNAdd(jjnextStates[start]);");
+		writer.WriteLine("   } while (start++ != end);");
+		writer.WriteLine("}");
+		writer.WriteLine("");
 		if (jjCheckNAddStatesUnaryNeeded)
 		{
-			P_0.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAddStates(int start)")
+			writer.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAddStates(int start)")
 				);
-			P_0.WriteLine("{");
-			P_0.WriteLine("   jjCheckNAdd(jjnextStates[start]);");
-			P_0.WriteLine("   jjCheckNAdd(jjnextStates[start + 1]);");
-			P_0.WriteLine("}");
-			P_0.WriteLine("");
+			writer.WriteLine("{");
+			writer.WriteLine("   jjCheckNAdd(jjnextStates[start]);");
+			writer.WriteLine("   jjCheckNAdd(jjnextStates[start + 1]);");
+			writer.WriteLine("}");
+			writer.WriteLine("");
 		}
 	}
 
@@ -1381,33 +1380,33 @@ public class NfaState
 	}
 
 	
-	private void DumpAsciiMoveForCompositeState(TextWriter P_0, int P_1, bool P_2)
+	private void DumpAsciiMoveForCompositeState(TextWriter writer, int mid, bool use_else)
 	{
 		int num = (selfLoop() ? 1 : 0);
 		for (int i = 0; i < allStates.Count; i++)
 		{
 			NfaState nfaState = (NfaState)allStates[i];
-			if (this != nfaState && nfaState.stateName != -1 && !nfaState.dummy && stateName != nfaState.stateName && nfaState.asciiMoves[P_1] != 0 && num == 0 && Intersect(nfaState.next.epsilonMovesString, next.epsilonMovesString))
+			if (this != nfaState && nfaState.stateName != -1 && !nfaState.dummy && stateName != nfaState.stateName && nfaState.asciiMoves[mid] != 0 && num == 0 && Intersect(nfaState.next.epsilonMovesString, next.epsilonMovesString))
 			{
 				num = 1;
 				break;
 			}
 		}
 		string str = "";
-		if (asciiMoves[P_1] != -1)
+		if (asciiMoves[mid] != -1)
 		{
-			int num2 = OnlyOneBitSet(asciiMoves[P_1]);
+			int num2 = OnlyOneBitSet(asciiMoves[mid]);
 			if (num2 != -1)
 			{
-				P_0.WriteLine(("                  ")+((!P_2) ? "" : "else ")+("if (curChar == ")
-					+(64 * P_1 + num2)
+				writer.WriteLine(("                  ")+((!use_else) ? "" : "else ")+("if (curChar == ")
+					+(64 * mid + num2)
 					+(")")
 					);
 			}
 			else
 			{
-				P_0.WriteLine(("                  ")+((!P_2) ? "" : "else ")+("if ((0x")
-					+(Utils.ToHexString(asciiMoves[P_1]))
+				writer.WriteLine(("                  ")+((!use_else) ? "" : "else ")+("if ((0x")
+					+(Utils.ToHexString(asciiMoves[mid]))
 					+("L & l) != 0L)")
 					);
 			}
@@ -1415,14 +1414,14 @@ public class NfaState
 		}
 		if (kindToPrint != int.MaxValue)
 		{
-			if (asciiMoves[P_1] != -1)
+			if (asciiMoves[mid] != -1)
 			{
-				P_0.WriteLine("                  {");
+				writer.WriteLine("                  {");
 			}
-			P_0.WriteLine((str)+("                  if (kind > ")+(kindToPrint)
+			writer.WriteLine((str)+("                  if (kind > ")+(kindToPrint)
 				+(")")
 				);
-			P_0.WriteLine((str)+("                     kind = ")+(kindToPrint)
+			writer.WriteLine((str)+("                     kind = ")+(kindToPrint)
 				+(";")
 				);
 		}
@@ -1434,20 +1433,20 @@ public class NfaState
 				int i2 = array[0];
 				if (num != 0)
 				{
-					P_0.WriteLine((str)+("                  jjCheckNAdd(")+(i2)
+					writer.WriteLine((str)+("                  jjCheckNAdd(")+(i2)
 						+(");")
 						);
 				}
 				else
 				{
-					P_0.WriteLine((str)+("                  jjstateSet[jjnewStateCnt++] = ")+(i2)
+					writer.WriteLine((str)+("                  jjstateSet[jjnewStateCnt++] = ")+(i2)
 						+(";")
 						);
 				}
 			}
 			else if (next.usefulEpsilonMoves == 2 && num != 0)
 			{
-				P_0.WriteLine((str)+("                  jjCheckNAddTwoStates(")+(array[0])
+				writer.WriteLine((str)+("                  jjCheckNAddTwoStates(")+(array[0])
 					+(", ")
 					+(array[1])
 					+(");")
@@ -1459,21 +1458,21 @@ public class NfaState
 				int num3 = ((stateSetIndicesForUse[0] + 1 != stateSetIndicesForUse[1]) ? 1 : 0);
 				if (num != 0)
 				{
-					P_0.Write((str)+("                  jjCheckNAddStates(")+(stateSetIndicesForUse[0])
+					writer.Write((str)+("                  jjCheckNAddStates(")+(stateSetIndicesForUse[0])
 						);
 					if (num3 != 0)
 					{
-						P_0.Write((", ")+(stateSetIndicesForUse[1]));
+						writer.Write((", ")+(stateSetIndicesForUse[1]));
 					}
 					else
 					{
 						jjCheckNAddStatesUnaryNeeded = true;
 					}
-					P_0.WriteLine(");");
+					writer.WriteLine(");");
 				}
 				else
 				{
-					P_0.WriteLine((str)+("                  jjAddStates(")+(stateSetIndicesForUse[0])
+					writer.WriteLine((str)+("                  jjAddStates(")+(stateSetIndicesForUse[0])
 						+(", ")
 						+(stateSetIndicesForUse[1])
 						+(");")
@@ -1481,9 +1480,9 @@ public class NfaState
 				}
 			}
 		}
-		if (asciiMoves[P_1] != -1 && kindToPrint != int.MaxValue)
+		if (asciiMoves[mid] != -1 && kindToPrint != int.MaxValue)
 		{
-			P_0.WriteLine("                  }");
+			writer.WriteLine("                  }");
 		}
 	}
 
@@ -1581,29 +1580,29 @@ public class NfaState
 	}
 
 	
-	private string PrintNoBreak(TextWriter P_0, int P_1, bool[] P_2)
+	private string PrintNoBreak(TextWriter writer, int mid, bool[] visited)
 	{
 		if (inNextOf != 1)
 		{
 			
 			throw new System.Exception("JavaCC Bug: Please send mail to sankar@cs.stanford.edu");
 		}
-		P_2[stateName] = true;
-		if (P_1 >= 0)
+		visited[stateName] = true;
+		if (mid >= 0)
 		{
-			if (asciiMoves[P_1] != 0)
+			if (asciiMoves[mid] != 0)
 			{
-				P_0.WriteLine(("               case ")+(stateName)+(":")
+				writer.WriteLine(("               case ")+(stateName)+(":")
 					);
-				DumpAsciiMoveForCompositeState(P_0, P_1, false);
+				DumpAsciiMoveForCompositeState(writer, mid, false);
 				return "";
 			}
 		}
 		else if (nonAsciiMethod != -1)
 		{
-			P_0.WriteLine(("               case ")+(stateName)+(":")
+			writer.WriteLine(("               case ")+(stateName)+(":")
 				);
-			DumpNonAsciiMoveForCompositeState(P_0);
+			DumpNonAsciiMoveForCompositeState(writer);
 			return "";
 		}
 		string result = ("               case ")+(stateName)+(":\n")
@@ -1905,9 +1904,9 @@ public class NfaState
 	}
 
 	
-	private static void DumpCompositeStatesAsciiMoves(TextWriter P_0, string P_1, int P_2, bool[] P_3)
+	private static void DumpCompositeStatesAsciiMoves(TextWriter writer, string sn, int mvi, bool[] visited)
 	{
-		if (allNextStates.TryGetValue(P_1, out var array) && array.Length == 1 || P_3[StateNameForComposite(P_1)])
+		if (allNextStates.TryGetValue(sn, out var array) && array.Length == 1 || visited[StateNameForComposite(sn)])
 		{
 			return;
 		}
@@ -1916,11 +1915,11 @@ public class NfaState
 		NfaState nfaState2 = null;
 		string text = "";
 
-		int num2 = ((stateBlockTable.ContainsKey(P_1)) ? 1 : 0);
+		int num2 = ((stateBlockTable.ContainsKey(sn)) ? 1 : 0);
 		for (int i = 0; i < array.Length; i++)
 		{
 			NfaState nfaState3 = (NfaState)allStates[array[i]];
-			if (nfaState3.asciiMoves[P_2] != 0)
+			if (nfaState3.asciiMoves[mvi] != 0)
 			{
 				int num3 = num;
 				num++;
@@ -1932,7 +1931,7 @@ public class NfaState
 			}
 			else
 			{
-				P_3[nfaState3.stateName] = true;
+				visited[nfaState3.stateName] = true;
 			}
 			if (nfaState3.stateForCase != null)
 			{
@@ -1946,43 +1945,43 @@ public class NfaState
 		}
 		if (nfaState2 != null)
 		{
-			text = nfaState2.PrintNoBreak(P_0, P_2, P_3);
+			text = nfaState2.PrintNoBreak(writer, mvi, visited);
 		}
 		switch (num)
 		{
 		case 0:
 			if (nfaState2 != null && string.Equals(text, ""))
 			{
-				P_0.WriteLine("                  break;");
+				writer.WriteLine("                  break;");
 			}
 			return;
 		case 1:
 			if (!string.Equals(text, ""))
 			{
-				P_0.Write(text);
+				writer.Write(text);
 			}
-			P_0.WriteLine(("               case ")+(StateNameForComposite(P_1))+(":")
+			writer.WriteLine(("               case ")+(StateNameForComposite(sn))+(":")
 				);
-			if (!P_3[nfaState.stateName] && num2 == 0 && nfaState.inNextOf > 1)
+			if (!visited[nfaState.stateName] && num2 == 0 && nfaState.inNextOf > 1)
 			{
-				P_0.WriteLine(("               case ")+(nfaState.stateName)+(":")
+				writer.WriteLine(("               case ")+(nfaState.stateName)+(":")
 					);
 			}
-			P_3[nfaState.stateName] = true;
-			nfaState.DumpAsciiMove(P_0, P_2, P_3);
+			visited[nfaState.stateName] = true;
+			nfaState.DumpAsciiMove(writer, mvi, visited);
 			return;
 		}
-		List<List<NfaState>> vector = PartitionStatesSetForAscii(array, P_2);
+		List<List<NfaState>> vector = PartitionStatesSetForAscii(array, mvi);
 		if (!string.Equals(text, ""))
 		{
-			P_0.Write(text);
+			writer.Write(text);
 		}
-		int num4 = StateNameForComposite(P_1);
-		P_0.WriteLine(("               case ")+(num4)+(":")
+		int num4 = StateNameForComposite(sn);
+		writer.WriteLine(("               case ")+(num4)+(":")
 			);
 		if (num4 < generatedStates)
 		{
-			P_3[num4] = true;
+			visited[num4] = true;
 		}
 		for (int i = 0; i < vector.Count; i++)
 		{
@@ -1992,24 +1991,24 @@ public class NfaState
 				NfaState nfaState3 = (NfaState)vector2[j];
 				if (num2 != 0)
 				{
-					P_3[nfaState3.stateName] = true;
+					visited[nfaState3.stateName] = true;
 				}
-				nfaState3.DumpAsciiMoveForCompositeState(P_0, P_2, (j != 0) ? true : false);
+				nfaState3.DumpAsciiMoveForCompositeState(writer, mvi, (j != 0) ? true : false);
 			}
 		}
 		if (num2 != 0)
 		{
-			P_0.WriteLine("                  break;");
+			writer.WriteLine("                  break;");
 		}
 		else
 		{
-			P_0.WriteLine("                  break;");
+			writer.WriteLine("                  break;");
 		}
 	}
 
 	
 
-	private void DumpNonAsciiMove(TextWriter P_0, bool[] P_1)
+	private void DumpNonAsciiMove(TextWriter writer, bool[] P_1)
 	{
 		int num = ((selfLoop() && isComposite) ? 1 : 0);
 		for (int i = 0; i < allStates.Count; i++)
@@ -2024,7 +2023,7 @@ public class NfaState
 				if (!P_1[nfaState.stateName] && !nfaState.isComposite && nonAsciiMethod == nfaState.nonAsciiMethod && kindToPrint == nfaState.kindToPrint && ((object)next.epsilonMovesString == nfaState.next.epsilonMovesString || (next.epsilonMovesString != null && nfaState.next.epsilonMovesString != null && string.Equals(next.epsilonMovesString, nfaState.next.epsilonMovesString))))
 				{
 					P_1[nfaState.stateName] = true;
-					P_0.WriteLine(("               case ")+(nfaState.stateName)+(":")
+					writer.WriteLine(("               case ")+(nfaState.stateName)+(":")
 						);
 				}
 			}
@@ -2037,7 +2036,7 @@ public class NfaState
 			{
 				if (loByteVec != null && loByteVec.Count > 1)
 				{
-					P_0.WriteLine(("                  if ((jjbitVec") + (((int)loByteVec[(1)]))+("[i2")
+					writer.WriteLine(("                  if ((jjbitVec") + (((int)loByteVec[(1)]))+("[i2")
 						+("] & l2) != 0L")
 						+(str)
 						+(")")
@@ -2046,14 +2045,14 @@ public class NfaState
 			}
 			else
 			{
-				P_0.WriteLine(("                  if (jjCanMove_")+(nonAsciiMethod)+("(hiByte, i1, i2, l1, l2)")
+				writer.WriteLine(("                  if (jjCanMove_")+(nonAsciiMethod)+("(hiByte, i1, i2, l1, l2)")
 					+(str)
 					+(")")
 					);
 			}
-			P_0.WriteLine(("                     kind = ")+(kindToPrint)+(";")
+			writer.WriteLine(("                     kind = ")+(kindToPrint)+(";")
 				);
-			P_0.WriteLine("                  break;");
+			writer.WriteLine("                  break;");
 			return;
 		}
 		str = "   ";
@@ -2063,21 +2062,21 @@ public class NfaState
 			{
 				if (loByteVec != null && loByteVec.Count > 1)
 				{
-					P_0.WriteLine(("                  if ((jjbitVec") + (((int)loByteVec[(1)]))+("[i2")
+					writer.WriteLine(("                  if ((jjbitVec") + (((int)loByteVec[(1)]))+("[i2")
 						+("] & l2) == 0L)")
 						);
-					P_0.WriteLine("                     break;");
+					writer.WriteLine("                     break;");
 				}
 			}
 			else
 			{
-				P_0.WriteLine(("                  if (!jjCanMove_")+(nonAsciiMethod)+("(hiByte, i1, i2, l1, l2))")
+				writer.WriteLine(("                  if (!jjCanMove_")+(nonAsciiMethod)+("(hiByte, i1, i2, l1, l2))")
 					);
-				P_0.WriteLine("                     break;");
+				writer.WriteLine("                     break;");
 			}
-			P_0.WriteLine(("                  if (kind > ")+(kindToPrint)+(")")
+			writer.WriteLine(("                  if (kind > ")+(kindToPrint)+(")")
 				);
-			P_0.WriteLine(("                     kind = ")+(kindToPrint)+(";")
+			writer.WriteLine(("                     kind = ")+(kindToPrint)+(";")
 				);
 			str = "";
 		}
@@ -2085,14 +2084,14 @@ public class NfaState
 		{
 			if (loByteVec != null && loByteVec.Count > 1)
 			{
-				P_0.WriteLine(("                  if ((jjbitVec") + (((int)loByteVec[(1)]))+("[i2")
+				writer.WriteLine(("                  if ((jjbitVec") + (((int)loByteVec[(1)]))+("[i2")
 					+("] & l2) != 0L)")
 					);
 			}
 		}
 		else
 		{
-			P_0.WriteLine(("                  if (jjCanMove_")+(nonAsciiMethod)+("(hiByte, i1, i2, l1, l2))")
+			writer.WriteLine(("                  if (jjCanMove_")+(nonAsciiMethod)+("(hiByte, i1, i2, l1, l2))")
 				);
 		}
 		if (next != null && next.usefulEpsilonMoves > 0)
@@ -2103,20 +2102,20 @@ public class NfaState
 				int i2 = array[0];
 				if (num != 0)
 				{
-					P_0.WriteLine((str)+("                  jjCheckNAdd(")+(i2)
+					writer.WriteLine((str)+("                  jjCheckNAdd(")+(i2)
 						+(");")
 						);
 				}
 				else
 				{
-					P_0.WriteLine((str)+("                  jjstateSet[jjnewStateCnt++] = ")+(i2)
+					writer.WriteLine((str)+("                  jjstateSet[jjnewStateCnt++] = ")+(i2)
 						+(";")
 						);
 				}
 			}
 			else if (next.usefulEpsilonMoves == 2 && num != 0)
 			{
-				P_0.WriteLine((str)+("                  jjCheckNAddTwoStates(")+(array[0])
+				writer.WriteLine((str)+("                  jjCheckNAddTwoStates(")+(array[0])
 					+(", ")
 					+(array[1])
 					+(");")
@@ -2128,21 +2127,21 @@ public class NfaState
 				int num2 = ((stateSetIndicesForUse[0] + 1 != stateSetIndicesForUse[1]) ? 1 : 0);
 				if (num != 0)
 				{
-					P_0.Write((str)+("                  jjCheckNAddStates(")+(stateSetIndicesForUse[0])
+					writer.Write((str)+("                  jjCheckNAddStates(")+(stateSetIndicesForUse[0])
 						);
 					if (num2 != 0)
 					{
-						P_0.Write((", ")+(stateSetIndicesForUse[1]));
+						writer.Write((", ")+(stateSetIndicesForUse[1]));
 					}
 					else
 					{
 						jjCheckNAddStatesUnaryNeeded = true;
 					}
-					P_0.WriteLine(");");
+					writer.WriteLine(");");
 				}
 				else
 				{
-					P_0.WriteLine((str)+("                  jjAddStates(")+(stateSetIndicesForUse[0])
+					writer.WriteLine((str)+("                  jjAddStates(")+(stateSetIndicesForUse[0])
 						+(", ")
 						+(stateSetIndicesForUse[1])
 						+(");")
@@ -2150,15 +2149,15 @@ public class NfaState
 				}
 			}
 		}
-		P_0.WriteLine("                  break;");
+		writer.WriteLine("                  break;");
 	}
 
 	
-	private static void DumpCompositeStatesNonAsciiMoves(TextWriter P_0, string P_1, bool[] P_2)
+	private static void DumpCompositeStatesNonAsciiMoves(TextWriter writer, string mid, bool[] visited)
 	{
-		allNextStates.TryGetValue(P_1, out var array);
+		allNextStates.TryGetValue(mid, out var array);
 
-		if (array.Length == 1 || P_2[StateNameForComposite(P_1)])
+		if (array.Length == 1 || visited[StateNameForComposite(mid)])
 		{
 			return;
 		}
@@ -2166,7 +2165,7 @@ public class NfaState
 		int num = 0;
 		NfaState nfaState2 = null;
 		string text = "";
-		int num2 = ((stateBlockTable.ContainsKey(P_1)) ? 1 : 0);
+		int num2 = ((stateBlockTable.ContainsKey(mid)) ? 1 : 0);
 		for (int i = 0; i < array.Length; i++)
 		{
 			NfaState nfaState3 = (NfaState)allStates[array[i]];
@@ -2182,7 +2181,7 @@ public class NfaState
 			}
 			else
 			{
-				P_2[nfaState3.stateName] = true;
+				visited[nfaState3.stateName] = true;
 			}
 			if (nfaState3.stateForCase != null)
 			{
@@ -2196,43 +2195,43 @@ public class NfaState
 		}
 		if (nfaState2 != null)
 		{
-			text = nfaState2.PrintNoBreak(P_0, -1, P_2);
+			text = nfaState2.PrintNoBreak(writer, -1, visited);
 		}
 		switch (num)
 		{
 		case 0:
 			if (nfaState2 != null && string.Equals(text, ""))
 			{
-				P_0.WriteLine("                  break;");
+				writer.WriteLine("                  break;");
 			}
 			return;
 		case 1:
 			if (!string.Equals(text, ""))
 			{
-				P_0.Write(text);
+				writer.Write(text);
 			}
-			P_0.WriteLine(("               case ")+(StateNameForComposite(P_1))+(":")
+			writer.WriteLine(("               case ")+(StateNameForComposite(mid))+(":")
 				);
-			if (!P_2[nfaState.stateName] && num2 == 0 && nfaState.inNextOf > 1)
+			if (!visited[nfaState.stateName] && num2 == 0 && nfaState.inNextOf > 1)
 			{
-				P_0.WriteLine(("               case ")+(nfaState.stateName)+(":")
+				writer.WriteLine(("               case ")+(nfaState.stateName)+(":")
 					);
 			}
-			P_2[nfaState.stateName] = true;
-			nfaState.DumpNonAsciiMove(P_0, P_2);
+			visited[nfaState.stateName] = true;
+			nfaState.DumpNonAsciiMove(writer, visited);
 			return;
 		}
 		
 		if (!string.Equals(text, ""))
 		{
-			P_0.Write(text);
+			writer.Write(text);
 		}
-		int num4 = StateNameForComposite(P_1);
-		P_0.WriteLine(("               case ")+(num4)+(":")
+		int num4 = StateNameForComposite(mid);
+		writer.WriteLine(("               case ")+(num4)+(":")
 			);
 		if (num4 < generatedStates)
 		{
-			P_2[num4] = true;
+			visited[num4] = true;
 		}
 		for (int i = 0; i < array.Length; i++)
 		{
@@ -2241,18 +2240,18 @@ public class NfaState
 			{
 				if (num2 != 0)
 				{
-					P_2[nfaState3.stateName] = true;
+					visited[nfaState3.stateName] = true;
 				}
-				nfaState3.DumpNonAsciiMoveForCompositeState(P_0);
+				nfaState3.DumpNonAsciiMoveForCompositeState(writer);
 			}
 		}
 		if (num2 != 0)
 		{
-			P_0.WriteLine("                  break;");
+			writer.WriteLine("                  break;");
 		}
 		else
 		{
-			P_0.WriteLine("                  break;");
+			writer.WriteLine("                  break;");
 		}
 	}
 

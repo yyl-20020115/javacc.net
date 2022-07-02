@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class HTMLGenerator : TextGenerator, Generator
 {
-    private Dictionary<string, string> id_map = new();
+    private Dictionary<string, string> idmap = new();
     private int id = 1;
 
     public override void Write(string str)
@@ -47,12 +47,10 @@ public class HTMLGenerator : TextGenerator, Generator
 
     protected internal virtual string get_id(string str)
     {
-        if (this.id_map.TryGetValue(str, out var text))
+        if (this.idmap.TryGetValue(str, out var text))
         {
-            int num = id;
-            id = num + 1;
-            text = ("prod" + num);
-            id_map.Add(str, text);
+            text = ("prod" + id++);
+            idmap.Add(str, text);
         }
         return text;
     }
@@ -89,11 +87,11 @@ public class HTMLGenerator : TextGenerator, Generator
                 + ("\"/>")
                 );
         }
-        if (JJDocGlobals.input_file != null)
+        if (JJDocGlobals.InputFile != null)
         {
             WriteLine(
                 ("<TITLE>BNF for ")
-                + (JJDocGlobals.input_file)
+                + (JJDocGlobals.InputFile)
                 + ("</TITLE>")
                 );
         }
@@ -106,7 +104,7 @@ public class HTMLGenerator : TextGenerator, Generator
         WriteLine(
 
             ("<H1 ALIGN=CENTER>BNF for ")
-            + (JJDocGlobals.input_file)
+            + (JJDocGlobals.InputFile)
             + ("</H1>")
             );
     }

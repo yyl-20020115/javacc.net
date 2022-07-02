@@ -2,9 +2,9 @@ namespace JavaCC.JJTree;
 
 public class ASTBNFAction : JJTreeNode
 {
-    private Node GetScopingParent(NodeScope scope)
+    private INode GetScopingParent(NodeScope scope)
     {
-        for (var node = jjtGetParent(); node != null; node = node.jjtGetParent())
+        for (var node = JJTGetParent(); node != null; node = node.JJTGetParent())
         {
             if (node is ASTBNFNodeScope atbs)
             {
@@ -31,10 +31,10 @@ public class ASTBNFAction : JJTreeNode
             JJTreeNode jJTreeNode = this;
             while (true)
             {
-                var node = jJTreeNode.jjtGetParent();
+                var node = jJTreeNode.JJTGetParent();
                 if (node is ASTBNFSequence || node is ASTBNFTryBlock)
                 {
-                    if (jJTreeNode.Ordinal != node.jjtGetNumChildren() - 1)
+                    if (jJTreeNode.Ordinal != node.JJTGetNumChildren() - 1)
                     {
                         num = 0;
                         break;
@@ -55,7 +55,7 @@ public class ASTBNFAction : JJTreeNode
             {
                 JJTreeNode.OpenJJTreeComment(io, null);
                 io.WriteLine();
-                enclosingNodeScope.insertCloseNodeAction(io, GetIndentation(this));
+                enclosingNodeScope.InsertCloseNodeAction(io, GetIndentation(this));
                 JJTreeNode.CloseJJTreeComment(io);
             }
         }

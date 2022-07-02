@@ -319,7 +319,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         {
             try
             {
-                curChar = input_stream.BeginToken();
+                curChar = input_stream.BeginToken;
             }
             catch (IOException)
             {
@@ -344,10 +344,10 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
                     case 0:
                         try
                         {
-                            input_stream.backup(0);
+                            input_stream.Backup(0);
                             while (curChar <= ' ' && (0x100003600L & (1L << (int)curChar)) != 0)
                             {
-                                curChar = input_stream.BeginToken();
+                                curChar = input_stream.BeginToken;
                             }
                         }
                         catch (IOException)
@@ -400,7 +400,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
                             {
                                 if (jjmatchedPos + 1 < num)
                                 {
-                                    input_stream.backup(num - jjmatchedPos - 1);
+                                    input_stream.Backup(num - jjmatchedPos - 1);
                                 }
                                 if ((jjtoToken[jjmatchedKind >> 6] & (1L << jjmatchedKind)) != 0)
                                 {
@@ -452,7 +452,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
                                 jjmatchedKind = int.MaxValue;
                                 try
                                 {
-                                    curChar = input_stream.readChar();
+                                    curChar = input_stream.ReadChar();
                                 }
                                 catch (IOException)
                                 {
@@ -479,7 +479,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
                     IL_03cc:
                         if (num2 == 0)
                         {
-                            input_stream.backup(1);
+                            input_stream.Backup(1);
                             text = ((num > 1) ? input_stream.GetImage() : "");
                         }
                         b = num2;
@@ -491,14 +491,14 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
 
                         throw new TokenMgrError((byte)b != 0, i, i2, i3, str, ch, 0);
                     IL_0346:
-                        num3 = input_stream.getEndLine();
-                        num4 = input_stream.getEndColumn();
+                        num3 = input_stream.EndLine;
+                        num4 = input_stream.EndColumn;
                         text = null;
                         num2 = 0;
                         try
                         {
-                            input_stream.readChar();
-                            input_stream.backup(1);
+                            input_stream.ReadChar();
+                            input_stream.Backup(1);
                         }
                         catch (IOException)
                         {
@@ -1426,7 +1426,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
             }
             try
             {
-                curChar = input_stream.readChar();
+                curChar = input_stream.ReadChar();
             }
             catch (IOException)
             {
@@ -1442,7 +1442,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
     {
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -1630,7 +1630,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         }
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -1747,7 +1747,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         jjmatchedPos = P_0;
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -1777,7 +1777,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         }
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -1908,7 +1908,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         }
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -2026,7 +2026,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         }
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -2127,7 +2127,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         }
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -2208,7 +2208,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         }
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -2279,7 +2279,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         }
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -2350,7 +2350,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         }
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -2405,7 +2405,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         }
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -2446,7 +2446,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         }
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -2487,7 +2487,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         }
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -2522,7 +2522,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         }
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -2555,7 +2555,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         }
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -2824,7 +2824,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
     {
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -2950,7 +2950,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
             }
             try
             {
-                curChar = input_stream.readChar();
+                curChar = input_stream.ReadChar();
             }
             catch (IOException)
             {
@@ -2966,7 +2966,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
     {
         try
         {
-            curChar = input_stream.readChar();
+            curChar = input_stream.ReadChar();
         }
         catch (IOException)
         {
@@ -3004,10 +3004,10 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
     {
         string text = ___003C_003EjjstrLiteralImages[jjmatchedKind];
         string str = ((text != null) ? text : input_stream.GetImage());
-        int num = input_stream.getBeginLine();
-        int beginColumn = input_stream.getBeginColumn();
-        int endLine = input_stream.getEndLine();
-        int endColumn = input_stream.getEndColumn();
+        int num = input_stream.BeginLine;
+        int beginColumn = input_stream.BeginColumn;
+        int endLine = input_stream.EndLine;
+        int endColumn = input_stream.EndColumn;
         Token token = Token.NewToken(jjmatchedKind, str);
         token.BeginLine = num;
         token.endLine = endLine;
@@ -3393,7 +3393,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
                 image.Append(___003C_003EjjstrLiteralImages[130]);
                 P_0.kind = 132;
                 ((Token.GTToken)P_0).realKind = 130;
-                input_stream.backup(2);
+                input_stream.Backup(2);
                 P_0.image = ">";
                 break;
             case 131:
@@ -3404,7 +3404,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
                 image.Append(___003C_003EjjstrLiteralImages[131]);
                 P_0.kind = 132;
                 ((Token.GTToken)P_0).realKind = 131;
-                input_stream.backup(1);
+                input_stream.Backup(1);
                 P_0.image = ">";
                 break;
         }
@@ -3426,7 +3426,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
             lengthOfMatch = num2;
             stringBuilder.Append(javaCharStream.GetSuffix(num + num2));
             restoreBeginLineCol();
-            input_stream.backup(1);
+            input_stream.Backup(1);
         }
     }
 
@@ -3446,7 +3446,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
                 }
                 image.Append(input_stream.GetSuffix(jjimageLen));
                 jjimageLen = 0;
-                input_stream.backup(1);
+                input_stream.Backup(1);
                 break;
             case 22:
                 if (image == null)
@@ -3455,7 +3455,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
                 }
                 image.Append(input_stream.GetSuffix(jjimageLen));
                 jjimageLen = 0;
-                saveBeginLineCol(input_stream.getBeginLine(), input_stream.getBeginColumn());
+                saveBeginLineCol(input_stream.BeginLine, input_stream.BeginColumn);
                 break;
         }
     }
@@ -3464,7 +3464,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
     internal virtual void restoreBeginLineCol()
     {
         depth--;
-        input_stream.adjustBeginLineColumn(beginLine[depth], beginCol[depth]);
+        input_stream.AdjustBeginLineColumn(beginLine[depth], beginCol[depth]);
     }
 
     internal virtual void saveBeginLineCol(int P_0, int P_1)

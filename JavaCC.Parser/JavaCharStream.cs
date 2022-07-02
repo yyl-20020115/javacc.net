@@ -64,7 +64,7 @@ public class JavaCharStream
         ReInit(r, i1, i2, 4096);
     }
 
-    public virtual void adjustBeginLineColumn(int i1, int i2)
+    public virtual void AdjustBeginLineColumn(int i1, int i2)
     {
         int num = tokenBegin;
         int num2 = ((bufpos < tokenBegin) ? (bufsize - tokenBegin + bufpos + 1 + inBuf) : (bufpos - tokenBegin + inBuf + 1));
@@ -136,7 +136,7 @@ public class JavaCharStream
     }
 
 
-    public virtual char readChar()
+    public virtual char ReadChar()
     {
         //Discarded unreachable code: IL_0132
         int num;
@@ -221,7 +221,7 @@ public class JavaCharStream
             IL_0126:
                 try
                 {
-                    backup(num8);
+                    Backup(num8);
                     return '\\';
                 }
                 catch (IOException)
@@ -233,7 +233,7 @@ public class JavaCharStream
             IL_0141:
                 if (num8 > 1)
                 {
-                    backup(num8 - 1);
+                    Backup(num8 - 1);
                 }
                 return '\\';
             }
@@ -254,7 +254,7 @@ public class JavaCharStream
             {
                 return (char)num5;
             }
-            backup(num8 - 1);
+            Backup(num8 - 1);
             return '\\';
         }
         UpdateLineColumn((char)num5);
@@ -285,49 +285,40 @@ public class JavaCharStream
         return result2;
     }
 
-    public virtual int getBeginLine()
-    {
-        return bufline[tokenBegin];
-    }
+    public virtual int BeginLine => bufline[tokenBegin];
 
-    public virtual int getBeginColumn()
-    {
-        return bufcolumn[tokenBegin];
-    }
+    public virtual int BeginColumn => bufcolumn[tokenBegin];
 
-    public virtual int getEndLine()
-    {
-        return bufline[bufpos];
-    }
+    public virtual int EndLine => bufline[bufpos];
 
-    public virtual int getEndColumn()
-    {
-        return bufcolumn[bufpos];
-    }
+    public virtual int EndColumn => bufcolumn[bufpos];
 
 
-    public virtual char BeginToken()
+    public virtual char BeginToken
     {
-        if (inBuf > 0)
+        get
         {
-            inBuf--;
-            int num = bufpos + 1;
-            bufpos = num;
-            if (num == bufsize)
+            if (inBuf > 0)
             {
-                bufpos = 0;
+                inBuf--;
+                int num = bufpos + 1;
+                bufpos = num;
+                if (num == bufsize)
+                {
+                    bufpos = 0;
+                }
+                tokenBegin = bufpos;
+                return buffer[bufpos];
             }
-            tokenBegin = bufpos;
-            return buffer[bufpos];
-        }
-        tokenBegin = 0;
-        bufpos = -1;
-        char result = readChar();
+            tokenBegin = 0;
+            bufpos = -1;
+            char result = ReadChar();
 
-        return result;
+            return result;
+        }
     }
 
-    public virtual void backup(int i)
+    public virtual void Backup(int i)
     {
         inBuf += i;
         int num = bufpos - i;
@@ -383,7 +374,7 @@ public class JavaCharStream
         if (bufpos != 0)
         {
             bufpos--;
-            backup(0);
+            Backup(0);
         }
         else
         {
@@ -537,9 +528,9 @@ public class JavaCharStream
 
 
 
-    internal static int hexval(char P_0)
+    internal static int hexval(char c)
     {
-        switch (P_0)
+        switch (c)
         {
             case '0':
                 return 0;

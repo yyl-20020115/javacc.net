@@ -86,21 +86,21 @@ public class ASTNodeDescriptor : JJTreeNode
     internal virtual string NodeName => Name;
 
 
-    internal virtual string OpenNode(string P_0) => "jjtree.openNodeScope(" + (P_0) + (");");
+    internal virtual string OpenNode(string name) => "jjtree.openNodeScope(" + (name) + (");");
 
 
-    internal virtual string CloseNode(string P_0) => expression switch
+    internal virtual string CloseNode(string name) => expression switch
     {
-        null => "jjtree.closeNodeScope(" + P_0 + ", true);",
+        null => "jjtree.closeNodeScope(" + name + ", true);",
         _ => isGT
-                            ? "jjtree.closeNodeScope(" + P_0 + ", jjtree.nodeArity() >"
+                            ? "jjtree.closeNodeScope(" + name + ", jjtree.nodeArity() >"
                                 + ExpressionText()
                                 + ");"
-                            : "jjtree.closeNodeScope(" + P_0 + ", "
+                            : "jjtree.closeNodeScope(" + name + ", "
                             + ExpressionText()
                             + ");",
     };
 
 
-    internal override string TranslateImage(Token P_0) => WhiteOut(P_0);
+    internal override string TranslateImage(Token token) => WhiteOut(token);
 }

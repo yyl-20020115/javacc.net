@@ -40,12 +40,12 @@ public class OutputFile
         {
         }
 
-        public override void Write(byte[] P_0, int P_1, int P_2)
+        public override void Write(byte[] bytes, int offset, int length)
 		{
 		}
 
 
-		public virtual void Write(byte[] P_0)
+		public virtual void Write(byte[] bytes)
 		{
 		}
 

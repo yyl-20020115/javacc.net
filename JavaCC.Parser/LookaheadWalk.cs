@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public sealed class LookaheadWalk
 {
-    public static bool considerSemanticLA;
-    public static List<MatchInfo> sizeLimitedMatches;
+    public static bool considerSemanticLA =false;
+    public static List<MatchInfo> sizeLimitedMatches = new();
 
     public static List<MatchInfo> GenFirstSet(List<MatchInfo> v, Expansion e)
     {

@@ -17,7 +17,7 @@ public class TextGenerator : Generator
     {
         if (string.Equals(JJDocOptions.OutputFile, ""))
         {
-            if (string.Equals(JJDocGlobals.input_file, "standard input"))
+            if (string.Equals(JJDocGlobals.InputFile, "standard input"))
             {
                 return (Console.Out);
             }
@@ -26,31 +26,31 @@ public class TextGenerator : Generator
             {
                 text = ".txt";
             }
-            int num = JJDocGlobals.input_file.LastIndexOf((char)46);
+            int num = JJDocGlobals.InputFile.LastIndexOf((char)46);
             if (num == -1)
             {
-                JJDocGlobals.output_file = (JJDocGlobals.input_file) + (text);
+                JJDocGlobals.OutputFile = (JJDocGlobals.InputFile) + (text);
             }
             else
             {
-                string @this = JJDocGlobals.input_file.Substring(num);
+                string @this = JJDocGlobals.InputFile.Substring(num);
                 if (string.Equals(@this, text))
                 {
-                    JJDocGlobals.output_file = (JJDocGlobals.input_file) + (text);
+                    JJDocGlobals.OutputFile = (JJDocGlobals.InputFile) + (text);
                 }
                 else
                 {
-                    JJDocGlobals.output_file = (JJDocGlobals.input_file.Substring(0, num)) + text;
+                    JJDocGlobals.OutputFile = (JJDocGlobals.InputFile.Substring(0, num)) + text;
                 }
             }
         }
         else
         {
-            JJDocGlobals.output_file = JJDocOptions.OutputFile;
+            JJDocGlobals.OutputFile = JJDocOptions.OutputFile;
         }
         try
         {
-            writer = new StreamWriter(JJDocGlobals.output_file);
+            writer = new StreamWriter(JJDocGlobals.OutputFile);
         }
         catch (IOException)
         {
@@ -62,7 +62,7 @@ public class TextGenerator : Generator
     IL_00ff:
 
         Error(("JJDoc: can't open output stream on file ")
-            + (JJDocGlobals.output_file)
+            + (JJDocGlobals.OutputFile)
             + (".  Using standard output."));
         writer = (Console.Out);
         goto IL_0148;

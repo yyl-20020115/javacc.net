@@ -17,9 +17,9 @@ public class ASTOptionBinding : JJTreeNode
 
     internal virtual bool IsSuppressed => Suppressed;
 
-    internal virtual void SuppressOption(bool P_0)
+    internal virtual void SuppressOption(bool suppress)
     {
-        int num = ((Suppressed = P_0) ? 1 : 0);
+        int num = ((Suppressed = suppress) ? 1 : 0);
     }
 
     internal override string TranslateImage(Token token) => Suppressed ? WhiteOut(token) : token.Image;

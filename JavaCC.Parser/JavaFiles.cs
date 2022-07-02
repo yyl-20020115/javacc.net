@@ -16,28 +16,28 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
     internal const string tokenMgrErrorVersion = "4.1";
 
 
-    internal static string replaceBackslash(string P_0)
+    internal static string ReplaceBackslash(string name)
     {
         int num = 0;
-        int num2 = P_0.Length;
+        int num2 = name.Length;
         while (num < num2)
         {
             int index = num;
             num++;
-            if ((P_0[index]) == '\\')
+            if ((name[index]) == '\\')
             {
                 break;
             }
         }
         if (num == num2)
         {
-            return P_0;
+            return name;
         }
         var stringBuilder = new StringBuilder();
         for (num = 0; num < num2; num++)
         {
             int c;
-            if ((c = (P_0[num])) == 92)
+            if ((c = (name[num])) == 92)
             {
                 stringBuilder.Append("\\\\");
             }
@@ -55,13 +55,13 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
     }
 
 
-    internal static double getVersion(string P_0)
+    internal static double GetVersion(string name)
     {
         //Discarded unreachable code: IL_006a
-        string text = ("/* ") + (JavaCCGlobals.getIdString("JavaCC", P_0)) + (" Version ")
+        string text = ("/* ") + (JavaCCGlobals.getIdString("JavaCC", name)) + (" Version ")
             ;
 
-        var file = new FileInfo(Path.Combine(Options.OutputDirectory.FullName, replaceBackslash(P_0)));
+        var file = new FileInfo(Path.Combine(Options.OutputDirectory.FullName, ReplaceBackslash(name)));
         if (!file.Exists)
         {
             double.TryParse("4.1", out var r);

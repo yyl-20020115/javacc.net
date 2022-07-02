@@ -1,7 +1,6 @@
 namespace JavaCC.Parser;
 using System.IO;
 using System.Collections.Generic;
-using System.Collections;
 
 
 public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
@@ -355,7 +354,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
     public void CompilationUnit()
     {
-        JavaCCParserInternals.set_initial_cu_token(getToken(1));
+        JavaCCParserInternals.SetInitialCuToken(getToken(1));
         if (jj_2_7(int.MaxValue))
         {
             PackageDeclaration();
@@ -539,7 +538,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     public string StringLiteral()
     {
         Token token = jj_consume_token(90);
-        string result = JavaCCParserInternals.remove_escapes_and_quotes(token, token.image);
+        string result = JavaCCParserInternals.RemoveEscapesAndQuotes(token, token.image);
 
         return result;
     }
@@ -581,7 +580,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         }
         Block(javaCodeProduction.CodeTokens);
         javaCodeProduction.lastToken = getToken(0);
-        JavaCCParserInternals.addproduction(javaCodeProduction);
+        JavaCCParserInternals.AddProduction(javaCodeProduction);
     }
 
 
@@ -666,7 +665,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         }
         jj_la1[15] = jj_gen;
         token2 = (tokenProduction.lastToken = jj_consume_token(94));
-        JavaCCParserInternals.addregexpr(tokenProduction);
+        JavaCCParserInternals.AddRegexpr(tokenProduction);
     }
 
 
@@ -676,7 +675,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         Token t = jj_consume_token(10);
         jj_consume_token(105);
         ClassOrInterfaceBody(b: false, v);
-        JavaCCParserInternals.add_token_manager_decls(t, v);
+        JavaCCParserInternals.AddTokenManagerDecl(t, v);
     }
 
 
@@ -721,8 +720,8 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         expansion_choices(container);
         token2 = (bNFProduction.lastToken = jj_consume_token(94));
         bNFProduction.JumpPatched = jumpPatched;
-        JavaCCParserInternals.production_addexpansion(bNFProduction, (Expansion)container.member);
-        JavaCCParserInternals.addproduction(bNFProduction);
+        JavaCCParserInternals.ProductionAddExpansion(bNFProduction, (Expansion)container.member);
+        JavaCCParserInternals.AddProduction(bNFProduction);
     }
 
 
@@ -1450,7 +1449,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     {
                         jj_la1[23] = jj_gen;
                     }
-                    JavaCCParserInternals.makeTryBlock(t, c, container, vector2, vector3, vector4, v);
+                    JavaCCParserInternals.MakeTryBlock(t, c, container, vector2, vector3, vector4, v);
                     return;
                 }
         }
@@ -1492,7 +1491,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             {
                 regular_expression(c);
                 ((RegularExpression)c.member).lhsTokens = vector;
-                JavaCCParserInternals.add_inline_regexpr((RegularExpression)c.member);
+                JavaCCParserInternals.AddInlineRegexpr((RegularExpression)c.member);
                 if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 99)
                 {
                     jj_consume_token(99);
@@ -2088,13 +2087,13 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         int num = 0;
         Token token = getToken(1);
         string text = StringLiteral();
-        int num2 = JavaCCParserInternals.character_descriptor_assign(getToken(0), text);
+        int num2 = JavaCCParserInternals.CharDescriptorAssign(getToken(0), text);
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 115)
         {
             jj_consume_token(115);
             string str = StringLiteral();
             num = 1;
-            right = JavaCCParserInternals.character_descriptor_assign(getToken(0), str, text);
+            right = JavaCCParserInternals.CharDescriptorAssign(getToken(0), str, text);
         }
         else
         {

@@ -12,13 +12,13 @@ public class NodeScope
     private int ScopeNumber = 0;
 
 
-    internal static NodeScope GetEnclosingNodeScope(Node _node)
+    internal static NodeScope GetEnclosingNodeScope(INode _node)
     {
         if (_node is ASTBNFDeclaration n)
         {
             return n.nodeScope;
         }
-        for (var node = _node.jjtGetParent(); node != null; node = node.jjtGetParent())
+        for (var node = _node.JJTGetParent(); node != null; node = node.JJTGetParent())
         {
             switch (node)
             {
@@ -39,10 +39,10 @@ public class NodeScope
     internal virtual bool IsVoid => nodeDescriptor.IsVoid;
 
 
-    internal virtual void insertCloseNodeAction(IO io, string text)
+    internal virtual void InsertCloseNodeAction(IO io, string text)
     {
         io.WriteLine((text) + ("{"));
-        insertCloseNodeCode(io, (text) + ("  "), false);
+        InsertCloseNodeCode(io, (text) + ("  "), false);
         io.WriteLine((text) + ("}"));
     }
 
@@ -50,12 +50,12 @@ public class NodeScope
     internal virtual string NodeDescriptorText => nodeDescriptor.Descriptor;
 
 
-    internal virtual void insertOpenNodeCode(IO io, string P_1)
+    internal virtual void InsertOpenNodeCode(IO io, string pre)
     {
         string nodeType = nodeDescriptor.NodeType;
         string str = (((JJTreeOptions.NodeClass.Length) <= 0 || JJTreeOptions.Multi) ? nodeType : JJTreeOptions.NodeClass);
-        NodeFiles.ensure(io, nodeType);
-        io.Write((P_1) + (str) + (" ")
+        NodeFiles.Ensure(io, nodeType);
+        io.Write((pre) + (str) + (" ")
             + (NodeVar)
             + (" = ")
             );
@@ -89,22 +89,22 @@ public class NodeScope
                 + (");")
                 );
         }
-        if (usesCloseNodeVar())
+        if (UsesCloseNodeVar)
         {
-            io.WriteLine((P_1) + ("boolean ") + (ClosedVar)
+            io.WriteLine((pre) + ("boolean ") + (ClosedVar)
                 + (" = true;")
                 );
         }
-        io.WriteLine((P_1) + (nodeDescriptor.OpenNode(NodeVar)));
+        io.WriteLine((pre) + (nodeDescriptor.OpenNode(NodeVar)));
         if (JJTreeOptions.NodeScopeHook)
         {
-            io.WriteLine((P_1) + ("jjtreeOpenNodeScope(") + (NodeVar)
+            io.WriteLine((pre) + ("jjtreeOpenNodeScope(") + (NodeVar)
                 + (");")
                 );
         }
         if (JJTreeOptions.TrackTokens)
         {
-            io.WriteLine((P_1) + (NodeVar) + (".jjtSetFirstToken(getToken(1));")
+            io.WriteLine((pre) + (NodeVar) + (".jjtSetFirstToken(getToken(1));")
                 );
         }
     }
@@ -112,35 +112,35 @@ public class NodeScope
     internal virtual ASTNodeDescriptor NodeDescriptor => nodeDescriptor;
 
 
-    internal virtual void tryExpansionUnit(IO P_0, string P_1, JJTreeNode P_2)
+    internal virtual void TryExpansionUnit(IO io, string pre, JJTreeNode node)
     {
-        P_0.WriteLine((P_1) + ("try {"));
-        JJTreeNode.CloseJJTreeComment(P_0);
-        P_2.Write(P_0);
-        JJTreeNode.OpenJJTreeComment(P_0, null);
-        P_0.WriteLine();
+        io.WriteLine((pre) + ("try {"));
+        JJTreeNode.CloseJJTreeComment(io);
+        node.Write(io);
+        JJTreeNode.OpenJJTreeComment(io, null);
+        io.WriteLine();
         var dict = new Dictionary<string, string>();
-        findThrown(dict, P_2);
-        insertCatchBlocks(P_0, dict.Keys, P_1);
-        P_0.WriteLine((P_1) + ("} finally {"));
-        if (usesCloseNodeVar())
+        FindThrown(dict, node);
+        InsertCatchBlocks(io, dict.Keys, pre);
+        io.WriteLine((pre) + ("} finally {"));
+        if (UsesCloseNodeVar)
         {
-            P_0.WriteLine((P_1) + ("  if (") + (ClosedVar)
+            io.WriteLine((pre) + ("  if (") + (ClosedVar)
                 + (") {")
                 );
-            insertCloseNodeCode(P_0, (P_1) + ("    "), true);
-            P_0.WriteLine((P_1) + ("  }"));
+            InsertCloseNodeCode(io, (pre) + ("    "), true);
+            io.WriteLine((pre) + ("  }"));
         }
-        P_0.WriteLine((P_1) + ("}"));
-        JJTreeNode.CloseJJTreeComment(P_0);
+        io.WriteLine((pre) + ("}"));
+        JJTreeNode.CloseJJTreeComment(io);
     }
 
 
-    internal virtual void insertOpenNodeAction(IO P_0, string P_1)
+    internal virtual void InsertOpenNodeAction(IO io, string pre)
     {
-        P_0.WriteLine((P_1) + ("{"));
-        insertOpenNodeCode(P_0, (P_1) + ("  "));
-        P_0.WriteLine((P_1) + ("}"));
+        io.WriteLine((pre) + ("{"));
+        InsertOpenNodeCode(io, (pre) + ("  "));
+        io.WriteLine((pre) + ("}"));
     }
 
 
@@ -155,14 +155,14 @@ public class NodeScope
         JJTreeNode.OpenJJTreeComment(io, null);
         io.WriteLine();
 
-        insertCatchBlocks(io, Production.ThrowsList, text);
+        InsertCatchBlocks(io, Production.ThrowsList, text);
         io.WriteLine((text) + ("} finally {"));
-        if (usesCloseNodeVar())
+        if (UsesCloseNodeVar)
         {
             io.WriteLine((text) + ("  if (") + (ClosedVar)
                 + (") {")
                 );
-            insertCloseNodeCode(io, (text) + ("    "), true);
+            InsertCloseNodeCode(io, (text) + ("    "), true);
             io.WriteLine((text) + ("  }"));
         }
         io.WriteLine((text) + ("}"));
@@ -187,92 +187,89 @@ public class NodeScope
             nodeDescriptor = astn;
         }
         ScopeNumber = Production.GetNodeScopeNumber(this);
-        NodeVar = constructVariable("n");
-        ClosedVar = constructVariable("c");
-        ExceptionVar = constructVariable("e");
+        NodeVar = ConstructVariable("n");
+        ClosedVar = ConstructVariable("c");
+        ExceptionVar = ConstructVariable("e");
     }
 
 
-    private string constructVariable(string P_0)
+    private string ConstructVariable(string name)
     {
         string @this = ("000") + (ScopeNumber);
-        return ("jjt") + (P_0) + (@this.Substring(@this.Length - 3, @this.Length));
+        return ("jjt") + (name) + (@this.Substring(@this.Length - 3, @this.Length));
     }
 
-    internal virtual bool usesCloseNodeVar()
-    {
-        return true;
-    }
+    internal virtual bool UsesCloseNodeVar => true;
 
 
-    internal virtual void insertCloseNodeCode(IO P_0, string P_1, bool P_2)
+    internal virtual void InsertCloseNodeCode(IO io, string pre, bool assigned)
     {
-        P_0.WriteLine((P_1) + (nodeDescriptor.CloseNode(NodeVar)));
-        if (usesCloseNodeVar() && !P_2)
+        io.WriteLine((pre) + (nodeDescriptor.CloseNode(NodeVar)));
+        if (UsesCloseNodeVar&& !assigned)
         {
-            P_0.WriteLine((P_1) + (ClosedVar) + (" = false;")
+            io.WriteLine((pre) + (ClosedVar) + (" = false;")
                 );
         }
         if (JJTreeOptions.NodeScopeHook)
         {
-            P_0.WriteLine((P_1) + ("jjtreeCloseNodeScope(") + (NodeVar)
+            io.WriteLine((pre) + ("jjtreeCloseNodeScope(") + (NodeVar)
                 + (");")
                 );
         }
         if (JJTreeOptions.TrackTokens)
         {
-            P_0.WriteLine((P_1) + (NodeVar) + (".jjtSetLastToken(getToken(0));")
+            io.WriteLine((pre) + (NodeVar) + (".jjtSetLastToken(getToken(0));")
                 );
         }
     }
 
 
-    private void insertCatchBlocks(IO io, IEnumerable<string> P_1, string P_2)
+    private void InsertCatchBlocks(IO io, IEnumerable<string> texts, string pre)
     {
-        var em = P_1.GetEnumerator();
+        var em = texts.GetEnumerator();
         if (em.MoveNext())
         {
-            io.WriteLine((P_2) + ("} catch (Throwable ") + (ExceptionVar)
+            io.WriteLine((pre) + ("} catch (Throwable ") + (ExceptionVar)
                 + (") {")
                 );
-            if (usesCloseNodeVar())
+            if (UsesCloseNodeVar)
             {
-                io.WriteLine((P_2) + ("  if (") + (ClosedVar)
+                io.WriteLine((pre) + ("  if (") + (ClosedVar)
                     + (") {")
                     );
-                io.WriteLine((P_2) + ("    jjtree.clearNodeScope(") + (NodeVar)
+                io.WriteLine((pre) + ("    jjtree.clearNodeScope(") + (NodeVar)
                     + (");")
                     );
-                io.WriteLine((P_2) + ("    ") + (ClosedVar)
+                io.WriteLine((pre) + ("    ") + (ClosedVar)
                     + (" = false;")
                     );
-                io.WriteLine((P_2) + ("  } else {"));
-                io.WriteLine((P_2) + ("    jjtree.popNode();"));
-                io.WriteLine((P_2) + ("  }"));
+                io.WriteLine((pre) + ("  } else {"));
+                io.WriteLine((pre) + ("    jjtree.popNode();"));
+                io.WriteLine((pre) + ("  }"));
             }
             while (em.MoveNext())
             {
                 string str = em.Current;
-                io.WriteLine((P_2) + ("  if (") + (ExceptionVar)
+                io.WriteLine((pre) + ("  if (") + (ExceptionVar)
                     + (" instanceof ")
                     + (str)
                     + (") {")
                     );
-                io.WriteLine((P_2) + ("    throw (") + (str)
+                io.WriteLine((pre) + ("    throw (") + (str)
                     + (")")
                     + (ExceptionVar)
                     + (";")
                     );
-                io.WriteLine((P_2) + ("  }"));
+                io.WriteLine((pre) + ("  }"));
             }
-            io.WriteLine((P_2) + ("  throw ") + (ExceptionVar)
+            io.WriteLine((pre) + ("  throw ") + (ExceptionVar)
                 + (";")
                 );
         }
     }
 
 
-    private static void findThrown(Dictionary<string, string> dict, JJTreeNode node)
+    private static void FindThrown(Dictionary<string, string> dict, JJTreeNode node)
     {
         if (node is ASTBNFNonTerminal)
         {
@@ -286,16 +283,16 @@ public class NodeScope
                 }
             }
         }
-        for (int i = 0; i < node.jjtGetNumChildren(); i++)
+        for (int i = 0; i < node.JJTGetNumChildren(); i++)
         {
-            JJTreeNode jJTreeNode = (JJTreeNode)node.jjtGetChild(i);
-            findThrown(dict, jJTreeNode);
+            JJTreeNode jJTreeNode = (JJTreeNode)node.JJTGetChild(i);
+            FindThrown(dict, jJTreeNode);
         }
     }
 
 
-    internal virtual void insertOpenNodeDeclaration(IO P_0, string P_1)
+    internal virtual void InsertOpenNodeDeclaration(IO io, string pre)
     {
-        insertOpenNodeCode(P_0, P_1);
+        InsertOpenNodeCode(io, pre);
     }
 }

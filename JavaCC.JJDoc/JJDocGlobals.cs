@@ -4,62 +4,60 @@ using JavaCC.Parser;
 
 public class JJDocGlobals : JavaCCGlobals
 {
-    public static string input_file;
-    public static string output_file;
-    public static Generator generator;
+    public static string InputFile;
+    public static string OutputFile;
+    protected static Generator generator;
 
-    public static Generator GetGenerator()
+    public static Generator Generator
     {
-        if (generator == null)
+        get
         {
-            if (JJDocOptions.Text)
+            if (generator == null)
             {
-                generator = new TextGenerator();
+                if (JJDocOptions.Text)
+                {
+                    generator = new TextGenerator();
+                }
+                else
+                {
+                    generator = new HTMLGenerator();
+                }
             }
-            else
+            else if (JJDocOptions.Text)
+            {
+                if (generator is HTMLGenerator)
+                {
+                    generator = new TextGenerator();
+                }
+            }
+            else if (generator is TextGenerator)
             {
                 generator = new HTMLGenerator();
             }
+            return generator;
         }
-        else if (JJDocOptions.Text)
-        {
-            if (generator is HTMLGenerator)
-            {
-                generator = new TextGenerator();
-            }
-        }
-        else if (generator is TextGenerator)
-        {
-            generator = new HTMLGenerator();
-        }
-        return generator;
-    }
 
+        set => generator = value;
+    }
 
     public JJDocGlobals()
     {
     }
 
-    public static void setGenerator(Generator g)
+    public static void Debug(string str)
     {
-        generator = g;
+        Generator.Debug(str);
     }
 
 
-    public static void debug(string str)
+    public static void Info(string str)
     {
-        GetGenerator().Debug(str);
+        Generator.Info(str);
     }
 
 
-    public static void info(string str)
+    public static void Error(string str)
     {
-        GetGenerator().Info(str);
-    }
-
-
-    public static void error(string str)
-    {
-        GetGenerator().Error(str);
+        Generator.Error(str);
     }
 }

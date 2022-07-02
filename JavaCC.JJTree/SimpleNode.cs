@@ -1,10 +1,10 @@
 namespace JavaCC.JJTree;
 using System;
 
-public class SimpleNode : Node
+public class SimpleNode : INode
 {
-    protected internal Node parent;
-    protected internal Node[] children = Array.Empty<Node>();
+    protected internal INode parent;
+    protected internal INode[] children = Array.Empty<INode>();
     protected internal int id = 0;
     protected internal object value = new();
     protected internal JJTreeParser parser;
@@ -35,38 +35,38 @@ public class SimpleNode : Node
         parser = jjtp;
     }
 
-    public virtual void jjtOpen()
+    public virtual void JJTOpen()
     {
     }
 
-    public virtual void jjtClose()
+    public virtual void JJTClose()
     {
     }
 
-    public virtual void jjtSetParent(Node n) => parent = n;
+    public virtual void JJTSetParent(INode n) => parent = n;
 
-    public virtual Node jjtGetParent() => parent;
+    public virtual INode JJTGetParent() => parent;
 
-    public virtual void jjtAddChild(Node n, int i)
+    public virtual void JJTAddChild(INode n, int i)
     {
         if (children == null)
         {
-            children = new Node[i + 1];
+            children = new INode[i + 1];
         }
         else if (i >= children.Length)
         {
-            Node[] dest = new Node[i + 1];
+            INode[] dest = new INode[i + 1];
             Array.Copy(children, 0, dest, 0, children.Length);
             children = dest;
         }
         children[i] = n;
     }
 
-    public virtual Node jjtGetChild(int i) => children[i];
+    public virtual INode JJTGetChild(int i) => children[i];
 
-    public virtual int jjtGetNumChildren() => ((children != null) ? children.Length : 0);
+    public virtual int JJTGetNumChildren() => ((children != null) ? children.Length : 0);
 
-    public virtual void jjtSetValue(object obj) => value = obj;
+    public virtual void JJTSetValue(object obj) => value = obj;
 
-    public virtual object jjtGetValue() => value;
+    public virtual object JJTGetValue() => value;
 }
