@@ -158,8 +158,7 @@ public class OutputFile
 		}
 		return pw;
 	IL_0025:
-		NoSuchAlgorithmException cause = ex;
-		throw new System.Exception((IOException)Throwable.instancehelper_initCause(new IOException("No MD5 implementation"), cause));
+		throw (new IOException("No MD5 implementation"));
 	}
 
 
@@ -184,7 +183,7 @@ public class OutputFile
 		NoSuchAlgorithmException ex;
 		if (f.Exists)
 		{
-			BufferedReader bufferedReader = new BufferedReader(new StreamReader(f));
+			var bufferedReader = (new StreamReader(f.FullName));
 			MessageDigest instance;
 			try
 			{
@@ -213,7 +212,7 @@ public class OutputFile
 					//__003Cref_003E = (charSequence.___003Cref_003E = " (do not edit this line) */");
 					CharSequence target2 = charSequence;
 					//__003Cref_003E = (charSequence.___003Cref_003E = obj);
-					text = String.instancehelper_replace(@this, target2, charSequence);
+					text = @this.Replace( target2, charSequence);
 				}
 				else
 				{
@@ -236,7 +235,7 @@ public class OutputFile
 			}
 			else
 			{
-				Console.WriteLine(("File \"")+(f.Names)+("\" is being rebuilt.")
+				Console.WriteLine(("File \"")+(f.Name)+("\" is being rebuilt.")
 					);
 				needToWrite = true;
 			}
@@ -280,11 +279,11 @@ public class OutputFile
 		{
 			try
 			{
-				BufferedReader bufferedReader = new BufferedReader(new StreamReader(info));
+				var bufferedReader = (new StreamReader(info.FullName));
 				string @this;
 				while ((@this = bufferedReader.ReadLine()) != null)
 				{
-					if (String.instancehelper_startsWith(@this, text))
+					if (@this.StartsWith(text))
 					{
 						string text2 = String.instancehelper_replaceAll(String.instancehelper_replaceFirst(text, ".* Version ", ""), " \\*/", "");
 						if ((object)text2 != name)
@@ -324,14 +323,14 @@ public class OutputFile
 			{
 				var bufferedReader = new StreamReader(P_0.FullName);
 				string @this;
-				CharSequence s = default(CharSequence);
+				var s = "";
 				while ((@this = bufferedReader.ReadLine()) != null)
 				{
-					if (String.instancehelper_startsWith(@this, "/* JavaCCOptions:"))
+					if (@this.StartsWith( "/* JavaCCOptions:"))
 					{
 						string optionsString = Options.getOptionsString(text);
 						//object obj = (s.___003Cref_003E = optionsString);
-						if (!String.instancehelper_contains(@this, s))
+						if (!(@this.Contains(s)))
 						{
 							JavaCCErrors.Warning((P_0.Name)+(": Generated using incompatible options. Please rename or delete this file so")+(" that a new one can be generated for you.")
 								);
@@ -362,8 +361,8 @@ public class OutputFile
 
 	private string getMD5sum()
 	{
-		pw.flush();
-		byte[] array = dos.getMessageDigest().digest();
+		pw.Flush();
+		byte[] array = dos.GetMessageDigest().digest();
 		string result = toHexString(array);
 
 		return result;

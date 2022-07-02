@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,16 +5,13 @@ namespace org.javacc.parser;
 
 public class Lookahead : Expansion
 {
-	public ArrayList action_tokens;
-	public int amount;
+	public List<Token> action_tokens = new();
+	public int amount = int.MaxValue;
 	public Expansion la_expansion;
-	public bool isExplicit;
-
+	public bool isExplicit =false;
 		
 	public Lookahead()
 	{
-		action_tokens = new ArrayList();
-		amount = int.MaxValue;
 	}
 
 	

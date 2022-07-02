@@ -7,11 +7,11 @@ namespace org.javacc.parser;
 
 public class JavaCCGlobals 
 {
-	protected internal const string toolName = "JavaCC";
+	protected internal const string ToolName = "JavaCC";
 
-	public static string fileName = "";
+	public static string FileName = "";
 
-	public static string origFileName = "";
+	public static string OrigFileName = "";
 
 	public static bool jjtreeGenerated = false;
 
@@ -162,7 +162,7 @@ public class JavaCCGlobals
 				fileReader.Close();
 				return result;
 			}
-			catch (System.Exception x2)
+			catch (System.Exception )
 			{
 			}
 			
@@ -188,7 +188,7 @@ public class JavaCCGlobals
 				{
 					fileReader.Close();
 				}
-				catch (System.Exception x3)
+				catch (System.Exception )
 				{
 					goto IL_0100;
 				}
@@ -698,8 +698,8 @@ public class JavaCCGlobals
 
     public static void ReInit()
 	{
-		fileName = null;
-		origFileName = null;
+		FileName = null;
+		OrigFileName = null;
 		jjtreeGenerated = false;
 		toolNames = null;
 		cu_name = null;

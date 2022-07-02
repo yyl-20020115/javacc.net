@@ -15,7 +15,7 @@ public class TokenProduction
 	public int Column = 0;
 	public string[] LexStates = Array.Empty<string>();
 	public int Kind = 0;
-	public List<RegExprSpec> respecs = new();
+	public List<RegExprSpec> Respecs = new();
 	public bool isExplicit = true;
 	public bool ignoreCase = false;
 	public Token firstToken;

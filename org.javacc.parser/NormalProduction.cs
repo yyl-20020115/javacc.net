@@ -21,13 +21,13 @@ public class NormalProduction :Expansion
 
 	public List<Token> parameter_list_tokens = new();
 
-	public List<Token> ThrowsList = new();
+	public List<List<Token>> ThrowsList = new();
 
 	public Expansion Expansion;
 
 	internal bool emptyPossible;
 
-	internal NormalProduction[] leftExpansions;
+	internal NormalProduction[] leftExpansions =Array.Empty<NormalProduction>();
 
 	internal int leIndex;
 

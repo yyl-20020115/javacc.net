@@ -38,7 +38,7 @@ public class JJDoc : JJDocGlobals
 					text +=(" [IGNORE_CASE]");
 				}
 				text +=(" : {\n");
-				foreach(var regExprSpec in tokenProduction.respecs)
+				foreach(var regExprSpec in tokenProduction.Respecs)
 				{
 					text +=(emitRE(regExprSpec.rexp));
 					if (regExprSpec.nsTok != null)

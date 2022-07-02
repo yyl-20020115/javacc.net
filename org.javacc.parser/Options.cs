@@ -113,17 +113,15 @@ public class Options
 	internal static Type class_0024(string P_0)
 	{
 		//Discarded unreachable code: IL_000d
-		java.lang.ClassNotFoundException ex;
+		
 		try
 		{
-			return Class.forName(P_0, Options.___003CGetCallerID_003E());
+			return Type.GetType(P_0);
 		}
-		catch (java.lang.ClassNotFoundException x)
+		catch (Exception x)
 		{
-			ex = ByteCodeHelper.MapException<java.lang.ClassNotFoundException>(x, ByteCodeHelper.MapFlags.NoRemapping);
 		}
-		java.lang.ClassNotFoundException cause = ex;
-		throw new System.Exception(Throwable.instancehelper_initCause(new java.lang.NoClassDefFoundError(), cause));
+		throw new System.Exception("Type Not Found");
 	}
 
 	
@@ -145,13 +143,11 @@ public class Options
     public static bool DebugParser => BooleanValue("DEBUG_PARSER");
 
 
-    protected internal static int IntValue(string str)
-	{
-		return  ((int)OptionValues.get(str));
-	}
+    protected internal static int IntValue(string str) 
+		=> OptionValues.TryGetValue(str, out var v) && v is int i ? i : 0;// ((int)OptionValues.get(str));
 
-	
-	protected internal static bool BooleanValue(string str)
+
+    protected internal static bool BooleanValue(string str)
 	{
 		return (OptionValues.get(str)).booleanValue();
 	}
@@ -206,7 +202,10 @@ public class Options
 			string text = strarr[i];
 			stringBuilder.Append(text);
 			stringBuilder.Append('=');
-			stringBuilder.Append(OptionValues.get(text));
+			if(OptionValues.TryGetValue(text, out var val))
+            {
+				stringBuilder.Append(val);
+			}
 			if (i != (nint)strarr.LongLength - 1)
 			{
 				stringBuilder.Append(',');

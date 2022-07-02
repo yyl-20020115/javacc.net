@@ -61,7 +61,7 @@ public class NfaState
 
 	internal NfaState stateForCase;
 
-	internal List<Node> epsilonMoves;
+	internal List<NfaState> epsilonMoves;
 
 	internal string epsilonMovesString;
 
@@ -1168,7 +1168,7 @@ public class NfaState
 	}
 
 	
-	private static bool EqualLoByteVectors(ArrayList P_0, ArrayList P_1)
+	private static bool EqualLoByteVectors(List<int> P_0, List<int> P_1)
 	{
 		if (P_0 == null || P_1 == null)
 		{

@@ -2,6 +2,7 @@ using javacc.net;
 using System;
 using System.Collections;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace org.javacc.parser;
@@ -100,13 +101,13 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		try
 		{
 			
-			FileInfo file = new FileInfo(
+			var file = new FileInfo(
 				Path.Combine(Options.OutputDirectory.FullName, tokMgrClassName)+(".java"));
 		
 			ostr = new StreamWriter(file.FullName);
-			ArrayList vector = (ArrayList)JavaCCGlobals.toolNames.Clone();
+			var vector = JavaCCGlobals.toolNames.ToList();
 			vector.Add("JavaCC");
-			ostr.WriteLine(("/* ")+(JavaCCGlobals.getIdString(vector, (tokMgrClassName)+(".java")))+(" */")
+			ostr.WriteLine(("/* ")+(JavaCCGlobals.GetIdStringList(vector, (tokMgrClassName)+(".java")))+(" */")
 				);
 			int num = 0;
 			int i = 1;
@@ -208,19 +209,18 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 	
 	internal static void BuildLexStatesTable()
 	{
-		Enumeration enumeration = JavaCCGlobals.rexprlist.elements();
 		string[] array = new string[JavaCCGlobals.lexstate_I2S.Count];
-		while (enumeration.hasMoreElements())
+		foreach(var reugraph in all)
 		{
 			TokenProduction tokenProduction = (TokenProduction)enumeration.nextElement();
-			ArrayList respecs = tokenProduction.respecs;
+			var respecs = tokenProduction.Respecs;
 			for (int i = 0; i < (nint)tokenProduction.LexStates.LongLength; i++)
 			{
 				ArrayList vector;
 				if ((vector = (ArrayList)allTpsForState.get(tokenProduction.LexStates[i])) == null)
 				{
 					array[maxLexStates++] = tokenProduction.LexStates[i];
-					allTpsForState.Add(tokenProduction.LexStates[i], vector = new ArrayList());
+					allTpsForState.Add(tokenProduction.LexStates[i], vector = new ());
 				}
 				vector.Add(tokenProduction);
 			}
@@ -648,7 +648,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				ostr.WriteLine("   endColumn = input_stream.getEndColumn();");
 			}
 		}
-		if (String.instancehelper_length(Options.TokenFactory) > 0)
+		if ((Options.TokenFactory.le) > 0)
 		{
 			ostr.WriteLine(("   t = ")+(Options.TokenFactory)+(".newToken(jjmatchedKind, tokenImage);")
 				);
@@ -1123,7 +1123,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			long num2 = 1L;
 			int num3 = i;
 			Action action;
-			if ((num & (num2 << ((64 != -1) ? (num3 % 64) : 0))) == 0 || (((action = actions[i]) == null || action.action_tokens == null || action.action_tokens.Count == 0) && !canLoop[lexStates[i]]))
+			if ((num & (num2 << ((64 != -1) ? (num3 % 64) : 0))) == 0 || (((action = actions[i]) == null || action.ActionTokens == null || action.ActionTokens.Count == 0) && !canLoop[lexStates[i]]))
 			{
 				continue;
 			}
@@ -1148,7 +1148,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					);
 				ostr.WriteLine("         }");
 			}
-			if ((action = actions[i]) != null && action.action_tokens.Count != 0)
+			if ((action = actions[i]) != null && action.ActionTokens.Count != 0)
 			{
 				ostr.WriteLine("         if (image == null)");
 				ostr.WriteLine(("            image = new ")+(Options.StringBufOrBuild)+("();")
@@ -1169,11 +1169,11 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				{
 					ostr.WriteLine("(input_stream.GetSuffix(jjimageLen + (lengthOfMatch = jjmatchedPos + 1)));");
 				}
-				JavaCCGlobals.PrintTokenSetup((Token)action.action_tokens[0]);
+				JavaCCGlobals.PrintTokenSetup((Token)action.ActionTokens[0]);
 				JavaCCGlobals.ccol = 1;
-				for (int j = 0; j < action.action_tokens.Count; j++)
+				for (int j = 0; j < action.ActionTokens.Count; j++)
 				{
-					JavaCCGlobals.PrintToken((Token)action.action_tokens[j], ostr);
+					JavaCCGlobals.PrintToken((Token)action.ActionTokens[j], ostr);
 				}
 				ostr.WriteLine("");
 			}
@@ -1199,7 +1199,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			long num2 = 1L;
 			int num3 = i;
 			Action action;
-			if ((num & (num2 << ((64 != -1) ? (num3 % 64) : 0))) == 0 || (((action = actions[i]) == null || action.action_tokens == null || action.action_tokens.Count == 0) && !canLoop[lexStates[i]]))
+			if ((num & (num2 << ((64 != -1) ? (num3 % 64) : 0))) == 0 || (((action = actions[i]) == null || action.ActionTokens == null || action.ActionTokens.Count == 0) && !canLoop[lexStates[i]]))
 			{
 				continue;
 			}
@@ -1224,7 +1224,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					);
 				ostr.WriteLine("         }");
 			}
-			if ((action = actions[i]) != null && action.action_tokens.Count != 0)
+			if ((action = actions[i]) != null && action.ActionTokens.Count != 0)
 			{
 				ostr.WriteLine("         if (image == null)");
 				ostr.WriteLine(("            image = new ")+(Options.StringBufOrBuild)+("();")
@@ -1244,11 +1244,11 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					ostr.WriteLine("(input_stream.GetSuffix(jjimageLen));");
 				}
 				ostr.WriteLine("         jjimageLen = 0;");
-				JavaCCGlobals.PrintTokenSetup((Token)action.action_tokens[0]);
+				JavaCCGlobals.PrintTokenSetup((Token)action.ActionTokens[0]);
 				JavaCCGlobals.ccol = 1;
-				for (int j = 0; j < action.action_tokens.Count; j++)
+				for (int j = 0; j < action.ActionTokens.Count; j++)
 				{
-					JavaCCGlobals.PrintToken((Token)action.action_tokens[j], ostr);
+					JavaCCGlobals.PrintToken((Token)action.ActionTokens[j], ostr);
 				}
 				ostr.WriteLine("");
 			}
@@ -1273,7 +1273,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			long num2 = 1L;
 			int num3 = i;
 			Action action;
-			if ((num & (num2 << ((64 != -1) ? (num3 % 64) : 0))) == 0 || (((action = actions[i]) == null || action.action_tokens == null || action.action_tokens.Count == 0) && !canLoop[lexStates[i]]))
+			if ((num & (num2 << ((64 != -1) ? (num3 % 64) : 0))) == 0 || (((action = actions[i]) == null || action.ActionTokens == null || action.ActionTokens.Count == 0) && !canLoop[lexStates[i]]))
 			{
 				continue;
 			}
@@ -1298,7 +1298,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					);
 				ostr.WriteLine("         }");
 			}
-			if ((action = actions[i]) != null && action.action_tokens.Count != 0)
+			if ((action = actions[i]) != null && action.ActionTokens.Count != 0)
 			{
 				if (i == 0)
 				{
@@ -1326,11 +1326,11 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 						ostr.WriteLine("(input_stream.GetSuffix(jjimageLen + (lengthOfMatch = jjmatchedPos + 1)));");
 					}
 				}
-				JavaCCGlobals.PrintTokenSetup((Token)action.action_tokens[0]);
+				JavaCCGlobals.PrintTokenSetup((Token)action.ActionTokens[0]);
 				JavaCCGlobals.ccol = 1;
-				for (int j = 0; j < action.action_tokens.Count; j++)
+				for (int j = 0; j < action.ActionTokens.Count; j++)
 				{
-					JavaCCGlobals.PrintToken((Token)action.action_tokens[j], ostr);
+					JavaCCGlobals.PrintToken((Token)action.ActionTokens[j], ostr);
 				}
 				ostr.WriteLine("");
 			}
@@ -1380,7 +1380,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		tokMgrClassName = (JavaCCGlobals.cu_name)+("TokenManager");
 		PrintClassHead();
 		BuildLexStatesTable();
-		Enumeration enumeration = allTpsForState.keys();
+		var enumeration = allTpsForState.keys();
 		_ = 0;
 		while (enumeration.hasMoreElements())
 		{
@@ -1404,7 +1404,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				TokenProduction tokenProduction = (TokenProduction)vector2[i];
 				int kind = tokenProduction.Kind;
 				int num2 = (tokenProduction.ignoreCase ? 1 : 0);
-				var respecs = tokenProduction.respecs;
+				var respecs = tokenProduction.Respecs;
 				if (i == 0)
 				{
 					num = num2;
@@ -1458,7 +1458,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					{
 						newLexState[curRE.ordinal] = regExprSpec.nextState;
 					}
-					if (regExprSpec.act != null && regExprSpec.act.action_tokens != null && regExprSpec.act.action_tokens.Count > 0)
+					if (regExprSpec.act != null && regExprSpec.act.ActionTokens != null && regExprSpec.act.ActionTokens.Count > 0)
 					{
 						actions[curRE.ordinal] = regExprSpec.act;
 					}

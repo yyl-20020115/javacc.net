@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace org.javacc.parser;
@@ -75,7 +76,7 @@ public class RStringLiteral : RegularExpression
 		for (int j = 0; j < num; j++)
 		{
 			int num2;
-			string key = ((!Options.IgnoreCase) ? ("")+((char)(num2 = image[j])) : java.lang.String.instancehelper_toLowerCase(("")+((char)(num2 = image[j]))));
+			string key = ((!Options.IgnoreCase) ? ("")+((char)(num2 = image[j])) : (("")+((char)(num2 = image[j]))).ToLower());
 			if (!NfaState.unicodeWarningGiven && num2 > 255 && !Options.JavaUnicodeEscape && !Options.UserCharStream)
 			{
 				NfaState.unicodeWarningGiven = true;
@@ -179,7 +180,7 @@ public class RStringLiteral : RegularExpression
 			{
 				if (j != i && LexGen.lexStates[j] == LexGen.lexStateIndex && allImages[j] != null)
 				{
-					if (java.lang.String.instancehelper_indexOf(allImages[j], text) == 0)
+					if ((allImages[j].IndexOf(text)) == 0)
 					{
 						subString[i] = true;
 						subStringAtPos[text.Length - 1] = true;
@@ -222,7 +223,7 @@ public class RStringLiteral : RegularExpression
 			}
 			try
 			{
-				if ((vector2 = (ArrayList)P_1.epsilonMoves.Clone()) == null || vector2.Count == 0)
+				if ((vector2 = P_1.epsilonMoves.ToList()) == null || vector2.Count == 0)
 				{
 					DumpNfaStartStatesCode(statesForPos, P_0);
 					return;
@@ -273,7 +274,7 @@ public class RStringLiteral : RegularExpression
 					{
 						num6 = LexGen.canMatchAnyChar[LexGen.lexStateIndex];
 					}
-					if (GetStrKind(java.lang.String.instancehelper_substring(text2, 0, j + 1)) < num6)
+					if (GetStrKind(text2.Substring( 0, j + 1)) < num6)
 					{
 						num6 = (intermediateKinds[i][j] = int.MaxValue);
 						i2 = 0;
@@ -1046,7 +1047,7 @@ public class RStringLiteral : RegularExpression
 					long num13 = LexGen.toMore[i / 64];
 					long num14 = 1L;
 					int num15 = i;
-					if ((num13 & (num14 << ((64 != -1) ? (num15 % 64) : 0))) == 0 && !LexGen.canReachOnMore[LexGen.lexStates[i]] && ((!Options.IgnoreCase && !LexGen.ignoreCase[i]) || (string.Equals(@this, java.lang.String.instancehelper_toLowerCase(@this)) && string.Equals(@this, java.lang.String.instancehelper_toUpperCase(@this)))))
+					if ((num13 & (num14 << ((64 != -1) ? (num15 % 64) : 0))) == 0 && !LexGen.canReachOnMore[LexGen.lexStates[i]] && ((!Options.IgnoreCase && !LexGen.ignoreCase[i]) || (string.Equals(@this, (@this).ToLower()) && string.Equals(@this, (@this.ToUpper())))))
 					{
 						string str = "\"";
 						for (int j = 0; j < @this.Length; j++)

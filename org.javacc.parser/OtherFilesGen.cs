@@ -107,8 +107,8 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 		ostr.WriteLine("    \"<EOF>\",");
 		foreach(var tokenProduction in JavaCCGlobals.rexprlist)
 		{
-			var respecs = tokenProduction.respecs;
-			foreach(var regExprSpec in tokenProduction.respecs)
+			var respecs = tokenProduction.Respecs;
+			foreach(var regExprSpec in tokenProduction.Respecs)
 			{
 				RegularExpression regularExpression = regExprSpec.rexp;
 				if (regularExpression is RStringLiteral)

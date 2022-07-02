@@ -185,7 +185,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 			regExprSpec.act = new Action();
 			regExprSpec.nextState = null;
 			regExprSpec.nsTok = null;
-			tokenProduction.respecs.Add(regExprSpec);
+			tokenProduction.Respecs.Add(regExprSpec);
 			JavaCCGlobals.rexprlist.Add(tokenProduction);
 		}
 	}
@@ -354,7 +354,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 			JavaCCErrors.Parse_Error(t, "Try block must contain at least one catch or finally block.");
 			return;
 		}
-		TryBlock tryBlock = new TryBlock();
+		var tryBlock = new TryBlock();
 		tryBlock.Line = t.BeginLine;
 		tryBlock.Column = t.BeginColumn;
 		tryBlock.exp = (Expansion)c2.member;

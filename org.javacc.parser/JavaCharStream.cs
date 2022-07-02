@@ -649,7 +649,7 @@ public class JavaCharStream
 
 
 	public JavaCharStream(Stream @is, string str, int i1, int i2, int i3)
-	: this((str != null) ? new StreamReader(@is, str) : new StreamReader(@is), i1, i2, i3)
+	: this((str != null) ? new StreamReader(@is) : new StreamReader(@is), i1, i2, i3)
 	{
 	}
 

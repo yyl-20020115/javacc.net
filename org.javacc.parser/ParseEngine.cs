@@ -286,11 +286,11 @@ public class ParseEngine : JavaCCGlobals
 		{
 			Action action = (Action)P_0;
 			text = (text)+("\u0003\n");
-			if (action.action_tokens.Count != 0)
+			if (action.ActionTokens.Count != 0)
 			{
-				JavaCCGlobals.PrintTokenSetup((Token)action.action_tokens[0]);
+				JavaCCGlobals.PrintTokenSetup((Token)action.ActionTokens[0]);
 				JavaCCGlobals.ccol = 1;
-				Enumeration enumeration = action.action_tokens.elements();
+				Enumeration enumeration = action.ActionTokens.elements();
 				while (enumeration.hasMoreElements())
 				{
 					t = (Token)enumeration.nextElement();
