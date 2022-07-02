@@ -187,13 +187,13 @@ public class Semanticize : JavaCCGlobals
             {
                 return;
             }
-            Choice choice = new Choice
+            Choice choice = new ()
             {
                 Line = lookahead.Line,
                 Column = lookahead.Column,
                 parent = sequence
             };
-            Sequence sequence2 = new Sequence
+            Sequence sequence2 = new ()
             {
                 Line = lookahead.Line,
                 Column = lookahead.Column,
@@ -201,10 +201,12 @@ public class Semanticize : JavaCCGlobals
             };
             sequence2.Units.Add(lookahead);
             lookahead.parent = sequence2;
-            Action action = new Action();
-            action.Line = lookahead.Line;
-            action.Column = lookahead.Column;
-            action.parent = sequence2;
+            Action action = new()
+            {
+                Line = lookahead.Line,
+                Column = lookahead.Column,
+                parent = sequence2
+            };
             sequence2.Units.Add(action);
             choice.Choices.Add(sequence2);
             if (lookahead.amount != 0)
