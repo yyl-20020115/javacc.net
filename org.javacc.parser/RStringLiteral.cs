@@ -49,6 +49,10 @@ public class RStringLiteral : RegularExpression
 	
 	public static new void ReInit()
 	{
+		RegularExpression.ReInit();
+		charCnt = 0;
+		allImages = null;
+		boilerPlateDumped = false;
 		maxStrKind = 0;
 		maxLen = 0;
 		charPosKind = new ArrayList();
@@ -205,8 +209,8 @@ public class RStringLiteral : RegularExpression
 		string text = "";
 		_ = 0;
 		int num = maxStrKind / 64 + 1;
-		ArrayList vector = new ArrayList();
-		ArrayList vector2 = null;
+		List<NfaState> vector = new ();
+		List<NfaState> vector2 = null;
 		statesForPos = new Hashtable[maxLen];
 		intermediateKinds = new int[maxStrKind + 1][];
 		intermediateMatchedPos = new int[maxStrKind + 1][];
@@ -1105,14 +1109,6 @@ public class RStringLiteral : RegularExpression
 	}
 
 	
-	public new static void ReInit()
-	{
-		RegularExpression.ReInit();
-		charCnt = 0;
-		allImages = null;
-		boilerPlateDumped = false;
-	}
-
 	
 	private static bool StartsWithIgnoreCase(string P_0, string P_1)
 	{
@@ -1206,7 +1202,7 @@ public class RStringLiteral : RegularExpression
 		{
 			int i = 0;
 			string text;
-			for (int num2 = java.lang.String.instancehelper_charAt(text = (string)enumeration.nextElement(), 0); i < num && java.lang.String.instancehelper_charAt(array[i], 0) < num2; i++)
+			for (int num2 = (text = (string)enumeration.nextElement())[0]; i < num && array[i][0] < num2; i++)
 			{
 			}
 			if (i < num)
@@ -1275,8 +1271,8 @@ public class RStringLiteral : RegularExpression
 		{
 			string text = (string)enumeration.nextElement();
 			long[] array = (long[])hashtable.get(text);
-			text = java.lang.String.instancehelper_substring(text, java.lang.String.instancehelper_indexOf(text, ", ") + 2);
-			text = java.lang.String.instancehelper_substring(text, java.lang.String.instancehelper_indexOf(text, ", ") + 2);
+			text = text.Substring(text.IndexOf(", ") + 2);
+			text = text.Substring(text.IndexOf(", ") + 2);
 			if (!string.Equals(text, "null;") && array != null)
 			{
 				if ((array[P_1 / 64] & (1L << ((64 != -1) ? (P_1 % 64) : 0))) != 0)
@@ -1355,10 +1351,10 @@ public class RStringLiteral : RegularExpression
 				}
 				P_1.WriteLine(")");
 				int num3;
-				string text2 = java.lang.String.instancehelper_substring(text, 0, num3 = java.lang.String.instancehelper_indexOf(text, ", "));
-				string @this = java.lang.String.instancehelper_substring(text, num3 + 2);
-				int num4 = int.parseInt(java.lang.String.instancehelper_substring(@this, 0, java.lang.String.instancehelper_indexOf(@this, ", ")));
-				if (!string.Equals(text2, java.lang.String.valueOf(int.MaxValue)))
+				string text2 = text.Substring( 0, num3 = text.IndexOf(", "));
+				string @this = text.Substring( num3 + 2);
+				int num4 = int.parseInt((@this.Substring(0, (@this.IndexOf(", ")))));
+				if (!string.Equals(text2, int.MaxValue.ToString()))
 				{
 					P_1.WriteLine("         {");
 				}

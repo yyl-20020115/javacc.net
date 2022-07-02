@@ -1,9 +1,9 @@
 using javacc.net;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace org.javacc.parser;
 
@@ -15,7 +15,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 
 	private static string tokMgrClassName;
 
-	internal static Hashtable allTpsForState;
+	internal static Dictionary<string, TokenProduction> allTpsForState = new();
 
 	public static int lexStateIndex;
 
@@ -648,7 +648,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				ostr.WriteLine("   endColumn = input_stream.getEndColumn();");
 			}
 		}
-		if ((Options.TokenFactory.le) > 0)
+		if ((Options.TokenFactory.Length) > 0)
 		{
 			ostr.WriteLine(("   t = ")+(Options.TokenFactory)+(".newToken(jjmatchedKind, tokenImage);")
 				);
@@ -1381,7 +1381,6 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		PrintClassHead();
 		BuildLexStatesTable();
 		var enumeration = allTpsForState.keys();
-		_ = 0;
 		while (enumeration.hasMoreElements())
 		{
 			NfaState.ReInit();

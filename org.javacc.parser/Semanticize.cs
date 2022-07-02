@@ -368,11 +368,11 @@ public class Semanticize : JavaCCGlobals
         {
             JavaCCErrors.Warning("Lookahead adequacy checking not being performed since option LOOKAHEAD is more than 1.  HashSet<object> option FORCE_LA_CHECK to true to force checking.");
         }
-        foreach (var b in JavaCCGlobals.bnfproductions)
+        foreach (var b in JavaCCGlobals.BNFProductions)
         {
             ExpansionTreeWalker.postOrderWalk(b.Expansion, new LookaheadFixer());
         }
-        enumeration = JavaCCGlobals.bnfproductions.elements();
+        enumeration = JavaCCGlobals.BNFProductions.elements();
         while (enumeration.hasMoreElements())
         {
             NormalProduction normalProduction = (NormalProduction)enumeration.nextElement();
@@ -381,7 +381,7 @@ public class Semanticize : JavaCCGlobals
                 JavaCCErrors.Semantic_Error(normalProduction, (normalProduction.lhs) + (" occurs on the left hand side of more than one production."));
             }
         }
-        enumeration = JavaCCGlobals.bnfproductions.elements();
+        enumeration = JavaCCGlobals.BNFProductions.elements();
         while (enumeration.hasMoreElements())
         {
             ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration.nextElement()).Expansion, new ProductionDefinedChecker());
@@ -390,7 +390,7 @@ public class Semanticize : JavaCCGlobals
         while (enumeration.hasMoreElements())
         {
             TokenProduction tokenProduction = (TokenProduction)enumeration.nextElement();
-            ArrayList respecs = tokenProduction.Respecs;
+            var respecs = tokenProduction.Respecs;
             Enumeration enumeration2 = respecs.elements();
             while (enumeration2.hasMoreElements())
             {
@@ -497,9 +497,9 @@ public class Semanticize : JavaCCGlobals
                 RegExprSpec regExprSpec2 = (RegExprSpec)enumeration3.nextElement();
                 if (regExprSpec2.rexp is RStringLiteral rStringLiteral)
                 {
-                    for (int j = 0; j < (nint)array.LongLength; j++)
+                    for (int j = 0; j < array.Length; j++)
                     {
-                        Hashtable hashtable = (Hashtable)array[j].get(String.instancehelper_toUpperCase(rStringLiteral.image));
+                        Hashtable hashtable = (Hashtable)array[j].get((rStringLiteral.image).ToUpper());
                         if (hashtable == null)
                         {
                             if (rStringLiteral.ordinal == 0)
@@ -508,7 +508,7 @@ public class Semanticize : JavaCCGlobals
                             }
                             hashtable = new Hashtable();
                             hashtable.Add(rStringLiteral.image, rStringLiteral);
-                            array[j].Add(String.instancehelper_toUpperCase(rStringLiteral.image), hashtable);
+                            array[j].Add((rStringLiteral.image).ToUpper(), hashtable);
                             continue;
                         }
                         if (hasIgnoreCase(hashtable, rStringLiteral.image))
@@ -592,7 +592,7 @@ public class Semanticize : JavaCCGlobals
                         else if (regularExpression2.tpContext.Kind != 0)
                         {
                             JavaCCErrors.Semantic_Error(rStringLiteral, ("String token \"") + (rStringLiteral.image) + ("\" has been defined as a \"")
-                                + (TokenProduction._KindImage[regularExpression2.tpContext.Kind])
+                                + (TokenProduction.KindImage[regularExpression2.tpContext.Kind])
                                 + ("\" token.")
                                 );
                         }
@@ -634,7 +634,7 @@ public class Semanticize : JavaCCGlobals
             while (enumeration5.hasMoreElements())
             {
                 TokenProduction tokenProduction2 = (TokenProduction)enumeration5.nextElement();
-                ArrayList respecs2 = tokenProduction2.Respecs;
+                var respecs2 = tokenProduction2.Respecs;
                 Enumeration enumeration3 = respecs2.elements();
                 while (enumeration3.hasMoreElements())
                 {
@@ -655,7 +655,7 @@ public class Semanticize : JavaCCGlobals
             while (enumeration.hasMoreElements())
             {
                 TokenProduction tokenProduction = (TokenProduction)enumeration.nextElement();
-                ArrayList respecs = tokenProduction.Respecs;
+                var respecs = tokenProduction.Respecs;
                 Enumeration enumeration2 = respecs.elements();
                 while (enumeration2.hasMoreElements())
                 {
@@ -712,7 +712,7 @@ public class Semanticize : JavaCCGlobals
         while (num4 != 0)
         {
             num4 = 0;
-            Enumeration enumeration5 = JavaCCGlobals.bnfproductions.elements();
+            Enumeration enumeration5 = JavaCCGlobals.BNFProductions.elements();
             while (enumeration5.hasMoreElements())
             {
                 NormalProduction normalProduction2 = (NormalProduction)enumeration5.nextElement();
@@ -728,18 +728,18 @@ public class Semanticize : JavaCCGlobals
         }
         if (Options.SanityCheck && JavaCCErrors._Error_Count == 0)
         {
-            Enumeration enumeration5 = JavaCCGlobals.bnfproductions.elements();
+            Enumeration enumeration5 = JavaCCGlobals.BNFProductions.elements();
             while (enumeration5.hasMoreElements())
             {
                 ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration5.nextElement()).Expansion, new EmptyChecker());
             }
-            enumeration5 = JavaCCGlobals.bnfproductions.elements();
+            enumeration5 = JavaCCGlobals.BNFProductions.elements();
             while (enumeration5.hasMoreElements())
             {
                 NormalProduction normalProduction2 = (NormalProduction)enumeration5.nextElement();
                 addLeftMost(normalProduction2, normalProduction2.Expansion);
             }
-            enumeration5 = JavaCCGlobals.bnfproductions.elements();
+            enumeration5 = JavaCCGlobals.BNFProductions.elements();
             while (enumeration5.hasMoreElements())
             {
                 NormalProduction normalProduction2 = (NormalProduction)enumeration5.nextElement();
@@ -778,7 +778,7 @@ public class Semanticize : JavaCCGlobals
             }
             if (JavaCCErrors._Error_Count == 0)
             {
-                enumeration5 = JavaCCGlobals.bnfproductions.elements();
+                enumeration5 = JavaCCGlobals.BNFProductions.elements();
                 while (enumeration5.hasMoreElements())
                 {
                     ExpansionTreeWalker.PreOrderWalk(((NormalProduction)enumeration5.nextElement()).Expansion, new LookaheadChecker());
@@ -802,7 +802,7 @@ public class Semanticize : JavaCCGlobals
     }
 
 
-    internal static void prepareToRemove(ArrayList P_0, object P_1)
+    internal static void prepareToRemove(List<RegExprSpec> P_0, object P_1)
     {
         removeList.Add(P_0);
         itemList.Add(P_1);
@@ -878,18 +878,15 @@ public class Semanticize : JavaCCGlobals
         }
         else if (P_1 is Choice pc)
         {
-            Enumeration enumeration = ((Choice)P_1).Choices.elements();
-            while (enumeration.hasMoreElements())
+            foreach(var cx in pc.Choices)
             {
-                addLeftMost(P_0, (Expansion)enumeration.nextElement());
+                addLeftMost(P_0, cx);
             }
         }
         else if (P_1 is Sequence ps)
         {
-            Enumeration enumeration = ((Sequence)P_1).Units.elements();
-            while (enumeration.hasMoreElements())
+            foreach(var expansion in ps.Units)
             {
-                Expansion expansion = (Expansion)enumeration.nextElement();
                 addLeftMost(P_0, expansion);
                 if (!EmptyExpansionExists(expansion))
                 {

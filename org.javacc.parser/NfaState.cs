@@ -196,7 +196,7 @@ public class NfaState
 		charMoves = null;
 		rangeMoves = null;
 		next = null;
-		epsilonMoves = new ArrayList();
+		epsilonMoves = new ();
 		stateName = -1;
 		kind = int.MaxValue;
 		usefulEpsilonMoves = 0;
@@ -216,11 +216,11 @@ public class NfaState
 	}
 
 	
-	internal virtual void AddMove(NfaState P_0)
+	internal virtual void AddMove(NfaState s)
 	{
-		if (!epsilonMoves.Contains(P_0))
+		if (!epsilonMoves.Contains(s))
 		{
-			InsertInOrder(epsilonMoves, P_0);
+			InsertInOrder(epsilonMoves, s);
 		}
 	}
 
@@ -473,7 +473,7 @@ public class NfaState
 		for (int i = 0; i < orderedStateSet.Count; i++)
 		{
 			int[] array = (int[])orderedStateSet[i];
-			for (int j = 0; j < (nint)array.LongLength; j++)
+			for (int j = 0; j < array.Length; j++)
 			{
 				int num2 = num;
 				num++;
@@ -687,7 +687,7 @@ public class NfaState
 	}
 
 	
-	internal static void InsertInOrder(List<Node> P_0, NfaState P_1)
+	internal static void InsertInOrder(List<NfaState> P_0, NfaState P_1)
 	{
 		int i;
 		for (i = 0; i < P_0.Count && ((NfaState)P_0[i]).id <= P_1.id; i++)
@@ -925,7 +925,7 @@ public class NfaState
 		}
 		int num2 = 1;
 		NfaState nfaState = null;
-		ArrayList vector = null;
+		List<NfaState> vector = null;
 		while (num2 != 0)
 		{
 			num2 = 0;
@@ -942,7 +942,7 @@ public class NfaState
 						{
 							if (vector == null)
 							{
-								vector = new ArrayList();
+								vector = new ();
 								vector.Add(nfaState2);
 							}
 							InsertInOrder(vector, nfaState3);
@@ -956,7 +956,7 @@ public class NfaState
 					string text = "";
 					for (int j = 0; j < vector.Count; j++)
 					{
-						text = (text)+(java.lang.String.valueOf(((NfaState)vector[j]).id))+(", ")
+						text = (text)+((((NfaState)vector[j]).id))+(", ")
 							;
 					}
 					if ((nfaState = (NfaState)equivStatesTable.get(text)) == null)
@@ -1015,7 +1015,7 @@ public class NfaState
 	}
 
 	
-	internal virtual NfaState CreateEquivState(ArrayList P_0)
+	internal virtual NfaState CreateEquivState(List<NfaState> P_0)
 	{
 		NfaState nfaState = ((NfaState)P_0[0]).CreateClone();
 		nfaState.next = new NfaState();
@@ -1129,7 +1129,7 @@ public class NfaState
 	}
 
 	
-	public virtual int MoveFrom(char ch, ArrayList v)
+	public virtual int MoveFrom(char ch, List<NfaState> v)
 	{
 		if (CanMoveUsingChar(ch))
 		{
@@ -1238,14 +1238,14 @@ public class NfaState
 			
 			throw (message);
 		}
-		if ((nint)array.LongLength == 1)
+		if (array.Length == 1)
 		{
 			;
 			integer = (array[0]);
 			stateNameForComposite.Add(P_0, integer);
 			return array[0];
 		}
-		for (int j = 0; j < (nint)array.LongLength; j++)
+		for (int j = 0; j < array.Length; j++)
 		{
 			if (array[j] != -1)
 			{
@@ -1254,7 +1254,7 @@ public class NfaState
 				nfaState.compositeStates = array;
 			}
 		}
-		for (; i < (nint)array.LongLength; i++)
+		for (; i < array.Length; i++)
 		{
 			if (!P_1)
 			{
@@ -1271,12 +1271,12 @@ public class NfaState
 			string text = (string)enumeration.nextElement();
 			if (!string.Equals(text, P_0) && Intersect(P_0, text))
 			{
-				for (int[] array2 = (int[])compositeStateTable.get(text); i < (nint)array.LongLength && ((P_1 && ((NfaState)indexedAllStates[array[i]]).inNextOf > 1) || ElemOccurs(array[i], array2) >= 0); i++)
+				for (int[] array2 = (int[])compositeStateTable.get(text); i < array.Length && ((P_1 && ((NfaState)indexedAllStates[array[i]]).inNextOf > 1) || ElemOccurs(array[i], array2) >= 0); i++)
 				{
 				}
 			}
 		}
-		int num = ((i < (nint)array.LongLength) ? array[i] : ((dummyStateIndex != -1) ? (++dummyStateIndex) : (dummyStateIndex = generatedStates)));
+		int num = ((i < array.Length) ? array[i] : ((dummyStateIndex != -1) ? (++dummyStateIndex) : (dummyStateIndex = generatedStates)));
 		integer = (num);
 		stateNameForComposite.Add(P_0, integer);
 		compositeStateTable.Add(P_0, array);
@@ -1873,9 +1873,9 @@ public class NfaState
 			array2 = new int[2]
 			{
 				lastIndex,
-				(int)(lastIndex + (nint)array.LongLength - 1)
+				(int)(lastIndex + array.Length - 1)
 			};
-			lastIndex = (int)(lastIndex + (nint)array.LongLength);
+			lastIndex = (int)(lastIndex + array.Length);
 			tableToDump.Add(P_0, array2);
 			orderedStateSet.Add(array);
 		}
@@ -1914,7 +1914,7 @@ public class NfaState
 	private static void DumpCompositeStatesAsciiMoves(TextWriter P_0, string P_1, int P_2, bool[] P_3)
 	{
 		int[] array = (int[])allNextStates.get(P_1);
-		if ((nint)array.LongLength == 1 || P_3[StateNameForComposite(P_1)])
+		if (array.Length == 1 || P_3[StateNameForComposite(P_1)])
 		{
 			return;
 		}
@@ -1923,7 +1923,7 @@ public class NfaState
 		NfaState nfaState2 = null;
 		string text = "";
 		int num2 = ((stateBlockTable.get(P_1) != null) ? 1 : 0);
-		for (int i = 0; i < (nint)array.LongLength; i++)
+		for (int i = 0; i < array.Length; i++)
 		{
 			NfaState nfaState3 = (NfaState)allStates[array[i]];
 			if (nfaState3.asciiMoves[P_2] != 0)
@@ -2163,7 +2163,7 @@ public class NfaState
 	private static void DumpCompositeStatesNonAsciiMoves(TextWriter P_0, string P_1, bool[] P_2)
 	{
 		int[] array = (int[])allNextStates.get(P_1);
-		if ((nint)array.LongLength == 1 || P_2[StateNameForComposite(P_1)])
+		if (array.Length == 1 || P_2[StateNameForComposite(P_1)])
 		{
 			return;
 		}
@@ -2172,7 +2172,7 @@ public class NfaState
 		NfaState nfaState2 = null;
 		string text = "";
 		int num2 = ((stateBlockTable.get(P_1) != null) ? 1 : 0);
-		for (int i = 0; i < (nint)array.LongLength; i++)
+		for (int i = 0; i < array.Length; i++)
 		{
 			NfaState nfaState3 = (NfaState)allStates[array[i]];
 			if (nfaState3.nonAsciiMethod != -1)
@@ -2239,7 +2239,7 @@ public class NfaState
 		{
 			P_2[num4] = true;
 		}
-		for (int i = 0; i < (nint)array.LongLength; i++)
+		for (int i = 0; i < array.Length; i++)
 		{
 			NfaState nfaState3 = (NfaState)allStates[array[i]];
 			if (nfaState3.nonAsciiMethod != -1)
@@ -2760,7 +2760,7 @@ public class NfaState
 					continue;
 				}
 				pw.Write("   { ");
-				for (int k = 0; k < (nint)array.LongLength; k++)
+				for (int k = 0; k < array.Length; k++)
 				{
 					pw.Write((array[k])+(", "));
 				}
@@ -2785,7 +2785,7 @@ public class NfaState
 			return false;
 		}
 		int[] array = (int[])allNextStates.get(text);
-		for (int i = 0; i < (nint)array.LongLength; i++)
+		for (int i = 0; i < array.Length; i++)
 		{
 			NfaState nfaState = (NfaState)indexedAllStates[array[i]];
 			if ((nfaState.asciiMoves[(int)ch / 64] & (1L << ((64 != -1) ? ((int)ch % 64) : 0))) != 0)
@@ -2825,7 +2825,7 @@ public class NfaState
 	}
 
 	
-	public static int MoveFromSet(char ch, ArrayList v1, ArrayList v2)
+	public static int MoveFromSet(char ch, List<NfaState> v1, List<NfaState> v2)
 	{
 		int num = int.MaxValue;
 		int index = v1.Count;
@@ -2937,14 +2937,14 @@ public class NfaState
 		}
 		string key = next.epsilonMovesString;
 		int[] array = (int[])allNextStates.get(key);
-		if ((nint)array.LongLength <= 2 || compositeStateTable.get(key) != null)
+		if (array.Length <= 2 || compositeStateTable.get(key) != null)
 		{
 			return false;
 		}
-		int[] array2 = new int[(nint)array.LongLength];
-		bool[] array3 = new bool[(nint)array.LongLength];
+		int[] array2 = new int[array.Length];
+		bool[] array3 = new bool[array.Length];
 		int[] array4 = new int[allNextStates.Count];
-		for (int i = 0; i < (nint)array.LongLength; i++)
+		for (int i = 0; i < array.Length; i++)
 		{
 			if (array[i] != -1)
 			{
@@ -2975,7 +2975,7 @@ public class NfaState
 				continue;
 			}
 			int num7 = 0;
-			for (int j = 0; j < (nint)array.LongLength; j++)
+			for (int j = 0; j < array.Length; j++)
 			{
 				if (array[j] != -1 && array3[j] && ElemOccurs(array[j], array7) >= 0)
 				{
@@ -3011,7 +3011,7 @@ public class NfaState
 			{
 				return false;
 			}
-			for (int j = 0; j < (nint)array.LongLength; j++)
+			for (int j = 0; j < array.Length; j++)
 			{
 				if (array[j] != -1 && array2[j] != num8)
 				{
@@ -3028,7 +3028,7 @@ public class NfaState
 		}
 		array7 = new int[num5];
 		num8 = 0;
-		for (int i = 0; i < (nint)array.LongLength; i++)
+		for (int i = 0; i < array.Length; i++)
 		{
 			if (array3[i])
 			{
@@ -3093,13 +3093,13 @@ public class NfaState
 		}
 		string key = next.epsilonMovesString;
 		int[] array = (int[])allNextStates.get(key);
-		if ((nint)array.LongLength == 1 || compositeStateTable.get(key) != null || stateSetsToFix.get(key) != null)
+		if (array.Length == 1 || compositeStateTable.get(key) != null || stateSetsToFix.get(key) != null)
 		{
 			return false;
 		}
 		Hashtable hashtable = new Hashtable();
 		NfaState nfaState = (NfaState)allStates[array[0]];
-		for (int i = 1; i < (nint)array.LongLength; i++)
+		for (int i = 1; i < array.Length; i++)
 		{
 			NfaState nfaState2 = (NfaState)allStates[array[i]];
 			if (nfaState.inNextOf != nfaState2.inNextOf)
@@ -3118,7 +3118,7 @@ public class NfaState
 			}
 			int num = 0;
 			int j;
-			for (j = 0; j < (nint)array.LongLength; j++)
+			for (j = 0; j < array.Length; j++)
 			{
 				if (ElemOccurs(array[j], array2) >= 0)
 				{
@@ -3131,7 +3131,7 @@ public class NfaState
 			}
 			if (num == j)
 			{
-				if ((nint)array2.LongLength > (nint)array.LongLength)
+				if ((nint)array2.LongLength > array.Length)
 				{
 					hashtable.Add(key2, array2);
 				}

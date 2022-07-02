@@ -97,7 +97,7 @@ public static class EntryPoint
 			{
 				Console.WriteLine(("Reading from file ")+(strarr[strarr.Length - 1])+(" . . .")
 					);
-				JavaCCGlobals.fileName = (JavaCCGlobals.OrigFileName = strarr[strarr.Length - 1]);
+				JavaCCGlobals.FileName = (JavaCCGlobals.OrigFileName = strarr[strarr.Length - 1]);
 				JavaCCGlobals.jjtreeGenerated = JavaCCGlobals.IsGeneratedBy("JJTree", strarr[strarr.Length - 1]);
 				JavaCCGlobals.toolNames = JavaCCGlobals.GetToolNames(strarr[strarr.Length - 1]);
 				javaCCParser.javacc_input();

@@ -452,7 +452,7 @@ public class JJDoc : JJDocGlobals
 		JJDocGlobals.generator = JJDocGlobals.GetGenerator();
 		JJDocGlobals.generator.DocumentStart();
 		EmitTokenProductions(JJDocGlobals.generator, JavaCCGlobals.rexprlist);
-		EmitNormalProductions(JJDocGlobals.generator, JavaCCGlobals.bnfproductions);
+		EmitNormalProductions(JJDocGlobals.generator, JavaCCGlobals.BNFProductions);
 		JJDocGlobals.generator.DocumentEnd();
 	}
 

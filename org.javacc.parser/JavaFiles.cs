@@ -124,7 +124,6 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		}
 		goto IL_0120;
 		IL_011a:
-		IOException ex5 = null;
 		try
 		{
 			num = 0.0;

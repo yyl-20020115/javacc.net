@@ -25,7 +25,7 @@ public class JavaCCGlobals
 
 	public static List<Token> cu_from_insertion_point_2 = new();
 
-	public static List<NormalProduction> bnfproductions = new();
+	public static List<NormalProduction> BNFProductions = new();
 
 	public static Hashtable production_table = new();
 
@@ -120,7 +120,7 @@ public class JavaCCGlobals
 				{
 					fileReader = new StreamReader(str);
 					int num2;
-					while ((num2 = fileReader.Read(array, num, (int)((nint)array.LongLength - num))) != -1 && (nint)(num += num2) != (nint)array.LongLength)
+					while ((num2 = fileReader.Read(array, num, (int)(array.Length - num))) != -1 && (nint)(num += num2) != array.Length)
 					{
 					}
 					result = MakeToolNameVector(new string(array, 0, num));
@@ -144,7 +144,7 @@ public class JavaCCGlobals
 				{
 					fileReader.Close();
 				}
-				catch (System.Exception x)
+				catch
 				{
 					goto IL_0064;
 				}
@@ -205,7 +205,7 @@ public class JavaCCGlobals
 			{
 				fileReader.Close();
 			}
-			catch (System.Exception x4)
+			catch
 			{
 				goto IL_014a;
 			}
@@ -227,7 +227,7 @@ public class JavaCCGlobals
 				fileReader.Close();
 				return result2;
 			}
-			catch (System.Exception x5)
+			catch
 			{
 			}
 			
@@ -241,7 +241,7 @@ public class JavaCCGlobals
 			{
 				fileReader.Close();
 			}
-			catch (System.Exception x6)
+			catch
 			{
 				goto IL_00b9;
 			}
@@ -706,7 +706,7 @@ public class JavaCCGlobals
 		cu_to_insertion_point_1 = new ();
 		cu_to_insertion_point_2 = new ();
 		cu_from_insertion_point_2 = new ();
-		bnfproductions = new ();
+		BNFProductions = new ();
 		production_table = new ();
 		lexstate_S2I = new ();
 		lexstate_I2S = new ();
@@ -732,7 +732,7 @@ public class JavaCCGlobals
 		cu_to_insertion_point_1 = new();
 		cu_to_insertion_point_2 = new();
 		cu_from_insertion_point_2 = new();
-		bnfproductions = new();
+		BNFProductions = new();
 		production_table = new();
 		lexstate_S2I = new ();
 		lexstate_I2S = new();

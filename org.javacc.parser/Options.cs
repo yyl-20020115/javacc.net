@@ -78,10 +78,10 @@ public class Options
 		goto IL_01c9;
 		IL_017b:
 		
-		obj = String.instancehelper_substring(@this, num3 + 1);
+		obj = @this.Substring( num3 + 1);
 		if (@this.Length > num3 + 2 && (@this[num3 + 1]) == '"' && (@this[@this.Length - 1]) == '"')
 		{
-			obj = String.instancehelper_substring(@this, num3 + 2, @this.Length - 1);
+			obj = @this.Substring( num3 + 2, @this.Length - 1);
 		}
 		goto IL_01c9;
 		IL_01c9:
@@ -142,22 +142,14 @@ public class Options
 
     public static bool DebugParser => BooleanValue("DEBUG_PARSER");
 
-
     protected internal static int IntValue(string str) 
 		=> OptionValues.TryGetValue(str, out var v) && v is int i ? i : 0;// ((int)OptionValues.get(str));
 
+    protected internal static bool BooleanValue(string str) 
+		=> (OptionValues.TryGetValue(str, out var s) && s is bool _s) && _s;
 
-    protected internal static bool BooleanValue(string str)
-	{
-		return (OptionValues.get(str)).booleanValue();
-	}
-
-	
-	protected internal static string StringValue(string str)
-	{
-		return (string)OptionValues.get(str);
-	}
-
+    protected internal static string StringValue(string str) 
+		=> (OptionValues.TryGetValue(str, out var s) && s is string _s) ? _s : null;
 
     public static string JdkVersion => StringValue("JDK_VERSION");
 

@@ -3136,10 +3136,8 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			System.Exception ex12;
 			try
 			{
-				ex10 = ex10;
 				try
 				{
-					ex10 = ex10;
 					try
 					{
 						System.Exception ex11 = ex10;

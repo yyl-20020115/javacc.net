@@ -409,69 +409,67 @@ public class ParseEngine : JavaCCGlobals
 			};
 			text = (text)+(buildLookaheadChecker(array, array2));
 		}
-		else if (P_0 is TryBlock)
-		{
-			TryBlock tryBlock = (TryBlock)P_0;
-			Expansion expansion = tryBlock.exp;
-			text = (text)+("\n");
-			text = (text)+("try {\u0001");
-			text = (text)+(phase1ExpansionGen(expansion));
-			text = (text)+("\u0002\n}");
-			for (int i2 = 0; i2 < tryBlock.catchblks.Count; i2++)
-			{
-				text = (text)+(" catch (");
-				ArrayList vector = (ArrayList)tryBlock.types[i2];
-				if (vector.Count != 0)
-				{
-					JavaCCGlobals.PrintTokenSetup((Token)vector[0]);
-					Enumeration enumeration2 = vector.elements();
-					while (enumeration2.hasMoreElements())
-					{
-						t = (Token)enumeration2.nextElement();
-						text = (text)+(JavaCCGlobals.PrintToken(t));
-					}
-					text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
-				}
-				text += " ";
-				t = (Token)tryBlock.ids[i2];
-				JavaCCGlobals.PrintTokenSetup(t);
-				text = (text)+(JavaCCGlobals.PrintToken(t));
-				text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
-				text = (text)+(") {\u0003\n");
-				vector = (ArrayList)tryBlock.catchblks[i2];
-				if (vector.Count != 0)
-				{
-					JavaCCGlobals.PrintTokenSetup((Token)vector[0]);
-					JavaCCGlobals.ccol = 1;
-					Enumeration enumeration2 = vector.elements();
-					while (enumeration2.hasMoreElements())
-					{
-						t = (Token)enumeration2.nextElement();
-						text = (text)+(JavaCCGlobals.PrintToken(t));
-					}
-					text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
-				}
-				text = (text)+("\u0004\n}");
-			}
-			if (tryBlock.finallyblk != null)
-			{
-				text = (text)+(" finally {\u0003\n");
-				if (tryBlock.finallyblk.Count != 0)
-				{
-					JavaCCGlobals.PrintTokenSetup((Token)tryBlock.finallyblk[0]);
-					JavaCCGlobals.ccol = 1;
-					Enumeration enumeration3 = tryBlock.finallyblk.elements();
-					while (enumeration3.hasMoreElements())
-					{
-						t = (Token)enumeration3.nextElement();
-						text = (text)+(JavaCCGlobals.PrintToken(t));
-					}
-					text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
-				}
-				text = (text)+("\u0004\n}");
-			}
-		}
-		return text;
+		else if (P_0 is TryBlock tryBlock)
+        {
+            Expansion expansion = tryBlock.exp;
+            text = (text) + ("\n");
+            text = (text) + ("try {\u0001");
+            text = (text) + (phase1ExpansionGen(expansion));
+            text = (text) + ("\u0002\n}");
+            for (int i2 = 0; i2 < tryBlock.catchblks.Count; i2++)
+            {
+                text = (text) + (" catch (");
+                var vector = tryBlock.types[i2];
+                if (vector.Count != 0)
+                {
+                    JavaCCGlobals.PrintTokenSetup((Token)vector[0]);
+                  
+					foreach(var t2 in vector)
+                    {
+                        text = (text) + (JavaCCGlobals.PrintToken(t2));
+                    }
+                    text = (text) + (JavaCCGlobals.PrintTrailingComments(t));
+                }
+                text += " ";
+                t = (Token)tryBlock.ids[i2];
+                JavaCCGlobals.PrintTokenSetup(t);
+                text = (text) + (JavaCCGlobals.PrintToken(t));
+                text = (text) + (JavaCCGlobals.PrintTrailingComments(t));
+                text = (text) + (") {\u0003\n");
+                vector = tryBlock.catchblks[i2];
+                if (vector.Count != 0)
+                {
+                    JavaCCGlobals.PrintTokenSetup((Token)vector[0]);
+                    JavaCCGlobals.ccol = 1;
+                    Enumeration enumeration2 = vector.elements();
+                    while (enumeration2.hasMoreElements())
+                    {
+                        t = (Token)enumeration2.nextElement();
+                        text = (text) + (JavaCCGlobals.PrintToken(t));
+                    }
+                    text = (text) + (JavaCCGlobals.PrintTrailingComments(t));
+                }
+                text = (text) + ("\u0004\n}");
+            }
+            if (tryBlock.finallyblk != null)
+            {
+                text = (text) + (" finally {\u0003\n");
+                if (tryBlock.finallyblk.Count != 0)
+                {
+                    JavaCCGlobals.PrintTokenSetup((Token)tryBlock.finallyblk[0]);
+                    JavaCCGlobals.ccol = 1;
+                    Enumeration enumeration3 = tryBlock.finallyblk.elements();
+                    while (enumeration3.hasMoreElements())
+                    {
+                        t = (Token)enumeration3.nextElement();
+                        text = (text) + (JavaCCGlobals.PrintToken(t));
+                    }
+                    text = (text) + (JavaCCGlobals.PrintTrailingComments(t));
+                }
+                text = (text) + ("\u0004\n}");
+            }
+        }
+        return text;
 	}
 
 	
@@ -1278,7 +1276,8 @@ public class ParseEngine : JavaCCGlobals
 		ostr.WriteLine("    catch(LookaheadSuccess ls) { return true; }");
 		if (Options.ErrorReporting)
 		{
-			ostr.WriteLine(("    finally { jj_save(")+(int.parseInt(String.instancehelper_substring(la_expansion.internal_name, 1)) - 1)+(", xla); }")
+			ostr.WriteLine(("    finally { jj_save(")+(
+				int.parseInt((la_expansion.internal_name.Substring(1))) - 1)+(", xla); }")
 				);
 		}
 		ostr.WriteLine("  }");
@@ -1309,7 +1308,7 @@ public class ParseEngine : JavaCCGlobals
 	{
 		
 		ostr = P_0;
-		Enumeration enumeration = JavaCCGlobals.bnfproductions.elements();
+		Enumeration enumeration = JavaCCGlobals.BNFProductions.elements();
 		Enumeration enumeration2;
 		while (enumeration.hasMoreElements())
 		{

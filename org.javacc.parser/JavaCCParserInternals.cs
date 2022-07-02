@@ -1,3 +1,4 @@
+using org.javacc.jjtree;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -114,7 +115,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 	
 	protected internal static void addproduction(NormalProduction np)
 	{
-		JavaCCGlobals.bnfproductions.Add(np);
+		JavaCCGlobals.BNFProductions.Add(np);
 	}
 
 	protected internal static void production_addexpansion(BNFProduction bnfp, Expansion e)
@@ -347,7 +348,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 	}
 
 	
-	protected internal static void makeTryBlock(Token t, Container c1, Container c2, ArrayList v1, ArrayList v2, ArrayList v3, ArrayList v4)
+	protected internal static void makeTryBlock(Token t, Container c1, Container c2, List<List<Token>> v1, List<Token> v2, List<List<Token>> v3, List<Token> v4)
 	{
 		if (v3.Count == 0 && v4 == null)
 		{

@@ -65,22 +65,22 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
         }
 
-        public virtual bool isPublic(int i)
+        public virtual bool IsPublic(int i)
         {
             return (((uint)i & (true ? 1u : 0u)) != 0) ? true : false;
         }
 
-        public virtual bool isProtected(int i)
+        public virtual bool IsProtected(int i)
         {
             return (((uint)i & 2u) != 0) ? true : false;
         }
 
-        public virtual bool isPrivate(int i)
+        public virtual bool IsPrivate(int i)
         {
             return (((uint)i & 4u) != 0) ? true : false;
         }
 
-        public virtual bool isStatic(int i)
+        public virtual bool IsStatic(int i)
         {
             return (((uint)i & 0x10u) != 0) ? true : false;
         }
@@ -183,7 +183,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
     private LookaheadSuccess jj_ls;
 
-    private List<object> jj_expentries;
+    private List<int[]> jj_expentries =new();
 
     private int[] jj_expentry;
 
@@ -510,7 +510,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             return int.TryParse(token.image, out var v) ? v : 0;
         }
-        catch (Exception e)
+        catch
         {
         }
 
@@ -1914,7 +1914,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     rSequence.Units.Add(container.member as RegularExpression);
                     break;
                 default:
-                    rSequence.Units.Add(container.member);
+                    rSequence.Units.Add(container.member as RegularExpression);
                     break;
             }
             switch ((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk())
@@ -12468,11 +12468,9 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         int[][] array2 = new int[jj_expentries.Count][];
         for (int j = 0; j < jj_expentries.Count; j++)
         {
-            array2[j] = (int[])jj_expentries.get(j);
+            array2[j] = (int[])jj_expentries[j];
         }
-        ParseException result = new ParseException(token, array2, JavaCCParserConstants.tokenImage);
-
-        return result;
+        return new ParseException(token, array2, JavaCCParserConstants.tokenImage);
     }
 
 
@@ -12503,10 +12501,9 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 jj_expentry[i] = jj_lasttokens[i];
             }
             i = 0;
-            Iterator iterator = jj_expentries.iterator();
-            while (iterator.hasNext())
+            foreach(var fv in jj_expentries)
             {
-                int[] array2 = (int[])iterator.next();
+                int[] array2 = fv;
                 if ((nint)array2.LongLength != (nint)jj_expentry.LongLength)
                 {
                     continue;

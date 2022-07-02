@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -7,10 +6,10 @@ namespace org.javacc.parser;
 public class TryBlock : Expansion
 {
 	public Expansion exp;
-	public ArrayList types;
-	public ArrayList ids;
-	public ArrayList catchblks;
-	public ArrayList finallyblk;
+	public List<List<Token>> types = new();
+	public List<Token> ids =new();
+	public List<List<Token>> catchblks =new();
+	public List<Token> finallyblk =new();
 
 	public TryBlock() { }
 	
