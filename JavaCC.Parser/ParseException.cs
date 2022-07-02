@@ -1,8 +1,7 @@
+namespace JavaCC.Parser;
 using System;
 using System.Text;
 using JavaCC.NET;
-
-namespace JavaCC.Parser;
 
 public class ParseException : System.Exception
 {
@@ -84,9 +83,7 @@ public class ParseException : System.Exception
 				stringBuilder.Append((char)num);
 			}
 		}
-		string result = stringBuilder;
-
-		return result;
+		return stringBuilder.ToString();
 	}
 
 

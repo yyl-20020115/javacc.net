@@ -1,8 +1,7 @@
+namespace JavaCC.Parser;
 using System;
 using System.Collections;
 using System.IO;
-
-namespace JavaCC.Parser;
 
 public class ParseEngine : JavaCCGlobals
 {
@@ -1223,11 +1222,11 @@ public class ParseEngine : JavaCCGlobals
 			ostr.Write("    try {");
 			indentamt = 6;
 		}
-		if (P_0.declaration_tokens.Count != 0)
+		if (P_0.DeclarationTokens.Count != 0)
 		{
-			JavaCCGlobals.PrintTokenSetup((Token)P_0.declaration_tokens[0]);
+			JavaCCGlobals.PrintTokenSetup((Token)P_0.DeclarationTokens[0]);
 			JavaCCGlobals.cline--;
-			enumeration = P_0.declaration_tokens.elements();
+			enumeration = P_0.DeclarationTokens.elements();
 			while (enumeration.hasMoreElements())
 			{
 				token = (Token)enumeration.nextElement();
@@ -1238,7 +1237,7 @@ public class ParseEngine : JavaCCGlobals
 		string text = phase1ExpansionGen(P_0.Expansion);
 		dumpFormattedString(text);
 		ostr.WriteLine("");
-		if (P_0.jumpPatched && num == 0)
+		if (P_0.JumpPatched && num == 0)
 		{
 			ostr.WriteLine("    throw new System.Exception(\"Missing return statement in function\");");
 		}

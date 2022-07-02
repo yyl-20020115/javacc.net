@@ -1,9 +1,8 @@
-using JavaCC.JJTree;
+namespace JavaCC.Parser;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace JavaCC.Parser;
 public class Semanticize : JavaCCGlobals
 {
     internal class EmptyChecker : JavaCCGlobals, TreeWalkerOp
@@ -878,14 +877,14 @@ public class Semanticize : JavaCCGlobals
         }
         else if (P_1 is Choice pc)
         {
-            foreach(var cx in pc.Choices)
+            foreach (var cx in pc.Choices)
             {
                 addLeftMost(P_0, cx);
             }
         }
         else if (P_1 is Sequence ps)
         {
-            foreach(var expansion in ps.Units)
+            foreach (var expansion in ps.Units)
             {
                 addLeftMost(P_0, expansion);
                 if (!EmptyExpansionExists(expansion))

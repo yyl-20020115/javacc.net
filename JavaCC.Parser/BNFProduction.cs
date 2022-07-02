@@ -1,9 +1,9 @@
-using System.Collections.Generic;
 namespace JavaCC.Parser;
+using System.Collections.Generic;
 
 public class BNFProduction : NormalProduction
 {
-	public List<Token> declaration_tokens = new();
-	public bool jumpPatched = false;
-	public BNFProduction() { }
+    public List<Token> DeclarationTokens = new();
+    public bool JumpPatched = false;
+    public BNFProduction() { }
 }

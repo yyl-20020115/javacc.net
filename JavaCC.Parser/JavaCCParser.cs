@@ -1,9 +1,7 @@
+namespace JavaCC.Parser;
 using System.IO;
 using System.Collections.Generic;
 using System.Collections;
-using System;
-
-namespace JavaCC.Parser;
 
 
 public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
@@ -183,7 +181,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
     private LookaheadSuccess jj_ls;
 
-    private List<int[]> jj_expentries =new();
+    private List<int[]> jj_expentries = new();
 
     private int[] jj_expentry;
 
@@ -570,7 +568,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             javaCodeProduction.ThrowsList.Add(vector);
             while (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 98)
             {
-                vector = new ();
+                vector = new();
                 jj_consume_token(98);
                 Name(vector);
                 javaCodeProduction.ThrowsList.Add(vector);
@@ -674,7 +672,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
     public void token_manager_decls()
     {
-        var v = new List<Token> ();
+        var v = new List<Token>();
         Token t = jj_consume_token(10);
         jj_consume_token(105);
         ClassOrInterfaceBody(b: false, v);
@@ -684,13 +682,13 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
     public void bnf_production()
     {
-        BNFProduction bNFProduction = new ();
-        Container container = new ();
+        BNFProduction bNFProduction = new();
+        Container container = new();
         Token token = getToken(1);
         BNFProduction bNFProduction2 = bNFProduction;
         bNFProduction2.firstToken = token;
         Token token2 = token;
-        bNFProduction.ThrowsList = new ();
+        bNFProduction.ThrowsList = new();
         bNFProduction.line = token2.BeginLine;
         bNFProduction.column = token2.BeginColumn;
         jumpPatched = false;
@@ -706,7 +704,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             bNFProduction.ThrowsList.Add(vector);
             while (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 98)
             {
-                vector = new ();
+                vector = new();
                 jj_consume_token(98);
                 Name(vector);
                 bNFProduction.ThrowsList.Add(vector);
@@ -718,11 +716,11 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             jj_la1[8] = jj_gen;
         }
         jj_consume_token(105);
-        Block(bNFProduction.declaration_tokens);
+        Block(bNFProduction.DeclarationTokens);
         jj_consume_token(93);
         expansion_choices(container);
         token2 = (bNFProduction.lastToken = jj_consume_token(94));
-        bNFProduction.jumpPatched = jumpPatched;
+        bNFProduction.JumpPatched = jumpPatched;
         JavaCCParserInternals.production_addexpansion(bNFProduction, (Expansion)container.member);
         JavaCCParserInternals.addproduction(bNFProduction);
     }
@@ -1432,12 +1430,12 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                         jj_consume_token(92);
                         vector2.Add(vector5);
                         vector3.Add(obj);
-                        vector5 = new ();
+                        vector5 = new();
                         inAction = true;
                         Block(vector5);
                         inAction = false;
                         vector4.Add(vector5);
-                        vector5 = new ();
+                        vector5 = new();
                     }
                     jj_la1[22] = jj_gen;
                     if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 46)
@@ -1572,7 +1570,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         if (jj_2_24(2))
         {
             AssignmentOperator();
-            Expression(new ());
+            Expression(new());
         }
         Token token2 = getToken(0);
         Token token3 = token;
@@ -2165,7 +2163,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     {
         Modifiers();
         jj_consume_token(60);
-        Name(new ());
+        Name(new());
         jj_consume_token(97);
     }
 
@@ -2223,7 +2221,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     {
                         case 35:
                         case 55:
-                            ClassOrInterfaceDeclaration(i, new ());
+                            ClassOrInterfaceDeclaration(i, new());
                             break;
                         case 42:
                             EnumDeclaration(i);
@@ -2426,7 +2424,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             num = 1;
             JavaCCParserInternals.SetInsertionPoint(getToken(1), 1);
         }
-        ClassOrInterfaceBody((byte)b != 0, new ());
+        ClassOrInterfaceBody((byte)b != 0, new());
         if (num != 0)
         {
             JavaCCParserInternals.SetInsertionPoint(getToken(0), 2);
@@ -2613,7 +2611,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         jj_consume_token(140);
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 91)
         {
-            Arguments(new ());
+            Arguments(new());
         }
         else
         {
@@ -2621,7 +2619,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         }
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 93)
         {
-            ClassOrInterfaceBody(b: false, new ());
+            ClassOrInterfaceBody(b: false, new());
         }
         else
         {
@@ -2715,7 +2713,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     {
                         case 35:
                         case 55:
-                            ClassOrInterfaceDeclaration(i, new ());
+                            ClassOrInterfaceDeclaration(i, new());
                             break;
                         case 42:
                             EnumDeclaration(i);
@@ -2835,7 +2833,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             jj_la1[90] = jj_gen;
         }
-        Block(new ());
+        Block(new());
     }
 
 
@@ -2889,7 +2887,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             jj_la1[86] = jj_gen;
         }
         jj_consume_token(140);
-        FormalParameters(new ());
+        FormalParameters(new());
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 73)
         {
             jj_consume_token(73);
@@ -3043,7 +3041,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             jj_la1[79] = jj_gen;
         }
-        ResultType(new ());
+        ResultType(new());
         MethodDeclarator();
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 73)
         {
@@ -3057,7 +3055,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         switch ((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk())
         {
             case 93:
-                Block(new ());
+                Block(new());
                 return;
             case 97:
                 jj_consume_token(97);
@@ -3162,7 +3160,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             case 114:
             case 115:
             case 140:
-                Expression(new ());
+                Expression(new());
                 return;
         }
         jj_la1[76] = jj_gen;
@@ -3281,7 +3279,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     public void MethodDeclarator()
     {
         jj_consume_token(140);
-        FormalParameters(new ());
+        FormalParameters(new());
         while (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 95)
         {
             jj_consume_token(95);
@@ -3293,11 +3291,11 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
     public void NameList()
     {
-        Name(new ());
+        Name(new());
         while (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 98)
         {
             jj_consume_token(98);
-            Name(new ());
+            Name(new());
         }
         jj_la1[99] = jj_gen;
     }
@@ -3363,7 +3361,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         if (jj_2_16(int.MaxValue))
         {
             jj_consume_token(71);
-            Arguments(new ());
+            Arguments(new());
             jj_consume_token(97);
             return;
         }
@@ -3407,7 +3405,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     jj_consume_token(99);
                 }
                 jj_consume_token(68);
-                Arguments(new ());
+                Arguments(new());
                 jj_consume_token(97);
                 break;
             default:
@@ -3481,7 +3479,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 return;
             case 35:
             case 55:
-                ClassOrInterfaceDeclaration(0, new ());
+                ClassOrInterfaceDeclaration(0, new());
                 return;
         }
         jj_la1[143] = jj_gen;
@@ -4046,9 +4044,9 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 104)
         {
             jj_consume_token(104);
-            Expression(new ());
+            Expression(new());
             jj_consume_token(105);
-            Expression(new ());
+            Expression(new());
         }
         else
         {
@@ -4942,7 +4940,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 return;
             case 91:
                 jj_consume_token(91);
-                Expression(new ());
+                Expression(new());
                 jj_consume_token(92);
                 return;
             case 58:
@@ -4952,7 +4950,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         jj_la1[127] = jj_gen;
         if (jj_2_33(int.MaxValue))
         {
-            ResultType(new ());
+            ResultType(new());
             jj_consume_token(99);
             jj_consume_token(35);
             return;
@@ -4960,7 +4958,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         int num = ((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk());
         if (num == 1 || num == 2 || num == 3 || num == 4 || num == 5 || num == 6 || num == 7 || num == 8 || num == 9 || num == 10 || num == 11 || num == 140)
         {
-            Name(new ());
+            Name(new());
             return;
         }
         jj_la1[128] = jj_gen;
@@ -5032,7 +5030,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             case 95:
                 jj_consume_token(95);
-                Expression(new ());
+                Expression(new());
                 jj_consume_token(96);
                 break;
             case 99:
@@ -5040,7 +5038,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 jj_consume_token(140);
                 break;
             case 91:
-                Arguments(new ());
+                Arguments(new());
                 break;
             default:
                 jj_la1[129] = jj_gen;
@@ -5078,10 +5076,10 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     ArrayDimsAndInits();
                     break;
                 case 91:
-                    Arguments(new ());
+                    Arguments(new());
                     if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 93)
                     {
-                        ClassOrInterfaceBody(b: false, new ());
+                        ClassOrInterfaceBody(b: false, new());
                     }
                     else
                     {
@@ -5275,11 +5273,11 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
     public void ArgumentList()
     {
-        Expression(new ());
+        Expression(new());
         while (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 98)
         {
             jj_consume_token(98);
-            Expression(new ());
+            Expression(new());
         }
         jj_la1[133] = jj_gen;
     }
@@ -5331,7 +5329,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             do
             {
                 jj_consume_token(95);
-                Expression(new ());
+                Expression(new());
                 jj_consume_token(96);
             }
             while (jj_2_38(2));
@@ -5528,11 +5526,11 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     public void AssertStatement()
     {
         jj_consume_token(28);
-        Expression(new ());
+        Expression(new());
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 105)
         {
             jj_consume_token(105);
-            Expression(new ());
+            Expression(new());
         }
         else
         {
@@ -5628,7 +5626,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                             case 136:
                             case 137:
                                 AssignmentOperator();
-                                Expression(new ());
+                                Expression(new());
                                 break;
                             default:
                                 jj_la1[145] = jj_gen;
@@ -5655,7 +5653,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     {
         jj_consume_token(69);
         jj_consume_token(91);
-        Expression(new ());
+        Expression(new());
         jj_consume_token(92);
         jj_consume_token(93);
         while (true)
@@ -5748,7 +5746,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     {
         jj_consume_token(50);
         jj_consume_token(91);
-        Expression(new ());
+        Expression(new());
         jj_consume_token(92);
         Statement();
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 41)
@@ -5767,7 +5765,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     {
         jj_consume_token(79);
         jj_consume_token(91);
-        Expression(new ());
+        Expression(new());
         jj_consume_token(92);
         Statement();
     }
@@ -5779,7 +5777,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         Statement();
         jj_consume_token(79);
         jj_consume_token(91);
-        Expression(new ());
+        Expression(new());
         jj_consume_token(92);
         jj_consume_token(97);
     }
@@ -5795,7 +5793,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             Type();
             jj_consume_token(140);
             jj_consume_token(105);
-            Expression(new ());
+            Expression(new());
         }
         else
         {
@@ -5950,7 +5948,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 case 114:
                 case 115:
                 case 140:
-                    Expression(new ());
+                    Expression(new());
                     break;
                 default:
                     jj_la1[153] = jj_gen;
@@ -6083,7 +6081,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             case 114:
             case 115:
             case 140:
-                Expression(new ());
+                Expression(new());
                 break;
             default:
                 jj_la1[160] = jj_gen;
@@ -6105,7 +6103,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             token.image = "{if (true) throw";
             jumpPatched = true;
         }
-        Expression(new ());
+        Expression(new());
         token = jj_consume_token(97);
         if (inAction)
         {
@@ -6118,29 +6116,29 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     {
         jj_consume_token(70);
         jj_consume_token(91);
-        Expression(new ());
+        Expression(new());
         jj_consume_token(92);
-        Block(new ());
+        Block(new());
     }
 
 
     public void TryStatement()
     {
         jj_consume_token(76);
-        Block(new ());
+        Block(new());
         while (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 33)
         {
             jj_consume_token(33);
             jj_consume_token(91);
             FormalParameter();
             jj_consume_token(92);
-            Block(new ());
+            Block(new());
         }
         jj_la1[161] = jj_gen;
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 46)
         {
             jj_consume_token(46);
-            Block(new ());
+            Block(new());
         }
         else
         {
@@ -6162,7 +6160,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 AssertStatement();
                 break;
             case 93:
-                Block(new ());
+                Block(new());
                 break;
             case 97:
                 EmptyStatement();
@@ -6305,7 +6303,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             case 32:
                 jj_consume_token(32);
-                Expression(new ());
+                Expression(new());
                 jj_consume_token(105);
                 break;
             case 38:
@@ -6512,7 +6510,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     public void NormalAnnotation()
     {
         jj_consume_token(139);
-        Name(new ());
+        Name(new());
         jj_consume_token(91);
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 140)
         {
@@ -6568,7 +6566,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     public void SingleMemberAnnotation()
     {
         jj_consume_token(139);
-        Name(new ());
+        Name(new());
         jj_consume_token(91);
         MemberValue();
         jj_consume_token(92);
@@ -6578,7 +6576,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     public void MarkerAnnotation()
     {
         jj_consume_token(139);
-        Name(new ());
+        Name(new());
     }
 
 
@@ -6814,7 +6812,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     {
                         case 35:
                         case 55:
-                            ClassOrInterfaceDeclaration(i, new ());
+                            ClassOrInterfaceDeclaration(i, new());
                             break;
                         case 42:
                             EnumDeclaration(i);
@@ -12501,7 +12499,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 jj_expentry[i] = jj_lasttokens[i];
             }
             i = 0;
-            foreach(var fv in jj_expentries)
+            foreach (var fv in jj_expentries)
             {
                 int[] array2 = fv;
                 if ((nint)array2.LongLength != (nint)jj_expentry.LongLength)

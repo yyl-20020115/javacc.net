@@ -1,9 +1,7 @@
+namespace JavaCC.Parser;
 using System;
 using System.IO;
 using System.Text;
-
-namespace JavaCC.Parser;
-
 
 public class OutputFile
 {

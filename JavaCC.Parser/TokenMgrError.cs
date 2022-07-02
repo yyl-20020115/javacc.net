@@ -1,7 +1,6 @@
+namespace JavaCC.Parser;
 using JavaCC.NET;
 using System.Text;
-namespace JavaCC.Parser;
-
 
 public class TokenMgrError : System.Exception
 {
@@ -65,8 +64,8 @@ public class TokenMgrError : System.Exception
             int num;
             if ((num = str[i]) < 32 || num > 126)
             {
-                string @this = ("0000")+(Utils.ToString(num, 16));
-                stringBuilder.Append(("\\u")+(
+                string @this = ("0000") + (Utils.ToString(num, 16));
+                stringBuilder.Append(("\\u") + (
                     @this.Substring(@this.Length - 4, @this.Length)));
             }
             else
@@ -80,19 +79,19 @@ public class TokenMgrError : System.Exception
 
     protected internal static string LexicalError(bool b, int i1, int i2, int i3, string str, char ch)
     {
-        return ("Lexical error at line ")+(i2)+(", column ")
-            +(i3)
-            +(".  Encountered: ")
-            +((!b) ? ("\"")+(
+        return ("Lexical error at line ") + (i2) + (", column ")
+            + (i3)
+            + (".  Encountered: ")
+            + ((!b) ? ("\"") + (
                 addEscapes(
-                ch.ToString()))+("\"")
-                +(" (")
-                +((int)ch)
-                +("), ")
+                ch.ToString())) + ("\"")
+                + (" (")
+                + ((int)ch)
+                + ("), ")
                  : "<EOF> ")
-            +("after : \"")
-            +(addEscapes(str))
-            +("\"")
+            + ("after : \"")
+            + (addEscapes(str))
+            + ("\"")
             ;
     }
 

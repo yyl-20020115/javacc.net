@@ -1,9 +1,6 @@
-using System.Collections;
+namespace JavaCC.Parser;
 using System.IO;
 using System.Linq;
-using System.Text;
-
-namespace JavaCC.Parser;
 
 public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals, 
 {

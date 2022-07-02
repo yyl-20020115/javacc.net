@@ -1,13 +1,11 @@
+namespace JavaCC.Parser;
 using JavaCC.NET;
 using System.IO;
 using System.Linq;
 
-namespace JavaCC.Parser;
-
 public class ParseGen : JavaCCParserConstants // JavaCCGlobals, 
 {
 	private static TextWriter writer;
-
 	
 	public static void Start()
 	{

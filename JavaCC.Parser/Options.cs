@@ -1,10 +1,8 @@
+namespace JavaCC.Parser;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-
-namespace JavaCC.Parser;
-
 
 public class Options
 {
