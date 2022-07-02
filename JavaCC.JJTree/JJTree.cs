@@ -1,5 +1,5 @@
-using Javacc.Parser;
-namespace Javacc.JJTree;
+using JavaCC.Parser;
+namespace JavaCC.JJTree;
 
 public class JJTree 
 {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
-using Javacc.Parser;
+using JavaCC.Parser;
 
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 
 internal sealed class NodeFiles
 {

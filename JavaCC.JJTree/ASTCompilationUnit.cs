@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTCompilationUnit : JJTreeNode
 {
 	internal ASTCompilationUnit(int id) : base(id) { }

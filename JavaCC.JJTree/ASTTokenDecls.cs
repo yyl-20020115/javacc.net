@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTTokenDecls : JJTreeNode
 {
 	public ASTTokenDecls(int id) : base(id) { }	

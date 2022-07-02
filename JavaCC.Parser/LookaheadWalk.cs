@@ -1,5 +1,5 @@
 using System.Collections;
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 public sealed class LookaheadWalk
 {

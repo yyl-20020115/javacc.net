@@ -1,8 +1,8 @@
-using javacc.net;
+using JavaCC.NET;
 using System.IO;
 using System.Linq;
 
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 public class ParseGen : JavaCCParserConstants // JavaCCGlobals, 
 {

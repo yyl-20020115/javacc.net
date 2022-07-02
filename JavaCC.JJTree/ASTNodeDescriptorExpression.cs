@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTNodeDescriptorExpression : JJTreeNode
 {
 	internal ASTNodeDescriptorExpression(int id) : base(id) { }

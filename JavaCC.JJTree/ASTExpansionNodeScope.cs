@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTExpansionNodeScope : JJTreeNode
 {
 	internal NodeScope nodeScope;

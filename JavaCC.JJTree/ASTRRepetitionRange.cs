@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTRRepetitionRange : JJTreeNode
 {	
 	public ASTRRepetitionRange(int id) : base(id) { }

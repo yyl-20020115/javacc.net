@@ -1,6 +1,6 @@
-using javacc.net;
+using JavaCC.NET;
 using System.Text;
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 
 public class TokenMgrError : System.Exception

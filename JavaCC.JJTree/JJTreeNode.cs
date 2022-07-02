@@ -1,5 +1,5 @@
 using System.Text;
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 
 public class JJTreeNode : SimpleNode
 {

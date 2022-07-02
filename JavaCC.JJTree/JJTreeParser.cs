@@ -4,11 +4,11 @@ using System.Security.Permissions;
 using System.IO;
 using System.Text;
 
-using Javacc.Parser;
+using JavaCC.Parser;
 using System.Collections.Generic;
 using System.Collections;
 
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 
 public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 {

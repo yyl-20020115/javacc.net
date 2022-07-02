@@ -1,7 +1,7 @@
-using javacc.net;
-using Javacc.Parser;
+using JavaCC.NET;
+using JavaCC.Parser;
 using System.Text;
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 
 public sealed class TokenUtils
 {	

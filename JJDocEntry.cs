@@ -1,4 +1,4 @@
-using Javacc.JJDoc;
+using JavaCC.JJDoc;
 
 public static class JJDocEntry
 {

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 public class BNFProduction : NormalProduction
 {

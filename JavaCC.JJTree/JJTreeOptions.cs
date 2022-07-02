@@ -1,6 +1,6 @@
 using System.IO;
-using Javacc.Parser;
-namespace Javacc.JJTree;
+using JavaCC.Parser;
+namespace JavaCC.JJTree;
 
 internal class JJTreeOptions : Options
 {

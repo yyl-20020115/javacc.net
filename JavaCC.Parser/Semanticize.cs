@@ -1,9 +1,9 @@
-using Javacc.JJTree;
+using JavaCC.JJTree;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 public class Semanticize : JavaCCGlobals
 {
     internal class EmptyChecker : JavaCCGlobals, TreeWalkerOp

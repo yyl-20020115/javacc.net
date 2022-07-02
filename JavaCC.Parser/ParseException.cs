@@ -1,8 +1,8 @@
 using System;
 using System.Text;
-using javacc.net;
+using JavaCC.NET;
 
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 public class ParseException : System.Exception
 {

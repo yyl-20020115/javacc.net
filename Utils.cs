@@ -1,5 +1,5 @@
 ﻿using System;
-namespace javacc.net
+namespace JavaCC.NET
 {
     public static class Utils
     {

@@ -1,6 +1,6 @@
-using Javacc.Parser;
+using JavaCC.Parser;
 
-namespace Javacc.JJDoc;
+namespace JavaCC.JJDoc;
 
 public class JJDocGlobals : JavaCCGlobals
 {

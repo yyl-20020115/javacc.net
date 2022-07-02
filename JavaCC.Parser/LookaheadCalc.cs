@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Text;
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 public class LookaheadCalc : JavaCCGlobals
 {

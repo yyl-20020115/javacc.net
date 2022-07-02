@@ -1,5 +1,5 @@
-using Javacc.Parser;
-namespace Javacc.JJDoc;
+using JavaCC.Parser;
+namespace JavaCC.JJDoc;
 
 public class JJDocOptions : Options
 {

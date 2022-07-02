@@ -1,5 +1,5 @@
 using System;
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 
 public class SimpleNode: Node
 {

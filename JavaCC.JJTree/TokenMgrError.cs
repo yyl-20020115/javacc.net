@@ -1,6 +1,6 @@
 using System.Text;
-using javacc.net;
-namespace Javacc.JJTree;
+using JavaCC.NET;
+namespace JavaCC.JJTree;
 
 public class TokenMgrError : System.Exception
 {

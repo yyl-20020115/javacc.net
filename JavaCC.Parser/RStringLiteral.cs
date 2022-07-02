@@ -1,4 +1,4 @@
-using javacc.net;
+using JavaCC.NET;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 public class RStringLiteral : RegularExpression
 {

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 
 public class ASTProduction : JJTreeNode
 {

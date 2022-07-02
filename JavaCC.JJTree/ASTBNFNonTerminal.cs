@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTBNFNonTerminal : JJTreeNode
 {
 	public ASTBNFNonTerminal(int id) : base(id) { }

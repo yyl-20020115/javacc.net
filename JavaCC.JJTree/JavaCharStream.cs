@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 
 public class JavaCharStream
 {

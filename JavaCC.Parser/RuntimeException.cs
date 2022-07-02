@@ -1,8 +1,8 @@
-﻿using Javacc.JJTree;
+﻿using JavaCC.JJTree;
 using System;
 using System.Runtime.Serialization;
 
-namespace Javacc.Parser
+namespace JavaCC.Parser
 {
     internal class RuntimeException : Exception
     {

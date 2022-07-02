@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTCharDescriptor : JJTreeNode
 {
 	public ASTCharDescriptor(int id) : base(id) { }

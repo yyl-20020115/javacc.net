@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTREParenthesized : JJTreeNode
 {
 	public ASTREParenthesized(int id) : base(id) { }	

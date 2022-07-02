@@ -1,6 +1,6 @@
 using System.Text;
-using Javacc.Parser;
-namespace Javacc.JJTree;
+using JavaCC.Parser;
+namespace JavaCC.JJTree;
 public class ASTGrammar : JJTreeNode
 {	
 	internal ASTGrammar(int id) : base(id) {}

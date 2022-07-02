@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Javacc.JJTree
+namespace JavaCC.JJTree
 {
     internal class UnsupportedEncodingException : Exception
     {

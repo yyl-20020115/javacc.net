@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using javacc.net;
-namespace Javacc.Parser;
+using JavaCC.NET;
+namespace JavaCC.Parser;
 
 public class JavaCCGlobals 
 {
@@ -43,7 +43,7 @@ public class JavaCCGlobals
 
 	public static List<RegularExpression> ordered_named_tokens = new();
 
-	public static Hashtable names_of_tokens = new();
+	public static Dictionary<int,string> names_of_tokens = new();
 
 	public static Hashtable rexps_of_tokens = new();
 

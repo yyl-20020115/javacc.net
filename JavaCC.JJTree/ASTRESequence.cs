@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTRESequence : JJTreeNode
 {	
 	public ASTRESequence(int id) : base(id) { }	

@@ -1,5 +1,4 @@
-using javacc.net;
-using Javacc.JJTree;
+using JavaCC.NET;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,7 +7,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 
 public class NfaState 
@@ -37,9 +36,9 @@ public class NfaState
 
 	internal static Hashtable equivStatesTable;
 
-	internal static Hashtable allNextStates;
+	internal static Dictionary<string,int[]> allNextStates=new();
 
-	internal static Hashtable lohiByteTab;
+	internal static Dictionary<int,string> lohiByteTab =new();
 
 	internal static Dictionary<string,int> stateNameForComposite;
 
@@ -320,14 +319,15 @@ public class NfaState
 				nfaState.GenerateNonAsciiMoves(pw);
 			}
 		}
-		Enumeration enumeration = stateNameForComposite.keys();
-		while (enumeration.hasMoreElements())
+		foreach(var pair in stateNameForComposite)
 		{
-			string key = (string)enumeration.nextElement();
-			int num = ((int)stateNameForComposite.get(key));
+			int num = pair.Value;
 			if (num >= generatedStates)
 			{
-				statesForState[LexGen.lexStateIndex][num] = (int[])allNextStates.get(key);
+				if(allNextStates.TryGetValue(pair.Key,out var v))
+                {
+					statesForState[LexGen.lexStateIndex][num]= v;
+				}
 			}
 		}
 		if (stateSetsToFix.Count != 0)
@@ -729,10 +729,8 @@ public class NfaState
 		{
 			((NfaState)epsilonMoves[i]).EpsilonClosure();
 		}
-		Enumeration enumeration = epsilonMoves.elements();
-		while (enumeration.hasMoreElements())
+		foreach(var nfaState in epsilonMoves)
 		{
-			NfaState nfaState = (NfaState)enumeration.nextElement();
 			for (int i = 0; i < nfaState.epsilonMoves.Count; i++)
 			{
 				NfaState nfaState2 = (NfaState)nfaState.epsilonMoves[i];
@@ -1236,7 +1234,7 @@ public class NfaState
 		{
 			string message = ("JavaCC Bug: Please send mail to sankar@cs.stanford.edu; nameSet null for : ")+(P_0);
 			
-			throw (message);
+			throw new Exception(message);
 		}
 		if (array.Length == 1)
 		{
@@ -2301,7 +2299,7 @@ public class NfaState
 						P_0.WriteLine(("         if ((jjbitVec")+(nonAsciiMoveIndices[i - 2])+("[i1] & l1) != 0L)")
 							);
 					}
-					if (!AllBitsSet((string)allBitVectors.elementAt(nonAsciiMoveIndices[i - 1])))
+					if (!AllBitsSet((string)allBitVectors[(nonAsciiMoveIndices[i - 1])]))
 					{
 						P_0.WriteLine(("            if ((jjbitVec")+(nonAsciiMoveIndices[i - 1])+("[i2] & l2) == 0L)")
 							);

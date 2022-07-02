@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTLHS : JJTreeNode
 {
 	internal ASTLHS(int id) : base(id) {}

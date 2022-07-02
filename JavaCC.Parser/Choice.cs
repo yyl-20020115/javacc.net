@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 public class Choice : Expansion
 {

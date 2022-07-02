@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Javacc.Parser
+namespace JavaCC.Parser
 {
     [Serializable]
     internal class UnsupportedEncodingException : Exception

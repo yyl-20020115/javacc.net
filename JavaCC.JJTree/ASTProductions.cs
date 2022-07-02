@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTProductions : JJTreeNode
 {	
 	public ASTProductions(int id) : base(id) { }

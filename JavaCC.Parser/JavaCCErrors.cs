@@ -1,6 +1,6 @@
 using System;
 
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 public sealed class JavaCCErrors
 {

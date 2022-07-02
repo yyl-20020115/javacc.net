@@ -1,8 +1,8 @@
 using System;
 using System.IO;
-using Javacc.Parser;
+using JavaCC.Parser;
 
-namespace Javacc.JJDoc;
+namespace JavaCC.JJDoc;
 
 public class TextGenerator: Generator
 {

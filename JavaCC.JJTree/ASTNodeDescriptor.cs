@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTNodeDescriptor : JJTreeNode
 {
 	private bool Faked = false;

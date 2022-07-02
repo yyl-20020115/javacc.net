@@ -1,11 +1,11 @@
-using javacc.net;
+using JavaCC.NET;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 public class LexGen : JavaCCParserConstants //JavaCCGlobals, 
 {
@@ -210,14 +210,13 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 	internal static void BuildLexStatesTable()
 	{
 		string[] array = new string[JavaCCGlobals.lexstate_I2S.Count];
-		foreach(var reugraph in all)
+
+		foreach(var tokenProduction in JavaCCGlobals.rexprlist)
 		{
-			TokenProduction tokenProduction = (TokenProduction)enumeration.nextElement();
 			var respecs = tokenProduction.Respecs;
 			for (int i = 0; i < (nint)tokenProduction.LexStates.LongLength; i++)
 			{
-				ArrayList vector;
-				if ((vector = (ArrayList)allTpsForState.get(tokenProduction.LexStates[i])) == null)
+				if (!allTpsForState.TryGetValue(tokenProduction.LexStates[i],out var vector))
 				{
 					array[maxLexStates++] = tokenProduction.LexStates[i];
 					allTpsForState.Add(tokenProduction.LexStates[i], vector = new ());
@@ -1380,15 +1379,14 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		tokMgrClassName = (JavaCCGlobals.Cu_name)+("TokenManager");
 		PrintClassHead();
 		BuildLexStatesTable();
-		var enumeration = allTpsForState.keys();
-		while (enumeration.hasMoreElements())
+		foreach(var pair in allTpsForState)
 		{
 			NfaState.ReInit();
 			RStringLiteral.ReInit();
-			string text = (string)enumeration.nextElement();
+			string text = pair.Key;// (string)enumeration.nextElement();
 			lexStateIndex = GetIndex(text);
 			lexStateSuffix = ("_")+(lexStateIndex);
-			ArrayList vector2 = (ArrayList)allTpsForState.get(text);
+			var vector2 = pair.Value;
 			initStates.Add(text, initialState = new NfaState());
 			int num = 0;
 			singlesToSkip[lexStateIndex] = new NfaState();

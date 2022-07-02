@@ -1,9 +1,9 @@
 using System;
 using System.IO;
 using System.Text;
-using Javacc.Parser;
+using JavaCC.Parser;
 
-namespace Javacc.JJDoc;
+namespace JavaCC.JJDoc;
 
 public sealed class JJDocMain : JJDocGlobals
 {

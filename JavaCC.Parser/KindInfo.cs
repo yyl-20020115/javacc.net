@@ -1,4 +1,4 @@
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 internal class KindInfo
 {

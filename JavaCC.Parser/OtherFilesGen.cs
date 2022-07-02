@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals, 
 {

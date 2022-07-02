@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 {

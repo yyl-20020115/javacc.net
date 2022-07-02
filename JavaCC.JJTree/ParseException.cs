@@ -1,8 +1,8 @@
 using System;
 using System.Text;
-using javacc.net;
+using JavaCC.NET;
 
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ParseException : System.Exception
 {
 	protected internal bool specialConstructor;

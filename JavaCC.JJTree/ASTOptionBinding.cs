@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTOptionBinding : JJTreeNode
 {
 	private bool Suppressed = false;

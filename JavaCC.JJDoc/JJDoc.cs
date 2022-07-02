@@ -1,8 +1,8 @@
-using Javacc.Parser;
+using JavaCC.Parser;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
-namespace Javacc.JJDoc;
+namespace JavaCC.JJDoc;
 
 public class JJDoc : JJDocGlobals
 {	

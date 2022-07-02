@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTBNFTryBlock : JJTreeNode
 {
 	public ASTBNFTryBlock(int id) : base(id) { }

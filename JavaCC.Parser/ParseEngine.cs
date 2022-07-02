@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.IO;
 
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 public class ParseEngine : JavaCCGlobals
 {
@@ -221,9 +221,10 @@ public class ParseEngine : JavaCCGlobals
 			if (regularExpression.lhsTokens.Count != 0)
 			{
 				JavaCCGlobals.PrintTokenSetup((Token)regularExpression.lhsTokens[0]);
-				foreach(var t in regularExpression.lhsTokens)
+				foreach(var _t in regularExpression.lhsTokens)
 				{
-					text = (text)+(JavaCCGlobals.PrintToken(t));
+					text = (text)+(JavaCCGlobals.PrintToken(_t));
+					t = _t;
 				}
 				text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
 				text = (text)+(" = ");
@@ -254,9 +255,10 @@ public class ParseEngine : JavaCCGlobals
 			text = (text)+("\n");
 			if (nonTerminal.lhsTokens.Count != 0)
 			{
-				foreach(Token t in nonTerminal.lhsTokens)
+				foreach(Token _t in nonTerminal.lhsTokens)
 				{
-					text = (text)+(JavaCCGlobals.PrintToken(t));
+					text = (text)+(JavaCCGlobals.PrintToken(_t));
+					t = _t;
 				}
 				text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
 				text = (text)+(" = ");

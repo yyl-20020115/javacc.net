@@ -1,5 +1,5 @@
 using System.IO;
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 
 internal class JJTreeIOException : IOException
 {

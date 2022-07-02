@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTBNFLookahead : JJTreeNode
 {
 	public ASTBNFLookahead(int id) : base(id) { }

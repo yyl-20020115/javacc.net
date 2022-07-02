@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTREStringLiteral : JJTreeNode
 {
 	public ASTREStringLiteral(int id) : base(id) { }

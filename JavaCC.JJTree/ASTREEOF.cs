@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTREEOF : JJTreeNode
 {
 	public ASTREEOF(int id) : base(id) { }

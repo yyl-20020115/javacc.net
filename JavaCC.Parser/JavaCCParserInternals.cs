@@ -1,8 +1,8 @@
-using Javacc.JJTree;
+using JavaCC.JJTree;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 
 public abstract class JavaCCParserInternals : JavaCCGlobals

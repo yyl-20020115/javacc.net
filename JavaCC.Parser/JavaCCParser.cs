@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 
-namespace Javacc.Parser;
+namespace JavaCC.Parser;
 
 
 public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants

@@ -1,4 +1,4 @@
-namespace Javacc.JJTree;
+namespace JavaCC.JJTree;
 public class ASTPrimaryExpression : JJTreeNode
 {
 	public ASTPrimaryExpression(int id) : base(id) { }
