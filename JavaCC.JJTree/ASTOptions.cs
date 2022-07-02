@@ -1,0 +1,5 @@
+namespace Javacc.JJTree;
+public class ASTOptions : JJTreeNode
+{
+	internal ASTOptions(int id) : base(id) { }
+}
