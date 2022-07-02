@@ -17,11 +17,11 @@ public class NormalProduction :Expansion
 
 	public string lhs;
 
-	public ArrayList return_type_tokens;
+	public List<Token> return_type_tokens = new();
 
-	public ArrayList parameter_list_tokens;
+	public List<Token> parameter_list_tokens = new();
 
-	public List<Token> throws_list;
+	public List<Token> ThrowsList = new();
 
 	public Expansion Expansion;
 
@@ -40,7 +40,7 @@ public class NormalProduction :Expansion
 	protected internal string eol;
 
 	
-	protected internal virtual StringBuilder DumpPrefix(int i)
+	protected internal override StringBuilder DumpPrefix(int i)
 	{
 		var stringBuilder = new StringBuilder(128);
 		for (int j = 0; j < i; j++)
@@ -56,7 +56,7 @@ public class NormalProduction :Expansion
 		parents = new ();
 		return_type_tokens = new ();
 		parameter_list_tokens = new ();
-		throws_list = new ();
+		ThrowsList = new ();
 		emptyPossible = false;
 		leftExpansions = new NormalProduction[10];
 		leIndex = 0;

@@ -7,7 +7,7 @@ public class LookaheadCalc : JavaCCGlobals
 {
 	internal static int firstChoice(Choice P_0)
 	{
-		if (Options.getForceLaCheck())
+		if (Options.ForceLaCheck)
 		{
 			return 0;
 		}
@@ -150,10 +150,10 @@ public class LookaheadCalc : JavaCCGlobals
 		int[] array3 = new int[c.Choices.Count - 1];
 		MatchInfo[] array4 = new MatchInfo[c.Choices.Count - 1];
 		int[] array5 = new int[c.Choices.Count - 1];
-		for (int i = 1; i <= Options.getChoiceAmbiguityCheck(); i++)
+		for (int i = 1; i <= Options.ChoiceAmbiguityCheck; i++)
 		{
 			MatchInfo.laLimit = i;
-			LookaheadWalk.considerSemanticLA = ((!Options.getForceLaCheck()) ? true : false);
+			LookaheadWalk.considerSemanticLA = ((!Options.ForceLaCheck) ? true : false);
 			for (int j = num; j < c.Choices.Count - 1; j++)
 			{
 				LookaheadWalk.sizeLimitedMatches = new ArrayList();
@@ -215,9 +215,9 @@ public class LookaheadCalc : JavaCCGlobals
 		}
 		for (int i = num; i < c.Choices.Count - 1; i++)
 		{
-			if (!explicitLA((Expansion)c.Choices[i]) || Options.getForceLaCheck())
+			if (!explicitLA((Expansion)c.Choices[i]) || Options.ForceLaCheck)
 			{
-				if (array3[i] > Options.getChoiceAmbiguityCheck())
+				if (array3[i] > Options.ChoiceAmbiguityCheck)
 				{
 					JavaCCErrors.Warning("Choice conflict involving two expansions at");
 					Console.Error.Write(("         line ")+(((Expansion)c.Choices[i]).Line).ToString());
@@ -250,7 +250,7 @@ public class LookaheadCalc : JavaCCGlobals
 	{
 		MatchInfo matchInfo = null;
 		int i;
-		for (i = 1; i <= Options.getOtherAmbiguityCheck(); i++)
+		for (i = 1; i <= Options.OtherAmbiguityCheck; i++)
 		{
 			MatchInfo.laLimit = i;
 			LookaheadWalk.sizeLimitedMatches = new ArrayList();
@@ -258,7 +258,7 @@ public class LookaheadCalc : JavaCCGlobals
 			matchInfo2.firstFreeLoc = 0;
 			ArrayList vector = new ArrayList();
 			vector.Add(matchInfo2);
-			LookaheadWalk.considerSemanticLA = ((!Options.getForceLaCheck()) ? true : false);
+			LookaheadWalk.considerSemanticLA = ((!Options.ForceLaCheck) ? true : false);
 			LookaheadWalk.genFirstSet(vector, e2);
 			ArrayList sizeLimitedMatches = LookaheadWalk.sizeLimitedMatches;
 			LookaheadWalk.sizeLimitedMatches = new ArrayList();
@@ -277,7 +277,7 @@ public class LookaheadCalc : JavaCCGlobals
 			}
 			matchInfo = matchInfo2;
 		}
-		if (i > Options.getOtherAmbiguityCheck())
+		if (i > Options.OtherAmbiguityCheck)
 		{
 			JavaCCErrors.Warning(("Choice conflict in ")+(image(e1))+(" construct ")
 				+("at line ")

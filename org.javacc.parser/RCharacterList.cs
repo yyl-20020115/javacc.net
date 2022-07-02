@@ -259,7 +259,7 @@ public class RCharacterList : RegularExpression
 			vector.Add(new CharacterRange((char)(num + 1), (char)(ch - 1)));
 			num = right;
 		}
-		if (NfaState.unicodeWarningGiven || Options.getJavaUnicodeEscape())
+		if (NfaState.unicodeWarningGiven || Options.JavaUnicodeEscape)
 		{
 			if (num < 65535)
 			{
@@ -294,7 +294,7 @@ public class RCharacterList : RegularExpression
 	{
 		if (!transformed)
 		{
-			if (Options.getIgnoreCase() || b)
+			if (Options.IgnoreCase || b)
 			{
 				ToCaseNeutral();
 				SortDescriptors();

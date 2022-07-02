@@ -19,7 +19,7 @@ internal class JJTreeOptions : Options
         {
             var text = Options.StringValue("JJTREE_OUTPUT_DIRECTORY");
 
-            return string.Equals("", text) ? Options.getOutputDirectory() : new FileInfo(text);
+            return string.Equals("", text) ? Options.OutputDirectory : new FileInfo(text);
         }
     }
 

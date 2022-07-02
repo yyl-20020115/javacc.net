@@ -5,9 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-
 namespace org.javacc.parser;
-
 
 public class RStringLiteral : RegularExpression
 {
@@ -77,8 +75,8 @@ public class RStringLiteral : RegularExpression
 		for (int j = 0; j < num; j++)
 		{
 			int num2;
-			string key = ((!Options.getIgnoreCase()) ? ("")+((char)(num2 = java.lang.String.instancehelper_charAt(image, j))) : java.lang.String.instancehelper_toLowerCase(("")+((char)(num2 = java.lang.String.instancehelper_charAt(image, j)))));
-			if (!NfaState.unicodeWarningGiven && num2 > 255 && !Options.getJavaUnicodeEscape() && !Options.getUserCharStream())
+			string key = ((!Options.IgnoreCase) ? ("")+((char)(num2 = image[j])) : java.lang.String.instancehelper_toLowerCase(("")+((char)(num2 = image[j]))));
+			if (!NfaState.unicodeWarningGiven && num2 > 255 && !Options.JavaUnicodeEscape && !Options.UserCharStream)
 			{
 				NfaState.unicodeWarningGiven = true;
 				JavaCCErrors.Warning(LexGen.curRE, "Non-ASCII characters used in regular expression.Please make sure you use the correct TextReader when you create the parser, one that can handle your character set.");
@@ -105,7 +103,7 @@ public class RStringLiteral : RegularExpression
 			{
 				kindInfo.InsertValidKind(ordinal);
 			}
-			if (!Options.getIgnoreCase() && LexGen.ignoreCase[ordinal] && num2 != Char.ToLower((char)num2))
+			if (!Options.IgnoreCase && LexGen.ignoreCase[ordinal] && num2 != Char.ToLower((char)num2))
 			{
 				key = Char.ToLower(image[j]);
 				if (j >= charPosKind.Count)
@@ -129,9 +127,9 @@ public class RStringLiteral : RegularExpression
 					kindInfo.InsertValidKind(ordinal);
 				}
 			}
-			if (!Options.getIgnoreCase() && LexGen.ignoreCase[ordinal] && num2 != char.ToUpper((char)num2))
+			if (!Options.IgnoreCase && LexGen.ignoreCase[ordinal] && num2 != char.ToUpper((char)num2))
 			{
-				key = java.lang.String.instancehelper_toUpperCase(("")+(java.lang.String.instancehelper_charAt(image, j)));
+				key = (("")+(image[j])).ToUpper();
 				if (j >= charPosKind.Count)
 				{
 					charPosKind.Add(hashtable = new Hashtable());
@@ -187,7 +185,7 @@ public class RStringLiteral : RegularExpression
 						subStringAtPos[text.Length - 1] = true;
 						break;
 					}
-					if (Options.getIgnoreCase() && StartsWithIgnoreCase(allImages[j], text))
+					if (Options.IgnoreCase && StartsWithIgnoreCase(allImages[j], text))
 					{
 						subString[i] = true;
 						subStringAtPos[text.Length - 1] = true;
@@ -563,7 +561,7 @@ public class RStringLiteral : RegularExpression
 							);
 					}
 				}
-				if (i != 0 && Options.getDebugTokenManager())
+				if (i != 0 && Options.DebugTokenManager)
 				{
 					P_0.WriteLine(("   if (jjmatchedKind != 0 && jjmatchedKind != 0x")+(Utils.ToString(int.MaxValue,16))+(")")
 						);
@@ -612,7 +610,7 @@ public class RStringLiteral : RegularExpression
 					{
 						P_0.WriteLine("0L);");
 					}
-					if (i != 0 && Options.getDebugTokenManager())
+					if (i != 0 && Options.DebugTokenManager)
 					{
 						P_0.WriteLine(("      if (jjmatchedKind != 0 && jjmatchedKind != 0x")+(Utils.ToString(int.MaxValue,16))+(")")
 							);
@@ -637,7 +635,7 @@ public class RStringLiteral : RegularExpression
 				}
 				P_0.WriteLine("   }");
 			}
-			if (i != 0 && Options.getDebugTokenManager())
+			if (i != 0 && Options.DebugTokenManager)
 			{
 				P_0.WriteLine(("   debugStream.WriteLine(")+((LexGen.maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ")+("\"Current character : \" + ")
 					+("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
@@ -651,7 +649,7 @@ public class RStringLiteral : RegularExpression
 				string text = array[k];
 				KindInfo kindInfo = (KindInfo)hashtable.get(text);
 				int num4 = 0;
-				int num5 = java.lang.String.instancehelper_charAt(text, 0);
+				int num5 = text[0];
 				int num6;
 				if (i == 0 && num5 < 128 && kindInfo.finalKindCnt != 0 && (NfaState.generatedStates == 0 || !NfaState.CanStartNfaUsingAscii((char)num5)))
 				{
@@ -680,7 +678,7 @@ public class RStringLiteral : RegularExpression
 						goto IL_0a09;
 					}
 				}
-				if (Options.getIgnoreCase())
+				if (Options.IgnoreCase)
 				{
 					if (num5 != char.ToUpper((char)num5))
 					{
@@ -723,7 +721,7 @@ public class RStringLiteral : RegularExpression
 							if (i != 0)
 							{
 								P_0.WriteLine(("((active")+(j)+(" & 0x")
-									+(Long.toHexString(1L << l))
+									+(Utils.ToHexString(1L << l))
 									+("L) != 0L)")
 									);
 							}
@@ -825,7 +823,7 @@ public class RStringLiteral : RegularExpression
 								{
 									num2 = 1;
 								}
-								P_0.Write(("0x")+(Long.toHexString(kindInfo.validKinds[j]))+("L")
+								P_0.Write(("0x")+(Utils.ToHexString(kindInfo.validKinds[j]))+("L")
 									);
 							}
 						}
@@ -835,7 +833,7 @@ public class RStringLiteral : RegularExpression
 							{
 								P_0.Write(", ");
 							}
-							P_0.Write(("0x")+(Long.toHexString(kindInfo.validKinds[j]))+("L")
+							P_0.Write(("0x")+(Utils.ToHexString(kindInfo.validKinds[j]))+("L")
 								);
 						}
 						P_0.WriteLine(");");
@@ -860,7 +858,7 @@ public class RStringLiteral : RegularExpression
 							if (kindInfo.validKinds[j] != 0)
 							{
 								P_0.Write(("active")+(j)+(", 0x")
-									+(Long.toHexString(kindInfo.validKinds[j]))
+									+(Utils.ToHexString(kindInfo.validKinds[j]))
 									+("L")
 									);
 							}
@@ -880,7 +878,7 @@ public class RStringLiteral : RegularExpression
 						if (kindInfo.validKinds[j] != 0)
 						{
 							P_0.Write(("active")+(j)+(", 0x")
-								+(Long.toHexString(kindInfo.validKinds[j]))
+								+(Utils.ToHexString(kindInfo.validKinds[j]))
 								+("L")
 								);
 						}
@@ -914,7 +912,7 @@ public class RStringLiteral : RegularExpression
 				continue;
 				IL_0a09:
 				LexGen.AddCharToSkip((char)num5, num6);
-				if (Options.getIgnoreCase())
+				if (Options.IgnoreCase)
 				{
 					if (num5 != char.ToUpper((char)num5))
 					{
@@ -927,7 +925,7 @@ public class RStringLiteral : RegularExpression
 				}
 			}
 			P_0.WriteLine("      default :");
-			if (Options.getDebugTokenManager())
+			if (Options.DebugTokenManager)
 			{
 				P_0.WriteLine("      debugStream.WriteLine(\"   No string literal matches possible.\");");
 			}
@@ -1048,7 +1046,7 @@ public class RStringLiteral : RegularExpression
 					long num13 = LexGen.toMore[i / 64];
 					long num14 = 1L;
 					int num15 = i;
-					if ((num13 & (num14 << ((64 != -1) ? (num15 % 64) : 0))) == 0 && !LexGen.canReachOnMore[LexGen.lexStates[i]] && ((!Options.getIgnoreCase() && !LexGen.ignoreCase[i]) || (string.Equals(@this, java.lang.String.instancehelper_toLowerCase(@this)) && string.Equals(@this, java.lang.String.instancehelper_toUpperCase(@this)))))
+					if ((num13 & (num14 << ((64 != -1) ? (num15 % 64) : 0))) == 0 && !LexGen.canReachOnMore[LexGen.lexStates[i]] && ((!Options.IgnoreCase && !LexGen.ignoreCase[i]) || (string.Equals(@this, java.lang.String.instancehelper_toLowerCase(@this)) && string.Equals(@this, java.lang.String.instancehelper_toUpperCase(@this)))))
 					{
 						string str = "\"";
 						for (int j = 0; j < @this.Length; j++)
@@ -1159,7 +1157,7 @@ public class RStringLiteral : RegularExpression
 		P_0.WriteLine("{");
 		P_0.WriteLine("   jjmatchedKind = kind;");
 		P_0.WriteLine("   jjmatchedPos = pos;");
-		if (Options.getDebugTokenManager())
+		if (Options.DebugTokenManager)
 		{
 			P_0.WriteLine("   debugStream.WriteLine(\"   No more string literal token matches are possible.\");");
 			P_0.WriteLine("   debugStream.WriteLine(\"   Currently matched the first \" + (jjmatchedPos + 1) + \" characters as a \" + tokenImage[jjmatchedKind] + \" token.\");");
@@ -1178,14 +1176,14 @@ public class RStringLiteral : RegularExpression
 		P_0.WriteLine("{");
 		P_0.WriteLine("   jjmatchedKind = kind;");
 		P_0.WriteLine("   jjmatchedPos = pos;");
-		if (Options.getDebugTokenManager())
+		if (Options.DebugTokenManager)
 		{
 			P_0.WriteLine("   debugStream.WriteLine(\"   No more string literal token matches are possible.\");");
 			P_0.WriteLine("   debugStream.WriteLine(\"   Currently matched the first \" + (jjmatchedPos + 1) + \" characters as a \" + tokenImage[jjmatchedKind] + \" token.\");");
 		}
 		P_0.WriteLine("   try { curChar = input_stream.readChar(); }");
 		P_0.WriteLine("   catch(java.io.IOException e) { return pos + 1; }");
-		if (Options.getDebugTokenManager())
+		if (Options.DebugTokenManager)
 		{
 			P_0.WriteLine(("   debugStream.WriteLine(")+((LexGen.maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ")+("\"Current character : \" + ")
 				+("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
@@ -1313,7 +1311,7 @@ public class RStringLiteral : RegularExpression
 		}
 		P_1.WriteLine(("long active")+(i)+(")\n{")
 			);
-		if (Options.getDebugTokenManager())
+		if (Options.DebugTokenManager)
 		{
 			P_1.WriteLine("      debugStream.WriteLine(\"   No more string literal token matches are possible.\");");
 		}
@@ -1345,7 +1343,7 @@ public class RStringLiteral : RegularExpression
 						}
 						num2 = 1;
 						P_1.Write(("(active")+(j)+(" & 0x")
-							+(Long.toHexString(array[j]))
+							+(Utils.ToHexString(array[j]))
 							+("L) != 0L")
 							);
 					}
@@ -1528,7 +1526,7 @@ public class RStringLiteral : RegularExpression
 			nfaState3 = new NfaState();
 			nfaState.charMoves = new char[1];
 			nfaState.AddChar(image[i]);
-			if (Options.getIgnoreCase() || b)
+			if (Options.IgnoreCase || b)
 			{
 				nfaState.AddChar(Char.ToLower(image[i]));
 				nfaState.AddChar(char.ToUpper(image[i]));
@@ -1544,16 +1542,13 @@ public class RStringLiteral : RegularExpression
 	
 	public override StringBuilder Dump(int i, HashSet<Expansion> s)
 	{
-		return base.Dump(i, s)+(' ')+(image);
+		return base.Dump(i, s).Append(' ').Append(image);
 	}
 
 	
 	public override string ToString()
 	{
-		string result = (base)+(" - ")+(image)
-			;
-		
-		return result;
+		return (base.ToString()) + (" - ") + (image);
 	}
 
 	static RStringLiteral()

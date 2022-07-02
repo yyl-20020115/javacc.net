@@ -1,5 +1,7 @@
 using System.IO;
 using System.Collections.Generic;
+using System.Collections;
+using System;
 
 namespace org.javacc.parser;
 
@@ -299,7 +301,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 			jj_la1[1] = jj_gen;
 			jj_consume_token(94);
 		}
-		Options.normalize();
+		Options.Normalize();
 	}
 
 	
@@ -342,7 +344,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		}
 		this.token = token;
 		jj_kind = P_0;
-		throw new System.Exception(generateParseException());
+		throw generateParseException();
 	}
 
 	
@@ -474,20 +476,20 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		case 80:
 		{
 			int value2 = IntegerLiteral();
-			Options.setInputFileOption(token, getToken(0), image, (value2));
+			Options.SetInputFileOption(token, getToken(0), image, (value2));
 			break;
 		}
 		case 44:
 		case 75:
 		{
 			int value = (BooleanLiteral() ? 1 : 0);
-			Options.setInputFileOption(token, getToken(0), image, ((byte)value != 0));
+			Options.SetInputFileOption(token, getToken(0), image, ((byte)value != 0));
 			break;
 		}
 		case 90:
 		{
 			string obj = StringLiteral();
-			Options.setInputFileOption(token, getToken(0), image, obj);
+			Options.SetInputFileOption(token, getToken(0), image, obj);
 			break;
 		}
 		default:
@@ -552,7 +554,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		JavaCodeProduction javaCodeProduction2 = javaCodeProduction;
 		javaCodeProduction2.firstToken = token;
 		Token token2 = token;
-		javaCodeProduction.throws_list = new ArrayList();
+		javaCodeProduction.ThrowsList = new ();
 		javaCodeProduction.line = token2.BeginLine;
 		javaCodeProduction.column = token2.BeginColumn;
 		jj_consume_token(5);
@@ -565,13 +567,13 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 			jj_consume_token(73);
 			ArrayList vector = new ArrayList();
 			Name(vector);
-			javaCodeProduction.throws_list.Add(vector);
+			javaCodeProduction.ThrowsList.Add(vector);
 			while (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 98)
 			{
 				vector = new ArrayList();
 				jj_consume_token(98);
 				Name(vector);
-				javaCodeProduction.throws_list.Add(vector);
+				javaCodeProduction.ThrowsList.Add(vector);
 			}
 			jj_la1[5] = jj_gen;
 		}
@@ -637,7 +639,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 			jj_la1[13] = jj_gen;
 		}
 		regexpr_kind(tokenProduction);
-		if (tokenProduction.Kind != 0 && Options.getUserTokenManager())
+		if (tokenProduction.Kind != 0 && Options.UserTokenManager)
 		{
 			JavaCCErrors.Warning(getToken(0), "Regular expression is being treated as if it were a TOKEN since option USER_TOKEN_MANAGER has been set to true.");
 		}
@@ -647,7 +649,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 			token2 = jj_consume_token(2);
 			jj_consume_token(96);
 			tokenProduction.ignoreCase = true;
-			if (Options.getUserTokenManager())
+			if (Options.UserTokenManager)
 			{
 				JavaCCErrors.Warning(token2, "Ignoring \"IGNORE_CASE\" specification since option USER_TOKEN_MANAGER has been set to true.");
 			}
@@ -688,7 +690,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		BNFProduction bNFProduction2 = bNFProduction;
 		bNFProduction2.firstToken = token;
 		Token token2 = token;
-		bNFProduction.throws_list = new ArrayList();
+		bNFProduction.ThrowsList = new ArrayList();
 		bNFProduction.line = token2.BeginLine;
 		bNFProduction.column = token2.BeginColumn;
 		jumpPatched = false;
@@ -701,13 +703,13 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 			jj_consume_token(73);
 			ArrayList vector = new ArrayList();
 			Name(vector);
-			bNFProduction.throws_list.Add(vector);
+			bNFProduction.ThrowsList.Add(vector);
 			while (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 98)
 			{
 				vector = new ArrayList();
 				jj_consume_token(98);
 				Name(vector);
-				bNFProduction.throws_list.Add(vector);
+				bNFProduction.ThrowsList.Add(vector);
 			}
 			jj_la1[7] = jj_gen;
 		}
@@ -977,7 +979,6 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 				continue;
 			}
 			num = 1;
-			Choice.___003Cclinit_003E();
 			choice = new Choice((Expansion)c.member);
 			((Expansion)c.member).parent = choice;
 			choice.Choices.Add(container.member);
@@ -1072,7 +1073,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		{
 			token = getToken(1);
 			Block(action.action_tokens);
-			if (Options.getUserTokenManager())
+			if (Options.UserTokenManager)
 			{
 				JavaCCErrors.Warning(token, "Ignoring action in regular expression specification since option USER_TOKEN_MANAGER has been set to true.");
 			}
@@ -1206,10 +1207,10 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 			complex_regular_expression_choices(c);
 			jj_consume_token(132);
 			RegularExpression regularExpression;
-			if (c.member is RJustName)
+			if (c.member is RJustName rj)
 			{
 				RSequence rSequence = new RSequence();
-				rSequence.Units.Add(c.member);
+				rSequence.Units.Add(rj);
 				regularExpression = rSequence;
 			}
 			else
@@ -1260,7 +1261,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		sequence.Column = token.BeginColumn;
 		lookahead.Line = token.BeginLine;
 		lookahead.Column = token.BeginColumn;
-		lookahead.amount = Options.getLookahead();
+		lookahead.amount = Options.Lookahead;
 		lookahead.la_expansion = null;
 		lookahead.isExplicit = false;
 		if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 1)
@@ -7821,7 +7822,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		}
 		if (jj_la == 0 && jj_scanpos == jj_lastpos)
 		{
-			throw new System.Exception(jj_ls);
+			throw (jj_ls);
 		}
 		return false;
 	}

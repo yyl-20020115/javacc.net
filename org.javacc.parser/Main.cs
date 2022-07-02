@@ -101,8 +101,8 @@ public static class EntryPoint
 				JavaCCGlobals.jjtreeGenerated = JavaCCGlobals.IsGeneratedBy("JJTree", strarr[strarr.Length - 1]);
 				JavaCCGlobals.toolNames = JavaCCGlobals.GetToolNames(strarr[strarr.Length - 1]);
 				javaCCParser.javacc_input();
-				JavaCCGlobals.CreateOutputDir(Options.getOutputDirectory());
-				if (Options.getUnicodeInput())
+				JavaCCGlobals.CreateOutputDir(Options.OutputDirectory);
+				if (Options.UnicodeInput)
 				{
 					NfaState.unicodeWarningGiven = true;
 					Console.WriteLine("Note: UNICODE_INPUT option is specified. Please make sure you create the parser/lexer using a TextReader with the correct character encoding.");
@@ -111,7 +111,7 @@ public static class EntryPoint
 				ParseGen.Start();
 				LexGen.start();
 				OtherFilesGen.start();
-				if (JavaCCErrors._Error_Count == 0 && (Options.getBuildParser() || Options.getBuildTokenManager()))
+				if (JavaCCErrors._Error_Count == 0 && (Options.BuildParser || Options.BuildTokenManager))
 				{
 					if (JavaCCErrors._Warning_Count == 0)
 					{

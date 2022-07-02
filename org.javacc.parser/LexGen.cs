@@ -101,7 +101,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		{
 			
 			FileInfo file = new FileInfo(
-				Path.Combine(Options.getOutputDirectory().FullName, tokMgrClassName)+(".java"));
+				Path.Combine(Options.OutputDirectory.FullName, tokMgrClassName)+(".java"));
 		
 			ostr = new StreamWriter(file.FullName);
 			ArrayList vector = (ArrayList)JavaCCGlobals.toolNames.Clone();
@@ -156,7 +156,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		{
 			_ = (Token)JavaCCGlobals.token_mgr_decls[0];
 			int num2 = 0;
-			int num = (Options.getCommonTokenAction() ? 1 : 0);
+			int num = (Options.CommonTokenAction ? 1 : 0);
 			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.token_mgr_decls[0]);
 			JavaCCGlobals.ccol = 1;
 			for (int j = 0; j < JavaCCGlobals.token_mgr_decls.Count; j++)
@@ -176,7 +176,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					);
 			}
 		}
-		else if (Options.getCommonTokenAction())
+		else if (Options.CommonTokenAction)
 		{
 			JavaCCErrors.Warning(("You have the COMMON_TOKEN_ACTION option set. But you have not defined the method :\n      ")+(staticString)+("void CommonTokenAction(Token t)\n")
 				+("in your TOKEN_MGR_DECLS. The generated token manager will not compile.")
@@ -189,7 +189,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		ostr.WriteLine("  /** HashSet<object> debug output. */");
 		ostr.WriteLine(("  public ")+(staticString)+(" void setDebugStream(java.io.TextWriter ds) { debugStream = ds; }")
 			);
-		if (Options.getTokenManagerUsesParser() && !Options.getStatic())
+		if (Options.TokenManagerUsesParser && !Options.getStatic())
 		{
 			ostr.WriteLine("");
 			ostr.WriteLine("  /** The parser. */");
@@ -467,7 +467,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			}
 			ostr.WriteLine("\n};");
 		}
-		string str = (Options.getUserCharStream() ? "CharStream" : ((!Options.getJavaUnicodeEscape()) ? "SimpleCharStream" : "JavaCharStream"));
+		string str = (Options.UserCharStream ? "CharStream" : ((!Options.JavaUnicodeEscape) ? "SimpleCharStream" : "JavaCharStream"));
 		ostr.WriteLine((staticString)+("protected ")+(str)
 			+(" input_stream;")
 			);
@@ -481,13 +481,13 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			);
 		if (hasMoreActions || hasSkipActions || hasTokenActions)
 		{
-			ostr.WriteLine((staticString)+(Options.getStringBufOrBuild())+(" image;")
+			ostr.WriteLine((staticString)+(Options.StringBufOrBuild)+(" image;")
 				);
 			ostr.WriteLine((staticString)+("int jjimageLen;"));
 			ostr.WriteLine((staticString)+("int lengthOfMatch;"));
 		}
 		ostr.WriteLine((staticString)+("protected char curChar;"));
-		if (Options.getTokenManagerUsesParser() && !Options.getStatic())
+		if (Options.TokenManagerUsesParser && !Options.getStatic())
 		{
 			ostr.WriteLine("");
 			ostr.WriteLine("/** Constructor with parser. */");
@@ -507,14 +507,14 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				+(" stream){")
 				);
 		}
-		if (Options.getStatic() && !Options.getUserCharStream())
+		if (Options.getStatic() && !Options.UserCharStream)
 		{
 			ostr.WriteLine("   if (input_stream != null)");
 			ostr.WriteLine("      throw new TokenMgrError(\"ERROR: Second call to constructor of static lexer. You must use ReInit() to initialize the static variables.\", TokenMgrError.STATIC_LEXER_ERROR);");
 		}
-		else if (!Options.getUserCharStream())
+		else if (!Options.UserCharStream)
 		{
-			if (Options.getJavaUnicodeEscape())
+			if (Options.JavaUnicodeEscape)
 			{
 				ostr.WriteLine("   if (JavaCharStream.staticFlag)");
 			}
@@ -526,7 +526,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		}
 		ostr.WriteLine("   input_stream = stream;");
 		ostr.WriteLine("}");
-		if (Options.getTokenManagerUsesParser() && !Options.getStatic())
+		if (Options.TokenManagerUsesParser && !Options.getStatic())
 		{
 			ostr.WriteLine("");
 			ostr.WriteLine("/** Constructor with parser. */");
@@ -648,9 +648,9 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				ostr.WriteLine("   endColumn = input_stream.getEndColumn();");
 			}
 		}
-		if (String.instancehelper_length(Options.getTokenFactory()) > 0)
+		if (String.instancehelper_length(Options.TokenFactory) > 0)
 		{
-			ostr.WriteLine(("   t = ")+(Options.getTokenFactory())+(".newToken(jjmatchedKind, tokenImage);")
+			ostr.WriteLine(("   t = ")+(Options.TokenFactory)+(".newToken(jjmatchedKind, tokenImage);")
 				);
 		}
 		else if (num2 != 0)
@@ -709,7 +709,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		ostr.WriteLine("   }     ");
 		ostr.WriteLine("   catch(java.io.IOException e)");
 		ostr.WriteLine("   {        ");
-		if (Options.getDebugTokenManager())
+		if (Options.DebugTokenManager)
 		{
 			ostr.WriteLine("      debugStream.WriteLine(\"Returning the <EOF> token.\");");
 		}
@@ -723,7 +723,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		{
 			ostr.WriteLine("      TokenLexicalActions(matchedToken);");
 		}
-		if (Options.getCommonTokenAction())
+		if (Options.CommonTokenAction)
 		{
 			ostr.WriteLine("      CommonTokenAction(matchedToken);");
 		}
@@ -791,7 +791,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 						+("L & (1L << (curChar & 077))) != 0L)")
 						);
 				}
-				if (Options.getDebugTokenManager())
+				if (Options.DebugTokenManager)
 				{
 					ostr.WriteLine((str)+("{"));
 					ostr.WriteLine(("      debugStream.WriteLine(")+((maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ")+("\"Skipping character : \" + ")
@@ -799,7 +799,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 						);
 				}
 				ostr.WriteLine((str)+("      curChar = input_stream.BeginToken();"));
-				if (Options.getDebugTokenManager())
+				if (Options.DebugTokenManager)
 				{
 					ostr.WriteLine((str)+("}"));
 				}
@@ -808,7 +808,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			}
 			if (initMatch[i] != int.MaxValue && initMatch[i] != 0)
 			{
-				if (Options.getDebugTokenManager())
+				if (Options.DebugTokenManager)
 				{
 					ostr.WriteLine(("      debugStream.WriteLine(\"   Matched the empty string as \" + tokenImage[")+(initMatch[i])+("] + \" token.\");")
 						);
@@ -826,7 +826,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					);
 				ostr.WriteLine((str)+("jjmatchedPos = 0;"));
 			}
-			if (Options.getDebugTokenManager())
+			if (Options.DebugTokenManager)
 			{
 				ostr.WriteLine(("      debugStream.WriteLine(")+((maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ")+("\"Current character : \" + ")
 					+("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
@@ -851,7 +851,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 						);
 				}
 				ostr.WriteLine((str)+("{"));
-				if (Options.getDebugTokenManager())
+				if (Options.DebugTokenManager)
 				{
 					ostr.WriteLine(("           debugStream.WriteLine(\"   Current character matched as a \" + tokenImage[")+(canMatchAnyChar[i])+("] + \" token.\");")
 						);
@@ -887,20 +887,20 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				);
 			ostr.WriteLine((str)+("   {"));
 			ostr.WriteLine((str)+("      if (jjmatchedPos + 1 < curPos)"));
-			if (Options.getDebugTokenManager())
+			if (Options.DebugTokenManager)
 			{
 				ostr.WriteLine((str)+("      {"));
 				ostr.WriteLine((str)+("         debugStream.WriteLine(")+("\"   Putting back \" + (curPos - jjmatchedPos - 1) + \" characters into the input stream.\");")
 					);
 			}
 			ostr.WriteLine((str)+("         input_stream.backup(curPos - jjmatchedPos - 1);"));
-			if (Options.getDebugTokenManager())
+			if (Options.DebugTokenManager)
 			{
 				ostr.WriteLine((str)+("      }"));
 			}
-			if (Options.getDebugTokenManager())
+			if (Options.DebugTokenManager)
 			{
-				if (Options.getJavaUnicodeEscape() || Options.getUserCharStream())
+				if (Options.JavaUnicodeEscape || Options.UserCharStream)
 				{
 					ostr.WriteLine("    debugStream.WriteLine(\"****** FOUND A \" + tokenImage[jjmatchedKind] + \" MATCH (\" + TokenMgrError.addEscapes(new String(input_stream.GetSuffix(jjmatchedPos + 1))) + \") ******\\n\");");
 				}
@@ -929,7 +929,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				ostr.WriteLine("       if (jjnewLexState[jjmatchedKind] != -1)");
 				ostr.WriteLine((str)+("       curLexState = jjnewLexState[jjmatchedKind];"));
 			}
-			if (Options.getCommonTokenAction())
+			if (Options.CommonTokenAction)
 			{
 				ostr.WriteLine((str)+("         CommonTokenAction(matchedToken);"));
 			}
@@ -1006,7 +1006,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 						);
 					ostr.WriteLine((str)+("      try {"));
 					ostr.WriteLine((str)+("         curChar = input_stream.readChar();"));
-					if (Options.getDebugTokenManager())
+					if (Options.DebugTokenManager)
 					{
 						ostr.WriteLine(("   debugStream.WriteLine(")+((maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ")+("\"Current character : \" + ")
 							+("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
@@ -1151,7 +1151,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			if ((action = actions[i]) != null && action.action_tokens.Count != 0)
 			{
 				ostr.WriteLine("         if (image == null)");
-				ostr.WriteLine(("            image = new ")+(Options.getStringBufOrBuild())+("();")
+				ostr.WriteLine(("            image = new ")+(Options.StringBufOrBuild)+("();")
 					);
 				ostr.Write("         image+");
 				if (RStringLiteral.allImages[i] != null)
@@ -1161,7 +1161,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					ostr.WriteLine(("        lengthOfMatch = jjstrLiteralImages[")+(i)+("].length();")
 						);
 				}
-				else if (Options.getJavaUnicodeEscape() || Options.getUserCharStream())
+				else if (Options.JavaUnicodeEscape || Options.UserCharStream)
 				{
 					ostr.WriteLine("(input_stream.GetSuffix(jjimageLen + (lengthOfMatch = jjmatchedPos + 1)));");
 				}
@@ -1227,7 +1227,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			if ((action = actions[i]) != null && action.action_tokens.Count != 0)
 			{
 				ostr.WriteLine("         if (image == null)");
-				ostr.WriteLine(("            image = new ")+(Options.getStringBufOrBuild())+("();")
+				ostr.WriteLine(("            image = new ")+(Options.StringBufOrBuild)+("();")
 					);
 				ostr.Write("         image+");
 				if (RStringLiteral.allImages[i] != null)
@@ -1235,7 +1235,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					ostr.WriteLine(("(jjstrLiteralImages[")+(i)+("]);")
 						);
 				}
-				else if (Options.getJavaUnicodeEscape() || Options.getUserCharStream())
+				else if (Options.JavaUnicodeEscape || Options.UserCharStream)
 				{
 					ostr.WriteLine("(input_stream.GetSuffix(jjimageLen));");
 				}
@@ -1307,7 +1307,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				else
 				{
 					ostr.WriteLine("        if (image == null)");
-					ostr.WriteLine(("            image = new ")+(Options.getStringBufOrBuild())+("();")
+					ostr.WriteLine(("            image = new ")+(Options.StringBufOrBuild)+("();")
 						);
 					ostr.Write("        image+");
 					if (RStringLiteral.allImages[i] != null)
@@ -1317,7 +1317,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 						ostr.WriteLine(("        lengthOfMatch = jjstrLiteralImages[")+(i)+("].length();")
 							);
 					}
-					else if (Options.getJavaUnicodeEscape() || Options.getUserCharStream())
+					else if (Options.JavaUnicodeEscape || Options.UserCharStream)
 					{
 						ostr.WriteLine("(input_stream.GetSuffix(jjimageLen + (lengthOfMatch = jjmatchedPos + 1)));");
 					}
@@ -1370,11 +1370,11 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 	
 	public static void start()
 	{
-		if (!Options.getBuildTokenManager() || Options.getUserTokenManager() || JavaCCErrors._Error_Count > 0)
+		if (!Options.BuildTokenManager || Options.UserTokenManager || JavaCCErrors._Error_Count > 0)
 		{
 			return;
 		}
-		keepLineCol = Options.getKeepLineColumn();
+		keepLineCol = Options.KeepLineColumn;
 		ArrayList vector = new ArrayList();
 		staticString = ((!Options.getStatic()) ? "" : "static ");
 		tokMgrClassName = (JavaCCGlobals.cu_name)+("TokenManager");
@@ -1610,7 +1610,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		DumpStaticVarDeclarations();
 		DumpFillToken();
 		DumpGetNextToken();
-		if (Options.getDebugTokenManager())
+		if (Options.DebugTokenManager)
 		{
 			NfaState.DumpStatesForKind(ostr);
 			DumpDebugMethods();

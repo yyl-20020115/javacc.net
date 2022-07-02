@@ -90,7 +90,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	
 	private LookaheadSuccess jj_ls;
 
-	private ArrayList jj_expentries;
+	private List<int[]> jj_expentries;
 
 	private int[] jj_expentry;
 
@@ -496,7 +496,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x13)
 			{
-				ex21 = ByteCodeHelper.MapException<System.Exception>(x13, ByteCodeHelper.MapFlags.None);
+				ex21 = x13;
 			}
 		}
 		catch
@@ -820,7 +820,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 					Token obj2 = token2;
 					string image = token.Image;
 					;
-					Options.setInputFileOption(obj, obj2, image, (token2.Image));
+					Options.SetInputFileOption(obj, obj2, image, (token2.Image));
 					aSTOptionBinding.Initialize(token.Image, token2.Image);
 					break;
 				}
@@ -828,7 +828,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				case 69:
 				{
 					Token token2 = BooleanLiteral();
-					Options.setInputFileOption(token, token2, token.Image, (token2.Image));
+					Options.SetInputFileOption(token, token2, token.Image, (token2.Image));
 					aSTOptionBinding.Initialize(token.Image, token2.Image);
 					break;
 				}
@@ -836,7 +836,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				{
 					Token token2 = StringLiteral();
 					string text = TokenUtils.RemoveEscapeAndQuotes(token2, token2.Image);
-					Options.setInputFileOption(token, token2, token.Image, text);
+					Options.SetInputFileOption(token, token2, token.Image, text);
 					aSTOptionBinding.Initialize(token.Image, text);
 					break;
 				}
@@ -1958,7 +1958,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 			}
 			catch (System.Exception x13)
 			{
-				ex21 = ByteCodeHelper.MapException<System.Exception>(x13, ByteCodeHelper.MapFlags.None);
+				ex21 = x13;
 			}
 		}
 		catch
@@ -3366,12 +3366,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 				}
 				catch (System.Exception x13)
 				{
-					ex22 = ByteCodeHelper.MapException<System.Exception>(x13, ByteCodeHelper.MapFlags.None);
+					ex22 = x13;
 				}
 			}
 			catch (System.Exception x14)
 			{
-				ex19 = ByteCodeHelper.MapException<System.Exception>(x14, ByteCodeHelper.MapFlags.None);
+				ex19 = x14;
 				goto IL_01b0;
 			}
 		}
@@ -15220,14 +15220,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 	
 	public JJTreeParser(Stream @is, string str)
 	{
-		jjtree = new JJTJJTreeParserState();
+		jjtree = new ();
 		lookingAhead = false;
 		jj_la1 = new int[178];
 		jj_2_rtns = new JJCalls[47];
 		jj_rescan = false;
 		jj_gc = 0;
-		jj_ls = new LookaheadSuccess();
-		jj_expentries = new ArrayList();
+		jj_ls = new ();
+		jj_expentries = new ();
 		jj_kind = -1;
 		jj_lasttokens = new int[100];
 		UnsupportedEncodingException ex;
@@ -15254,9 +15254,8 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 		}
 		return;
 		IL_008e:
-		UnsupportedEncodingException cause = ex;
 		
-		throw new RuntimeException(cause);
+		throw ex;
 	}
 
 	
@@ -15286,10 +15285,8 @@ ex=x;
 			jj_2_rtns[i] = new JJCalls();
 		}
 		return;
-		IL_001e:
-		UnsupportedEncodingException cause = ex;
-		
-		throw new RuntimeException(cause);
+		IL_001e:		
+		throw ex;
 	}
 
 	
@@ -15347,11 +15344,9 @@ ex=x;
 		int[][] array2 = new int[jj_expentries.Count][];
 		for (int j = 0; j < jj_expentries.Count; j++)
 		{
-			array2[j] = (int[])jj_expentries.get(j);
+			array2[j] = jj_expentries[j];
 		}
-		ParseException result = new ParseException(token, array2, JJTreeParserConstants.tokenImage);
-		
-		return result;
+		return new ParseException(token, array2, JJTreeParserConstants.tokenImage);
 	}
 
 	
@@ -15382,10 +15377,9 @@ ex=x;
 				jj_expentry[i] = jj_lasttokens[i];
 			}
 			i = 0;
-			Iterator iterator = jj_expentries.iterator();
-			while (iterator.hasNext())
+			foreach(var array2 in jj_expentries)
 			{
-				int[] array2 = (int[])iterator.next();
+				//int[] array2 = (int[])iterator.next();
 				if ((nint)array2.LongLength != (nint)jj_expentry.LongLength)
 				{
 					continue;
@@ -15833,14 +15827,14 @@ ex=x;
 	
 	public JJTreeParser(JJTreeParserTokenManager jjtptm)
 	{
-		jjtree = new JJTJJTreeParserState();
+		jjtree = new ();
 		lookingAhead = false;
 		jj_la1 = new int[178];
 		jj_2_rtns = new JJCalls[47];
 		jj_rescan = false;
 		jj_gc = 0;
-		jj_ls = new LookaheadSuccess();
-		jj_expentries = new ArrayList();
+		jj_ls = new ();
+		jj_expentries = new ();
 		jj_kind = -1;
 		jj_lasttokens = new int[100];
 		token_source = jjtptm;

@@ -1,12 +1,12 @@
-using System.Text;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace org.javacc.parser;
 
 
 public abstract class JavaCCParserInternals : JavaCCGlobals
 {
-	private static ArrayList add_cu_token_here;
+	private static List<Token> add_cu_token_here;
 
 	private static Token first_cu_token;
 
@@ -127,7 +127,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 	protected internal static void addregexpr(TokenProduction tp)
 	{
 		JavaCCGlobals.rexprlist.Add(tp);
-		if (Options.getUserTokenManager() && (tp.LexStates == null || (nint)tp.LexStates.LongLength != 1 || !string.Equals(tp.LexStates[0], "DEFAULT")))
+		if (Options.UserTokenManager && (tp.LexStates == null || (nint)tp.LexStates.LongLength != 1 || !string.Equals(tp.LexStates[0], "DEFAULT")))
 		{
 			JavaCCErrors.Warning(tp, "Ignoring lexical state specifications since option USER_TOKEN_MANAGER has been set to true.");
 		}
@@ -164,7 +164,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 			return;
 		}
 		JavaCCGlobals.token_mgr_decls = v;
-		if (Options.getUserTokenManager())
+		if (Options.UserTokenManager)
 		{
 			JavaCCErrors.Warning(t, "Ignoring declarations in \"TOKEN_MGR_DECLS\" since option USER_TOKEN_MANAGER has been set to true.");
 		}

@@ -19,9 +19,9 @@ public class JavaCCGlobals
 
 	public static string cu_name = "";
 
-	public static ArrayList cu_to_insertion_point_1 = new();
+	public static List<Token> cu_to_insertion_point_1 = new();
 
-	public static ArrayList cu_to_insertion_point_2 = new();
+	public static List<Token> cu_to_insertion_point_2 = new();
 
 	public static List<Token> cu_from_insertion_point_2 = new();
 

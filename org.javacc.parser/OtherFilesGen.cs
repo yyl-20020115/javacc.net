@@ -14,7 +14,7 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 	public static void start()
 	{
 		Token t = null;
-		keepLineCol = Options.getKeepLineColumn();
+		keepLineCol = Options.KeepLineColumn;
 		if (JavaCCErrors._Error_Count != 0)
 		{
 			throw new MetaParseException();
@@ -22,15 +22,15 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 		JavaFiles.gen_TokenMgrError();
 		JavaFiles.gen_ParseException();
 		JavaFiles.gen_Token();
-		if (Options.getUserTokenManager())
+		if (Options.UserTokenManager)
 		{
 			JavaFiles.gen_TokenManager();
 		}
-		else if (Options.getUserCharStream())
+		else if (Options.UserCharStream)
 		{
 			JavaFiles.gen_CharStream();
 		}
-		else if (Options.getJavaUnicodeEscape())
+		else if (Options.JavaUnicodeEscape)
 		{
 			JavaFiles.gen_JavaCharStream();
 		}
@@ -42,7 +42,7 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 		{
 			
 			ostr = new StreamWriter(
-				Path.Combine(Options.getOutputDirectory().FullName, (JavaCCGlobals.cu_name)+("Constants.java")));
+				Path.Combine(Options.OutputDirectory.FullName, (JavaCCGlobals.cu_name)+("Constants.java")));
 		}
 		catch (IOException)
 		{
@@ -90,7 +90,7 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 				);
 		}
 		ostr.WriteLine("");
-		if (!Options.getUserTokenManager() && Options.getBuildTokenManager())
+		if (!Options.UserTokenManager && Options.BuildTokenManager)
 		{
 			for (int j = 0; j < (nint)LexGen.lexStateName.LongLength; j++)
 			{

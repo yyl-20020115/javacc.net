@@ -19,7 +19,7 @@ internal class JJTreeGlobals
 
 	public static Token ParserImports;
 
-	internal static Dictionary<string, ASTJavacode> Productions = new();
+	internal static Dictionary<string, ASTProduction> Productions = new();
 
 
     public static bool IsOptionJJTreeOnly(string name) => JJTreeOptions.Contains((name.ToUpper()));

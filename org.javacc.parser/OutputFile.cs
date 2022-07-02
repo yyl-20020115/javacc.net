@@ -93,7 +93,7 @@ public class OutputFile
 			{
 			}
 
-			Console.Error.WriteLine(("Could not close ")+(this_00240.file.getAbsolutePath()));
+			Console.Error.WriteLine(("Could not close ")+(this_00240.file.FullName));
 		}
 	}
 
@@ -266,7 +266,7 @@ public class OutputFile
 		for (int i = 0; i < (nint)P_0.LongLength; i++)
 		{
 			int num = P_0[i];
-			stringBuilder+(HEX_DIGITS[(num & 0xF0) >> 4])+(HEX_DIGITS[num & 0xF]);
+			stringBuilder.Append(HEX_DIGITS[(num & 0xF0) >> 4]).Append(HEX_DIGITS[num & 0xF]);
 		}
 		return stringBuilder.ToString();
 	}

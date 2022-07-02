@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 
@@ -150,7 +151,7 @@ public class NfaState
 		for (i = 0; i < num && charMoves[i] != 0 && charMoves[i] <= P_0; i++)
 		{
 		}
-		if (!unicodeWarningGiven && P_0 > 'ÿ' && !Options.getJavaUnicodeEscape() && !Options.getUserCharStream())
+		if (!unicodeWarningGiven && P_0 > 'ÿ' && !Options.JavaUnicodeEscape && !Options.UserCharStream)
 		{
 			unicodeWarningGiven = true;
 			JavaCCErrors.Warning(LexGen.curRE, "Non-ASCII characters used in regular expression.\nPlease make sure you use the correct TextReader when you create the parser, one that can handle your character set.");
@@ -361,11 +362,11 @@ public class NfaState
 			);
 		pw.WriteLine("   int i = 1;");
 		pw.WriteLine("   jjstateSet[0] = startState;");
-		if (Options.getDebugTokenManager())
+		if (Options.DebugTokenManager)
 		{
 			pw.WriteLine("      debugStream.WriteLine(\"   Starting NFA to match one of : \" + jjKindsForStateVector(curLexState, jjstateSet, 0, 1));");
 		}
-		if (Options.getDebugTokenManager())
+		if (Options.DebugTokenManager)
 		{
 			pw.WriteLine(("      debugStream.WriteLine(")+((LexGen.maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ")+("\"Current character : \" + ")
 				+("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
@@ -401,7 +402,7 @@ public class NfaState
 			);
 		pw.WriteLine("      }");
 		pw.WriteLine("      ++curPos;");
-		if (Options.getDebugTokenManager())
+		if (Options.DebugTokenManager)
 		{
 			pw.WriteLine(("      if (jjmatchedKind != 0 && jjmatchedKind != 0x")+(Utils.ToString(int.MaxValue,16))+(")")
 				);
@@ -417,7 +418,7 @@ public class NfaState
 		{
 			pw.WriteLine("         return curPos;");
 		}
-		if (Options.getDebugTokenManager())
+		if (Options.DebugTokenManager)
 		{
 			pw.WriteLine("      debugStream.WriteLine(\"   Possible kinds of longer matches : \" + jjKindsForStateVector(curLexState, jjstateSet, startsAt, i));");
 		}
@@ -430,7 +431,7 @@ public class NfaState
 		{
 			pw.WriteLine("      catch(java.io.IOException e) { return curPos; }");
 		}
-		if (Options.getDebugTokenManager())
+		if (Options.DebugTokenManager)
 		{
 			pw.WriteLine(("      debugStream.WriteLine(")+((LexGen.maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ")+("\"Current character : \" + ")
 				+("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
@@ -489,7 +490,7 @@ public class NfaState
 	
 	public static void DumpNonAsciiMoveMethods(TextWriter pw)
 	{
-		if ((Options.getJavaUnicodeEscape() || unicodeWarningGiven) && nonAsciiTableForMethod.Count > 0)
+		if ((Options.JavaUnicodeEscape || unicodeWarningGiven) && nonAsciiTableForMethod.Count > 0)
 		{
 			for (int i = 0; i < nonAsciiTableForMethod.Count; i++)
 			{
@@ -780,7 +781,7 @@ public class NfaState
 				num = (ushort)(num + 1);
 			}
 		}
-		if (!unicodeWarningGiven && (num > 255 || P_1 > 'ÿ') && !Options.getJavaUnicodeEscape() && !Options.getUserCharStream())
+		if (!unicodeWarningGiven && (num > 255 || P_1 > 'ÿ') && !Options.JavaUnicodeEscape && !Options.UserCharStream)
 		{
 			unicodeWarningGiven = true;
 			JavaCCErrors.Warning(LexGen.curRE, "Non-ASCII characters used in regular expression.\nPlease make sure you use the correct TextReader when you create the parser, one that can handle your character set.");
@@ -1056,7 +1057,7 @@ public class NfaState
 				{
 					nfaState.GenerateCode();
 				}
-				((NfaState)indexedAllStates.elementAt(nfaState.stateName)).inNextOf++;
+				indexedAllStates[(nfaState.stateName)].inNextOf++;
 				array[num] = nfaState.stateName;
 				stringBuilder = new StringBuilder();
 				epsilonMovesString = stringBuilder+(epsilonMovesString)+(nfaState.stateName)+(", ")
@@ -1248,7 +1249,7 @@ public class NfaState
 		{
 			if (array[j] != -1)
 			{
-				NfaState nfaState = (NfaState)indexedAllStates.elementAt(array[j]);
+				NfaState nfaState = indexedAllStates[array[j]];
 				nfaState.isComposite = true;
 				nfaState.compositeStates = array;
 			}
@@ -1508,7 +1509,7 @@ public class NfaState
 				break;
 			}
 		}
-		if (!Options.getJavaUnicodeEscape() && !unicodeWarningGiven)
+		if (!Options.JavaUnicodeEscape && !unicodeWarningGiven)
 		{
 			if (loByteVec != null && loByteVec.Count > 1)
 			{
@@ -1893,7 +1894,7 @@ public class NfaState
 			P_0.WriteLine("         long l = 1L << (curChar & 077);");
 			break;
 		default:
-			if (Options.getJavaUnicodeEscape() || unicodeWarningGiven)
+			if (Options.JavaUnicodeEscape || unicodeWarningGiven)
 			{
 				P_0.WriteLine("         int hiByte = (int)(curChar >> 8);");
 				P_0.WriteLine("         int i1 = hiByte >> 6;");
@@ -2038,7 +2039,7 @@ public class NfaState
 		if (next == null || next.usefulEpsilonMoves <= 0)
 		{
 			str = (" && kind > ")+(kindToPrint);
-			if (!Options.getJavaUnicodeEscape() && !unicodeWarningGiven)
+			if (!Options.JavaUnicodeEscape && !unicodeWarningGiven)
 			{
 				if (loByteVec != null && loByteVec.Count > 1)
 				{
@@ -2064,7 +2065,7 @@ public class NfaState
 		str = "   ";
 		if (kindToPrint != int.MaxValue)
 		{
-			if (!Options.getJavaUnicodeEscape() && !unicodeWarningGiven)
+			if (!Options.JavaUnicodeEscape && !unicodeWarningGiven)
 			{
 				if (loByteVec != null && loByteVec.Count > 1)
 				{
@@ -2086,7 +2087,7 @@ public class NfaState
 				);
 			str = "";
 		}
-		else if (!Options.getJavaUnicodeEscape() && !unicodeWarningGiven)
+		else if (!Options.JavaUnicodeEscape && !unicodeWarningGiven)
 		{
 			if (loByteVec != null && loByteVec.Count > 1)
 			{
@@ -2322,14 +2323,13 @@ public class NfaState
 	private static void ReArrange()
 	{
 		var vector = allStates;
-		allStates = new ();
-		allStates.setSize(generatedStates);
+		allStates = new (Enumerable.Repeat<NfaState>(null,generatedStates));
 		for (int i = 0; i < vector.Count; i++)
 		{
 			NfaState nfaState = (NfaState)vector[i];
 			if (nfaState.stateName != -1 && !nfaState.dummy)
 			{
-				allStates.setElementAt(nfaState, nfaState.stateName);
+                allStates[nfaState.stateName] = (nfaState);
 			}
 		}
 	}

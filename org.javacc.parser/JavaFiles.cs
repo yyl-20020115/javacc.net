@@ -62,7 +62,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		string text = ("/* ")+(JavaCCGlobals.getIdString("JavaCC", P_0))+(" Version ")
 			;
 		
-		var file = new FileInfo(Path.Combine( Options.getOutputDirectory().FullName, replaceBackslash(P_0)));
+		var file = new FileInfo(Path.Combine( Options.OutputDirectory.FullName, replaceBackslash(P_0)));
 		if (!file.Exists)
 		{
 			double.TryParse("4.1", out var r);
@@ -189,7 +189,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			FileInfo f = new FileInfo(Path.Combine( Options.getOutputDirectory().FullName, "JavaCharStream.java"));
+			FileInfo f = new FileInfo(Path.Combine( Options.OutputDirectory.FullName, "JavaCharStream.java"));
 			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[1] { "STATIC" });
 			if (!outputFile.needToWrite)
@@ -966,7 +966,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			var f = new FileInfo(Path.Combine(Options.getOutputDirectory().DirectoryName, "SimpleCharStream.java"));
+			var f = new FileInfo(Path.Combine(Options.OutputDirectory.DirectoryName, "SimpleCharStream.java"));
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[1] { "STATIC" });
 			if (!outputFile.needToWrite)
 			{
@@ -1569,7 +1569,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			FileInfo f = new FileInfo(Path.Combine( Options.getOutputDirectory().FullName, "CharStream.java"));
+			FileInfo f = new FileInfo(Path.Combine( Options.OutputDirectory.FullName, "CharStream.java"));
 			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[1] { "STATIC" });
 			if (!outputFile.needToWrite)
@@ -1723,7 +1723,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			var f = new FileInfo(Path.Combine(Options.getOutputDirectory().FullName, "ParseException.java"));
+			var f = new FileInfo(Path.Combine(Options.OutputDirectory.FullName, "ParseException.java"));
 			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[1] { "KEEP_LINE_COL" });
 			if (!outputFile.needToWrite)
@@ -1966,7 +1966,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			FileInfo f = new FileInfo(Path.Combine(Options.getOutputDirectory().FullName, "TokenMgrError.java"));
+			FileInfo f = new FileInfo(Path.Combine(Options.OutputDirectory.FullName, "TokenMgrError.java"));
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[0]);
 			if (!outputFile.needToWrite)
 			{
@@ -1992,7 +1992,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 				}
 			}
 			printWriter.WriteLine("/** Token Manager Error. */");
-			if (string.Compare(Options.getJdkVersion(), "1.5") >= 0)
+			if (string.Compare(Options.JdkVersion, "1.5") >= 0)
 			{
 				printWriter.WriteLine("@SuppressWarnings(\"serial\")");
 			}
@@ -2151,7 +2151,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			FileInfo f = new FileInfo(Path.Combine(Options.getOutputDirectory().FullName, "Token.java"));
+			FileInfo f = new FileInfo(Path.Combine(Options.OutputDirectory.FullName, "Token.java"));
 			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[2] { "TOKEN_EXTENDS", "KEEP_LINE_COL" });
 			if (!outputFile.needToWrite)
@@ -2181,13 +2181,13 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine(" * Describes the input token stream.");
 			printWriter.WriteLine(" */");
 			printWriter.WriteLine("");
-			if (string.Equals(Options.getTokenExtends(), ""))
+			if (string.Equals(Options.TokenExtends, ""))
 			{
 				printWriter.WriteLine("public class Token {");
 			}
 			else
 			{
-				printWriter.WriteLine(("public class Token extends ")+(Options.getTokenExtends())+(" {")
+				printWriter.WriteLine(("public class Token extends ")+(Options.TokenExtends)+(" {")
 					);
 			}
 			printWriter.WriteLine("");
@@ -2328,7 +2328,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			FileInfo f = new FileInfo(Path.Combine( Options.getOutputDirectory().FullName, "TokenManager.java"));
+			FileInfo f = new FileInfo(Path.Combine( Options.OutputDirectory.FullName, "TokenManager.java"));
 			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[0]);
 			if (!outputFile.needToWrite)

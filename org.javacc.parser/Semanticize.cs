@@ -1,4 +1,5 @@
 using org.javacc.jjtree;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace org.javacc.parser;
@@ -130,7 +131,7 @@ public class Semanticize : JavaCCGlobals
 		{
 			if (P_0 is Choice)
 			{
-				if (Options.getLookahead() == 1 || Options.getForceLaCheck())
+				if (Options.Lookahead == 1 || Options.ForceLaCheck)
 				{
 					LookaheadCalc.choiceCalc((Choice)P_0);
 				}
@@ -138,7 +139,7 @@ public class Semanticize : JavaCCGlobals
 			else if (P_0 is OneOrMore)
 			{
 				OneOrMore oneOrMore = (OneOrMore)P_0;
-				if (Options.getForceLaCheck() || (implicitLA(oneOrMore.expansion) && Options.getLookahead() == 1))
+				if (Options.ForceLaCheck || (implicitLA(oneOrMore.expansion) && Options.Lookahead == 1))
 				{
 					LookaheadCalc.ebnfCalc(oneOrMore, oneOrMore.expansion);
 				}
@@ -146,7 +147,7 @@ public class Semanticize : JavaCCGlobals
 			else if (P_0 is ZeroOrMore)
 			{
 				ZeroOrMore zeroOrMore = (ZeroOrMore)P_0;
-				if (Options.getForceLaCheck() || (implicitLA(zeroOrMore.expansion) && Options.getLookahead() == 1))
+				if (Options.ForceLaCheck || (implicitLA(zeroOrMore.expansion) && Options.Lookahead == 1))
 				{
 					LookaheadCalc.ebnfCalc(zeroOrMore, zeroOrMore.expansion);
 				}
@@ -154,7 +155,7 @@ public class Semanticize : JavaCCGlobals
 			else if (P_0 is ZeroOrOne)
 			{
 				ZeroOrOne zeroOrOne = (ZeroOrOne)P_0;
-				if (Options.getForceLaCheck() || (implicitLA(zeroOrOne.expansion) && Options.getLookahead() == 1))
+				if (Options.ForceLaCheck || (implicitLA(zeroOrOne.expansion) && Options.Lookahead == 1))
 				{
 					LookaheadCalc.ebnfCalc(zeroOrOne, zeroOrOne.expansion);
 				}
@@ -377,7 +378,7 @@ public class Semanticize : JavaCCGlobals
 			
 			throw new MetaParseException();
 		}
-		if (Options.getLookahead() > 1 && !Options.getForceLaCheck() && Options.getSanityCheck())
+		if (Options.Lookahead > 1 && !Options.ForceLaCheck && Options.SanityCheck)
 		{
 			JavaCCErrors.Warning("Lookahead adequacy checking not being performed since option LOOKAHEAD is more than 1.  HashSet<object> option FORCE_LA_CHECK to true to force checking.");
 		}
@@ -432,11 +433,11 @@ public class Semanticize : JavaCCGlobals
 					JavaCCGlobals.nextStateForEof = regExprSpec.nextState;
 					prepareToRemove(respecs, regExprSpec);
 				}
-				else if (tokenProduction.isExplicit && Options.getUserTokenManager())
+				else if (tokenProduction.isExplicit && Options.UserTokenManager)
 				{
 					JavaCCErrors.Warning(regExprSpec.rexp, "Ignoring regular expression specification since option USER_TOKEN_MANAGER has been set to true.");
 				}
-				else if (tokenProduction.isExplicit && !Options.getUserTokenManager() && regExprSpec.rexp is RJustName)
+				else if (tokenProduction.isExplicit && !Options.UserTokenManager && regExprSpec.rexp is RJustName)
 				{
 					JavaCCErrors.Warning(regExprSpec.rexp, ("Ignoring free-standing regular expression reference.  If you really want this, you must give it a different label as <NEWLABEL:<")+(regExprSpec.rexp.label)+(">>.")
 						);
@@ -642,7 +643,7 @@ public class Semanticize : JavaCCGlobals
 			}
 		}
 		removePreparedItems();
-		if (!Options.getUserTokenManager())
+		if (!Options.UserTokenManager)
 		{
 			FixRJustNames fixRJustNames = new FixRJustNames();
 			Enumeration enumeration5 = JavaCCGlobals.rexprlist.elements();
@@ -664,7 +665,7 @@ public class Semanticize : JavaCCGlobals
 			}
 		}
 		removePreparedItems();
-		if (Options.getUserTokenManager())
+		if (Options.UserTokenManager)
 		{
 			enumeration = JavaCCGlobals.rexprlist.elements();
 			while (enumeration.hasMoreElements())
@@ -698,7 +699,7 @@ public class Semanticize : JavaCCGlobals
 			}
 		}
 		removePreparedItems();
-		if (Options.getUserTokenManager())
+		if (Options.UserTokenManager)
 		{
 			enumeration = JavaCCGlobals.rexprlist.elements();
 			while (enumeration.hasMoreElements())
@@ -741,7 +742,7 @@ public class Semanticize : JavaCCGlobals
 				}
 			}
 		}
-		if (Options.getSanityCheck() && JavaCCErrors._Error_Count == 0)
+		if (Options.SanityCheck && JavaCCErrors._Error_Count == 0)
 		{
 			Enumeration enumeration5 = JavaCCGlobals.bnfproductions.elements();
 			while (enumeration5.hasMoreElements())
@@ -763,7 +764,7 @@ public class Semanticize : JavaCCGlobals
 					prodWalk(normalProduction2);
 				}
 			}
-			if (!Options.getUserTokenManager())
+			if (!Options.UserTokenManager)
 			{
 				enumeration5 = JavaCCGlobals.rexprlist.elements();
 				while (enumeration5.hasMoreElements())
@@ -810,8 +811,8 @@ public class Semanticize : JavaCCGlobals
 	
 	public new static void reInit()
 	{
-		removeList = new ArrayList();
-		itemList = new ArrayList();
+		removeList = new ();
+		itemList = new ();
 		other = null;
 		loopString = null;
 	}
@@ -1056,7 +1057,7 @@ public class Semanticize : JavaCCGlobals
 	static Semanticize()
 	{
 		
-		removeList = new ArrayList();
-		itemList = new ArrayList();
+		removeList = new ();
+		itemList = new ();
 	}
 }
