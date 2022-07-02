@@ -47,9 +47,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 				stringBuilder.Append((char)c);
 			}
 		}
-		string result = stringBuilder.ToString();
-		
-		return result;
+		return stringBuilder.ToString();
 	}
 
 	
@@ -61,22 +59,14 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 	internal static double getVersion(string P_0)
 	{
 		//Discarded unreachable code: IL_006a
-		string text = new StringBuilder().Append("/* ").Append(JavaCCGlobals.getIdString("JavaCC", P_0)).Append(" Version ")
-			.ToString();
+		string text = ("/* ")+(JavaCCGlobals.getIdString("JavaCC", P_0))+(" Version ")
+			;
 		
 		var file = new FileInfo(Path.Combine( Options.getOutputDirectory().FullName, replaceBackslash(P_0)));
 		if (!file.Exists)
 		{
-			try
-			{
-				string s = String.instancehelper_replaceAll("4.1d1", "[^0-9.]+.*", "");
-				return Double.parseDouble(s);
-			}
-			catch (System.FormatException)
-			{
-			}
-			
-			return 0.0;
+			double.TryParse("4.1", out var r);
+			return r;
 		}
 		TextReader bufferedReader = null;
 		double num;
@@ -84,31 +74,25 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		{
 			try
 			{
-				bufferedReader = (new StreamReader(file));
+				bufferedReader = (new StreamReader(file.FullName));
 				num = 0.0;
 				string @this;
 				while ((@this = bufferedReader.ReadLine()) != null)
 				{
-					if (!String.instancehelper_startsWith(@this, text))
+					if (!@this.StartsWith( text))
 					{
 						continue;
 					}
-					@this = String.instancehelper_substring(@this, String.instancehelper_length(text));
-					int num2 = String.instancehelper_indexOf(@this, 32);
+					@this = @this.Substring( text.Length);
+					int num2 = @this.IndexOf((char) 32);
 					if (num2 >= 0)
 					{
-						@this = String.instancehelper_substring(@this, 0, num2);
+						@this = @this.Substring( 0, num2);
 					}
 					if (@this.Length > 0)
 					{
-						try
-						{
-							num = Double.parseDouble(@this);
-						}
-						catch (NumberFormatException)
-						{
+						if (!double.TryParse(@this, out num))
 							goto IL_0117;
-						}
 					}
 					break;
 				}
@@ -205,7 +189,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			File f = new File(Options.getOutputDirectory(), "JavaCharStream.java");
+			FileInfo f = new FileInfo(Path.Combine( Options.getOutputDirectory().FullName, "JavaCharStream.java"));
 			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[1] { "STATIC" });
 			if (!outputFile.needToWrite)
@@ -240,8 +224,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("public class JavaCharStream");
 			printWriter.WriteLine("{");
 			printWriter.WriteLine("/** Whether parser is static. */");
-			printWriter.WriteLine(new StringBuilder().Append("  public static final boolean staticFlag = ").Append(Options.getStatic()).Append(";")
-				.ToString());
+			printWriter.WriteLine(("  public static final boolean staticFlag = ")+(Options.getStatic())+(";")
+				);
 			printWriter.WriteLine("  static final int hexval(char c) throws java.io.IOException {");
 			printWriter.WriteLine("    switch(c)");
 			printWriter.WriteLine("    {");
@@ -290,35 +274,35 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("/** Position in buffer. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public int bufpos = -1;").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("int bufsize;").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("int available;").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("int tokenBegin;").ToString());
+			printWriter.WriteLine((str)+("public int bufpos = -1;"));
+			printWriter.WriteLine((str)+("int bufsize;"));
+			printWriter.WriteLine((str)+("int available;"));
+			printWriter.WriteLine((str)+("int tokenBegin;"));
 			if (OtherFilesGen.keepLineCol)
 			{
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int bufline[];").ToString());
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int bufcolumn[];").ToString());
+				printWriter.WriteLine((str)+("protected int bufline[];"));
+				printWriter.WriteLine((str)+("protected int bufcolumn[];"));
 				printWriter.WriteLine("");
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int column = 0;").ToString());
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int line = 1;").ToString());
+				printWriter.WriteLine((str)+("protected int column = 0;"));
+				printWriter.WriteLine((str)+("protected int line = 1;"));
 				printWriter.WriteLine("");
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("protected boolean prevCharIsCR = false;").ToString());
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("protected boolean prevCharIsLF = false;").ToString());
+				printWriter.WriteLine((str)+("protected boolean prevCharIsCR = false;"));
+				printWriter.WriteLine((str)+("protected boolean prevCharIsLF = false;"));
 			}
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected java.io.TextReader inputStream;").ToString());
+			printWriter.WriteLine((str)+("protected java.io.TextReader inputStream;"));
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected char[] nextCharBuf;").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected char[] buffer;").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int maxNextCharInd = 0;").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int nextCharInd = -1;").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int inBuf = 0;").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int tabSize = 8;").ToString());
+			printWriter.WriteLine((str)+("protected char[] nextCharBuf;"));
+			printWriter.WriteLine((str)+("protected char[] buffer;"));
+			printWriter.WriteLine((str)+("protected int maxNextCharInd = 0;"));
+			printWriter.WriteLine((str)+("protected int nextCharInd = -1;"));
+			printWriter.WriteLine((str)+("protected int inBuf = 0;"));
+			printWriter.WriteLine((str)+("protected int tabSize = 8;"));
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected void setTabSize(int i) { tabSize = i; }").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int getTabSize(int i) { return tabSize; }").ToString());
+			printWriter.WriteLine((str)+("protected void setTabSize(int i) { tabSize = i; }"));
+			printWriter.WriteLine((str)+("protected int getTabSize(int i) { return tabSize; }"));
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected void ExpandBuff(boolean wrapAround)").ToString());
+			printWriter.WriteLine((str)+("protected void ExpandBuff(boolean wrapAround)"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     char[] newbuffer = new char[bufsize + 2048];");
 			if (OtherFilesGen.keepLineCol)
@@ -375,7 +359,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("     tokenBegin = 0;");
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected void FillBuff() throws java.io.IOException").ToString());
+			printWriter.WriteLine((str)+("protected void FillBuff() throws java.io.IOException"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     int i;");
 			printWriter.WriteLine("     if (maxNextCharInd == 4096)");
@@ -410,7 +394,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("     }");
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected char ReadByte() throws java.io.IOException").ToString());
+			printWriter.WriteLine((str)+("protected char ReadByte() throws java.io.IOException"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     if (++nextCharInd >= maxNextCharInd)");
 			printWriter.WriteLine("        FillBuff();");
@@ -419,7 +403,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("/** @return starting character for token. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public char BeginToken() throws java.io.IOException").ToString());
+			printWriter.WriteLine((str)+("public char BeginToken() throws java.io.IOException"));
 			printWriter.WriteLine("  {     ");
 			printWriter.WriteLine("     if (inBuf > 0)");
 			printWriter.WriteLine("     {");
@@ -438,7 +422,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("     return readChar();");
 			printWriter.WriteLine("  }     ");
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected void AdjustBuffSize()").ToString());
+			printWriter.WriteLine((str)+("protected void AdjustBuffSize()"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     if (available == bufsize)");
 			printWriter.WriteLine("     {");
@@ -460,7 +444,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			if (OtherFilesGen.keepLineCol)
 			{
 				printWriter.WriteLine("");
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("protected void UpdateLineColumn(char c)").ToString());
+				printWriter.WriteLine((str)+("protected void UpdateLineColumn(char c)"));
 				printWriter.WriteLine("  {");
 				printWriter.WriteLine("     column++;");
 				printWriter.WriteLine("");
@@ -502,7 +486,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			}
 			printWriter.WriteLine("");
 			printWriter.WriteLine("/** Read a character. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public char readChar() throws java.io.IOException").ToString());
+			printWriter.WriteLine((str)+("public char readChar() throws java.io.IOException"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     if (inBuf > 0)");
 			printWriter.WriteLine("     {");
@@ -628,7 +612,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("   * @see #getEndColumn");
 			printWriter.WriteLine("   */");
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public int getColumn() {").ToString());
+			printWriter.WriteLine((str)+("public int getColumn() {"));
 			if (OtherFilesGen.keepLineCol)
 			{
 				printWriter.WriteLine("     return bufcolumn[bufpos];");
@@ -644,7 +628,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("   * @see #getEndLine");
 			printWriter.WriteLine("   */");
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public int getLine() {").ToString());
+			printWriter.WriteLine((str)+("public int getLine() {"));
 			if (OtherFilesGen.keepLineCol)
 			{
 				printWriter.WriteLine("     return bufline[bufpos];");
@@ -656,7 +640,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("/** Get end column. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public int getEndColumn() {").ToString());
+			printWriter.WriteLine((str)+("public int getEndColumn() {"));
 			if (OtherFilesGen.keepLineCol)
 			{
 				printWriter.WriteLine("     return bufcolumn[bufpos];");
@@ -668,7 +652,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("/** Get end line. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public int getEndLine() {").ToString());
+			printWriter.WriteLine((str)+("public int getEndLine() {"));
 			if (OtherFilesGen.keepLineCol)
 			{
 				printWriter.WriteLine("     return bufline[bufpos];");
@@ -680,7 +664,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("/** @return column of token start */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public int getBeginColumn() {").ToString());
+			printWriter.WriteLine((str)+("public int getBeginColumn() {"));
 			if (OtherFilesGen.keepLineCol)
 			{
 				printWriter.WriteLine("     return bufcolumn[tokenBegin];");
@@ -692,7 +676,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("/** @return line number of token start */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public int getBeginLine() {").ToString());
+			printWriter.WriteLine((str)+("public int getBeginLine() {"));
 			if (OtherFilesGen.keepLineCol)
 			{
 				printWriter.WriteLine("     return bufline[tokenBegin];");
@@ -704,7 +688,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("/** Retreat. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public void backup(int amount) {").ToString());
+			printWriter.WriteLine((str)+("public void backup(int amount) {"));
 			printWriter.WriteLine("");
 			printWriter.WriteLine("    inBuf += amount;");
 			printWriter.WriteLine("    if ((bufpos -= amount) < 0)");
@@ -871,7 +855,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** @return token image as String */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public String GetImage()").ToString());
+			printWriter.WriteLine((str)+("public String GetImage()"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     if (bufpos >= tokenBegin)");
 			printWriter.WriteLine("        return new String(buffer, tokenBegin, bufpos - tokenBegin + 1);");
@@ -881,7 +865,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** @return suffix */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public char[] GetSuffix(int len)").ToString());
+			printWriter.WriteLine((str)+("public char[] GetSuffix(int len)"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     char[] ret = new char[len];");
 			printWriter.WriteLine("");
@@ -898,7 +882,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** HashSet<object> buffers back to null when finished. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public void Done()").ToString());
+			printWriter.WriteLine((str)+("public void Done()"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     nextCharBuf = null;");
 			printWriter.WriteLine("     buffer = null;");
@@ -914,7 +898,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 				printWriter.WriteLine("  /**");
 				printWriter.WriteLine("   * Method to adjust line and column numbers for the start of a token.");
 				printWriter.WriteLine("   */");
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("public void adjustBeginLineColumn(int newLine, int newCol)").ToString());
+				printWriter.WriteLine((str)+("public void adjustBeginLineColumn(int newLine, int newCol)"));
 				printWriter.WriteLine("  {");
 				printWriter.WriteLine("     int start = tokenBegin;");
 				printWriter.WriteLine("     int len;");
@@ -969,7 +953,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			ex = x;
 		}
 		IOException obj = ex;
-		Console.Error.WriteLine(new StringBuilder().Append("Failed to create JavaCharStream ").Append(obj).ToString());
+		Console.Error.WriteLine(("Failed to create JavaCharStream ")+(obj));
 		JavaCCErrors.Semantic_Error("Could not open file JavaCharStream.java for writing.");
 		
 		throw new System.Exception();
@@ -1016,37 +1000,37 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("public class SimpleCharStream");
 			printWriter.WriteLine("{");
 			printWriter.WriteLine("/** Whether parser is static. */");
-			printWriter.WriteLine(new StringBuilder().Append("  public static final boolean staticFlag = ").Append(Options.getStatic()).Append(";")
-				.ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("int bufsize;").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("int available;").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("int tokenBegin;").ToString());
+			printWriter.WriteLine(("  public static final boolean staticFlag = ")+(Options.getStatic())+(";")
+				);
+			printWriter.WriteLine((str)+("int bufsize;"));
+			printWriter.WriteLine((str)+("int available;"));
+			printWriter.WriteLine((str)+("int tokenBegin;"));
 			printWriter.WriteLine("/** Position in buffer. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public int bufpos = -1;").ToString());
+			printWriter.WriteLine((str)+("public int bufpos = -1;"));
 			if (OtherFilesGen.keepLineCol)
 			{
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int bufline[];").ToString());
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int bufcolumn[];").ToString());
+				printWriter.WriteLine((str)+("protected int bufline[];"));
+				printWriter.WriteLine((str)+("protected int bufcolumn[];"));
 				printWriter.WriteLine("");
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int column = 0;").ToString());
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int line = 1;").ToString());
+				printWriter.WriteLine((str)+("protected int column = 0;"));
+				printWriter.WriteLine((str)+("protected int line = 1;"));
 				printWriter.WriteLine("");
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("protected boolean prevCharIsCR = false;").ToString());
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("protected boolean prevCharIsLF = false;").ToString());
+				printWriter.WriteLine((str)+("protected boolean prevCharIsCR = false;"));
+				printWriter.WriteLine((str)+("protected boolean prevCharIsLF = false;"));
 			}
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected java.io.TextReader inputStream;").ToString());
+			printWriter.WriteLine((str)+("protected java.io.TextReader inputStream;"));
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected char[] buffer;").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int maxNextCharInd = 0;").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int inBuf = 0;").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int tabSize = 8;").ToString());
+			printWriter.WriteLine((str)+("protected char[] buffer;"));
+			printWriter.WriteLine((str)+("protected int maxNextCharInd = 0;"));
+			printWriter.WriteLine((str)+("protected int inBuf = 0;"));
+			printWriter.WriteLine((str)+("protected int tabSize = 8;"));
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected void setTabSize(int i) { tabSize = i; }").ToString());
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected int getTabSize(int i) { return tabSize; }").ToString());
+			printWriter.WriteLine((str)+("protected void setTabSize(int i) { tabSize = i; }"));
+			printWriter.WriteLine((str)+("protected int getTabSize(int i) { return tabSize; }"));
 			printWriter.WriteLine("");
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected void ExpandBuff(boolean wrapAround)").ToString());
+			printWriter.WriteLine((str)+("protected void ExpandBuff(boolean wrapAround)"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     char[] newbuffer = new char[bufsize + 2048];");
 			if (OtherFilesGen.keepLineCol)
@@ -1105,7 +1089,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("     tokenBegin = 0;");
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("protected void FillBuff() throws java.io.IOException").ToString());
+			printWriter.WriteLine((str)+("protected void FillBuff() throws java.io.IOException"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     if (maxNextCharInd == available)");
 			printWriter.WriteLine("     {");
@@ -1151,7 +1135,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("/** Start. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public char BeginToken() throws java.io.IOException").ToString());
+			printWriter.WriteLine((str)+("public char BeginToken() throws java.io.IOException"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     tokenBegin = -1;");
 			printWriter.WriteLine("     char c = readChar();");
@@ -1162,7 +1146,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			if (OtherFilesGen.keepLineCol)
 			{
 				printWriter.WriteLine("");
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("protected void UpdateLineColumn(char c)").ToString());
+				printWriter.WriteLine((str)+("protected void UpdateLineColumn(char c)"));
 				printWriter.WriteLine("  {");
 				printWriter.WriteLine("     column++;");
 				printWriter.WriteLine("");
@@ -1204,7 +1188,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			}
 			printWriter.WriteLine("");
 			printWriter.WriteLine("/** Read a character. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public char readChar() throws java.io.IOException").ToString());
+			printWriter.WriteLine((str)+("public char readChar() throws java.io.IOException"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     if (inBuf > 0)");
 			printWriter.WriteLine("     {");
@@ -1233,7 +1217,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("   * @see #getEndColumn");
 			printWriter.WriteLine("   */");
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public int getColumn() {").ToString());
+			printWriter.WriteLine((str)+("public int getColumn() {"));
 			if (OtherFilesGen.keepLineCol)
 			{
 				printWriter.WriteLine("     return bufcolumn[bufpos];");
@@ -1249,7 +1233,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("   * @see #getEndLine");
 			printWriter.WriteLine("   */");
 			printWriter.WriteLine("");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public int getLine() {").ToString());
+			printWriter.WriteLine((str)+("public int getLine() {"));
 			if (OtherFilesGen.keepLineCol)
 			{
 				printWriter.WriteLine("     return bufline[bufpos];");
@@ -1261,7 +1245,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** Get token end column number. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public int getEndColumn() {").ToString());
+			printWriter.WriteLine((str)+("public int getEndColumn() {"));
 			if (OtherFilesGen.keepLineCol)
 			{
 				printWriter.WriteLine("     return bufcolumn[bufpos];");
@@ -1273,7 +1257,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** Get token end line number. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public int getEndLine() {").ToString());
+			printWriter.WriteLine((str)+("public int getEndLine() {"));
 			if (OtherFilesGen.keepLineCol)
 			{
 				printWriter.WriteLine("     return bufline[bufpos];");
@@ -1285,7 +1269,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** Get token beginning column number. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public int getBeginColumn() {").ToString());
+			printWriter.WriteLine((str)+("public int getBeginColumn() {"));
 			if (OtherFilesGen.keepLineCol)
 			{
 				printWriter.WriteLine("     return bufcolumn[tokenBegin];");
@@ -1297,7 +1281,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** Get token beginning line number. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public int getBeginLine() {").ToString());
+			printWriter.WriteLine((str)+("public int getBeginLine() {"));
 			if (OtherFilesGen.keepLineCol)
 			{
 				printWriter.WriteLine("     return bufline[tokenBegin];");
@@ -1309,7 +1293,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("/** Backup a number of characters. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public void backup(int amount) {").ToString());
+			printWriter.WriteLine((str)+("public void backup(int amount) {"));
 			printWriter.WriteLine("");
 			printWriter.WriteLine("    inBuf += amount;");
 			printWriter.WriteLine("    if ((bufpos -= amount) < 0)");
@@ -1475,7 +1459,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("     ReInit(dstream, startline, startcolumn, 4096);");
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("  /** Get token literal value. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public String GetImage()").ToString());
+			printWriter.WriteLine((str)+("public String GetImage()"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     if (bufpos >= tokenBegin)");
 			printWriter.WriteLine("        return new String(buffer, tokenBegin, bufpos - tokenBegin + 1);");
@@ -1485,7 +1469,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** Get the suffix. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public char[] GetSuffix(int len)").ToString());
+			printWriter.WriteLine((str)+("public char[] GetSuffix(int len)"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     char[] ret = new char[len];");
 			printWriter.WriteLine("");
@@ -1502,7 +1486,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /** Reset buffer when finished. */");
-			printWriter.WriteLine(new StringBuilder().Append(str).Append("public void Done()").ToString());
+			printWriter.WriteLine((str)+("public void Done()"));
 			printWriter.WriteLine("  {");
 			printWriter.WriteLine("     buffer = null;");
 			if (OtherFilesGen.keepLineCol)
@@ -1517,7 +1501,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 				printWriter.WriteLine("  /**");
 				printWriter.WriteLine("   * Method to adjust line and column numbers for the start of a token.");
 				printWriter.WriteLine("   */");
-				printWriter.WriteLine(new StringBuilder().Append(str).Append("public void adjustBeginLineColumn(int newLine, int newCol)").ToString());
+				printWriter.WriteLine((str)+("public void adjustBeginLineColumn(int newLine, int newCol)"));
 				printWriter.WriteLine("  {");
 				printWriter.WriteLine("     int start = tokenBegin;");
 				printWriter.WriteLine("     int len;");
@@ -1572,7 +1556,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			ex = x;
 		}
 		IOException obj = ex;
-		Console.Error.WriteLine(new StringBuilder().Append("Failed to create SimpleCharStream ").Append(obj).ToString());
+		Console.Error.WriteLine(("Failed to create SimpleCharStream ")+(obj));
 		JavaCCErrors.Semantic_Error("Could not open file SimpleCharStream.java for writing.");
 		
 		throw new System.Exception();
@@ -1585,7 +1569,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			File f = new File(Options.getOutputDirectory(), "CharStream.java");
+			FileInfo f = new FileInfo(Path.Combine( Options.getOutputDirectory().FullName, "CharStream.java"));
 			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[1] { "STATIC" });
 			if (!outputFile.needToWrite)
@@ -1726,7 +1710,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			ex = x;
 		}
 		IOException obj = ex;
-		Console.Error.WriteLine(new StringBuilder().Append("Failed to create CharStream ").Append(obj).ToString());
+		Console.Error.WriteLine(("Failed to create CharStream ")+(obj));
 		JavaCCErrors.Semantic_Error("Could not open file CharStream.java for writing.");
 		
 		throw new System.Exception();
@@ -1739,7 +1723,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			var f = new File(Options.getOutputDirectory(), "ParseException.java");
+			var f = new FileInfo(Path.Combine(Options.getOutputDirectory().FullName, "ParseException.java"));
 			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[1] { "KEEP_LINE_COL" });
 			if (!outputFile.needToWrite)
@@ -1870,12 +1854,12 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("        maxSize = expectedTokenSequences[i].length;");
 			printWriter.WriteLine("      }");
 			printWriter.WriteLine("      for (int j = 0; j < expectedTokenSequences[i].length; j++) {");
-			printWriter.WriteLine("        expected.Append(tokenImage[expectedTokenSequences[i][j]]).Append(' ');");
+			printWriter.WriteLine("        expected+(tokenImage[expectedTokenSequences[i][j]])+(' ');");
 			printWriter.WriteLine("      }");
 			printWriter.WriteLine("      if (expectedTokenSequences[i][expectedTokenSequences[i].length - 1] != 0) {");
-			printWriter.WriteLine("        expected.Append(\"...\");");
+			printWriter.WriteLine("        expected+(\"...\");");
 			printWriter.WriteLine("      }");
-			printWriter.WriteLine("      expected.Append(eol).Append(\"    \");");
+			printWriter.WriteLine("      expected+(eol)+(\"    \");");
 			printWriter.WriteLine("    }");
 			printWriter.WriteLine("    String retval = \"Encountered \\\"\";");
 			printWriter.WriteLine("    Token tok = currentToken.next;");
@@ -1901,7 +1885,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("    } else {");
 			printWriter.WriteLine("      retval += \"Was expecting one of:\" + eol + \"    \";");
 			printWriter.WriteLine("    }");
-			printWriter.WriteLine("    retval += expected.ToString();");
+			printWriter.WriteLine("    retval += expected;");
 			printWriter.WriteLine("    return retval;");
 			printWriter.WriteLine("  }");
 			printWriter.WriteLine("");
@@ -1957,7 +1941,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("              continue;");
 			printWriter.WriteLine("        }");
 			printWriter.WriteLine("      }");
-			printWriter.WriteLine("      return retval.ToString();");
+			printWriter.WriteLine("      return retval;");
 			printWriter.WriteLine("   }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("}");
@@ -1969,7 +1953,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			ex = x;
 		}
 		IOException obj = ex;
-		Console.Error.WriteLine(new StringBuilder().Append("Failed to create ParseException ").Append(obj).ToString());
+		Console.Error.WriteLine(("Failed to create ParseException ")+(obj));
 		JavaCCErrors.Semantic_Error("Could not open file ParseException.java for writing.");
 		
 		throw new System.Exception();
@@ -1982,7 +1966,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			File f = new File(Options.getOutputDirectory(), "TokenMgrError.java");
+			FileInfo f = new FileInfo(Path.Combine(Options.getOutputDirectory().FullName, "TokenMgrError.java"));
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[0]);
 			if (!outputFile.needToWrite)
 			{
@@ -2091,7 +2075,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			printWriter.WriteLine("              continue;");
 			printWriter.WriteLine("        }");
 			printWriter.WriteLine("      }");
-			printWriter.WriteLine("      return retval.ToString();");
+			printWriter.WriteLine("      return retval;");
 			printWriter.WriteLine("   }");
 			printWriter.WriteLine("");
 			printWriter.WriteLine("   /**");
@@ -2154,7 +2138,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			ex = x;
 		}
 		IOException obj = ex;
-		Console.Error.WriteLine(new StringBuilder().Append("Failed to create TokenMgrError ").Append(obj).ToString());
+		Console.Error.WriteLine(("Failed to create TokenMgrError ")+(obj));
 		JavaCCErrors.Semantic_Error("Could not open file TokenMgrError.java for writing.");
 		
 		throw new System.Exception();
@@ -2167,7 +2151,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			File f = new File(Options.getOutputDirectory(), "Token.java");
+			FileInfo f = new FileInfo(Path.Combine(Options.getOutputDirectory().FullName, "Token.java"));
 			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[2] { "TOKEN_EXTENDS", "KEEP_LINE_COL" });
 			if (!outputFile.needToWrite)
@@ -2203,8 +2187,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			}
 			else
 			{
-				printWriter.WriteLine(new StringBuilder().Append("public class Token extends ").Append(Options.getTokenExtends()).Append(" {")
-					.ToString());
+				printWriter.WriteLine(("public class Token extends ")+(Options.getTokenExtends())+(" {")
+					);
 			}
 			printWriter.WriteLine("");
 			printWriter.WriteLine("  /**");
@@ -2331,7 +2315,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			ex = x;
 		}
 		IOException obj = ex;
-		Console.Error.WriteLine(new StringBuilder().Append("Failed to create Token ").Append(obj).ToString());
+		Console.Error.WriteLine(("Failed to create Token ")+(obj));
 		JavaCCErrors.Semantic_Error("Could not open file Token.java for writing.");
 		
 		throw new System.Exception();
@@ -2344,7 +2328,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		try
 		{
 			
-			File f = new File(Options.getOutputDirectory(), "TokenManager.java");
+			FileInfo f = new FileInfo(Path.Combine( Options.getOutputDirectory().FullName, "TokenManager.java"));
 			
 			OutputFile outputFile = new OutputFile(f, "4.1", new string[0]);
 			if (!outputFile.needToWrite)
@@ -2392,7 +2376,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 			ex = x;
 		}
 		IOException obj = ex;
-		Console.Error.WriteLine(new StringBuilder().Append("Failed to create TokenManager ").Append(obj).ToString());
+		Console.Error.WriteLine(("Failed to create TokenManager ")+(obj));
 		JavaCCErrors.Semantic_Error("Could not open file TokenManager.java for writing.");
 		
 		throw new System.Exception();

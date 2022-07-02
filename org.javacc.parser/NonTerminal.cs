@@ -6,11 +6,11 @@ namespace org.javacc.parser;
 
 public class NonTerminal : Expansion
 {
-	public ArrayList lhsTokens = new();
+	public List<Token> lhsTokens = new();
 
 	public string name = "";
 
-	public ArrayList argument_tokens = new();
+	public List<Token> argument_tokens = new();
 
 	public NormalProduction prod;
 

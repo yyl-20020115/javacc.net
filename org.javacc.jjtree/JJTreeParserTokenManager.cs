@@ -2905,7 +2905,7 @@ public class JJTreeParserTokenManager : JJTreeParserConstants
 	{
 		if (i >= 4 || i < 0)
 		{
-			string str = new StringBuilder().Append("Error: Ignoring invalid lexical state : ").Append(i).Append(". State unchanged.")
+			string str = ("Error: Ignoring invalid lexical state : ")+(i)+(". State unchanged.")
 				.ToString();
 			
 			throw new TokenMgrError(str, 2);

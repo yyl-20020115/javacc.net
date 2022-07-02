@@ -21,19 +21,19 @@ public class Semanticize : JavaCCGlobals
 		{
 			if (exp is OneOrMore)
 			{
-				if (emptyExpansionExists(((OneOrMore)exp).expansion))
+				if (EmptyExpansionExists(((OneOrMore)exp).expansion))
 				{
 					JavaCCErrors.Semantic_Error(exp, "Expansion within \"(...)+\" can be matched by empty string.");
 				}
 			}
 			else if (exp is ZeroOrMore)
 			{
-				if (emptyExpansionExists(((ZeroOrMore)exp).expansion))
+				if (EmptyExpansionExists(((ZeroOrMore)exp).expansion))
 				{
 					JavaCCErrors.Semantic_Error(exp, "Expansion within \"(...)*\" can be matched by empty string.");
 				}
 			}
-			else if (exp is ZeroOrOne && emptyExpansionExists(((ZeroOrOne)exp).expansion))
+			else if (exp is ZeroOrOne && EmptyExpansionExists(((ZeroOrOne)exp).expansion))
 			{
 				JavaCCErrors.Semantic_Error(exp, "Expansion within \"(...)?\" can be matched by empty string.");
 			}
@@ -60,8 +60,7 @@ public class Semanticize : JavaCCGlobals
 			if (P_0 is RJustName)
 			{
 				RJustName rJustName = (RJustName)P_0;
-				RegularExpression regularExpression = (RegularExpression)JavaCCGlobals.named_tokens_table.get(rJustName.label);
-				if (regularExpression == null)
+				if (!JavaCCGlobals.named_tokens_table.TryGetValue(rJustName.label,out var regularExpression))
 				{
 					JavaCCErrors.Semantic_Error(P_0, ("Undefined lexical token name \"")+(rJustName.label)+("\".")
 						);
@@ -274,17 +273,16 @@ public class Semanticize : JavaCCGlobals
 		}
 
 		
-		public virtual void Action(Expansion P_0)
+		public virtual void Action(Expansion exp)
 		{
-			if (P_0 is NonTerminal)
+			if (exp is NonTerminal nonTerminal)
 			{
-				NonTerminal nonTerminal = (NonTerminal)P_0;
 				NormalProduction normalProduction = (NormalProduction)JavaCCGlobals.production_table.get(nonTerminal.name);
 				NonTerminal nonTerminal2 = nonTerminal;
 				nonTerminal2.prod = normalProduction;
 				if (normalProduction == null)
 				{
-					JavaCCErrors.Semantic_Error(P_0, ("Non-terminal ")+(nonTerminal.name)+(" has not been defined.")
+					JavaCCErrors.Semantic_Error(exp, ("Non-terminal ")+(nonTerminal.name)+(" has not been defined.")
 						);
 				}
 				else
@@ -310,13 +308,7 @@ public class Semanticize : JavaCCGlobals
 	private static string loopString;
 
 	
-	
-	public new static void ___003Cclinit_003E()
-	{
-	}
-
-	
-	public static bool emptyExpansionExists(Expansion e)
+	public static bool EmptyExpansionExists(Expansion e)
 	{
 		if (e is NonTerminal)
 		{
@@ -332,7 +324,7 @@ public class Semanticize : JavaCCGlobals
 		}
 		if (e is OneOrMore)
 		{
-			bool result = emptyExpansionExists(((OneOrMore)e).expansion);
+			bool result = EmptyExpansionExists(((OneOrMore)e).expansion);
 			
 			return result;
 		}
@@ -349,7 +341,7 @@ public class Semanticize : JavaCCGlobals
 			Enumeration enumeration = ((Choice)e).Choices.elements();
 			while (enumeration.hasMoreElements())
 			{
-				if (emptyExpansionExists((Expansion)enumeration.nextElement()))
+				if (EmptyExpansionExists((Expansion)enumeration.nextElement()))
 				{
 					return true;
 				}
@@ -361,7 +353,7 @@ public class Semanticize : JavaCCGlobals
 			Enumeration enumeration = ((Sequence)e).Units.elements();
 			while (enumeration.hasMoreElements())
 			{
-				if (!emptyExpansionExists((Expansion)enumeration.nextElement()))
+				if (!EmptyExpansionExists((Expansion)enumeration.nextElement()))
 				{
 					return false;
 				}
@@ -370,7 +362,7 @@ public class Semanticize : JavaCCGlobals
 		}
 		if (e is TryBlock)
 		{
-			bool result2 = emptyExpansionExists(((TryBlock)e).exp);
+			bool result2 = EmptyExpansionExists(((TryBlock)e).exp);
 			
 			return result2;
 		}
@@ -739,7 +731,7 @@ public class Semanticize : JavaCCGlobals
 			while (enumeration5.hasMoreElements())
 			{
 				NormalProduction normalProduction2 = (NormalProduction)enumeration5.nextElement();
-				if (emptyExpansionExists(normalProduction2.Expansion) && !normalProduction2.emptyPossible)
+				if (EmptyExpansionExists(normalProduction2.Expansion) && !normalProduction2.emptyPossible)
 				{
 					NormalProduction normalProduction3 = normalProduction2;
 					int num5 = 1;
@@ -839,8 +831,8 @@ public class Semanticize : JavaCCGlobals
 			ArrayList vector = (ArrayList)removeList[i];
 			vector.Remove(itemList[i]);
 		}
-		removeList.removeAllElements();
-		itemList.removeAllElements();
+		removeList.Clear();
+		itemList.Clear();
 	}
 
 	
@@ -914,7 +906,7 @@ public class Semanticize : JavaCCGlobals
 			{
 				Expansion expansion = (Expansion)enumeration.nextElement();
 				addLeftMost(P_0, expansion);
-				if (!emptyExpansionExists(expansion))
+				if (!EmptyExpansionExists(expansion))
 				{
 					break;
 				}

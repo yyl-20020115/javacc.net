@@ -1,6 +1,5 @@
-using System.Runtime.Serialization;
-using System.Security.Permissions;
 using System.IO;
+using System.Collections.Generic;
 
 namespace org.javacc.parser;
 
@@ -24,18 +23,12 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		}
 	}
 
-	
-		
+
+
 	internal class LookaheadSuccess : System.Exception
 	{
-		
-		public LookaheadSuccess()
-		{
-		}
 
-		
-				protected LookaheadSuccess(SerializationInfo P_0, StreamingContext P_1)
-			: base(P_0, P_1)
+		public LookaheadSuccess()
 		{
 		}
 	}
@@ -188,7 +181,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 	
 	private LookaheadSuccess jj_ls;
 
-	private List jj_expentries;
+	private List<object> jj_expentries;
 
 	private int[] jj_expentry;
 
@@ -200,7 +193,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
 	
 	public JavaCCParser(Stream @is)
-		: this(new StreamReader(@is), null)
+		: this(new StreamReader(@is))
 	{
 	}
 
@@ -218,7 +211,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		jj_rescan = false;
 		jj_gc = 0;
 		jj_ls = new LookaheadSuccess();
-		jj_expentries = new ArrayList();
+		jj_expentries = new ();
 		jj_kind = -1;
 		jj_lasttokens = new int[100];
 		jj_input_stream = new JavaCharStream(r, 1, 1);
@@ -506,8 +499,8 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		jj_consume_token(97);
 	}
 
-	
-		public int IntegerLiteral()
+
+	public int IntegerLiteral()
 	{
 		//Discarded unreachable code: IL_001b
 		jj_consume_token(80);
@@ -518,8 +511,8 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		catch (Exception e)
 		{
 		}
-		
-		
+
+
 		throw new System.Exception();
 	}
 
@@ -1357,7 +1350,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 	
 		public void expansion_unit(Container c)
 	{
-		ArrayList vector = new ArrayList();
+		List<Token> vector = new ();
 		switch ((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk())
 		{
 		case 1:

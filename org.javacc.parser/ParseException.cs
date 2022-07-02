@@ -75,8 +75,8 @@ public class ParseException : System.Exception
 			int num;
 			if ((num = str[i]) < 32 || num > 126)
 			{
-				string @this = new StringBuilder().Append("0000").Append(Utils.ToString(num, 16)).ToString();
-				stringBuilder.Append(new StringBuilder().Append("\\u").Append(
+				string @this = ("0000")+(Utils.ToString(num, 16)).ToString();
+				stringBuilder.Append(("\\u")+(
 					(@this.Substring(@this.Length - 4, @this.Length))).ToString());
 			}
 			else
@@ -122,32 +122,32 @@ public class ParseException : System.Exception
 			{
 				if (k != 0)
 				{
-					str = new StringBuilder().Append(str).Append(" ").ToString();
+					str = (str)+(" ").ToString();
 				}
 				if (next.kind == 0)
 				{
-					str = new StringBuilder().Append(str).Append(tokenImage[0]).ToString();
+					str = (str)+(tokenImage[0]).ToString();
 					break;
 				}
-				str = new StringBuilder().Append(str).Append(" ").Append(tokenImage[next.kind])
+				str = (str)+(" ")+(tokenImage[next.kind])
 					.ToString();
-				str = new StringBuilder().Append(str).Append(" \"").ToString();
-				str = new StringBuilder().Append(str).Append(add_escapes(next.image)).ToString();
-				str = new StringBuilder().Append(str).Append(" \"").ToString();
+				str = (str)+(" \"").ToString();
+				str = (str)+(add_escapes(next.image)).ToString();
+				str = (str)+(" \"").ToString();
 				next = next.next;
 			}
-			str = new StringBuilder().Append(str).Append("\" at line ").Append(currentToken.next.BeginLine)
-				.Append(", column ")
-				.Append(currentToken.next.BeginColumn)
+			str = (str)+("\" at line ")+(currentToken.next.BeginLine)
+				+(", column ")
+				+(currentToken.next.BeginColumn)
 				.ToString();
-			str = new StringBuilder().Append(str).Append(".").Append(eol)
+			str = (str)+(".")+(eol)
 				.ToString();
-			str = (((nint)expectedTokenSequences.LongLength != 1) ? new StringBuilder().Append(str).Append("Was expecting one of:").Append(eol)
-				.Append("    ")
-				.ToString() : new StringBuilder().Append(str).Append("Was expecting:").Append(eol)
-				.Append("    ")
+			str = (((nint)expectedTokenSequences.LongLength != 1) ? (str)+("Was expecting one of:")+(eol)
+				+("    ")
+				.ToString() : (str)+("Was expecting:")+(eol)
+				+("    ")
 				.ToString());
-			return new StringBuilder().Append(str).Append(stringBuilder.ToString()).ToString();
+			return (str)+(stringBuilder.ToString()).ToString();
 		}
 	}
 

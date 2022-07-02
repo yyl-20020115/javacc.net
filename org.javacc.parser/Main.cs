@@ -15,7 +15,7 @@ public static class EntryPoint
 	{
 		Expansion.ReInit();
 		//JavaCCErrors.ReInit();
-		JavaCCGlobals.reInit();
+		JavaCCGlobals.ReInit();
 		Options.Init();
 		JavaCCParserInternals.reInit();
 		RStringLiteral.reInit();
@@ -47,7 +47,7 @@ public static class EntryPoint
 		if (Options.IsOption(strarr[strarr.Length - 1]))
 		{
 			Console.WriteLine(("Last argument \"")+(strarr[strarr.Length - 1])+("\" is not a filename.")
-				.ToString());
+				);
 			return 1;
 		}
 		for (int i = 0; i < (nint)strarr.LongLength - 1; i++)
@@ -55,7 +55,7 @@ public static class EntryPoint
 			if (!Options.IsOption(strarr[i]))
 			{
 				Console.WriteLine(("Argument \"")+(strarr[i])+("\" must be an option setting.")
-					.ToString());
+					);
 				return 1;
 			}
 			Options.setCmdLineOption(strarr[i]);
@@ -70,13 +70,13 @@ public static class EntryPoint
 				if (!file.Exists)
 				{
 					Console.WriteLine(("File ")+(strarr[strarr.Length - 1])+(" not found.")
-						.ToString());
+						);
 					return 1;
 				}
 				DirectoryInfo di = new DirectoryInfo(strarr[strarr.Length - 1]);
 				if (di.Exists)
 				{
-					Console.WriteLine((strarr[strarr.Length - 1])+(" is a directory. Please use a valid file name.").ToString());
+					Console.WriteLine((strarr[strarr.Length - 1])+(" is a directory. Please use a valid file name."));
 					return 1;
 				}
 				javaCCParser = new JavaCCParser(new StreamReader(strarr[strarr.Length - 1]));
@@ -96,7 +96,7 @@ public static class EntryPoint
 			try
 			{
 				Console.WriteLine(("Reading from file ")+(strarr[strarr.Length - 1])+(" . . .")
-					.ToString());
+					);
 				JavaCCGlobals.fileName = (JavaCCGlobals.origFileName = strarr[strarr.Length - 1]);
 				JavaCCGlobals.jjtreeGenerated = JavaCCGlobals.isGeneratedBy("JJTree", strarr[strarr.Length - 1]);
 				JavaCCGlobals.toolNames = JavaCCGlobals.getToolNames(strarr[strarr.Length - 1]);
@@ -120,14 +120,14 @@ public static class EntryPoint
 					else
 					{
 						Console.WriteLine(("Parser generated with 0 errors and ")+(JavaCCErrors._Warning_Count)+(" warnings.")
-							.ToString());
+							);
 					}
 					return 0;
 				}
 				Console.WriteLine(("Detected ")+(JavaCCErrors._Error_Count)+(" errors and ")
 					+(JavaCCErrors._Warning_Count)
 					+(" warnings.")
-					.ToString());
+					);
 				return (JavaCCErrors._Error_Count != 0) ? 1 : 0;
 			}
 			catch (MetaParseException)
@@ -143,24 +143,24 @@ public static class EntryPoint
 		Console.WriteLine(("Detected ")+(JavaCCErrors._Error_Count)+(" errors and ")
 			+(JavaCCErrors._Warning_Count)
 			+(" warnings.")
-			.ToString());
+			);
 		return 1;
 	IL_0361:
 		ParseException @this = ex4;
-		Console.WriteLine((@this.ToString()));
+		Console.WriteLine((@this));
 		Console.WriteLine(("Detected ")+(JavaCCErrors._Error_Count + 1)+(" errors and ")
 			+(JavaCCErrors._Warning_Count)
 			+(" warnings.")
-			.ToString());
+			);
 		return 1;
 	IL_0180:
 
 		Console.WriteLine(("File ")+(strarr[strarr.Length - 1])+(" not found.")
-			.ToString());
+			);
 		return 1;
 	IL_017d:
 
-		Console.WriteLine(("Security violation while trying to open ")+(strarr[strarr.Length - 1]).ToString());
+		Console.WriteLine(("Security violation while trying to open ")+(strarr[strarr.Length - 1]));
 		return 1;
 	}
 

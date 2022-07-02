@@ -35,24 +35,24 @@ public class Options
 			}
 			else
 			{
-				if (String.instancehelper_length(text) <= 2 || String.instancehelper_charAt(text, 0) != 'N' || String.instancehelper_charAt(text, 1) != 'O')
+				if (text.Length <= 2 || String.instancehelper_charAt(text, 0) != 'N' || String.instancehelper_charAt(text, 1) != 'O')
 				{
-					Console.WriteLine(new StringBuilder().Append("Warning: Bad option \"").Append(str).Append("\" will be ignored.")
-						.ToString());
+					Console.WriteLine(("Warning: Bad option \"")+(str)+("\" will be ignored.")
+						);
 					return;
 				}
 				obj = false;
-				text = String.instancehelper_substring(text, 2);
+				text = text.Substring(2);
 			}
 		}
 		else
 		{
-			text = String.instancehelper_toUpperCase(String.instancehelper_substring(@this, 0, num3));
-			if (String.instancehelper_equalsIgnoreCase(String.instancehelper_substring(@this, num3 + 1), "TRUE"))
+			text = String.instancehelper_toUpperCase(@this.Substring( 0, num3));
+			if (String.instancehelper_equalsIgnoreCase(@this.Substring(num3 + 1), "TRUE"))
 			{
 				obj = true;
 			}
-			else if (String.instancehelper_equalsIgnoreCase(String.instancehelper_substring(@this, num3 + 1), "FALSE"))
+			else if (String.instancehelper_equalsIgnoreCase(@this.Substring(num3 + 1), "FALSE"))
 			{
 				obj = false;
 			}
@@ -60,16 +60,16 @@ public class Options
 			{
 				try
 				{
-					int num4 = int.parseInt(String.instancehelper_substring(@this, num3 + 1));
+					int num4 = int.parseInt(@this.Substring( num3 + 1));
 					if (num4 <= 0)
 					{
-						Console.WriteLine(new StringBuilder().Append("Warning: Bad option value in \"").Append(str).Append("\" will be ignored.")
-							.ToString());
+						Console.WriteLine(("Warning: Bad option value in \"")+(str)+("\" will be ignored.")
+							);
 						return;
 					}
 					obj = (num4);
 				}
-				catch (NumberFormatException)
+				catch (Exception)
 				{
 					goto IL_017b;
 				}
@@ -87,21 +87,21 @@ public class Options
 		IL_01c9:
 		if (!OptionValues.ContainsKey(text))
 		{
-			Console.WriteLine(new StringBuilder().Append("Warning: Bad option \"").Append(str).Append("\" will be ignored.")
-				.ToString());
+			Console.WriteLine(("Warning: Bad option \"")+(str)+("\" will be ignored.")
+				);
 			return;
 		}
 		object this2 = OptionValues.get(text);
 		if (Object.instancehelper_getClass(obj) != Object.instancehelper_getClass(this2))
 		{
-			Console.WriteLine(new StringBuilder().Append("Warning: Bad option value in \"").Append(str).Append("\" will be ignored.")
-				.ToString());
+			Console.WriteLine(("Warning: Bad option value in \"")+(str)+("\" will be ignored.")
+				);
 			return;
 		}
 		if (cmdLineSetting.Contains(text))
 		{
-			Console.WriteLine(new StringBuilder().Append("Warning: Duplicate option setting \"").Append(str).Append("\" will be ignored.")
-				.ToString());
+			Console.WriteLine(("Warning: Duplicate option setting \"")+(str)+("\" will be ignored.")
+				);
 			return;
 		}
 		obj = upgradeValue(text, obj);
@@ -229,8 +229,8 @@ public class Options
 		string text = str.ToUpper();
 		if (!OptionValues.ContainsKey(text))
 		{
-			JavaCCErrors.Warning(obj1, new StringBuilder().Append("Bad option name \"").Append(str).Append("\".  Option setting will be ignored.")
-				.ToString());
+			JavaCCErrors.Warning(obj1, ("Bad option name \"")+(str)+("\".  Option setting will be ignored.")
+				);
 			return;
 		}
 		object obj4 = OptionValues.get(text);
@@ -239,24 +239,24 @@ public class Options
 		{
 			if (Object.instancehelper_getClass(obj4) != Object.instancehelper_getClass(obj3) || (obj3 is int && ((int)obj3) <= 0))
 			{
-				JavaCCErrors.Warning(obj2, new StringBuilder().Append("Bad option value \"").Append(obj3).Append("\" for \"")
-					.Append(str)
-					.Append("\".  Option setting will be ignored.")
-					.ToString());
+				JavaCCErrors.Warning(obj2, ("Bad option value \"")+(obj3)+("\" for \"")
+					+(str)
+					+("\".  Option setting will be ignored.")
+					);
 				return;
 			}
 			if (inputFileSetting.Contains(text))
 			{
-				JavaCCErrors.Warning(obj1, new StringBuilder().Append("Duplicate option setting for \"").Append(str).Append("\" will be ignored.")
-					.ToString());
+				JavaCCErrors.Warning(obj1, ("Duplicate option setting for \"")+(str)+("\" will be ignored.")
+					);
 				return;
 			}
 			if (cmdLineSetting.Contains(text))
 			{
 				if (!Object.instancehelper_equals(obj4, obj3))
 				{
-					JavaCCErrors.Warning(obj1, new StringBuilder().Append("Command line setting of \"").Append(str).Append("\" modifies option value in file.")
-						.ToString());
+					JavaCCErrors.Warning(obj1, ("Command line setting of \"")+(str)+("\" modifies option value in file.")
+						);
 				}
 				return;
 			}

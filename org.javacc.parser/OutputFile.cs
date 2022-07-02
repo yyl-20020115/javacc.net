@@ -93,7 +93,7 @@ public class OutputFile
 			{
 			}
 
-			Console.Error.WriteLine(("Could not close ")+(this_00240.file.getAbsolutePath()).ToString());
+			Console.Error.WriteLine(("Could not close ")+(this_00240.file.getAbsolutePath()));
 		}
 	}
 
@@ -149,11 +149,11 @@ public class OutputFile
 			pw.WriteLine(("/* ")+(JavaCCGlobals.getIdString(toolName, file.Name))+(" Version ")
 				+(str)
 				+(" */")
-				.ToString());
+				);
 			if (options != null)
 			{
 				pw.WriteLine(("/* JavaCCOptions:")+(Options.getOptionsString(options))+(" */")
-					.ToString());
+					);
 			}
 		}
 		return pw;
@@ -168,7 +168,7 @@ public class OutputFile
 		if (pw != null)
 		{
 			pw.WriteLine(("/* JavaCC - OriginalChecksum=")+(getMD5sum())+(" (do not edit this line) */")
-				.ToString());
+				);
 			pw.ClosePrintWriter();
 		}
 	}
@@ -237,14 +237,14 @@ public class OutputFile
 			else
 			{
 				Console.WriteLine(("File \"")+(f.Names)+("\" is being rebuilt.")
-					.ToString());
+					);
 				needToWrite = true;
 			}
 		}
 		else
 		{
 			Console.WriteLine(("File \"")+(f.Name)+("\" does not exist.  Will create one.")
-				.ToString());
+				);
 			needToWrite = true;
 		}
 		return;
@@ -268,16 +268,14 @@ public class OutputFile
 			int num = P_0[i];
 			stringBuilder+(HEX_DIGITS[(num & 0xF0) >> 4])+(HEX_DIGITS[num & 0xF]);
 		}
-		string result = stringBuilder.ToString();
-
-		return result;
+		return stringBuilder.ToString();
 	}
 
 
 	private void CheckVersion(FileInfo info, string name)
 	{
 		string text = ("/* ")+(JavaCCGlobals.getIdString(toolName, info.Name))+(" Version ")
-			.ToString();
+			;
 		try
 		{
 			try
@@ -292,7 +290,7 @@ public class OutputFile
 						if ((object)text2 != name)
 						{
 							JavaCCErrors.Warning((info.Name)+(": File is obsolete.  Please rename or delete this file so")+(" that a new one can be generated for you.")
-								.ToString());
+								);
 						}
 						break;
 					}
@@ -309,7 +307,7 @@ public class OutputFile
 		}
 
 		JavaCCErrors.Semantic_Error(("Could not open file ")+(info.Name)+(" for writing.")
-			.ToString());
+			);
 
 		throw new System.Exception();
 	IL_00b7:
@@ -336,7 +334,7 @@ public class OutputFile
 						if (!String.instancehelper_contains(@this, s))
 						{
 							JavaCCErrors.Warning((P_0.Name)+(": Generated using incompatible options. Please rename or delete this file so")+(" that a new one can be generated for you.")
-								.ToString());
+								);
 						}
 						break;
 					}
@@ -353,7 +351,7 @@ public class OutputFile
 		}
 
 		JavaCCErrors.Semantic_Error(("Could not open file ")+(P_0.Name)+(" for writing.")
-			.ToString());
+			);
 
 		throw new System.Exception();
 	IL_0082:

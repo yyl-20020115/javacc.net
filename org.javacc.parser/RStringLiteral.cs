@@ -77,7 +77,7 @@ public class RStringLiteral : RegularExpression
 		for (int j = 0; j < num; j++)
 		{
 			int num2;
-			string key = ((!Options.getIgnoreCase()) ? new StringBuilder().Append("").Append((char)(num2 = java.lang.String.instancehelper_charAt(image, j))).ToString() : java.lang.String.instancehelper_toLowerCase(new StringBuilder().Append("").Append((char)(num2 = java.lang.String.instancehelper_charAt(image, j))).ToString()));
+			string key = ((!Options.getIgnoreCase()) ? ("")+((char)(num2 = java.lang.String.instancehelper_charAt(image, j))) : java.lang.String.instancehelper_toLowerCase(("")+((char)(num2 = java.lang.String.instancehelper_charAt(image, j)))));
 			if (!NfaState.unicodeWarningGiven && num2 > 255 && !Options.getJavaUnicodeEscape() && !Options.getUserCharStream())
 			{
 				NfaState.unicodeWarningGiven = true;
@@ -107,7 +107,7 @@ public class RStringLiteral : RegularExpression
 			}
 			if (!Options.getIgnoreCase() && LexGen.ignoreCase[ordinal] && num2 != Char.ToLower((char)num2))
 			{
-				key = Char.ToLower(image[j]).ToString();
+				key = Char.ToLower(image[j]);
 				if (j >= charPosKind.Count)
 				{
 					charPosKind.Add(hashtable = new Hashtable());
@@ -131,7 +131,7 @@ public class RStringLiteral : RegularExpression
 			}
 			if (!Options.getIgnoreCase() && LexGen.ignoreCase[ordinal] && num2 != char.ToUpper((char)num2))
 			{
-				key = java.lang.String.instancehelper_toUpperCase(new StringBuilder().Append("").Append(java.lang.String.instancehelper_charAt(image, j)).ToString());
+				key = java.lang.String.instancehelper_toUpperCase(("")+(java.lang.String.instancehelper_charAt(image, j)));
 				if (j >= charPosKind.Count)
 				{
 					charPosKind.Add(hashtable = new Hashtable());
@@ -154,7 +154,7 @@ public class RStringLiteral : RegularExpression
 				}
 			}
 		}
-		maxLenForActive[ordinal / 64] = java.lang.Math.max(maxLenForActive[ordinal / 64], num - 1);
+		maxLenForActive[ordinal / 64] = Math.Max(maxLenForActive[ordinal / 64], num - 1);
 		allImages[ordinal] = image;
 	}
 
@@ -174,7 +174,7 @@ public class RStringLiteral : RegularExpression
 			if (LexGen.mixed[LexGen.lexStateIndex])
 			{
 				subString[i] = true;
-				subStringAtPos[java.lang.String.instancehelper_length(text) - 1] = true;
+				subStringAtPos[text.Length - 1] = true;
 				continue;
 			}
 			for (int j = 0; j < maxStrKind; j++)
@@ -184,13 +184,13 @@ public class RStringLiteral : RegularExpression
 					if (java.lang.String.instancehelper_indexOf(allImages[j], text) == 0)
 					{
 						subString[i] = true;
-						subStringAtPos[java.lang.String.instancehelper_length(text) - 1] = true;
+						subStringAtPos[text.Length - 1] = true;
 						break;
 					}
 					if (Options.getIgnoreCase() && StartsWithIgnoreCase(allImages[j], text))
 					{
 						subString[i] = true;
-						subStringAtPos[java.lang.String.instancehelper_length(text) - 1] = true;
+						subStringAtPos[text.Length - 1] = true;
 						break;
 					}
 				}
@@ -270,7 +270,7 @@ public class RStringLiteral : RegularExpression
 				else
 				{
 					num6 = NfaState.MoveFromSet(java.lang.String.instancehelper_charAt(text2, j), vector2, vector);
-					vector2.removeAllElements();
+					vector2.Clear();
 					if (j == 0 && num6 != int.MaxValue && LexGen.canMatchAnyChar[LexGen.lexStateIndex] != -1 && num6 > LexGen.canMatchAnyChar[LexGen.lexStateIndex])
 					{
 						num6 = LexGen.canMatchAnyChar[LexGen.lexStateIndex];
@@ -352,22 +352,22 @@ public class RStringLiteral : RegularExpression
 				}
 				ArrayList vector3 = vector2;
 				vector2 = vector;
-				(vector = vector3).removeAllElements();
+				(vector = vector3).Clear();
 				if (statesForPos[j] == null)
 				{
 					statesForPos[j] = new Hashtable();
 				}
 				long[] array3;
-				if ((array3 = (long[])statesForPos[j].get(new StringBuilder().Append(num6).Append(", ").Append(i2)
-					.Append(", ")
-					.Append(text)
-					.ToString())) == null)
+				if ((array3 = (long[])statesForPos[j].get((num6)+(", ")+(i2)
+					+(", ")
+					+(text)
+					)) == null)
 				{
 					array3 = new long[num];
-					statesForPos[j].Add(new StringBuilder().Append(num6).Append(", ").Append(i2)
-						.Append(", ")
-						.Append(text)
-						.ToString(), array3);
+					statesForPos[j].Add((num6)+(", ")+(i2)
+						+(", ")
+						+(text)
+						, array3);
 				}
 				long[] array4 = array3;
 				num3 = i / 64;
@@ -389,10 +389,10 @@ public class RStringLiteral : RegularExpression
 		LexGen.maxLongsReqd[LexGen.lexStateIndex] = num;
 		if (maxLen == 0)
 		{
-			P_0.WriteLine(new StringBuilder().Append((!Options.getStatic()) ? "" : "static ").Append("private int ").Append("jjMoveStringLiteralDfa0")
-				.Append(LexGen.lexStateSuffix)
-				.Append("()")
-				.ToString());
+			P_0.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private int ")+("jjMoveStringLiteralDfa0")
+				+(LexGen.lexStateSuffix)
+				+("()")
+				);
 			DumpNullStrLiterals(P_0);
 			return;
 		}
@@ -411,11 +411,11 @@ public class RStringLiteral : RegularExpression
 			int num3 = 0;
 			Hashtable hashtable = (Hashtable)charPosKind[i];
 			string[] array = ReArrange(hashtable);
-			P_0.Write(new StringBuilder().Append((!Options.getStatic()) ? "" : "static ").Append("private int ").Append("jjMoveStringLiteralDfa")
-				.Append(i)
-				.Append(LexGen.lexStateSuffix)
-				.Append("(")
-				.ToString());
+			P_0.Write(((!Options.getStatic()) ? "" : "static ")+("private int ")+("jjMoveStringLiteralDfa")
+				+(i)
+				+(LexGen.lexStateSuffix)
+				+("(")
+				);
 			switch (i)
 			{
 			case 1:
@@ -433,7 +433,7 @@ public class RStringLiteral : RegularExpression
 						{
 							num2 = 1;
 						}
-						P_0.Write(new StringBuilder().Append("long active").Append(j).ToString());
+						P_0.Write(("long active")+(j));
 					}
 				}
 				if (i <= maxLenForActive[j])
@@ -442,7 +442,7 @@ public class RStringLiteral : RegularExpression
 					{
 						P_0.Write(", ");
 					}
-					P_0.Write(new StringBuilder().Append("long active").Append(j).ToString());
+					P_0.Write(("long active")+(j));
 				}
 				break;
 			}
@@ -461,9 +461,9 @@ public class RStringLiteral : RegularExpression
 						{
 							num2 = 1;
 						}
-						P_0.Write(new StringBuilder().Append("long old").Append(j).Append(", long active")
-							.Append(j)
-							.ToString());
+						P_0.Write(("long old")+(j)+(", long active")
+							+(j)
+							);
 					}
 				}
 				if (i <= maxLenForActive[j] + 1)
@@ -472,9 +472,9 @@ public class RStringLiteral : RegularExpression
 					{
 						P_0.Write(", ");
 					}
-					P_0.Write(new StringBuilder().Append("long old").Append(j).Append(", long active")
-						.Append(j)
-						.ToString());
+					P_0.Write(("long old")+(j)+(", long active")
+						+(j)
+						);
 				}
 				break;
 			}
@@ -502,10 +502,10 @@ public class RStringLiteral : RegularExpression
 							{
 								num2 = 1;
 							}
-							P_0.Write(new StringBuilder().Append("(active").Append(j).Append(" &= old")
-								.Append(j)
-								.Append(")")
-								.ToString());
+							P_0.Write(("(active")+(j)+(" &= old")
+								+(j)
+								+(")")
+								);
 						}
 					}
 					if (i <= maxLenForActive[j] + 1)
@@ -514,24 +514,24 @@ public class RStringLiteral : RegularExpression
 						{
 							P_0.Write(" | ");
 						}
-						P_0.Write(new StringBuilder().Append("(active").Append(j).Append(" &= old")
-							.Append(j)
-							.Append(")")
-							.ToString());
+						P_0.Write(("(active")+(j)+(" &= old")
+							+(j)
+							+(")")
+							);
 					}
 					P_0.WriteLine(") == 0L)");
 					if (!LexGen.mixed[LexGen.lexStateIndex] && NfaState.generatedStates != 0)
 					{
-						P_0.Write(new StringBuilder().Append("      return jjStartNfa").Append(LexGen.lexStateSuffix).Append("(")
-							.Append(i - 2)
-							.Append(", ")
-							.ToString());
+						P_0.Write(("      return jjStartNfa")+(LexGen.lexStateSuffix)+("(")
+							+(i - 2)
+							+(", ")
+							);
 						for (j = 0; j < num - 1; j++)
 						{
 							if (i <= maxLenForActive[j] + 1)
 							{
-								P_0.Write(new StringBuilder().Append("old").Append(j).Append(", ")
-									.ToString());
+								P_0.Write(("old")+(j)+(", ")
+									);
 							}
 							else
 							{
@@ -540,8 +540,8 @@ public class RStringLiteral : RegularExpression
 						}
 						if (i <= maxLenForActive[j] + 1)
 						{
-							P_0.WriteLine(new StringBuilder().Append("old").Append(j).Append("); ")
-								.ToString());
+							P_0.WriteLine(("old")+(j)+("); ")
+								);
 						}
 						else
 						{
@@ -550,23 +550,23 @@ public class RStringLiteral : RegularExpression
 					}
 					else if (NfaState.generatedStates != 0)
 					{
-						P_0.WriteLine(new StringBuilder().Append("      return jjMoveNfa").Append(LexGen.lexStateSuffix).Append("(")
-							.Append(NfaState.InitStateName())
-							.Append(", ")
-							.Append(i - 1)
-							.Append(");")
-							.ToString());
+						P_0.WriteLine(("      return jjMoveNfa")+(LexGen.lexStateSuffix)+("(")
+							+(NfaState.InitStateName())
+							+(", ")
+							+(i - 1)
+							+(");")
+							);
 					}
 					else
 					{
-						P_0.WriteLine(new StringBuilder().Append("      return ").Append(i).Append(";")
-							.ToString());
+						P_0.WriteLine(("      return ")+(i)+(";")
+							);
 					}
 				}
 				if (i != 0 && Options.getDebugTokenManager())
 				{
-					P_0.WriteLine(new StringBuilder().Append("   if (jjmatchedKind != 0 && jjmatchedKind != 0x").Append(Utils.ToString(int.MaxValue,16)).Append(")")
-						.ToString());
+					P_0.WriteLine(("   if (jjmatchedKind != 0 && jjmatchedKind != 0x")+(Utils.ToString(int.MaxValue,16))+(")")
+						);
 					P_0.WriteLine("      debugStream.WriteLine(\"   Currently matched the first \" + (jjmatchedPos + 1) + \" characters as a \" + tokenImage[jjmatchedKind] + \" token.\");");
 					P_0.WriteLine("   debugStream.WriteLine(\"   Possible string literal matches : { \"");
 					for (int k = 0; k < maxStrKind / 64 + 1; k++)
@@ -574,10 +574,10 @@ public class RStringLiteral : RegularExpression
 						if (i <= maxLenForActive[k])
 						{
 							P_0.WriteLine(" + ");
-							P_0.Write(new StringBuilder().Append("         jjKindsForBitVector(").Append(k).Append(", ")
-								.ToString());
-							P_0.Write(new StringBuilder().Append("active").Append(k).Append(") ")
-								.ToString());
+							P_0.Write(("         jjKindsForBitVector(")+(k)+(", ")
+								);
+							P_0.Write(("active")+(k)+(") ")
+								);
 						}
 					}
 					P_0.WriteLine(" + \" } \");");
@@ -586,17 +586,17 @@ public class RStringLiteral : RegularExpression
 				P_0.WriteLine("   catch(java.io.IOException e) {");
 				if (!LexGen.mixed[LexGen.lexStateIndex] && NfaState.generatedStates != 0)
 				{
-					P_0.Write(new StringBuilder().Append("      jjStopStringLiteralDfa").Append(LexGen.lexStateSuffix).Append("(")
-						.Append(i - 1)
-						.Append(", ")
-						.ToString());
+					P_0.Write(("      jjStopStringLiteralDfa")+(LexGen.lexStateSuffix)+("(")
+						+(i - 1)
+						+(", ")
+						);
 					int l;
 					for (l = 0; l < num - 1; l++)
 					{
 						if (i <= maxLenForActive[l])
 						{
-							P_0.Write(new StringBuilder().Append("active").Append(l).Append(", ")
-								.ToString());
+							P_0.Write(("active")+(l)+(", ")
+								);
 						}
 						else
 						{
@@ -605,8 +605,8 @@ public class RStringLiteral : RegularExpression
 					}
 					if (i <= maxLenForActive[l])
 					{
-						P_0.WriteLine(new StringBuilder().Append("active").Append(l).Append(");")
-							.ToString());
+						P_0.WriteLine(("active")+(l)+(");")
+							);
 					}
 					else
 					{
@@ -614,35 +614,35 @@ public class RStringLiteral : RegularExpression
 					}
 					if (i != 0 && Options.getDebugTokenManager())
 					{
-						P_0.WriteLine(new StringBuilder().Append("      if (jjmatchedKind != 0 && jjmatchedKind != 0x").Append(Utils.ToString(int.MaxValue,16)).Append(")")
-							.ToString());
+						P_0.WriteLine(("      if (jjmatchedKind != 0 && jjmatchedKind != 0x")+(Utils.ToString(int.MaxValue,16))+(")")
+							);
 						P_0.WriteLine("         debugStream.WriteLine(\"   Currently matched the first \" + (jjmatchedPos + 1) + \" characters as a \" + tokenImage[jjmatchedKind] + \" token.\");");
 					}
-					P_0.WriteLine(new StringBuilder().Append("      return ").Append(i).Append(";")
-						.ToString());
+					P_0.WriteLine(("      return ")+(i)+(";")
+						);
 				}
 				else if (NfaState.generatedStates != 0)
 				{
-					P_0.WriteLine(new StringBuilder().Append("   return jjMoveNfa").Append(LexGen.lexStateSuffix).Append("(")
-						.Append(NfaState.InitStateName())
-						.Append(", ")
-						.Append(i - 1)
-						.Append(");")
-						.ToString());
+					P_0.WriteLine(("   return jjMoveNfa")+(LexGen.lexStateSuffix)+("(")
+						+(NfaState.InitStateName())
+						+(", ")
+						+(i - 1)
+						+(");")
+						);
 				}
 				else
 				{
-					P_0.WriteLine(new StringBuilder().Append("      return ").Append(i).Append(";")
-						.ToString());
+					P_0.WriteLine(("      return ")+(i)+(";")
+						);
 				}
 				P_0.WriteLine("   }");
 			}
 			if (i != 0 && Options.getDebugTokenManager())
 			{
-				P_0.WriteLine(new StringBuilder().Append("   debugStream.WriteLine(").Append((LexGen.maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ").Append("\"Current character : \" + ")
-					.Append("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
-					.Append("at line \" + input_stream.getEndLine() + \" column \" + input_stream.getEndColumn());")
-					.ToString());
+				P_0.WriteLine(("   debugStream.WriteLine(")+((LexGen.maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ")+("\"Current character : \" + ")
+					+("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
+					+("at line \" + input_stream.getEndLine() + \" column \" + input_stream.getEndColumn());")
+					);
 			}
 			P_0.WriteLine("   switch(curChar)");
 			P_0.WriteLine("   {");
@@ -684,17 +684,17 @@ public class RStringLiteral : RegularExpression
 				{
 					if (num5 != char.ToUpper((char)num5))
 					{
-						P_0.WriteLine(new StringBuilder().Append("      case ").Append((int)char.ToUpper((char)num5)).Append(":")
-							.ToString());
+						P_0.WriteLine(("      case ")+((int)char.ToUpper((char)num5))+(":")
+							);
 					}
 					if (num5 != Char.ToLower((char)num5))
 					{
-						P_0.WriteLine(new StringBuilder().Append("      case ").Append((int)Char.ToLower((char)num5)).Append(":")
-							.ToString());
+						P_0.WriteLine(("      case ")+((int)Char.ToLower((char)num5))+(":")
+							);
 					}
 				}
-				P_0.WriteLine(new StringBuilder().Append("      case ").Append(num5).Append(":")
-					.ToString());
+				P_0.WriteLine(("      case ")+(num5)+(":")
+					);
 				string str = ((i != 0) ? "            " : "         ");
 				if (kindInfo.finalKindCnt != 0)
 				{
@@ -722,36 +722,36 @@ public class RStringLiteral : RegularExpression
 							num4 = 1;
 							if (i != 0)
 							{
-								P_0.WriteLine(new StringBuilder().Append("((active").Append(j).Append(" & 0x")
-									.Append(Long.toHexString(1L << l))
-									.Append("L) != 0L)")
-									.ToString());
+								P_0.WriteLine(("((active")+(j)+(" & 0x")
+									+(Long.toHexString(1L << l))
+									+("L) != 0L)")
+									);
 							}
 							int i2;
 							if (intermediateKinds != null && intermediateKinds[j * 64 + l] != null && intermediateKinds[j * 64 + l][i] < j * 64 + l && intermediateMatchedPos != null && intermediateMatchedPos[j * 64 + l][i] == i)
 							{
-								JavaCCErrors.Warning(new StringBuilder().Append(" \"").Append(JavaCCGlobals.add_escapes(allImages[j * 64 + l])).Append("\" cannot be matched as a string literal token ")
-									.Append("at line ")
-									.Append(GetLine(j * 64 + l))
-									.Append(", column ")
-									.Append(GetColumn(j * 64 + l))
-									.Append(". It will be matched as ")
-									.Append(GetLabel(intermediateKinds[j * 64 + l][i]))
-									.Append(".")
-									.ToString());
+								JavaCCErrors.Warning((" \"")+(JavaCCGlobals.add_escapes(allImages[j * 64 + l]))+("\" cannot be matched as a string literal token ")
+									+("at line ")
+									+(GetLine(j * 64 + l))
+									+(", column ")
+									+(GetColumn(j * 64 + l))
+									+(". It will be matched as ")
+									+(GetLabel(intermediateKinds[j * 64 + l][i]))
+									+(".")
+									);
 								i2 = intermediateKinds[j * 64 + l][i];
 							}
 							else if (i == 0 && LexGen.canMatchAnyChar[LexGen.lexStateIndex] >= 0 && LexGen.canMatchAnyChar[LexGen.lexStateIndex] < j * 64 + l)
 							{
-								JavaCCErrors.Warning(new StringBuilder().Append(" \"").Append(JavaCCGlobals.add_escapes(allImages[j * 64 + l])).Append("\" cannot be matched as a string literal token ")
-									.Append("at line ")
-									.Append(GetLine(j * 64 + l))
-									.Append(", column ")
-									.Append(GetColumn(j * 64 + l))
-									.Append(". It will be matched as ")
-									.Append(GetLabel(LexGen.canMatchAnyChar[LexGen.lexStateIndex]))
-									.Append(".")
-									.ToString());
+								JavaCCErrors.Warning((" \"")+(JavaCCGlobals.add_escapes(allImages[j * 64 + l]))+("\" cannot be matched as a string literal token ")
+									+("at line ")
+									+(GetLine(j * 64 + l))
+									+(", column ")
+									+(GetColumn(j * 64 + l))
+									+(". It will be matched as ")
+									+(GetLabel(LexGen.canMatchAnyChar[LexGen.lexStateIndex]))
+									+(".")
+									);
 								i2 = LexGen.canMatchAnyChar[LexGen.lexStateIndex];
 							}
 							else
@@ -763,42 +763,42 @@ public class RStringLiteral : RegularExpression
 								int stateSetForKind = GetStateSetForKind(i, j * 64 + l);
 								if (stateSetForKind != -1)
 								{
-									P_0.WriteLine(new StringBuilder().Append(str).Append("return jjStartNfaWithStates").Append(LexGen.lexStateSuffix)
-										.Append("(")
-										.Append(i)
-										.Append(", ")
-										.Append(i2)
-										.Append(", ")
-										.Append(stateSetForKind)
-										.Append(");")
-										.ToString());
+									P_0.WriteLine((str)+("return jjStartNfaWithStates")+(LexGen.lexStateSuffix)
+										+("(")
+										+(i)
+										+(", ")
+										+(i2)
+										+(", ")
+										+(stateSetForKind)
+										+(");")
+										);
 								}
 								else
 								{
-									P_0.WriteLine(new StringBuilder().Append(str).Append("return jjStopAtPos").Append("(")
-										.Append(i)
-										.Append(", ")
-										.Append(i2)
-										.Append(");")
-										.ToString());
+									P_0.WriteLine((str)+("return jjStopAtPos")+("(")
+										+(i)
+										+(", ")
+										+(i2)
+										+(");")
+										);
 								}
 							}
 							else if ((LexGen.initMatch[LexGen.lexStateIndex] != 0 && LexGen.initMatch[LexGen.lexStateIndex] != int.MaxValue) || i != 0)
 							{
 								P_0.WriteLine("         {");
-								P_0.WriteLine(new StringBuilder().Append(str).Append("jjmatchedKind = ").Append(i2)
-									.Append(";")
-									.ToString());
-								P_0.WriteLine(new StringBuilder().Append(str).Append("jjmatchedPos = ").Append(i)
-									.Append(";")
-									.ToString());
+								P_0.WriteLine((str)+("jjmatchedKind = ")+(i2)
+									+(";")
+									);
+								P_0.WriteLine((str)+("jjmatchedPos = ")+(i)
+									+(";")
+									);
 								P_0.WriteLine("         }");
 							}
 							else
 							{
-								P_0.WriteLine(new StringBuilder().Append(str).Append("jjmatchedKind = ").Append(i2)
-									.Append(";")
-									.ToString());
+								P_0.WriteLine((str)+("jjmatchedKind = ")+(i2)
+									+(";")
+									);
 							}
 						}
 					}
@@ -810,9 +810,9 @@ public class RStringLiteral : RegularExpression
 					if (i == 0)
 					{
 						P_0.Write("         return ");
-						P_0.Write(new StringBuilder().Append("jjMoveStringLiteralDfa").Append(i + 1).Append(LexGen.lexStateSuffix)
-							.Append("(")
-							.ToString());
+						P_0.Write(("jjMoveStringLiteralDfa")+(i + 1)+(LexGen.lexStateSuffix)
+							+("(")
+							);
 						for (j = 0; j < num - 1; j++)
 						{
 							if (i + 1 <= maxLenForActive[j])
@@ -825,8 +825,8 @@ public class RStringLiteral : RegularExpression
 								{
 									num2 = 1;
 								}
-								P_0.Write(new StringBuilder().Append("0x").Append(Long.toHexString(kindInfo.validKinds[j])).Append("L")
-									.ToString());
+								P_0.Write(("0x")+(Long.toHexString(kindInfo.validKinds[j]))+("L")
+									);
 							}
 						}
 						if (i + 1 <= maxLenForActive[j])
@@ -835,16 +835,16 @@ public class RStringLiteral : RegularExpression
 							{
 								P_0.Write(", ");
 							}
-							P_0.Write(new StringBuilder().Append("0x").Append(Long.toHexString(kindInfo.validKinds[j])).Append("L")
-								.ToString());
+							P_0.Write(("0x")+(Long.toHexString(kindInfo.validKinds[j]))+("L")
+								);
 						}
 						P_0.WriteLine(");");
 						continue;
 					}
 					P_0.Write("         return ");
-					P_0.Write(new StringBuilder().Append("jjMoveStringLiteralDfa").Append(i + 1).Append(LexGen.lexStateSuffix)
-						.Append("(")
-						.ToString());
+					P_0.Write(("jjMoveStringLiteralDfa")+(i + 1)+(LexGen.lexStateSuffix)
+						+("(")
+						);
 					for (j = 0; j < num - 1; j++)
 					{
 						if (i + 1 <= maxLenForActive[j] + 1)
@@ -859,15 +859,15 @@ public class RStringLiteral : RegularExpression
 							}
 							if (kindInfo.validKinds[j] != 0)
 							{
-								P_0.Write(new StringBuilder().Append("active").Append(j).Append(", 0x")
-									.Append(Long.toHexString(kindInfo.validKinds[j]))
-									.Append("L")
-									.ToString());
+								P_0.Write(("active")+(j)+(", 0x")
+									+(Long.toHexString(kindInfo.validKinds[j]))
+									+("L")
+									);
 							}
 							else
 							{
-								P_0.Write(new StringBuilder().Append("active").Append(j).Append(", 0L")
-									.ToString());
+								P_0.Write(("active")+(j)+(", 0L")
+									);
 							}
 						}
 					}
@@ -879,15 +879,15 @@ public class RStringLiteral : RegularExpression
 						}
 						if (kindInfo.validKinds[j] != 0)
 						{
-							P_0.Write(new StringBuilder().Append("active").Append(j).Append(", 0x")
-								.Append(Long.toHexString(kindInfo.validKinds[j]))
-								.Append("L")
-								.ToString());
+							P_0.Write(("active")+(j)+(", 0x")
+								+(Long.toHexString(kindInfo.validKinds[j]))
+								+("L")
+								);
 						}
 						else
 						{
-							P_0.Write(new StringBuilder().Append("active").Append(j).Append(", 0L")
-								.ToString());
+							P_0.Write(("active")+(j)+(", 0L")
+								);
 						}
 					}
 					P_0.WriteLine(");");
@@ -896,10 +896,10 @@ public class RStringLiteral : RegularExpression
 				{
 					if (NfaState.generatedStates != 0)
 					{
-						P_0.WriteLine(new StringBuilder().Append("         return jjMoveNfa").Append(LexGen.lexStateSuffix).Append("(")
-							.Append(NfaState.InitStateName())
-							.Append(", 0);")
-							.ToString());
+						P_0.WriteLine(("         return jjMoveNfa")+(LexGen.lexStateSuffix)+("(")
+							+(NfaState.InitStateName())
+							+(", 0);")
+							);
 					}
 					else
 					{
@@ -935,10 +935,10 @@ public class RStringLiteral : RegularExpression
 			{
 				if (i == 0)
 				{
-					P_0.WriteLine(new StringBuilder().Append("         return jjMoveNfa").Append(LexGen.lexStateSuffix).Append("(")
-						.Append(NfaState.InitStateName())
-						.Append(", 0);")
-						.ToString());
+					P_0.WriteLine(("         return jjMoveNfa")+(LexGen.lexStateSuffix)+("(")
+						+(NfaState.InitStateName())
+						+(", 0);")
+						);
 				}
 				else
 				{
@@ -948,25 +948,25 @@ public class RStringLiteral : RegularExpression
 			}
 			else
 			{
-				P_0.WriteLine(new StringBuilder().Append("         return ").Append(i + 1).Append(";")
-					.ToString());
+				P_0.WriteLine(("         return ")+(i + 1)+(";")
+					);
 			}
 			P_0.WriteLine("   }");
 			if (i != 0 && num3 != 0)
 			{
 				if (!LexGen.mixed[LexGen.lexStateIndex] && NfaState.generatedStates != 0)
 				{
-					P_0.Write(new StringBuilder().Append("   return jjStartNfa").Append(LexGen.lexStateSuffix).Append("(")
-						.Append(i - 1)
-						.Append(", ")
-						.ToString());
+					P_0.Write(("   return jjStartNfa")+(LexGen.lexStateSuffix)+("(")
+						+(i - 1)
+						+(", ")
+						);
 					int l;
 					for (l = 0; l < num - 1; l++)
 					{
 						if (i <= maxLenForActive[l])
 						{
-							P_0.Write(new StringBuilder().Append("active").Append(l).Append(", ")
-								.ToString());
+							P_0.Write(("active")+(l)+(", ")
+								);
 						}
 						else
 						{
@@ -975,8 +975,8 @@ public class RStringLiteral : RegularExpression
 					}
 					if (i <= maxLenForActive[l])
 					{
-						P_0.WriteLine(new StringBuilder().Append("active").Append(l).Append(");")
-							.ToString());
+						P_0.WriteLine(("active")+(l)+(");")
+							);
 					}
 					else
 					{
@@ -985,17 +985,17 @@ public class RStringLiteral : RegularExpression
 				}
 				else if (NfaState.generatedStates != 0)
 				{
-					P_0.WriteLine(new StringBuilder().Append("   return jjMoveNfa").Append(LexGen.lexStateSuffix).Append("(")
-						.Append(NfaState.InitStateName())
-						.Append(", ")
-						.Append(i)
-						.Append(");")
-						.ToString());
+					P_0.WriteLine(("   return jjMoveNfa")+(LexGen.lexStateSuffix)+("(")
+						+(NfaState.InitStateName())
+						+(", ")
+						+(i)
+						+(");")
+						);
 				}
 				else
 				{
-					P_0.WriteLine(new StringBuilder().Append("   return ").Append(i + 1).Append(";")
-						.ToString());
+					P_0.WriteLine(("   return ")+(i + 1)+(";")
+						);
 				}
 			}
 			P_0.WriteLine("}");
@@ -1055,19 +1055,19 @@ public class RStringLiteral : RegularExpression
 						{
 							if (java.lang.String.instancehelper_charAt(@this, j) <= 'ÿ')
 							{
-								str = new StringBuilder().Append(str).Append("\\").Append(int.toOctalString(java.lang.String.instancehelper_charAt(@this, j)))
-									.ToString();
+								str = (str)+("\\")+(int.toOctalString(java.lang.String.instancehelper_charAt(@this, j)))
+									;
 								continue;
 							}
 							string text = Utils.ToHexString(java.lang.String.instancehelper_charAt(@this, j));
-							if (java.lang.String.instancehelper_length(text) == 3)
+							if (java.lang.text.Length == 3)
 							{
-								text = new StringBuilder().Append("0").Append(text).ToString();
+								text = ("0")+(text);
 							}
-							str = new StringBuilder().Append(str).Append("\\u").Append(text)
-								.ToString();
+							str = (str)+("\\u")+(text)
+								;
 						}
-						str = new StringBuilder().Append(str).Append("\", ").ToString();
+						str = (str)+("\", ");
 						if ((charCnt += str.Length) >= 80)
 						{
 							pw.WriteLine("");
@@ -1139,10 +1139,10 @@ public class RStringLiteral : RegularExpression
 		P_0.WriteLine("{");
 		if (NfaState.generatedStates != 0)
 		{
-			P_0.WriteLine(new StringBuilder().Append("   return jjMoveNfa").Append(LexGen.lexStateSuffix).Append("(")
-				.Append(NfaState.InitStateName())
-				.Append(", 0);")
-				.ToString());
+			P_0.WriteLine(("   return jjMoveNfa")+(LexGen.lexStateSuffix)+("(")
+				+(NfaState.InitStateName())
+				+(", 0);")
+				);
 		}
 		else
 		{
@@ -1154,8 +1154,8 @@ public class RStringLiteral : RegularExpression
 	
 	internal static void DumpBoilerPlate(TextWriter P_0)
 	{
-		P_0.WriteLine(new StringBuilder().Append((!Options.getStatic()) ? "" : "static ").Append("private int ").Append("jjStopAtPos(int pos, int kind)")
-			.ToString());
+		P_0.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private int ")+("jjStopAtPos(int pos, int kind)")
+			);
 		P_0.WriteLine("{");
 		P_0.WriteLine("   jjmatchedKind = kind;");
 		P_0.WriteLine("   jjmatchedPos = pos;");
@@ -1171,10 +1171,10 @@ public class RStringLiteral : RegularExpression
 	
 	internal static void DumpStartWithStates(TextWriter P_0)
 	{
-		P_0.WriteLine(new StringBuilder().Append((!Options.getStatic()) ? "" : "static ").Append("private int ").Append("jjStartNfaWithStates")
-			.Append(LexGen.lexStateSuffix)
-			.Append("(int pos, int kind, int state)")
-			.ToString());
+		P_0.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private int ")+("jjStartNfaWithStates")
+			+(LexGen.lexStateSuffix)
+			+("(int pos, int kind, int state)")
+			);
 		P_0.WriteLine("{");
 		P_0.WriteLine("   jjmatchedKind = kind;");
 		P_0.WriteLine("   jjmatchedPos = pos;");
@@ -1187,13 +1187,13 @@ public class RStringLiteral : RegularExpression
 		P_0.WriteLine("   catch(java.io.IOException e) { return pos + 1; }");
 		if (Options.getDebugTokenManager())
 		{
-			P_0.WriteLine(new StringBuilder().Append("   debugStream.WriteLine(").Append((LexGen.maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ").Append("\"Current character : \" + ")
-				.Append("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
-				.Append("at line \" + input_stream.getEndLine() + \" column \" + input_stream.getEndColumn());")
-				.ToString());
+			P_0.WriteLine(("   debugStream.WriteLine(")+((LexGen.maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ")+("\"Current character : \" + ")
+				+("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
+				+("at line \" + input_stream.getEndLine() + \" column \" + input_stream.getEndColumn());")
+				);
 		}
-		P_0.WriteLine(new StringBuilder().Append("   return jjMoveNfa").Append(LexGen.lexStateSuffix).Append("(state, pos + 1);")
-			.ToString());
+		P_0.WriteLine(("   return jjMoveNfa")+(LexGen.lexStateSuffix)+("(state, pos + 1);")
+			);
 		P_0.WriteLine("}");
 	}
 
@@ -1241,20 +1241,20 @@ public class RStringLiteral : RegularExpression
 		var regularExpression = LexGen.rexprs[P_0];
 		if (regularExpression is RStringLiteral)
 		{
-			string result = new StringBuilder().Append(" \"").Append(JavaCCGlobals.add_escapes(((RStringLiteral)regularExpression).image)).Append("\"")
-				.ToString();
+			string result = (" \"")+(JavaCCGlobals.add_escapes(((RStringLiteral)regularExpression).image))+("\"")
+				;
 			
 			return result;
 		}
 		if (!string.Equals(regularExpression.label, ""))
 		{
-			string result2 = new StringBuilder().Append(" <").Append(regularExpression.label).Append(">")
-				.ToString();
+			string result2 = (" <")+(regularExpression.label)+(">")
+				;
 			
 			return result2;
 		}
-		string result3 = new StringBuilder().Append(" <token of kind ").Append(P_0).Append(">")
-			.ToString();
+		string result3 = (" <token of kind ")+(P_0)+(">")
+			;
 		
 		return result3;
 	}
@@ -1301,18 +1301,18 @@ public class RStringLiteral : RegularExpression
 		int num = maxStrKind / 64 + 1;
 		int num2 = 0;
 		_ = 0;
-		P_1.Write(new StringBuilder().Append("private").Append((!Options.getStatic()) ? "" : " static").Append(" final int jjStopStringLiteralDfa")
-			.Append(LexGen.lexStateSuffix)
-			.Append("(int pos, ")
-			.ToString());
+		P_1.Write(("private")+((!Options.getStatic()) ? "" : " static")+(" final int jjStopStringLiteralDfa")
+			+(LexGen.lexStateSuffix)
+			+("(int pos, ")
+			);
 		int i;
 		for (i = 0; i < num - 1; i++)
 		{
-			P_1.Write(new StringBuilder().Append("long active").Append(i).Append(", ")
-				.ToString());
+			P_1.Write(("long active")+(i)+(", ")
+				);
 		}
-		P_1.WriteLine(new StringBuilder().Append("long active").Append(i).Append(")\n{")
-			.ToString());
+		P_1.WriteLine(("long active")+(i)+(")\n{")
+			);
 		if (Options.getDebugTokenManager())
 		{
 			P_1.WriteLine("      debugStream.WriteLine(\"   No more string literal token matches are possible.\");");
@@ -1324,8 +1324,8 @@ public class RStringLiteral : RegularExpression
 			{
 				continue;
 			}
-			P_1.WriteLine(new StringBuilder().Append("      case ").Append(i).Append(":")
-				.ToString());
+			P_1.WriteLine(("      case ")+(i)+(":")
+				);
 			Enumeration enumeration = P_0[i].keys();
 			while (enumeration.hasMoreElements())
 			{
@@ -1344,10 +1344,10 @@ public class RStringLiteral : RegularExpression
 							P_1.Write("         if (");
 						}
 						num2 = 1;
-						P_1.Write(new StringBuilder().Append("(active").Append(j).Append(" & 0x")
-							.Append(Long.toHexString(array[j]))
-							.Append("L) != 0L")
-							.ToString());
+						P_1.Write(("(active")+(j)+(" & 0x")
+							+(Long.toHexString(array[j]))
+							+("L) != 0L")
+							);
 					}
 				}
 				if (num2 == 0)
@@ -1367,8 +1367,8 @@ public class RStringLiteral : RegularExpression
 				{
 					if (i == 0)
 					{
-						P_1.WriteLine(new StringBuilder().Append("            jjmatchedKind = ").Append(text2).Append(";")
-							.ToString());
+						P_1.WriteLine(("            jjmatchedKind = ")+(text2)+(";")
+							);
 						if (LexGen.initMatch[LexGen.lexStateIndex] != 0 && LexGen.initMatch[LexGen.lexStateIndex] != int.MaxValue)
 						{
 							P_1.WriteLine("            jjmatchedPos = 0;");
@@ -1378,39 +1378,39 @@ public class RStringLiteral : RegularExpression
 					{
 						if (subStringAtPos[i])
 						{
-							P_1.WriteLine(new StringBuilder().Append("            if (jjmatchedPos != ").Append(i).Append(")")
-								.ToString());
+							P_1.WriteLine(("            if (jjmatchedPos != ")+(i)+(")")
+								);
 							P_1.WriteLine("            {");
-							P_1.WriteLine(new StringBuilder().Append("               jjmatchedKind = ").Append(text2).Append(";")
-								.ToString());
-							P_1.WriteLine(new StringBuilder().Append("               jjmatchedPos = ").Append(i).Append(";")
-								.ToString());
+							P_1.WriteLine(("               jjmatchedKind = ")+(text2)+(";")
+								);
+							P_1.WriteLine(("               jjmatchedPos = ")+(i)+(";")
+								);
 							P_1.WriteLine("            }");
 						}
 						else
 						{
-							P_1.WriteLine(new StringBuilder().Append("            jjmatchedKind = ").Append(text2).Append(";")
-								.ToString());
-							P_1.WriteLine(new StringBuilder().Append("            jjmatchedPos = ").Append(i).Append(";")
-								.ToString());
+							P_1.WriteLine(("            jjmatchedKind = ")+(text2)+(";")
+								);
+							P_1.WriteLine(("            jjmatchedPos = ")+(i)+(";")
+								);
 						}
 					}
 					else
 					{
 						if (num4 > 0)
 						{
-							P_1.WriteLine(new StringBuilder().Append("            if (jjmatchedPos < ").Append(num4).Append(")")
-								.ToString());
+							P_1.WriteLine(("            if (jjmatchedPos < ")+(num4)+(")")
+								);
 						}
 						else
 						{
 							P_1.WriteLine("            if (jjmatchedPos == 0)");
 						}
 						P_1.WriteLine("            {");
-						P_1.WriteLine(new StringBuilder().Append("               jjmatchedKind = ").Append(text2).Append(";")
-							.ToString());
-						P_1.WriteLine(new StringBuilder().Append("               jjmatchedPos = ").Append(num4).Append(";")
-							.ToString());
+						P_1.WriteLine(("               jjmatchedKind = ")+(text2)+(";")
+							);
+						P_1.WriteLine(("               jjmatchedPos = ")+(num4)+(";")
+							);
 						P_1.WriteLine("            }");
 					}
 				}
@@ -1423,8 +1423,8 @@ public class RStringLiteral : RegularExpression
 				}
 				else
 				{
-					P_1.WriteLine(new StringBuilder().Append("            return ").Append(NfaState.AddStartStateSet(text)).Append(";")
-						.ToString());
+					P_1.WriteLine(("            return ")+(NfaState.AddStartStateSet(text))+(";")
+						);
 				}
 				if (!string.Equals(text2, java.lang.String.valueOf(int.MaxValue)))
 				{
@@ -1438,25 +1438,25 @@ public class RStringLiteral : RegularExpression
 		P_1.WriteLine("         return -1;");
 		P_1.WriteLine("   }");
 		P_1.WriteLine("}");
-		P_1.Write(new StringBuilder().Append("private").Append((!Options.getStatic()) ? "" : " static").Append(" final int jjStartNfa")
-			.Append(LexGen.lexStateSuffix)
-			.Append("(int pos, ")
-			.ToString());
+		P_1.Write(("private")+((!Options.getStatic()) ? "" : " static")+(" final int jjStartNfa")
+			+(LexGen.lexStateSuffix)
+			+("(int pos, ")
+			);
 		for (i = 0; i < num - 1; i++)
 		{
-			P_1.Write(new StringBuilder().Append("long active").Append(i).Append(", ")
-				.ToString());
+			P_1.Write(("long active")+(i)+(", ")
+				);
 		}
-		P_1.WriteLine(new StringBuilder().Append("long active").Append(i).Append(")\n{")
-			.ToString());
+		P_1.WriteLine(("long active")+(i)+(")\n{")
+			);
 		if (LexGen.mixed[LexGen.lexStateIndex])
 		{
 			if (NfaState.generatedStates != 0)
 			{
-				P_1.WriteLine(new StringBuilder().Append("   return jjMoveNfa").Append(LexGen.lexStateSuffix).Append("(")
-					.Append(NfaState.InitStateName())
-					.Append(", pos + 1);")
-					.ToString());
+				P_1.WriteLine(("   return jjMoveNfa")+(LexGen.lexStateSuffix)+("(")
+					+(NfaState.InitStateName())
+					+(", pos + 1);")
+					);
 			}
 			else
 			{
@@ -1465,18 +1465,18 @@ public class RStringLiteral : RegularExpression
 			P_1.WriteLine("}");
 			return;
 		}
-		P_1.Write(new StringBuilder().Append("   return jjMoveNfa").Append(LexGen.lexStateSuffix).Append("(")
-			.Append("jjStopStringLiteralDfa")
-			.Append(LexGen.lexStateSuffix)
-			.Append("(pos, ")
-			.ToString());
+		P_1.Write(("   return jjMoveNfa")+(LexGen.lexStateSuffix)+("(")
+			+("jjStopStringLiteralDfa")
+			+(LexGen.lexStateSuffix)
+			+("(pos, ")
+			);
 		for (i = 0; i < num - 1; i++)
 		{
-			P_1.Write(new StringBuilder().Append("active").Append(i).Append(", ")
-				.ToString());
+			P_1.Write(("active")+(i)+(", ")
+				);
 		}
-		P_1.Write(new StringBuilder().Append("active").Append(i).Append(")")
-			.ToString());
+		P_1.Write(("active")+(i)+(")")
+			);
 		P_1.WriteLine(", pos + 1);");
 		P_1.WriteLine("}");
 	}
@@ -1544,14 +1544,14 @@ public class RStringLiteral : RegularExpression
 	
 	public override StringBuilder Dump(int i, HashSet<Expansion> s)
 	{
-		return base.Dump(i, s).Append(' ').Append(image);
+		return base.Dump(i, s)+(' ')+(image);
 	}
 
 	
 	public override string ToString()
 	{
-		string result = new StringBuilder().Append(base.ToString()).Append(" - ").Append(image)
-			.ToString();
+		string result = (base)+(" - ")+(image)
+			;
 		
 		return result;
 	}

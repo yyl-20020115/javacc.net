@@ -6,7 +6,7 @@ internal sealed class JJTreeState
 {	
 	internal static void InsertParserMembers(IO io)
 	{
-		string str = ((!Options.getStatic()) ? "" : "static ");
+		var str = ((!Options.getStatic()) ? "" : "static ");
 		io.WriteLine();
 		io.WriteLine(("  protected ")+(str)+(NameState())
 			+(" jjtree = new ")
@@ -70,7 +70,7 @@ internal sealed class JJTreeState
 		writer.WriteLine("  private boolean node_created;");
 		writer.WriteLine("");
 		writer.WriteLine("  public "+(NameState())+("() {")
-			.ToString());
+			);
 		if (!string.Equals(JJTreeOptions.JdkVersion, "1.5"))
 		{
 			writer.WriteLine("    nodes = new java.util.ArrayList();");

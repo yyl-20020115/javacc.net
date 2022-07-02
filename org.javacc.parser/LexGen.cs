@@ -106,8 +106,8 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			ostr = new StreamWriter(file.FullName);
 			ArrayList vector = (ArrayList)JavaCCGlobals.toolNames.Clone();
 			vector.Add("JavaCC");
-			ostr.WriteLine(("/* ")+(JavaCCGlobals.getIdString(vector, (tokMgrClassName)+(".java").ToString()))+(" */")
-				.ToString());
+			ostr.WriteLine(("/* ")+(JavaCCGlobals.getIdString(vector, (tokMgrClassName)+(".java")))+(" */")
+				);
 			int num = 0;
 			int i = 1;
 			while (JavaCCGlobals.cu_to_insertion_point_1.Count > num)
@@ -145,7 +145,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			ostr.WriteLine(("public class ")+(tokMgrClassName)+(" implements ")
 				+(JavaCCGlobals.cu_name)
 				+("Constants")
-				.ToString());
+				);
 			ostr.WriteLine("{");
 		}
 		catch (IOException)
@@ -173,34 +173,34 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			{
 				JavaCCErrors.Warning(("You have the COMMON_TOKEN_ACTION option set. But it appears you have not defined the method :\n      ")+(staticString)+("void CommonTokenAction(Token t)\n")
 					+("in your TOKEN_MGR_DECLS. The generated token manager will not compile.")
-					.ToString());
+					);
 			}
 		}
 		else if (Options.getCommonTokenAction())
 		{
 			JavaCCErrors.Warning(("You have the COMMON_TOKEN_ACTION option set. But you have not defined the method :\n      ")+(staticString)+("void CommonTokenAction(Token t)\n")
 				+("in your TOKEN_MGR_DECLS. The generated token manager will not compile.")
-				.ToString());
+				);
 		}
 		ostr.WriteLine("");
 		ostr.WriteLine("  /** Debug output. */");
 		ostr.WriteLine(("  public ")+(staticString)+(" java.io.TextWriter debugStream = System.out;")
-			.ToString());
+			);
 		ostr.WriteLine("  /** HashSet<object> debug output. */");
 		ostr.WriteLine(("  public ")+(staticString)+(" void setDebugStream(java.io.TextWriter ds) { debugStream = ds; }")
-			.ToString());
+			);
 		if (Options.getTokenManagerUsesParser() && !Options.getStatic())
 		{
 			ostr.WriteLine("");
 			ostr.WriteLine("  /** The parser. */");
 			ostr.WriteLine(("  public ")+(JavaCCGlobals.cu_name)+(" parser = null;")
-				.ToString());
+				);
 		}
 		return;
 		IL_0277:
 		
 		JavaCCErrors.Semantic_Error(("Could not create file : ")+(tokMgrClassName)+(".java\n")
-			.ToString());
+			);
 		
 		throw new System.Exception();
 	}
@@ -307,15 +307,15 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			int num2 = i;
 			array[i] = true;
 			str = (str)+(lexStateName[num2])+("-->")
-				.ToString();
+				;
 			while (true)
 			{
 				if (newLexState[initMatch[num2]] != null)
 				{
-					str = (str)+(newLexState[initMatch[num2]]).ToString();
+					str = (str)+(newLexState[initMatch[num2]]);
 					if (!array[num2 = GetIndex(newLexState[initMatch[num2]])])
 					{
-						str = (str)+("-->").ToString();
+						str = (str)+("-->");
 						array2[num2] = true;
 						array[num2] = true;
 						if (initMatch[num2] == 0 || initMatch[num2] == int.MaxValue || canMatchAnyChar[num2] != -1)
@@ -324,19 +324,19 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 						}
 						if (num != 0)
 						{
-							str2 = (str2)+("; ").ToString();
+							str2 = (str2)+("; ");
 						}
 						str2 = (str2)+("line ")+(rexprs[initMatch[num2]].Line)
 							+(", column ")
 							+(rexprs[initMatch[num2]].Column)
-							.ToString();
+							;
 						num++;
 						continue;
 					}
 				}
 				if (newLexState[initMatch[num2]] == null)
 				{
-					str = (str)+(lexStateName[lexStates[initMatch[num2]]]).ToString();
+					str = (str)+(lexStateName[lexStates[initMatch[num2]]]);
 				}
 				for (int j = 0; j < maxLexStates; j++)
 				{
@@ -348,15 +348,15 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				hasLoop = true;
 				if (num == 0)
 				{
-					JavaCCErrors.Warning(rexprs[initMatch[i]], ("Regular expression")+((!string.Equals(rexprs[initMatch[i]].label, "")) ? (" for ")+(rexprs[initMatch[i]].label).ToString() : "")+(" can be matched by the empty string (\"\") in lexical state ")
+					JavaCCErrors.Warning(rexprs[initMatch[i]], ("Regular expression")+((!string.Equals(rexprs[initMatch[i]].label, "")) ? (" for ")+(rexprs[initMatch[i]].label) : "")+(" can be matched by the empty string (\"\") in lexical state ")
 						+(lexStateName[i])
 						+(". This can result in an endless loop of ")
 						+("empty string matches.")
-						.ToString());
+						);
 				}
 				else
 				{
-					JavaCCErrors.Warning(rexprs[initMatch[i]], ("Regular expression")+((!string.Equals(rexprs[initMatch[i]].label, "")) ? (" for ")+(rexprs[initMatch[i]].label).ToString() : "")+(" can be matched by the empty string (\"\") in lexical state ")
+					JavaCCErrors.Warning(rexprs[initMatch[i]], ("Regular expression")+((!string.Equals(rexprs[initMatch[i]].label, "")) ? (" for ")+(rexprs[initMatch[i]].label) : "")+(" can be matched by the empty string (\"\") in lexical state ")
 						+(lexStateName[i])
 						+(". This regular expression along with the ")
 						+("regular expressions at ")
@@ -365,7 +365,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 						+(str)
 						+("\ncontaining regular expressions with empty matches.")
 						+(" This can result in an endless loop of empty string matches.")
-						.ToString());
+						);
 				}
 				break;
 			}
@@ -381,7 +381,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		for (int i = 0; i < maxLexStates; i++)
 		{
 			ostr.WriteLine(("   \"")+(lexStateName[i])+("\", ")
-				.ToString());
+				);
 		}
 		ostr.WriteLine("};");
 		if (maxLexStates > 1)
@@ -402,7 +402,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				}
 				else
 				{
-					ostr.Write((GetIndex(newLexState[i]))+(", ").ToString());
+					ostr.Write((GetIndex(newLexState[i]))+(", "));
 				}
 			}
 			ostr.WriteLine("\n};");
@@ -418,7 +418,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					ostr.Write("\n   ");
 				}
 				ostr.Write(("0x")+(Utils.ToHexString(toToken[i]))+("L, ")
-					.ToString());
+					);
 			}
 			ostr.WriteLine("\n};");
 		}
@@ -433,7 +433,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					ostr.Write("\n   ");
 				}
 				ostr.Write(("0x")+(Utils.ToHexString(toSkip[i]))+("L, ")
-					.ToString());
+					);
 			}
 			ostr.WriteLine("\n};");
 		}
@@ -448,7 +448,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					ostr.Write("\n   ");
 				}
 				ostr.Write(("0x")+(Utils.ToHexString(toSpecial[i]))+("L, ")
-					.ToString());
+					);
 			}
 			ostr.WriteLine("\n};");
 		}
@@ -463,30 +463,30 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 					ostr.Write("\n   ");
 				}
 				ostr.Write(("0x")+(Utils.ToHexString(toMore[i]))+("L, ")
-					.ToString());
+					);
 			}
 			ostr.WriteLine("\n};");
 		}
 		string str = (Options.getUserCharStream() ? "CharStream" : ((!Options.getJavaUnicodeEscape()) ? "SimpleCharStream" : "JavaCharStream"));
 		ostr.WriteLine((staticString)+("protected ")+(str)
 			+(" input_stream;")
-			.ToString());
+			);
 		ostr.WriteLine((staticString)+("private final int[] jjrounds = ")+("new int[")
 			+(stateSetSize)
 			+("];")
-			.ToString());
+			);
 		ostr.WriteLine((staticString)+("private final int[] jjstateSet = ")+("new int[")
 			+(2 * stateSetSize)
 			+("];")
-			.ToString());
+			);
 		if (hasMoreActions || hasSkipActions || hasTokenActions)
 		{
 			ostr.WriteLine((staticString)+(Options.getStringBufOrBuild())+(" image;")
-				.ToString());
-			ostr.WriteLine((staticString)+("int jjimageLen;").ToString());
-			ostr.WriteLine((staticString)+("int lengthOfMatch;").ToString());
+				);
+			ostr.WriteLine((staticString)+("int jjimageLen;"));
+			ostr.WriteLine((staticString)+("int lengthOfMatch;"));
 		}
-		ostr.WriteLine((staticString)+("protected char curChar;").ToString());
+		ostr.WriteLine((staticString)+("protected char curChar;"));
 		if (Options.getTokenManagerUsesParser() && !Options.getStatic())
 		{
 			ostr.WriteLine("");
@@ -496,7 +496,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				+(" parserArg, ")
 				+(str)
 				+(" stream){")
-				.ToString());
+				);
 			ostr.WriteLine("   parser = parserArg;");
 		}
 		else
@@ -505,7 +505,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			ostr.WriteLine(("public ")+(tokMgrClassName)+("(")
 				+(str)
 				+(" stream){")
-				.ToString());
+				);
 		}
 		if (Options.getStatic() && !Options.getUserCharStream())
 		{
@@ -535,7 +535,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				+(" parserArg, ")
 				+(str)
 				+(" stream, int lexState){")
-				.ToString());
+				);
 			ostr.WriteLine("   this(parserArg, stream);");
 		}
 		else
@@ -545,7 +545,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			ostr.WriteLine(("public ")+(tokMgrClassName)+("(")
 				+(str)
 				+(" stream, int lexState){")
-				.ToString());
+				);
 			ostr.WriteLine("   this(stream);");
 		}
 		ostr.WriteLine("   SwitchTo(lexState);");
@@ -554,38 +554,38 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		ostr.WriteLine("/** Reinitialise parser. */");
 		ostr.WriteLine((staticString)+("public void ReInit(")+(str)
 			+(" stream)")
-			.ToString());
+			);
 		ostr.WriteLine("{");
 		ostr.WriteLine("   jjmatchedPos = jjnewStateCnt = 0;");
 		ostr.WriteLine("   curLexState = defaultLexState;");
 		ostr.WriteLine("   input_stream = stream;");
 		ostr.WriteLine("   ReInitRounds();");
 		ostr.WriteLine("}");
-		ostr.WriteLine((staticString)+("private void ReInitRounds()").ToString());
+		ostr.WriteLine((staticString)+("private void ReInitRounds()"));
 		ostr.WriteLine("{");
 		ostr.WriteLine("   int i;");
 		ostr.WriteLine(("   jjround = 0x")+(Utils.ToHexString(-2147483647))+(";")
-			.ToString());
+			);
 		ostr.WriteLine(("   for (i = ")+(stateSetSize)+("; i-- > 0;)")
-			.ToString());
+			);
 		ostr.WriteLine(("      jjrounds[i] = 0x")+(Utils.ToHexString(int.MinValue))+(";")
-			.ToString());
+			);
 		ostr.WriteLine("}");
 		ostr.WriteLine("");
 		ostr.WriteLine("/** Reinitialise parser. */");
 		ostr.WriteLine((staticString)+("public void ReInit(")+(str)
 			+(" stream, int lexState)")
-			.ToString());
+			);
 		ostr.WriteLine("{");
 		ostr.WriteLine("   ReInit(stream);");
 		ostr.WriteLine("   SwitchTo(lexState);");
 		ostr.WriteLine("}");
 		ostr.WriteLine("");
 		ostr.WriteLine("/** Switch to specified lex state. */");
-		ostr.WriteLine((staticString)+("public void SwitchTo(int lexState)").ToString());
+		ostr.WriteLine((staticString)+("public void SwitchTo(int lexState)"));
 		ostr.WriteLine("{");
 		ostr.WriteLine(("   if (lexState >= ")+(lexStateName.Length)+(" || lexState < 0)")
-			.ToString());
+			);
 		ostr.WriteLine("      throw new TokenMgrError(\"Error: Ignoring invalid lexical state : \" + lexState + \". State unchanged.\", TokenMgrError.INVALID_LEXICAL_STATE);");
 		ostr.WriteLine("   else");
 		ostr.WriteLine("      curLexState = lexState;");
@@ -598,7 +598,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 	{
 		double num = JavaFiles.getVersion("Token.java");
 		int num2 = ((num > 4.09) ? 1 : 0);
-		ostr.WriteLine((staticString)+("protected Token jjFillToken()").ToString());
+		ostr.WriteLine((staticString)+("protected Token jjFillToken()"));
 		ostr.WriteLine("{");
 		ostr.WriteLine("   final Token t;");
 		ostr.WriteLine("   final String tokenImage;");
@@ -616,7 +616,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			ostr.WriteLine("      if (image == null)");
 			ostr.WriteLine("         tokenImage = \"\";");
 			ostr.WriteLine("      else");
-			ostr.WriteLine("         tokenImage = image.ToString();");
+			ostr.WriteLine("         tokenImage = image;");
 			if (keepLineCol)
 			{
 				ostr.WriteLine("      beginLine = endLine = input_stream.getBeginLine();");
@@ -651,7 +651,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		if (String.instancehelper_length(Options.getTokenFactory()) > 0)
 		{
 			ostr.WriteLine(("   t = ")+(Options.getTokenFactory())+(".newToken(jjmatchedKind, tokenImage);")
-				.ToString());
+				);
 		}
 		else if (num2 != 0)
 		{
@@ -682,19 +682,19 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		ostr.WriteLine("");
 		ostr.WriteLine((staticString)+("int curLexState = ")+(defaultLexState)
 			+(";")
-			.ToString());
+			);
 		ostr.WriteLine((staticString)+("int defaultLexState = ")+(defaultLexState)
 			+(";")
-			.ToString());
-		ostr.WriteLine((staticString)+("int jjnewStateCnt;").ToString());
-		ostr.WriteLine((staticString)+("int jjround;").ToString());
-		ostr.WriteLine((staticString)+("int jjmatchedPos;").ToString());
-		ostr.WriteLine((staticString)+("int jjmatchedKind;").ToString());
+			);
+		ostr.WriteLine((staticString)+("int jjnewStateCnt;"));
+		ostr.WriteLine((staticString)+("int jjround;"));
+		ostr.WriteLine((staticString)+("int jjmatchedPos;"));
+		ostr.WriteLine((staticString)+("int jjmatchedKind;"));
 		ostr.WriteLine("");
 		ostr.WriteLine("/** Get the next Token. */");
 		ostr.WriteLine(("public ")+(staticString)+("Token getNextToken()")
 			+(" ")
-			.ToString());
+			);
 		ostr.WriteLine("{");
 		ostr.WriteLine("  //int kind;");
 		ostr.WriteLine("  Token specialToken = null;");
@@ -746,23 +746,23 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		string str2 = "";
 		if (maxLexStates > 1)
 		{
-			ostr.WriteLine((str)+("   switch(curLexState)").ToString());
-			ostr.WriteLine((str)+("   {").ToString());
-			x = (str)+("   }").ToString();
-			str2 = (str)+("     case ").ToString();
-			str = (str)+("    ").ToString();
+			ostr.WriteLine((str)+("   switch(curLexState)"));
+			ostr.WriteLine((str)+("   {"));
+			x = (str)+("   }");
+			str2 = (str)+("     case ");
+			str = (str)+("    ");
 		}
-		str = (str)+("   ").ToString();
+		str = (str)+("   ");
 		for (int i = 0; i < maxLexStates; i++)
 		{
 			if (maxLexStates > 1)
 			{
 				ostr.WriteLine((str2)+(i)+(":")
-					.ToString());
+					);
 			}
 			if (singlesToSkip[i].HasTransitions())
 			{
-				ostr.WriteLine((str)+("try { input_stream.backup(0);").ToString());
+				ostr.WriteLine((str)+("try { input_stream.backup(0);"));
 				if (singlesToSkip[i].asciiMoves[0] != 0 && singlesToSkip[i].asciiMoves[1] != 0)
 				{
 					ostr.WriteLine((str)+("   while ((curChar < 64")+(" && (0x")
@@ -773,7 +773,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 						+(" && (0x")
 						+(Utils.ToHexString(singlesToSkip[i].asciiMoves[1]))
 						+("L & (1L << (curChar & 077))) != 0L)")
-						.ToString());
+						);
 				}
 				else if (singlesToSkip[i].asciiMoves[1] == 0)
 				{
@@ -781,7 +781,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 						+(" && (0x")
 						+(Utils.ToHexString(singlesToSkip[i].asciiMoves[0]))
 						+("L & (1L << curChar)) != 0L)")
-						.ToString());
+						);
 				}
 				else if (singlesToSkip[i].asciiMoves[0] == 0)
 				{
@@ -789,85 +789,85 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 						+(" && (0x")
 						+(Utils.ToHexString(singlesToSkip[i].asciiMoves[1]))
 						+("L & (1L << (curChar & 077))) != 0L)")
-						.ToString());
+						);
 				}
 				if (Options.getDebugTokenManager())
 				{
-					ostr.WriteLine((str)+("{").ToString());
+					ostr.WriteLine((str)+("{"));
 					ostr.WriteLine(("      debugStream.WriteLine(")+((maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ")+("\"Skipping character : \" + ")
 						+("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \")\");")
-						.ToString());
+						);
 				}
-				ostr.WriteLine((str)+("      curChar = input_stream.BeginToken();").ToString());
+				ostr.WriteLine((str)+("      curChar = input_stream.BeginToken();"));
 				if (Options.getDebugTokenManager())
 				{
-					ostr.WriteLine((str)+("}").ToString());
+					ostr.WriteLine((str)+("}"));
 				}
-				ostr.WriteLine((str)+("}").ToString());
-				ostr.WriteLine((str)+("catch (java.io.IOException e1) { continue EOFLoop; }").ToString());
+				ostr.WriteLine((str)+("}"));
+				ostr.WriteLine((str)+("catch (java.io.IOException e1) { continue EOFLoop; }"));
 			}
 			if (initMatch[i] != int.MaxValue && initMatch[i] != 0)
 			{
 				if (Options.getDebugTokenManager())
 				{
 					ostr.WriteLine(("      debugStream.WriteLine(\"   Matched the empty string as \" + tokenImage[")+(initMatch[i])+("] + \" token.\");")
-						.ToString());
+						);
 				}
 				ostr.WriteLine((str)+("jjmatchedKind = ")+(initMatch[i])
 					+(";")
-					.ToString());
-				ostr.WriteLine((str)+("jjmatchedPos = -1;").ToString());
-				ostr.WriteLine((str)+("curPos = 0;").ToString());
+					);
+				ostr.WriteLine((str)+("jjmatchedPos = -1;"));
+				ostr.WriteLine((str)+("curPos = 0;"));
 			}
 			else
 			{
 				ostr.WriteLine((str)+("jjmatchedKind = 0x")+(Utils.ToString(int.MaxValue,16))
 					+(";")
-					.ToString());
-				ostr.WriteLine((str)+("jjmatchedPos = 0;").ToString());
+					);
+				ostr.WriteLine((str)+("jjmatchedPos = 0;"));
 			}
 			if (Options.getDebugTokenManager())
 			{
 				ostr.WriteLine(("      debugStream.WriteLine(")+((maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ")+("\"Current character : \" + ")
 					+("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
 					+("at line \" + input_stream.getEndLine() + \" column \" + input_stream.getEndColumn());")
-					.ToString());
+					);
 			}
 			ostr.WriteLine((str)+("curPos = jjMoveStringLiteralDfa0_")+(i)
 				+("();")
-				.ToString());
+				);
 			if (canMatchAnyChar[i] != -1)
 			{
 				if (initMatch[i] != int.MaxValue && initMatch[i] != 0)
 				{
 					ostr.WriteLine((str)+("if (jjmatchedPos < 0 || (jjmatchedPos == 0 && jjmatchedKind > ")+(canMatchAnyChar[i])
 						+("))")
-						.ToString());
+						);
 				}
 				else
 				{
 					ostr.WriteLine((str)+("if (jjmatchedPos == 0 && jjmatchedKind > ")+(canMatchAnyChar[i])
 						+(")")
-						.ToString());
+						);
 				}
-				ostr.WriteLine((str)+("{").ToString());
+				ostr.WriteLine((str)+("{"));
 				if (Options.getDebugTokenManager())
 				{
 					ostr.WriteLine(("           debugStream.WriteLine(\"   Current character matched as a \" + tokenImage[")+(canMatchAnyChar[i])+("] + \" token.\");")
-						.ToString());
+						);
 				}
 				ostr.WriteLine((str)+("   jjmatchedKind = ")+(canMatchAnyChar[i])
 					+(";")
-					.ToString());
+					);
 				if (initMatch[i] != int.MaxValue && initMatch[i] != 0)
 				{
-					ostr.WriteLine((str)+("   jjmatchedPos = 0;").ToString());
+					ostr.WriteLine((str)+("   jjmatchedPos = 0;"));
 				}
-				ostr.WriteLine((str)+("}").ToString());
+				ostr.WriteLine((str)+("}"));
 			}
 			if (maxLexStates > 1)
 			{
-				ostr.WriteLine((str)+("break;").ToString());
+				ostr.WriteLine((str)+("break;"));
 			}
 		}
 		if (maxLexStates > 1)
@@ -877,26 +877,26 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		else if (maxLexStates == 0)
 		{
 			ostr.WriteLine(("       jjmatchedKind = 0x")+(Utils.ToString(int.MaxValue,16))+(";")
-				.ToString());
+				);
 		}
 		str = ((maxLexStates <= 1) ? "" : "  ");
 		if (maxLexStates > 0)
 		{
 			ostr.WriteLine((str)+("   if (jjmatchedKind != 0x")+(Utils.ToString(int.MaxValue,16))
 				+(")")
-				.ToString());
-			ostr.WriteLine((str)+("   {").ToString());
-			ostr.WriteLine((str)+("      if (jjmatchedPos + 1 < curPos)").ToString());
+				);
+			ostr.WriteLine((str)+("   {"));
+			ostr.WriteLine((str)+("      if (jjmatchedPos + 1 < curPos)"));
 			if (Options.getDebugTokenManager())
 			{
-				ostr.WriteLine((str)+("      {").ToString());
+				ostr.WriteLine((str)+("      {"));
 				ostr.WriteLine((str)+("         debugStream.WriteLine(")+("\"   Putting back \" + (curPos - jjmatchedPos - 1) + \" characters into the input stream.\");")
-					.ToString());
+					);
 			}
-			ostr.WriteLine((str)+("         input_stream.backup(curPos - jjmatchedPos - 1);").ToString());
+			ostr.WriteLine((str)+("         input_stream.backup(curPos - jjmatchedPos - 1);"));
 			if (Options.getDebugTokenManager())
 			{
-				ostr.WriteLine((str)+("      }").ToString());
+				ostr.WriteLine((str)+("      }"));
 			}
 			if (Options.getDebugTokenManager())
 			{
@@ -912,138 +912,138 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			if (hasSkip || hasMore || hasSpecial)
 			{
 				ostr.WriteLine((str)+("      if ((jjtoToken[jjmatchedKind >> 6] & ")+("(1L << (jjmatchedKind & 077))) != 0L)")
-					.ToString());
-				ostr.WriteLine((str)+("      {").ToString());
+					);
+				ostr.WriteLine((str)+("      {"));
 			}
-			ostr.WriteLine((str)+("         matchedToken = jjFillToken();").ToString());
+			ostr.WriteLine((str)+("         matchedToken = jjFillToken();"));
 			if (hasSpecial)
 			{
-				ostr.WriteLine((str)+("         matchedToken.specialToken = specialToken;").ToString());
+				ostr.WriteLine((str)+("         matchedToken.specialToken = specialToken;"));
 			}
 			if (hasTokenActions)
 			{
-				ostr.WriteLine((str)+("         TokenLexicalActions(matchedToken);").ToString());
+				ostr.WriteLine((str)+("         TokenLexicalActions(matchedToken);"));
 			}
 			if (maxLexStates > 1)
 			{
 				ostr.WriteLine("       if (jjnewLexState[jjmatchedKind] != -1)");
-				ostr.WriteLine((str)+("       curLexState = jjnewLexState[jjmatchedKind];").ToString());
+				ostr.WriteLine((str)+("       curLexState = jjnewLexState[jjmatchedKind];"));
 			}
 			if (Options.getCommonTokenAction())
 			{
-				ostr.WriteLine((str)+("         CommonTokenAction(matchedToken);").ToString());
+				ostr.WriteLine((str)+("         CommonTokenAction(matchedToken);"));
 			}
-			ostr.WriteLine((str)+("         return matchedToken;").ToString());
+			ostr.WriteLine((str)+("         return matchedToken;"));
 			if (hasSkip || hasMore || hasSpecial)
 			{
-				ostr.WriteLine((str)+("      }").ToString());
+				ostr.WriteLine((str)+("      }"));
 				if (hasSkip || hasSpecial)
 				{
 					if (hasMore)
 					{
 						ostr.WriteLine((str)+("      else if ((jjtoSkip[jjmatchedKind >> 6] & ")+("(1L << (jjmatchedKind & 077))) != 0L)")
-							.ToString());
+							);
 					}
 					else
 					{
-						ostr.WriteLine((str)+("      else").ToString());
+						ostr.WriteLine((str)+("      else"));
 					}
-					ostr.WriteLine((str)+("      {").ToString());
+					ostr.WriteLine((str)+("      {"));
 					if (hasSpecial)
 					{
 						ostr.WriteLine((str)+("         if ((jjtoSpecial[jjmatchedKind >> 6] & ")+("(1L << (jjmatchedKind & 077))) != 0L)")
-							.ToString());
-						ostr.WriteLine((str)+("         {").ToString());
-						ostr.WriteLine((str)+("            matchedToken = jjFillToken();").ToString());
-						ostr.WriteLine((str)+("            if (specialToken == null)").ToString());
-						ostr.WriteLine((str)+("               specialToken = matchedToken;").ToString());
-						ostr.WriteLine((str)+("            else").ToString());
-						ostr.WriteLine((str)+("            {").ToString());
-						ostr.WriteLine((str)+("               matchedToken.specialToken = specialToken;").ToString());
-						ostr.WriteLine((str)+("               specialToken = (specialToken.next = matchedToken);").ToString());
-						ostr.WriteLine((str)+("            }").ToString());
+							);
+						ostr.WriteLine((str)+("         {"));
+						ostr.WriteLine((str)+("            matchedToken = jjFillToken();"));
+						ostr.WriteLine((str)+("            if (specialToken == null)"));
+						ostr.WriteLine((str)+("               specialToken = matchedToken;"));
+						ostr.WriteLine((str)+("            else"));
+						ostr.WriteLine((str)+("            {"));
+						ostr.WriteLine((str)+("               matchedToken.specialToken = specialToken;"));
+						ostr.WriteLine((str)+("               specialToken = (specialToken.next = matchedToken);"));
+						ostr.WriteLine((str)+("            }"));
 						if (hasSkipActions)
 						{
-							ostr.WriteLine((str)+("            SkipLexicalActions(matchedToken);").ToString());
+							ostr.WriteLine((str)+("            SkipLexicalActions(matchedToken);"));
 						}
-						ostr.WriteLine((str)+("         }").ToString());
+						ostr.WriteLine((str)+("         }"));
 						if (hasSkipActions)
 						{
-							ostr.WriteLine((str)+("         else ").ToString());
-							ostr.WriteLine((str)+("            SkipLexicalActions(null);").ToString());
+							ostr.WriteLine((str)+("         else "));
+							ostr.WriteLine((str)+("            SkipLexicalActions(null);"));
 						}
 					}
 					else if (hasSkipActions)
 					{
-						ostr.WriteLine((str)+("         SkipLexicalActions(null);").ToString());
+						ostr.WriteLine((str)+("         SkipLexicalActions(null);"));
 					}
 					if (maxLexStates > 1)
 					{
 						ostr.WriteLine("         if (jjnewLexState[jjmatchedKind] != -1)");
-						ostr.WriteLine((str)+("         curLexState = jjnewLexState[jjmatchedKind];").ToString());
+						ostr.WriteLine((str)+("         curLexState = jjnewLexState[jjmatchedKind];"));
 					}
-					ostr.WriteLine((str)+("         continue EOFLoop;").ToString());
-					ostr.WriteLine((str)+("      }").ToString());
+					ostr.WriteLine((str)+("         continue EOFLoop;"));
+					ostr.WriteLine((str)+("      }"));
 				}
 				if (hasMore)
 				{
 					if (hasMoreActions)
 					{
-						ostr.WriteLine((str)+("      MoreLexicalActions();").ToString());
+						ostr.WriteLine((str)+("      MoreLexicalActions();"));
 					}
 					else if (hasSkipActions || hasTokenActions)
 					{
-						ostr.WriteLine((str)+("      jjimageLen += jjmatchedPos + 1;").ToString());
+						ostr.WriteLine((str)+("      jjimageLen += jjmatchedPos + 1;"));
 					}
 					if (maxLexStates > 1)
 					{
 						ostr.WriteLine("      if (jjnewLexState[jjmatchedKind] != -1)");
-						ostr.WriteLine((str)+("      curLexState = jjnewLexState[jjmatchedKind];").ToString());
+						ostr.WriteLine((str)+("      curLexState = jjnewLexState[jjmatchedKind];"));
 					}
-					ostr.WriteLine((str)+("      curPos = 0;").ToString());
+					ostr.WriteLine((str)+("      curPos = 0;"));
 					ostr.WriteLine((str)+("      jjmatchedKind = 0x")+(Utils.ToString(int.MaxValue,16))
 						+(";")
-						.ToString());
-					ostr.WriteLine((str)+("      try {").ToString());
-					ostr.WriteLine((str)+("         curChar = input_stream.readChar();").ToString());
+						);
+					ostr.WriteLine((str)+("      try {"));
+					ostr.WriteLine((str)+("         curChar = input_stream.readChar();"));
 					if (Options.getDebugTokenManager())
 					{
 						ostr.WriteLine(("   debugStream.WriteLine(")+((maxLexStates <= 1) ? "" : "\"<\" + lexStateNames[curLexState] + \">\" + ")+("\"Current character : \" + ")
 							+("TokenMgrError.addEscapes(String.valueOf(curChar)) + \" (\" + (int)curChar + \") ")
 							+("at line \" + input_stream.getEndLine() + \" column \" + input_stream.getEndColumn());")
-							.ToString());
+							);
 					}
-					ostr.WriteLine((str)+("         continue;").ToString());
-					ostr.WriteLine((str)+("      }").ToString());
-					ostr.WriteLine((str)+("      catch (java.io.IOException e1) { }").ToString());
+					ostr.WriteLine((str)+("         continue;"));
+					ostr.WriteLine((str)+("      }"));
+					ostr.WriteLine((str)+("      catch (java.io.IOException e1) { }"));
 				}
 			}
-			ostr.WriteLine((str)+("   }").ToString());
-			ostr.WriteLine((str)+("   int error_line = input_stream.getEndLine();").ToString());
-			ostr.WriteLine((str)+("   int error_column = input_stream.getEndColumn();").ToString());
-			ostr.WriteLine((str)+("   String error_after = null;").ToString());
-			ostr.WriteLine((str)+("   boolean EOFSeen = false;").ToString());
-			ostr.WriteLine((str)+("   try { input_stream.readChar(); input_stream.backup(1); }").ToString());
-			ostr.WriteLine((str)+("   catch (java.io.IOException e1) {").ToString());
-			ostr.WriteLine((str)+("      EOFSeen = true;").ToString());
-			ostr.WriteLine((str)+("      error_after = curPos <= 1 ? \"\" : input_stream.GetImage();").ToString());
-			ostr.WriteLine((str)+("      if (curChar == '\\n' || curChar == '\\r') {").ToString());
-			ostr.WriteLine((str)+("         error_line++;").ToString());
-			ostr.WriteLine((str)+("         error_column = 0;").ToString());
-			ostr.WriteLine((str)+("      }").ToString());
-			ostr.WriteLine((str)+("      else").ToString());
-			ostr.WriteLine((str)+("         error_column++;").ToString());
-			ostr.WriteLine((str)+("   }").ToString());
-			ostr.WriteLine((str)+("   if (!EOFSeen) {").ToString());
-			ostr.WriteLine((str)+("      input_stream.backup(1);").ToString());
-			ostr.WriteLine((str)+("      error_after = curPos <= 1 ? \"\" : input_stream.GetImage();").ToString());
-			ostr.WriteLine((str)+("   }").ToString());
+			ostr.WriteLine((str)+("   }"));
+			ostr.WriteLine((str)+("   int error_line = input_stream.getEndLine();"));
+			ostr.WriteLine((str)+("   int error_column = input_stream.getEndColumn();"));
+			ostr.WriteLine((str)+("   String error_after = null;"));
+			ostr.WriteLine((str)+("   boolean EOFSeen = false;"));
+			ostr.WriteLine((str)+("   try { input_stream.readChar(); input_stream.backup(1); }"));
+			ostr.WriteLine((str)+("   catch (java.io.IOException e1) {"));
+			ostr.WriteLine((str)+("      EOFSeen = true;"));
+			ostr.WriteLine((str)+("      error_after = curPos <= 1 ? \"\" : input_stream.GetImage();"));
+			ostr.WriteLine((str)+("      if (curChar == '\\n' || curChar == '\\r') {"));
+			ostr.WriteLine((str)+("         error_line++;"));
+			ostr.WriteLine((str)+("         error_column = 0;"));
+			ostr.WriteLine((str)+("      }"));
+			ostr.WriteLine((str)+("      else"));
+			ostr.WriteLine((str)+("         error_column++;"));
+			ostr.WriteLine((str)+("   }"));
+			ostr.WriteLine((str)+("   if (!EOFSeen) {"));
+			ostr.WriteLine((str)+("      input_stream.backup(1);"));
+			ostr.WriteLine((str)+("      error_after = curPos <= 1 ? \"\" : input_stream.GetImage();"));
+			ostr.WriteLine((str)+("   }"));
 			ostr.WriteLine((str)+("   throw new TokenMgrError(")+("EOFSeen, curLexState, error_line, error_column, error_after, curChar, TokenMgrError.LEXICAL_ERROR);")
-				.ToString());
+				);
 		}
 		if (hasMore)
 		{
-			ostr.WriteLine((str)+(" }").ToString());
+			ostr.WriteLine((str)+(" }"));
 		}
 		ostr.WriteLine("  }");
 		ostr.WriteLine("}");
@@ -1054,9 +1054,9 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 	internal static void DumpDebugMethods()
 	{
 		ostr.WriteLine(("  ")+(staticString)+(" int kindCnt = 0;")
-			.ToString());
+			);
 		ostr.WriteLine(("  protected ")+(staticString)+(" final String jjKindsForBitVector(int i, long vec)")
-			.ToString());
+			);
 		ostr.WriteLine("  {");
 		ostr.WriteLine("    String retVal = \"\";");
 		ostr.WriteLine("    if (i == 0)");
@@ -1077,10 +1077,10 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		ostr.WriteLine("");
 		ostr.WriteLine(("  protected ")+(staticString)+(" final String jjKindsForStateVector(")
 			+("int lexState, int[] vec, int start, int end)")
-			.ToString());
+			);
 		ostr.WriteLine("  {");
 		ostr.WriteLine(("    boolean[] kindDone = new boolean[")+(maxOrdinal)+("];")
-			.ToString());
+			);
 		ostr.WriteLine("    String retVal = \"\";");
 		ostr.WriteLine("    int cnt = 0;");
 		ostr.WriteLine("    for (int i = start; i < end; i++)");
@@ -1113,7 +1113,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 	
 	public static void DumpSkipActions()
 	{
-		ostr.WriteLine((staticString)+("void SkipLexicalActions(Token matchedToken)").ToString());
+		ostr.WriteLine((staticString)+("void SkipLexicalActions(Token matchedToken)"));
 		ostr.WriteLine("{");
 		ostr.WriteLine("   switch(jjmatchedKind)");
 		ostr.WriteLine("   {");
@@ -1128,38 +1128,38 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				continue;
 			}
 			ostr.WriteLine(("      case ")+(i)+(" :")
-				.ToString());
+				);
 			if (initMatch[lexStates[i]] == i && canLoop[lexStates[i]])
 			{
 				ostr.WriteLine("         if (jjmatchedPos == -1)");
 				ostr.WriteLine("         {");
 				ostr.WriteLine(("            if (jjbeenHere[")+(lexStates[i])+("] &&")
-					.ToString());
+					);
 				ostr.WriteLine(("                jjemptyLineNo[")+(lexStates[i])+("] == input_stream.getBeginLine() && ")
-					.ToString());
+					);
 				ostr.WriteLine(("                jjemptyColNo[")+(lexStates[i])+("] == input_stream.getBeginColumn())")
-					.ToString());
+					);
 				ostr.WriteLine("               throw new TokenMgrError((\"Error: Bailing out of infinite loop caused by repeated empty string matches at line \" + input_stream.getBeginLine() + \", column \" + input_stream.getBeginColumn() + \".\"), TokenMgrError.LOOP_DETECTED);");
 				ostr.WriteLine(("            jjemptyLineNo[")+(lexStates[i])+("] = input_stream.getBeginLine();")
-					.ToString());
+					);
 				ostr.WriteLine(("            jjemptyColNo[")+(lexStates[i])+("] = input_stream.getBeginColumn();")
-					.ToString());
+					);
 				ostr.WriteLine(("            jjbeenHere[")+(lexStates[i])+("] = true;")
-					.ToString());
+					);
 				ostr.WriteLine("         }");
 			}
 			if ((action = actions[i]) != null && action.action_tokens.Count != 0)
 			{
 				ostr.WriteLine("         if (image == null)");
 				ostr.WriteLine(("            image = new ")+(Options.getStringBufOrBuild())+("();")
-					.ToString());
+					);
 				ostr.Write("         image+");
 				if (RStringLiteral.allImages[i] != null)
 				{
 					ostr.WriteLine(("(jjstrLiteralImages[")+(i)+("]);")
-						.ToString());
+						);
 					ostr.WriteLine(("        lengthOfMatch = jjstrLiteralImages[")+(i)+("].length();")
-						.ToString());
+						);
 				}
 				else if (Options.getJavaUnicodeEscape() || Options.getUserCharStream())
 				{
@@ -1188,7 +1188,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 	
 	public static void DumpMoreActions()
 	{
-		ostr.WriteLine((staticString)+("void MoreLexicalActions()").ToString());
+		ostr.WriteLine((staticString)+("void MoreLexicalActions()"));
 		ostr.WriteLine("{");
 		ostr.WriteLine("   jjimageLen += (lengthOfMatch = jjmatchedPos + 1);");
 		ostr.WriteLine("   switch(jjmatchedKind)");
@@ -1204,36 +1204,36 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				continue;
 			}
 			ostr.WriteLine(("      case ")+(i)+(" :")
-				.ToString());
+				);
 			if (initMatch[lexStates[i]] == i && canLoop[lexStates[i]])
 			{
 				ostr.WriteLine("         if (jjmatchedPos == -1)");
 				ostr.WriteLine("         {");
 				ostr.WriteLine(("            if (jjbeenHere[")+(lexStates[i])+("] &&")
-					.ToString());
+					);
 				ostr.WriteLine(("                jjemptyLineNo[")+(lexStates[i])+("] == input_stream.getBeginLine() && ")
-					.ToString());
+					);
 				ostr.WriteLine(("                jjemptyColNo[")+(lexStates[i])+("] == input_stream.getBeginColumn())")
-					.ToString());
+					);
 				ostr.WriteLine("               throw new TokenMgrError((\"Error: Bailing out of infinite loop caused by repeated empty string matches at line \" + input_stream.getBeginLine() + \", column \" + input_stream.getBeginColumn() + \".\"), TokenMgrError.LOOP_DETECTED);");
 				ostr.WriteLine(("            jjemptyLineNo[")+(lexStates[i])+("] = input_stream.getBeginLine();")
-					.ToString());
+					);
 				ostr.WriteLine(("            jjemptyColNo[")+(lexStates[i])+("] = input_stream.getBeginColumn();")
-					.ToString());
+					);
 				ostr.WriteLine(("            jjbeenHere[")+(lexStates[i])+("] = true;")
-					.ToString());
+					);
 				ostr.WriteLine("         }");
 			}
 			if ((action = actions[i]) != null && action.action_tokens.Count != 0)
 			{
 				ostr.WriteLine("         if (image == null)");
 				ostr.WriteLine(("            image = new ")+(Options.getStringBufOrBuild())+("();")
-					.ToString());
+					);
 				ostr.Write("         image+");
 				if (RStringLiteral.allImages[i] != null)
 				{
 					ostr.WriteLine(("(jjstrLiteralImages[")+(i)+("]);")
-						.ToString());
+						);
 				}
 				else if (Options.getJavaUnicodeEscape() || Options.getUserCharStream())
 				{
@@ -1263,7 +1263,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 	
 	public static void DumpTokenActions()
 	{
-		ostr.WriteLine((staticString)+("void TokenLexicalActions(Token matchedToken)").ToString());
+		ostr.WriteLine((staticString)+("void TokenLexicalActions(Token matchedToken)"));
 		ostr.WriteLine("{");
 		ostr.WriteLine("   switch(jjmatchedKind)");
 		ostr.WriteLine("   {");
@@ -1278,24 +1278,24 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				continue;
 			}
 			ostr.WriteLine(("      case ")+(i)+(" :")
-				.ToString());
+				);
 			if (initMatch[lexStates[i]] == i && canLoop[lexStates[i]])
 			{
 				ostr.WriteLine("         if (jjmatchedPos == -1)");
 				ostr.WriteLine("         {");
 				ostr.WriteLine(("            if (jjbeenHere[")+(lexStates[i])+("] &&")
-					.ToString());
+					);
 				ostr.WriteLine(("                jjemptyLineNo[")+(lexStates[i])+("] == input_stream.getBeginLine() && ")
-					.ToString());
+					);
 				ostr.WriteLine(("                jjemptyColNo[")+(lexStates[i])+("] == input_stream.getBeginColumn())")
-					.ToString());
+					);
 				ostr.WriteLine("               throw new TokenMgrError((\"Error: Bailing out of infinite loop caused by repeated empty string matches at line \" + input_stream.getBeginLine() + \", column \" + input_stream.getBeginColumn() + \".\"), TokenMgrError.LOOP_DETECTED);");
 				ostr.WriteLine(("            jjemptyLineNo[")+(lexStates[i])+("] = input_stream.getBeginLine();")
-					.ToString());
+					);
 				ostr.WriteLine(("            jjemptyColNo[")+(lexStates[i])+("] = input_stream.getBeginColumn();")
-					.ToString());
+					);
 				ostr.WriteLine(("            jjbeenHere[")+(lexStates[i])+("] = true;")
-					.ToString());
+					);
 				ostr.WriteLine("         }");
 			}
 			if ((action = actions[i]) != null && action.action_tokens.Count != 0)
@@ -1308,14 +1308,14 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 				{
 					ostr.WriteLine("        if (image == null)");
 					ostr.WriteLine(("            image = new ")+(Options.getStringBufOrBuild())+("();")
-						.ToString());
+						);
 					ostr.Write("        image+");
 					if (RStringLiteral.allImages[i] != null)
 					{
 						ostr.WriteLine(("(jjstrLiteralImages[")+(i)+("]);")
-							.ToString());
+							);
 						ostr.WriteLine(("        lengthOfMatch = jjstrLiteralImages[")+(i)+("].length();")
-							.ToString());
+							);
 					}
 					else if (Options.getJavaUnicodeEscape() || Options.getUserCharStream())
 					{
@@ -1377,7 +1377,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		keepLineCol = Options.getKeepLineColumn();
 		ArrayList vector = new ArrayList();
 		staticString = ((!Options.getStatic()) ? "" : "static ");
-		tokMgrClassName = (JavaCCGlobals.cu_name)+("TokenManager").ToString();
+		tokMgrClassName = (JavaCCGlobals.cu_name)+("TokenManager");
 		PrintClassHead();
 		BuildLexStatesTable();
 		Enumeration enumeration = allTpsForState.keys();
@@ -1388,7 +1388,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 			RStringLiteral.ReInit();
 			string text = (string)enumeration.nextElement();
 			lexStateIndex = GetIndex(text);
-			lexStateSuffix = ("_")+(lexStateIndex).ToString();
+			lexStateSuffix = ("_")+(lexStateIndex);
 			ArrayList vector2 = (ArrayList)allTpsForState.get(text);
 			initStates.Add(text, initialState = new NfaState());
 			int num = 0;
@@ -1619,13 +1619,13 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 		{
 			ostr.WriteLine((staticString)+("int[] jjemptyLineNo = new int[")+(maxLexStates)
 				+("];")
-				.ToString());
+				);
 			ostr.WriteLine((staticString)+("int[] jjemptyColNo = new int[")+(maxLexStates)
 				+("];")
-				.ToString());
+				);
 			ostr.WriteLine((staticString)+("boolean[] jjbeenHere = new boolean[")+(maxLexStates)
 				+("];")
-				.ToString());
+				);
 		}
 		if (hasSkipActions)
 		{

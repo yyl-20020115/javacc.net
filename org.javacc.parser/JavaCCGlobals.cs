@@ -30,19 +30,19 @@ public class JavaCCGlobals
 
 	public static Hashtable production_table;
 
-	public static Dictionary<string,int> lexstate_S2I;
+	public static Dictionary<string,int> lexstate_S2I = new();
 
 	public static Hashtable lexstate_I2S;
 
 	public static ArrayList token_mgr_decls;
 
-	public static List<TokenProduction> rexprlist;
+	public static List<TokenProduction> rexprlist = new();
 
 	public static int tokenCount;
 
-	public static Hashtable named_tokens_table;
+	public static Dictionary<string, RegularExpression> named_tokens_table = new();
 
-	public static ArrayList ordered_named_tokens;
+	public static List<RegularExpression> ordered_named_tokens = new();
 
 	public static Hashtable names_of_tokens;
 
@@ -73,10 +73,10 @@ public class JavaCCGlobals
 		for (i = 0; i < l.Count - 1; i++)
 		{
 			str2 = (str2)+((string)l[i])+("&")
-				.ToString();
+				;
 		}
 		str2 = (str2)+((string)l[i])+(":")
-			.ToString();
+			;
 		if (str2.Length > 200)
 		{
 			Console.WriteLine("Tool names too long.");
@@ -84,7 +84,7 @@ public class JavaCCGlobals
 			throw new System.Exception();
 		}
 		string result = (str2)+(" Do not edit this line. ")+(addUnicodeEscapes(str))
-			.ToString();
+			;
 		
 		return result;
 	}
@@ -98,13 +98,13 @@ public class JavaCCGlobals
 			int num = str[i];
 			if (num < 32 || num > 126)
 			{
-				string @this = ("0000")+(Utils.ToString(num, 16)).ToString();
+				string @this = ("0000")+(Utils.ToString(num, 16));
 				text = (text)+("\\u")+(@this.Substring(@this.Length - 4, @this.Length))
-					.ToString();
+					;
 			}
 			else
 			{
-				text = (text)+((char)num).ToString();
+				text = (text)+((char)num);
 			}
 		}
 		return text;
@@ -328,7 +328,7 @@ public class JavaCCGlobals
 	}
 
 	
-	protected internal static string printLeadingComments(Token t)
+	protected internal static string PrintLeadingComments(Token t)
 	{
 		string text = "";
 		if (t.specialToken == null)
@@ -342,12 +342,12 @@ public class JavaCCGlobals
 		}
 		while (token != null)
 		{
-			text = (text)+(printTokenOnly(token)).ToString();
+			text = (text)+(printTokenOnly(token));
 			token = token.next;
 		}
 		if (ccol != 1 && cline != t.BeginLine)
 		{
-			text = (text)+("\n").ToString();
+			text = (text)+("\n");
 			cline++;
 			ccol = 1;
 		}
@@ -360,18 +360,18 @@ public class JavaCCGlobals
 		string str = "";
 		while (cline < t.BeginLine)
 		{
-			str = (str)+("\n").ToString();
+			str = (str)+("\n");
 			ccol = 1;
 			cline++;
 		}
 		while (ccol < t.BeginColumn)
 		{
-			str = (str)+(" ").ToString();
+			str = (str)+(" ");
 			ccol++;
 		}
 		str = ((t.kind != 90 && t.kind != 89)
-			? (str)+(t.image).ToString()
-			: (str)+(addUnicodeEscapes(t.image)).ToString());
+			? (str)+(t.image)
+			: (str)+(addUnicodeEscapes(t.image)));
 		cline = t.endLine;
 		ccol = t.endColumn + 1;
 		int num = t.image[(t.image.Length) - 1];
@@ -391,10 +391,10 @@ public class JavaCCGlobals
 	
 	public static void bannerLine(string str1, string str2)
 	{
-		Console.Write(("Java Compiler Compiler Version 4.1d1 (")+(str1).ToString());
+		Console.Write(("Java Compiler Compiler Version 4.1d1 (")+(str1));
 		if (!string.Equals(str2, ""))
 		{
-			Console.Write((" Version ")+(str2).ToString());
+			Console.Write((" Version ")+(str2));
 		}
 		Console.WriteLine(")");
 	}
@@ -429,23 +429,23 @@ public class JavaCCGlobals
 		if (!f.Exists)
 		{
 			JavaCCErrors.Warning(("Output directory \"")+(f)+("\" does not exist. Creating the directory.")
-				.ToString());
+				);
 			var d = Directory.CreateDirectory(f.FullName);
 			if (! d.Exists)
 			{
-				JavaCCErrors.Semantic_Error(("Cannot create the output directory : ")+(f).ToString());
+				JavaCCErrors.Semantic_Error(("Cannot create the output directory : ")+(f));
 				return;
 			}
 		}
 		if (!new DirectoryInfo(f.FullName).Exists)
 		{
 			JavaCCErrors.Semantic_Error(("\"")+(f)+(" is not a valid output directory.")
-				.ToString());
+				);
 		}
 		else if (f.IsReadOnly)
 		{
 			JavaCCErrors.Semantic_Error(("Cannot write to the output output directory : \"")+(f)+("\"")
-				.ToString());
+				);
 		}
 	}
 
@@ -468,49 +468,49 @@ public class JavaCCGlobals
 			int num = str[i];
 			if (num == 8)
 			{
-				text = (text)+("\\b").ToString();
+				text = (text)+("\\b");
 				continue;
 			}
 			if (num == 9)
 			{
-				text = (text)+("\\t").ToString();
+				text = (text)+("\\t");
 				continue;
 			}
 			if (num == 10)
 			{
-				text = (text)+("\\n").ToString();
+				text = (text)+("\\n");
 				continue;
 			}
 			if (num == 12)
 			{
-				text = (text)+("\\f").ToString();
+				text = (text)+("\\f");
 				continue;
 			}
 			if (num == 13)
 			{
-				text = (text)+("\\r").ToString();
+				text = (text)+("\\r");
 				continue;
 			}
 			if (num == 34)
 			{
-				text = (text)+("\\\"").ToString();
+				text = (text)+("\\\"");
 				continue;
 			}
 			if (num == 39)
 			{
-				text = (text)+("\\'").ToString();
+				text = (text)+("\\'");
 				continue;
 			}
 			switch (num)
 			{
 			case 92:
-				text = (text)+("\\\\").ToString();
+				text = (text)+("\\\\");
 				break;
 			default:
 			{
-				string @this = ("0000")+(Utils.ToString(num, 16)).ToString();
+				string @this = ("0000")+(Utils.ToString(num, 16));
 				text = (text)+("\\u")+(@this.Substring(@this.Length - 4, @this.Length))
-					.ToString();
+					;
 				break;
 			}
 			case 32:
@@ -607,7 +607,7 @@ public class JavaCCGlobals
 			case 124:
 			case 125:
 			case 126:
-				text = (text)+((char)num).ToString();
+				text = (text)+((char)num);
 				break;
 			}
 		}
@@ -673,7 +673,7 @@ public class JavaCCGlobals
 	{
 		if (t.next != null)
 		{
-			printLeadingComments(t.next);
+			PrintLeadingComments(t.next);
 		}
 	}
 
@@ -690,27 +690,18 @@ public class JavaCCGlobals
 			}
 			while (token != null)
 			{
-				str = (str)+(printTokenOnly(token)).ToString();
+				str = (str)+(printTokenOnly(token));
 				token = token.next;
 			}
 		}
-		return (str)+(printTokenOnly(t)).ToString();
+		return (str)+(printTokenOnly(t));
 	}
 
-	
-	protected internal static string printTrailingComments(Token t)
-	{
-		if (t.next == null)
-		{
-			return "";
-		}
-		string result = printLeadingComments(t.next);
-		
-		return result;
-	}
 
-	
-	public static void reInit()
+    protected internal static string PrintTrailingComments(Token t) => t.next == null ? "" : PrintLeadingComments(t.next);
+
+
+    public static void ReInit()
 	{
 		fileName = null;
 		origFileName = null;
