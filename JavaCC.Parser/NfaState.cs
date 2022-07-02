@@ -3140,7 +3140,7 @@ public class NfaState
 			}
 			else if (num != 0)
 			{
-				return false;
+				return false; 
 			}
 		}
 		enumeration = hashtable.keys();

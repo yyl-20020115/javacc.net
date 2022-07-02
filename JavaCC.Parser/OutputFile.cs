@@ -210,7 +210,7 @@ public class OutputFile
 					//obj = "";
 					//__003Cref_003E = (charSequence.___003Cref_003E = " (do not edit this line) */");
 					CharSequence target2 = charSequence;
-					//__003Cref_003E = (charSequence.___003Cref_003E = obj);
+					//__003Cref_003E = (charSequence.___003Cref_003E = o bj);
 					text = @this.Replace( target2, charSequence);
 				}
 				else

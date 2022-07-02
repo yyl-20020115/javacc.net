@@ -614,7 +614,7 @@ public class Semanticize : JavaCCGlobals
                 }
                 if (!(regExprSpec2.rexp is RJustName) && !string.Equals(regExprSpec2.rexp.label, ""))
                 {
-                    Hashtable hashtable2 = JavaCCGlobals.names_of_tokens;
+                    var hashtable2 = JavaCCGlobals.names_of_tokens;
                     ;
                     hashtable2.Add((regExprSpec2.rexp.ordinal), regExprSpec2.rexp.label);
                 }
@@ -813,7 +813,7 @@ public class Semanticize : JavaCCGlobals
     {
         for (int i = 0; i < removeList.Count; i++)
         {
-            ArrayList vector = (ArrayList)removeList[i];
+            var vector = removeList[i];
             vector.Remove(itemList[i]);
         }
         removeList.Clear();
@@ -821,7 +821,7 @@ public class Semanticize : JavaCCGlobals
     }
 
 
-    public static bool hasIgnoreCase(Hashtable h, string str)
+    public static bool hasIgnoreCase(Dictionary<string, RegularExpression> h, string str)
     {
         RegularExpression regularExpression = (RegularExpression)h.get(str);
         if (regularExpression != null && !regularExpression.tpContext.ignoreCase)
@@ -999,29 +999,21 @@ public class Semanticize : JavaCCGlobals
                 }
                 return false;
             }
-            if (P_0 is ROneOrMore)
+            if (P_0 is ROneOrMore more)
             {
-                bool result = RExpWalk(((ROneOrMore)P_0).RegExpr);
-
-                return result;
+                return RExpWalk(more.RegExpr);
             }
-            if (P_0 is RZeroOrMore)
+            if (P_0 is RZeroOrMore more1)
             {
-                bool result2 = RExpWalk(((RZeroOrMore)P_0).regexpr);
-
-                return result2;
+                return RExpWalk(more1.regexpr);
             }
-            if (P_0 is RZeroOrOne)
+            if (P_0 is RZeroOrOne one)
             {
-                bool result3 = RExpWalk(((RZeroOrOne)P_0).regexpr);
-
-                return result3;
+                return RExpWalk(one.regexpr);
             }
-            if (P_0 is RRepetitionRange)
+            if (P_0 is RRepetitionRange range)
             {
-                bool result4 = RExpWalk(((RRepetitionRange)P_0).regexpr);
-
-                return result4;
+                return RExpWalk(range.regexpr);
             }
         }
         return false;

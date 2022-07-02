@@ -1,9 +1,9 @@
 namespace JavaCC.JJTree;
 public static class MainEntry
-{	
-	public static int Main(string[] strarr)
-	{
-		var jJTree = new JJTree();
-		return jJTree.Main(strarr);
-	}
+{
+    public static int Main(string[] strarr)
+    {
+        var jJTree = new JJTree();
+        return jJTree.Main(strarr);
+    }
 }

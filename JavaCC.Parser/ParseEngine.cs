@@ -864,7 +864,6 @@ public class ParseEngine : JavaCCGlobals
 		}
 		string result = ("jj_3")+(P_0.internal_name)+("()")
 			;
-		
 		return result;
 	}
 
@@ -1348,7 +1347,7 @@ public class ParseEngine : JavaCCGlobals
 						token = (Token)enumeration3.nextElement();
 						ostr.Write(token.image);
 					}
-				}
+				} 
 				ostr.Write(" {");
 				if (Options.DebugParser)
 				{

@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using System.IO;
-using JavaCC.Parser;
-
 namespace JavaCC.JJTree;
+
+using System.IO;
+using System.Collections.Generic;
+using JavaCC.Parser;
 
 internal sealed class NodeFiles
 {
@@ -256,14 +256,14 @@ internal sealed class NodeFiles
         printWriter.Write("public class SimpleNode");
         if (!string.Equals(JJTreeOptions.NodeExtends, ""))
         {
-            printWriter.Write((" extends ")+(JJTreeOptions.NodeExtends));
+            printWriter.Write((" extends ") + (JJTreeOptions.NodeExtends));
         }
         printWriter.WriteLine(" implements Node {");
         printWriter.WriteLine("  protected Node parent;");
         printWriter.WriteLine("  protected Node[] children;");
         printWriter.WriteLine("  protected int id;");
         printWriter.WriteLine("  protected Object value;");
-        printWriter.WriteLine(("  protected ")+(JJTreeGlobals.ParserName)+(" parser;")
+        printWriter.WriteLine(("  protected ") + (JJTreeGlobals.ParserName) + (" parser;")
             );
         if (JJTreeOptions.TrackTokens)
         {
@@ -275,7 +275,7 @@ internal sealed class NodeFiles
         printWriter.WriteLine("    id = i;");
         printWriter.WriteLine("  }");
         printWriter.WriteLine("");
-        printWriter.WriteLine(("  public SimpleNode(")+(JJTreeGlobals.ParserName)+(" p, int i) {")
+        printWriter.WriteLine(("  public SimpleNode(") + (JJTreeGlobals.ParserName) + (" p, int i) {")
             );
         printWriter.WriteLine("    this(i);");
         printWriter.WriteLine("    parser = p;");
@@ -287,7 +287,7 @@ internal sealed class NodeFiles
             printWriter.WriteLine("    return new SimpleNode(id);");
             printWriter.WriteLine("  }");
             printWriter.WriteLine("");
-            printWriter.WriteLine(("  public static Node jjtCreate(")+(JJTreeGlobals.ParserName)+(" p, int id) {")
+            printWriter.WriteLine(("  public static Node jjtCreate(") + (JJTreeGlobals.ParserName) + (" p, int id) {")
                 );
             printWriter.WriteLine("    return new SimpleNode(p, id);");
             printWriter.WriteLine("  }");
@@ -341,21 +341,21 @@ internal sealed class NodeFiles
                 str2 = JJTreeOptions.VisitorDataType;
             }
             printWriter.WriteLine("  /** Accept the visitor. **/");
-            printWriter.WriteLine(("  public Object jjtAccept(")+(visitorClass())+(" visitor, ")
-                +(str2)
-                +(" data)")
-                +(str)
-                +(" {")
+            printWriter.WriteLine(("  public Object jjtAccept(") + (visitorClass()) + (" visitor, ")
+                + (str2)
+                + (" data)")
+                + (str)
+                + (" {")
                 );
             printWriter.WriteLine("    return visitor.visit(this, data);");
             printWriter.WriteLine("  }");
             printWriter.WriteLine("");
             printWriter.WriteLine("  /** Accept the visitor. **/");
-            printWriter.WriteLine(("  public Object childrenAccept(")+(visitorClass())+(" visitor, ")
-                +(str2)
-                +(" data)")
-                +(str)
-                +(" {")
+            printWriter.WriteLine(("  public Object childrenAccept(") + (visitorClass()) + (" visitor, ")
+                + (str2)
+                + (" data)")
+                + (str)
+                + (" {")
                 );
             printWriter.WriteLine("    if (children != null) {");
             printWriter.WriteLine("      for (int i = 0; i < children.length; ++i) {");
@@ -372,7 +372,7 @@ internal sealed class NodeFiles
         printWriter.WriteLine("     ToString(String), otherwise overriding ToString() is probably all");
         printWriter.WriteLine("     you need to do. */");
         printWriter.WriteLine("");
-        printWriter.WriteLine(("  public String ToString() { return ")+(NodeConstants)+(".jjtNodeName[id]; }")
+        printWriter.WriteLine(("  public String ToString() { return ") + (NodeConstants) + (".jjtNodeName[id]; }")
             );
         printWriter.WriteLine("  public String ToString(String prefix) { return prefix + ToString(); }");
         printWriter.WriteLine("");
@@ -401,24 +401,24 @@ internal sealed class NodeFiles
         GeneratePrologue(printWriter);
         if ((JJTreeOptions.NodeClass.Length) > 0)
         {
-            printWriter.WriteLine(("public class ")+(P_1)+(" extends ")
-                +(JJTreeOptions.NodeClass)
-                +("{")
+            printWriter.WriteLine(("public class ") + (P_1) + (" extends ")
+                + (JJTreeOptions.NodeClass)
+                + ("{")
                 );
         }
         else
         {
-            printWriter.WriteLine(("public class ")+(P_1)+(" extends SimpleNode {")
+            printWriter.WriteLine(("public class ") + (P_1) + (" extends SimpleNode {")
                 );
         }
-        printWriter.WriteLine(("  public ")+(P_1)+("(int id) {")
+        printWriter.WriteLine(("  public ") + (P_1) + ("(int id) {")
             );
         printWriter.WriteLine("    super(id);");
         printWriter.WriteLine("  }");
         printWriter.WriteLine();
-        printWriter.WriteLine(("  public ")+(P_1)+("(")
-            +(JJTreeGlobals.ParserName)
-            +(" p, int id) {")
+        printWriter.WriteLine(("  public ") + (P_1) + ("(")
+            + (JJTreeGlobals.ParserName)
+            + (" p, int id) {")
             );
         printWriter.WriteLine("    super(p, id);");
         printWriter.WriteLine("  }");
@@ -426,13 +426,13 @@ internal sealed class NodeFiles
         if ((JJTreeOptions.NodeFactory.Length) > 0)
         {
             printWriter.WriteLine("  public static Node jjtCreate(int id) {");
-            printWriter.WriteLine(("      return new ")+(P_1)+("(id);")
+            printWriter.WriteLine(("      return new ") + (P_1) + ("(id);")
                 );
             printWriter.WriteLine("  }");
             printWriter.WriteLine();
-            printWriter.WriteLine(("  public static Node jjtCreate(")+(JJTreeGlobals.ParserName)+(" p, int id) {")
+            printWriter.WriteLine(("  public static Node jjtCreate(") + (JJTreeGlobals.ParserName) + (" p, int id) {")
                 );
-            printWriter.WriteLine(("      return new ")+(P_1)+("(p, id);")
+            printWriter.WriteLine(("      return new ") + (P_1) + ("(p, id);")
                 );
             printWriter.WriteLine("  }");
         }
@@ -445,11 +445,11 @@ internal sealed class NodeFiles
             }
             printWriter.WriteLine("");
             printWriter.WriteLine("  /** Accept the visitor. **/");
-            printWriter.WriteLine(("  public Object jjtAccept(")+(visitorClass())+(" visitor, ")
-                +(str)
-                +(" data)")
-                +(mergeVisitorException())
-                +(" {")
+            printWriter.WriteLine(("  public Object jjtAccept(") + (visitorClass()) + (" visitor, ")
+                + (str)
+                + (" data)")
+                + (mergeVisitorException())
+                + (" {")
                 );
             printWriter.WriteLine("    return visitor.visit(this, data);");
             printWriter.WriteLine("  }");
@@ -461,7 +461,7 @@ internal sealed class NodeFiles
 
     internal static string visitorClass()
     {
-        return (JJTreeGlobals.ParserName)+("Visitor");
+        return (JJTreeGlobals.ParserName) + ("Visitor");
     }
 
 

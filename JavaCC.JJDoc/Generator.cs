@@ -1,5 +1,5 @@
-using JavaCC.Parser;
 namespace JavaCC.JJDoc;
+using JavaCC.Parser;
 
 public interface Generator
 {

@@ -1,80 +1,80 @@
+namespace JavaCC.JJTree;
 using System.Collections.Generic;
 
-namespace JavaCC.JJTree;
 public class ASTNodeDescriptor : JJTreeNode
 {
-	private bool Faked = false;
-	internal static List<string> nodeIds = new();
-	internal static List<string> nodeNames = new();
-	internal static Dictionary<string,string> nodeSeen = new();
-	internal string Name = "";
-	internal bool isGT =false;
-	internal ASTNodeDescriptorExpression expression;
+    private bool Faked = false;
+    internal static List<string> nodeIds = new();
+    internal static List<string> nodeNames = new();
+    internal static Dictionary<string, string> nodeSeen = new();
+    internal string Name = "";
+    internal bool isGT = false;
+    internal ASTNodeDescriptorExpression expression;
 
-	internal virtual string Descriptor
-	{
-		get
-		{
-			if (expression == null)
-			{
-				return Name;
-			}
-			string result = ("#") + (Name) + ("(")
-				+ ((!isGT) ? "" : ">")
-				+ (ExpressionText())
-				+ (")")
-				;
+    internal virtual string Descriptor
+    {
+        get
+        {
+            if (expression == null)
+            {
+                return Name;
+            }
+            string result = ("#") + (Name) + ("(")
+                + ((!isGT) ? "" : ">")
+                + (ExpressionText())
+                + (")")
+                ;
 
-			return result;
-		}
-	}
+            return result;
+        }
+    }
 
-	internal ASTNodeDescriptor(int id)
-		: base(id) { }
+    internal ASTNodeDescriptor(int id)
+        : base(id) { }
 
 
-	internal virtual void SetNodeId()
-	{
-		var nodeId = GetNodeId();
-		if (!nodeSeen.ContainsKey(nodeId))
-		{
-			nodeSeen.Add(nodeId, nodeId);
-			nodeNames.Add(Name);
-			nodeIds.Add(nodeId);
-		}
-	}
+    internal virtual void SetNodeId()
+    {
+        var nodeId = GetNodeId();
+        if (!nodeSeen.ContainsKey(nodeId))
+        {
+            nodeSeen.Add(nodeId, nodeId);
+            nodeNames.Add(Name);
+            nodeIds.Add(nodeId);
+        }
+    }
 
 
     internal virtual string GetNodeId() => $"JJT{Name.ToUpper().Replace('.', '_')}";
 
     private string ExpressionText()
-	{
-		if (string.Equals(expression.FirstToken.Image, ")") && string.Equals(expression.LastToken.Image, "("))
-		{
-			return "true";
-		}
-		var text = "";
-		var token = expression.FirstToken;
-		while (true)
-		{
-			text +=(" ")+(token.Image);
-			if (token == expression.LastToken) break;
-			token = token.Next;
-		}
-		return text;
-	}
+    {
+        if (string.Equals(expression.FirstToken.Image, ")") && string.Equals(expression.LastToken.Image, "("))
+        {
+            return "true";
+        }
+        var text = "";
+        var token = expression.FirstToken;
+        while (true)
+        {
+            text += (" ") + (token.Image);
+            if (token == expression.LastToken) break;
+            token = token.Next;
+        }
+        return text;
+    }
 
-	
-	internal static ASTNodeDescriptor Indefinite(string name)
-	{
-		var aSTNodeDescriptor = new ASTNodeDescriptor(39)
-		{
-			Name = name,
-			Faked = true
+
+    internal static ASTNodeDescriptor Indefinite(string name)
+    {
+        var aSTNodeDescriptor = new ASTNodeDescriptor(39)
+        {
+            Name = name,
+            Faked = true
         };
         aSTNodeDescriptor.SetNodeId();
-		return aSTNodeDescriptor;
-	}
+        return aSTNodeDescriptor;
+    }
 
     internal static List<string> NodeIds => nodeIds;
     internal static List<string> NodeNames => nodeNames;

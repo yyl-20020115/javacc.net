@@ -1,5 +1,6 @@
-using JavaCC.Parser;
 namespace JavaCC.JJDoc;
+
+using JavaCC.Parser;
 
 public class JJDocOptions : Options
 {
@@ -8,11 +9,11 @@ public class JJDocOptions : Options
     public static string CSS => Options.StringValue("CSS");
     public static bool OneTable => Options.BooleanValue("ONE_TABLE");
     public new static void Init()
-	{
-		Options.Init();
-		Options.OptionValues.Add("ONE_TABLE", true);
-		Options.OptionValues.Add("TEXT", false);
-		Options.OptionValues.Add("OUTPUT_FILE", "");
-		Options.OptionValues.Add("CSS", "");
-	}
+    {
+        Options.Init();
+        Options.OptionValues.Add("ONE_TABLE", true);
+        Options.OptionValues.Add("TEXT", false);
+        Options.OptionValues.Add("OUTPUT_FILE", "");
+        Options.OptionValues.Add("CSS", "");
+    }
 }

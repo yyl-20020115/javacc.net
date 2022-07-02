@@ -1,6 +1,6 @@
+namespace JavaCC.JJTree;
 using System.IO;
 using JavaCC.Parser;
-namespace JavaCC.JJTree;
 
 internal class JJTreeOptions : Options
 {
@@ -61,41 +61,41 @@ internal class JJTreeOptions : Options
 
     public static string NodePackage => Options.StringValue("NODE_PACKAGE");
 
-	public static void Validate()
-	{
-		if (!Visitor)
-		{
-			if ((VisitorDataType.Length) > 0)
-			{
-				JavaCCErrors.Warning("VISITOR_DATA_TYPE option will be ignored since VISITOR is false");
-			}
-			if ((VisitorException.Length) > 0)
-			{
-				JavaCCErrors.Warning("VISITOR_EXCEPTION option will be ignored since VISITOR is false");
-			}
-		}
-	}
+    public static void Validate()
+    {
+        if (!Visitor)
+        {
+            if ((VisitorDataType.Length) > 0)
+            {
+                JavaCCErrors.Warning("VISITOR_DATA_TYPE option will be ignored since VISITOR is false");
+            }
+            if ((VisitorException.Length) > 0)
+            {
+                JavaCCErrors.Warning("VISITOR_EXCEPTION option will be ignored since VISITOR is false");
+            }
+        }
+    }
 
 
-	public new static void Init()
-	{
-		Options.Init();
-		Options.OptionValues.Add("JDK_VERSION", "1.4");
-		Options.OptionValues.Add("MULTI", false);
-		Options.OptionValues.Add("NODE_DEFAULT_VOID", false);
-		Options.OptionValues.Add("NODE_SCOPE_HOOK", false);
-		Options.OptionValues.Add("NODE_USES_PARSER", false);
-		Options.OptionValues.Add("BUILD_NODE_FILES", true);
-		Options.OptionValues.Add("VISITOR", false);
-		Options.OptionValues.Add("TRACK_TOKENS", false);
-		Options.OptionValues.Add("NODE_PREFIX", "AST");
-		Options.OptionValues.Add("NODE_PACKAGE", "");
-		Options.OptionValues.Add("NODE_EXTENDS", "");
-		Options.OptionValues.Add("NODE_CLASS", "");
-		Options.OptionValues.Add("NODE_FACTORY", "");
-		Options.OptionValues.Add("OUTPUT_FILE", "");
-		Options.OptionValues.Add("VISITOR_DATA_TYPE", "");
-		Options.OptionValues.Add("VISITOR_EXCEPTION", "");
-		Options.OptionValues.Add("JJTREE_OUTPUT_DIRECTORY", "");
-	}
+    public new static void Init()
+    {
+        Options.Init();
+        Options.OptionValues.Add("JDK_VERSION", "1.4");
+        Options.OptionValues.Add("MULTI", false);
+        Options.OptionValues.Add("NODE_DEFAULT_VOID", false);
+        Options.OptionValues.Add("NODE_SCOPE_HOOK", false);
+        Options.OptionValues.Add("NODE_USES_PARSER", false);
+        Options.OptionValues.Add("BUILD_NODE_FILES", true);
+        Options.OptionValues.Add("VISITOR", false);
+        Options.OptionValues.Add("TRACK_TOKENS", false);
+        Options.OptionValues.Add("NODE_PREFIX", "AST");
+        Options.OptionValues.Add("NODE_PACKAGE", "");
+        Options.OptionValues.Add("NODE_EXTENDS", "");
+        Options.OptionValues.Add("NODE_CLASS", "");
+        Options.OptionValues.Add("NODE_FACTORY", "");
+        Options.OptionValues.Add("OUTPUT_FILE", "");
+        Options.OptionValues.Add("VISITOR_DATA_TYPE", "");
+        Options.OptionValues.Add("VISITOR_EXCEPTION", "");
+        Options.OptionValues.Add("JJTREE_OUTPUT_DIRECTORY", "");
+    }
 }
