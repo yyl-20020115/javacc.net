@@ -2338,7 +2338,11 @@ public class NfaState
 		int[] array = new int[2];
 		int num2 = (array[1] = 4);
 		num2 = (array[0] = 256);
-		long[][] array2 = (long[][])ByteCodeHelper.multianewarray(typeof(long[][]).TypeHandle, array);
+		long[][] array2 = new long[256][];
+		for(int i = 0; i < array2.Length; i++)
+        {
+			array2[i] = new long[4];
+        }
 		if ((charMoves == null || charMoves[0] == '\0') && (rangeMoves == null || rangeMoves[0] == '\0'))
 		{
 			return;
@@ -3136,11 +3140,10 @@ public class NfaState
 				return false; 
 			}
 		}
-		enumeration = hashtable.keys();
-		while (enumeration.hasMoreElements())
+		foreach(var pair in hashtable)
 		{
-			string key2;
-			int[] array2 = (int[])hashtable.get(key2 = (string)enumeration.nextElement());
+			string key2 = pair.Key;
+			int[] array2 = pair.Value;
 			if (!stateSetsToFix.ContainsKey(key2) )
 			{
 				stateSetsToFix.Add(key2, array2);
