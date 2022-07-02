@@ -161,7 +161,7 @@ public class LookaheadCalc : JavaCCGlobals
 				matchInfo.firstFreeLoc = 0;
 				ArrayList vector = new ArrayList();
 				vector.Add(matchInfo);
-				LookaheadWalk.genFirstSet(vector, (Expansion)c.Choices[j]);
+				LookaheadWalk.GenFirstSet(vector, (Expansion)c.Choices[j]);
 				array[j] = LookaheadWalk.sizeLimitedMatches;
 			}
 			LookaheadWalk.considerSemanticLA = false;
@@ -172,7 +172,7 @@ public class LookaheadCalc : JavaCCGlobals
 				matchInfo.firstFreeLoc = 0;
 				ArrayList vector = new ArrayList();
 				vector.Add(matchInfo);
-				LookaheadWalk.genFirstSet(vector, (Expansion)c.Choices[j]);
+				LookaheadWalk.GenFirstSet(vector, (Expansion)c.Choices[j]);
 				array2[j] = LookaheadWalk.sizeLimitedMatches;
 			}
 			if (i == 1)
@@ -259,11 +259,11 @@ public class LookaheadCalc : JavaCCGlobals
 			ArrayList vector = new ArrayList();
 			vector.Add(matchInfo2);
 			LookaheadWalk.considerSemanticLA = ((!Options.ForceLaCheck) ? true : false);
-			LookaheadWalk.genFirstSet(vector, e2);
+			LookaheadWalk.GenFirstSet(vector, e2);
 			ArrayList sizeLimitedMatches = LookaheadWalk.sizeLimitedMatches;
 			LookaheadWalk.sizeLimitedMatches = new ArrayList();
 			LookaheadWalk.considerSemanticLA = false;
-			LookaheadWalk.genFollowSet(vector, e1, Expansion.NextGenerationIndex++);
+			LookaheadWalk.GenFollowSet(vector, e1, Expansion.NextGenerationIndex++);
 			ArrayList sizeLimitedMatches2 = LookaheadWalk.sizeLimitedMatches;
 			if (i == 1 && javaCodeCheck(sizeLimitedMatches))
 			{

@@ -32,7 +32,7 @@ internal class JJTreeOptions : Options
     public static string VisitorException => Options.StringValue("VISITOR_EXCEPTION");
 
 
-    public static string JdkVersion => Options.StringValue("JDK_VERSION");
+    public static new string JdkVersion => Options.StringValue("JDK_VERSION");
 
 
     public static bool NodeDefaultVoid => Options.BooleanValue("NODE_DEFAULT_VOID");

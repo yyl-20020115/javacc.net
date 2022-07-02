@@ -367,7 +367,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 		c1.member = tryBlock;
 	}
 
-	public new static void reInit()
+	public new static void ReInit()
 	{
 		add_cu_token_here = JavaCCGlobals.cu_to_insertion_point_1;
 		first_cu_token = null;

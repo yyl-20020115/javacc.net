@@ -36,7 +36,7 @@ public class ParseEngine : JavaCCGlobals
 	internal static Hashtable generated;
 
 	
-	public new static void reInit()
+	public new static void ReInit()
 	{
 		ostr = null;
 		gensymindex = 0;

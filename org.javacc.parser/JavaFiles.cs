@@ -2382,7 +2382,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 		throw new System.Exception();
 	}
 
-	public new static void reInit()
+	public new static void ReInit()
 	{
 	}
 

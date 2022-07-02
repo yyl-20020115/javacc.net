@@ -508,7 +508,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 		jj_consume_token(80);
 		try
 		{
-			return int.parseInt(token.image);
+			return int.TryParse(token.image,out var v)?v:0;
 		}
 		catch (Exception e)
 		{

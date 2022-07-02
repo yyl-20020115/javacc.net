@@ -46,7 +46,7 @@ public class RStringLiteral : RegularExpression
 	}
 
 	
-	public static void ReInit()
+	public static new void ReInit()
 	{
 		maxStrKind = 0;
 		maxLen = 0;
@@ -267,7 +267,7 @@ public class RStringLiteral : RegularExpression
 				}
 				else
 				{
-					num6 = NfaState.MoveFromSet(java.lang.String.instancehelper_charAt(text2, j), vector2, vector);
+					num6 = NfaState.MoveFromSet(text2[j], vector2, vector);
 					vector2.Clear();
 					if (j == 0 && num6 != int.MaxValue && LexGen.canMatchAnyChar[LexGen.lexStateIndex] != -1 && num6 > LexGen.canMatchAnyChar[LexGen.lexStateIndex])
 					{
@@ -1051,14 +1051,14 @@ public class RStringLiteral : RegularExpression
 						string str = "\"";
 						for (int j = 0; j < @this.Length; j++)
 						{
-							if (java.lang.String.instancehelper_charAt(@this, j) <= 'ÿ')
+							if (@this[j] <= 'ÿ')
 							{
-								str = (str)+("\\")+(int.toOctalString(java.lang.String.instancehelper_charAt(@this, j)))
+								str = (str)+("\\")+(Utils.ToOctString(@this[j]))
 									;
 								continue;
 							}
-							string text = Utils.ToHexString(java.lang.String.instancehelper_charAt(@this, j));
-							if (java.lang.text.Length == 3)
+							string text = Utils.ToHexString(@this[j]);
+							if (text.Length == 3)
 							{
 								text = ("0")+(text);
 							}
@@ -1104,9 +1104,9 @@ public class RStringLiteral : RegularExpression
 	}
 
 	
-	public new static void reInit()
+	public new static void ReInit()
 	{
-		ReInit();
+		RegularExpression.ReInit();
 		charCnt = 0;
 		allImages = null;
 		boilerPlateDumped = false;
@@ -1361,7 +1361,7 @@ public class RStringLiteral : RegularExpression
 				{
 					P_1.WriteLine("         {");
 				}
-				if (!string.Equals(text2, java.lang.String.valueOf(int.MaxValue)))
+				if (!string.Equals(text2, (int.MaxValue.ToString())))
 				{
 					if (i == 0)
 					{
@@ -1412,9 +1412,9 @@ public class RStringLiteral : RegularExpression
 						P_1.WriteLine("            }");
 					}
 				}
-				text2 = java.lang.String.instancehelper_substring(text, 0, num3 = java.lang.String.instancehelper_indexOf(text, ", "));
-				@this = java.lang.String.instancehelper_substring(text, num3 + 2);
-				text = java.lang.String.instancehelper_substring(@this, java.lang.String.instancehelper_indexOf(@this, ", ") + 2);
+				text2 = text.Substring( 0, num3 = text.IndexOf(", "));
+				@this = text.Substring(num3 + 2);
+				text = (@this.Substring(@this.IndexOf( ", ") + 2));
 				if (string.Equals(text, "null;"))
 				{
 					P_1.WriteLine("            return -1;");
@@ -1424,7 +1424,7 @@ public class RStringLiteral : RegularExpression
 					P_1.WriteLine(("            return ")+(NfaState.AddStartStateSet(text))+(";")
 						);
 				}
-				if (!string.Equals(text2, java.lang.String.valueOf(int.MaxValue)))
+				if (!string.Equals(text2, (int.MaxValue).ToString()))
 				{
 					P_1.WriteLine("         }");
 				}

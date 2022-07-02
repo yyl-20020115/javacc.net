@@ -12,29 +12,26 @@ public class Semanticize : JavaCCGlobals
 		{
 		}
 
-		public virtual bool GoDeeper(Expansion exp)
-		{
-            return exp is not RegularExpression;
-        }
+        public virtual bool GoDeeper(Expansion exp) => exp is not RegularExpression;
 
 
         public virtual void Action(Expansion exp)
 		{
-			if (exp is OneOrMore)
+			if (exp is OneOrMore o)
 			{
-				if (EmptyExpansionExists(((OneOrMore)exp).expansion))
+				if (EmptyExpansionExists(o.expansion))
 				{
 					JavaCCErrors.Semantic_Error(exp, "Expansion within \"(...)+\" can be matched by empty string.");
 				}
 			}
-			else if (exp is ZeroOrMore)
+			else if (exp is ZeroOrMore z)
 			{
-				if (EmptyExpansionExists(((ZeroOrMore)exp).expansion))
+				if (EmptyExpansionExists(z.expansion))
 				{
 					JavaCCErrors.Semantic_Error(exp, "Expansion within \"(...)*\" can be matched by empty string.");
 				}
 			}
-			else if (exp is ZeroOrOne && EmptyExpansionExists(((ZeroOrOne)exp).expansion))
+			else if (exp is ZeroOrOne t && EmptyExpansionExists(t.expansion))
 			{
 				JavaCCErrors.Semantic_Error(exp, "Expansion within \"(...)?\" can be matched by empty string.");
 			}
@@ -337,35 +334,31 @@ public class Semanticize : JavaCCGlobals
 		{
 			return true;
 		}
-		if (e is Choice)
+		if (e is Choice c)
 		{
-			Enumeration enumeration = ((Choice)e).Choices.elements();
-			while (enumeration.hasMoreElements())
+			foreach(var d in c.Choices)
 			{
-				if (EmptyExpansionExists((Expansion)enumeration.nextElement()))
+				if (EmptyExpansionExists(d))
 				{
 					return true;
 				}
 			}
 			return false;
 		}
-		if (e is Sequence)
+		if (e is Sequence s)
 		{
-			Enumeration enumeration = ((Sequence)e).Units.elements();
-			while (enumeration.hasMoreElements())
+			foreach(var t in s.Units)
 			{
-				if (!EmptyExpansionExists((Expansion)enumeration.nextElement()))
+				if (!EmptyExpansionExists(t))
 				{
 					return false;
 				}
 			}
 			return true;
 		}
-		if (e is TryBlock)
+		if (e is TryBlock b)
 		{
-			bool result2 = EmptyExpansionExists(((TryBlock)e).exp);
-			
-			return result2;
+			return EmptyExpansionExists(b.exp);
 		}
 		return false;
 	}
@@ -382,10 +375,9 @@ public class Semanticize : JavaCCGlobals
 		{
 			JavaCCErrors.Warning("Lookahead adequacy checking not being performed since option LOOKAHEAD is more than 1.  HashSet<object> option FORCE_LA_CHECK to true to force checking.");
 		}
-		Enumeration enumeration = JavaCCGlobals.bnfproductions.elements();
-		while (enumeration.hasMoreElements())
+		foreach(var b in JavaCCGlobals.bnfproductions)
 		{
-			ExpansionTreeWalker.postOrderWalk(((NormalProduction)enumeration.nextElement()).Expansion, new LookaheadFixer());
+			ExpansionTreeWalker.postOrderWalk(b.Expansion, new LookaheadFixer());
 		}
 		enumeration = JavaCCGlobals.bnfproductions.elements();
 		while (enumeration.hasMoreElements())
@@ -809,7 +801,7 @@ public class Semanticize : JavaCCGlobals
 	}
 
 	
-	public new static void reInit()
+	public new static void ReInitReInit()
 	{
 		removeList = new ();
 		itemList = new ();
@@ -963,9 +955,8 @@ public class Semanticize : JavaCCGlobals
 	
 	private static bool rexpWalk(RegularExpression P_0)
 	{
-		if (P_0 is RJustName)
+		if (P_0 is RJustName rJustName)
 		{
-			RJustName rJustName = (RJustName)P_0;
 			if (rJustName.regexpr.walkStatus == -1)
 			{
 				rJustName.regexpr.walkStatus = -2;
@@ -997,7 +988,7 @@ public class Semanticize : JavaCCGlobals
 		}
 		else
 		{
-			if (P_0 is RChoice)
+			if (P_0 is RChoice rc)
 			{
 				Enumeration enumeration = ((RChoice)P_0).Choices.elements();
 				while (enumeration.hasMoreElements())
@@ -1009,12 +1000,11 @@ public class Semanticize : JavaCCGlobals
 				}
 				return false;
 			}
-			if (P_0 is RSequence)
+			if (P_0 is RSequence rs)
 			{
-				Enumeration enumeration = ((RSequence)P_0).Units.elements();
-				while (enumeration.hasMoreElements())
+				foreach(var rex in rs.Units) 
 				{
-					if (rexpWalk((RegularExpression)enumeration.nextElement()))
+					if (rexpWalk(rex))
 					{
 						return true;
 					}

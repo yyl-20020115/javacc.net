@@ -17,17 +17,17 @@ public static class EntryPoint
 		//JavaCCErrors.ReInit();
 		JavaCCGlobals.ReInit();
 		Options.Init();
-		JavaCCParserInternals.reInit();
-		RStringLiteral.reInit();
-		JavaFiles.reInit();
+		JavaCCParserInternals.ReInit();
+		RStringLiteral.ReInit();
+		JavaFiles.ReInit();
 		LexGen.reInit();
 		NfaState.reInit();
 		MatchInfo.ReInit();
-		LookaheadWalk.reInit();
-		Semanticize.reInit();
+		LookaheadWalk.ReInit();
+		Semanticize.ReInit();
 		ParseGen.reInit();
 		OtherFilesGen.reInit();
-		ParseEngine.reInit();
+		ParseEngine.ReInit();
 	}
 
 

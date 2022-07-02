@@ -11,7 +11,7 @@ public class NormalProduction :Expansion
 
 	public int column;
 
-	internal ArrayList parents;
+	internal List<Expansion> parents = new();
 
 	public string accessMod;
 
