@@ -1,9 +1,9 @@
 ﻿namespace JavaCC.Parser;
 using System;
 
-internal class RuntimeException : Exception
+public class RuntimeException : Exception
 {
-    private UnsupportedEncodingException cause;
+    public UnsupportedEncodingException Cause;
 
     public RuntimeException()
     {
@@ -11,7 +11,7 @@ internal class RuntimeException : Exception
 
     public RuntimeException(UnsupportedEncodingException cause)
     {
-        this.cause = cause;
+        this.Cause = cause;
     }
 
     public RuntimeException(string message) : base(message)

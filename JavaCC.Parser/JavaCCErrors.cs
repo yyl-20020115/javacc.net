@@ -87,8 +87,8 @@ public sealed class JavaCCErrors
         }
         else if (_loc is SingleCharacter locs)
         {
-            Console.Error.Write(("Line ") + (locs.line) + (", Column ")
-                + (locs.column)
+            Console.Error.Write(("Line ") + (locs.Line) + (", Column ")
+                + (locs.Column)
                 + (": ")
                 );
         }

@@ -303,17 +303,17 @@ public class JavaCCGlobals
             pw.Write(" ");
             ccol++;
         }
-        if (t.kind == 90 || t.kind == 89)
+        if (t.Kind == 90 || t.Kind == 89)
         {
-            pw.Write(AddUnicodeEscapes(t.image));
+            pw.Write(AddUnicodeEscapes(t.Image));
         }
         else
         {
-            pw.Write(t.image);
+            pw.Write(t.Image);
         }
-        cline = t.endLine;
-        ccol = t.endColumn + 1;
-        int num = t.image[(t.image.Length) - 1];
+        cline = t.EndLine;
+        ccol = t.EndColumn + 1;
+        int num = t.Image[(t.Image.Length) - 1];
         if (num == 10 || num == 13)
         {
             cline++;
@@ -325,19 +325,19 @@ public class JavaCCGlobals
     protected internal static string PrintLeadingComments(Token t)
     {
         string text = "";
-        if (t.specialToken == null)
+        if (t.SpecialToken == null)
         {
             return text;
         }
-        Token token = t.specialToken;
-        while (token.specialToken != null)
+        Token token = t.SpecialToken;
+        while (token.SpecialToken != null)
         {
-            token = token.specialToken;
+            token = token.SpecialToken;
         }
         while (token != null)
         {
             text = (text) + (PrintTokenOnly(token));
-            token = token.next;
+            token = token.Next;
         }
         if (ccol != 1 && cline != t.BeginLine)
         {
@@ -363,12 +363,12 @@ public class JavaCCGlobals
             str = (str) + (" ");
             ccol++;
         }
-        str = ((t.kind != 90 && t.kind != 89)
-            ? (str) + (t.image)
-            : (str) + (AddUnicodeEscapes(t.image)));
-        cline = t.endLine;
-        ccol = t.endColumn + 1;
-        int num = t.image[(t.image.Length) - 1];
+        str = ((t.Kind != 90 && t.Kind != 89)
+            ? (str) + (t.Image)
+            : (str) + (AddUnicodeEscapes(t.Image)));
+        cline = t.EndLine;
+        ccol = t.EndColumn + 1;
+        int num = t.Image[(t.Image.Length) - 1];
         if (num == 10 || num == 13)
         {
             cline++;
@@ -611,9 +611,9 @@ public class JavaCCGlobals
     protected internal static void PrintTokenSetup(Token t)
     {
         Token token = t;
-        while (token.specialToken != null)
+        while (token.SpecialToken != null)
         {
-            token = token.specialToken;
+            token = token.SpecialToken;
         }
         cline = token.BeginLine;
         ccol = token.BeginColumn;
@@ -622,17 +622,17 @@ public class JavaCCGlobals
 
     protected internal static void PrintToken(Token t, TextWriter pw)
     {
-        Token token = t.specialToken;
+        Token token = t.SpecialToken;
         if (token != null)
         {
-            while (token.specialToken != null)
+            while (token.SpecialToken != null)
             {
-                token = token.specialToken;
+                token = token.SpecialToken;
             }
             while (token != null)
             {
                 PrintTokenOnly(token, pw);
-                token = token.next;
+                token = token.Next;
             }
         }
         PrintTokenOnly(t, pw);
@@ -641,17 +641,17 @@ public class JavaCCGlobals
 
     protected internal static void PrintLeadingComments(Token t, TextWriter pw)
     {
-        if (t.specialToken != null)
+        if (t.SpecialToken != null)
         {
-            Token token = t.specialToken;
-            while (token.specialToken != null)
+            Token token = t.SpecialToken;
+            while (token.SpecialToken != null)
             {
-                token = token.specialToken;
+                token = token.SpecialToken;
             }
             while (token != null)
             {
                 PrintTokenOnly(token, pw);
-                token = token.next;
+                token = token.Next;
             }
             if (ccol != 1 && cline != t.BeginLine)
             {
@@ -665,9 +665,9 @@ public class JavaCCGlobals
 
     protected internal static void PrintTrailingComments(Token t, TextWriter pw)
     {
-        if (t.next != null)
+        if (t.Next != null)
         {
-            PrintLeadingComments(t.next);
+            PrintLeadingComments(t.Next);
         }
     }
 
@@ -675,24 +675,24 @@ public class JavaCCGlobals
     protected internal static string PrintToken(Token t)
     {
         string str = "";
-        Token token = t.specialToken;
+        Token token = t.SpecialToken;
         if (token != null)
         {
-            while (token.specialToken != null)
+            while (token.SpecialToken != null)
             {
-                token = token.specialToken;
+                token = token.SpecialToken;
             }
             while (token != null)
             {
                 str = (str) + (PrintTokenOnly(token));
-                token = token.next;
+                token = token.Next;
             }
         }
         return (str) + (PrintTokenOnly(t));
     }
 
 
-    protected internal static string PrintTrailingComments(Token t) => t.next == null ? "" : PrintLeadingComments(t.next);
+    protected internal static string PrintTrailingComments(Token t) => t.Next == null ? "" : PrintLeadingComments(t.Next);
 
 
     public static void ReInit()

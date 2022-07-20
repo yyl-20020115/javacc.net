@@ -78,9 +78,6 @@ public class JJTree
 
     public virtual int Main(string[] strarr)
     {
-        ASTNodeDescriptor.nodeIds = new();
-        ASTNodeDescriptor.nodeNames = new();
-        ASTNodeDescriptor.nodeSeen = new();
         EntryPoint.ReInitAll();
         JavaCCGlobals.BannerLine("Tree Builder", "");
         io = new IO();

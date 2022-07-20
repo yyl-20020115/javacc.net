@@ -11,31 +11,31 @@ public class RStringLiteral : RegularExpression
 {
     public string image;
 
-    internal static int maxStrKind;
+    public static int maxStrKind;
 
-    internal static int maxLen;
+    public static int maxLen;
 
-    internal static int charCnt;
+    public static int charCnt;
 
-    internal static List<Dictionary<string, KindInfo>> charPosKind =new();
+    public static List<Dictionary<string, KindInfo>> charPosKind =new();
 
-    internal static int[] maxLenForActive;
+    public static int[] maxLenForActive;
 
     public static string[] allImages;
 
-    internal static int[][] intermediateKinds;
+    public static int[][] intermediateKinds;
 
-    internal static int[][] intermediateMatchedPos;
+    public static int[][] intermediateMatchedPos;
 
-    internal static int startStateCnt;
+    public static int startStateCnt;
 
-    internal static bool[] subString;
+    public static bool[] subString;
 
-    internal static bool[] subStringAtPos;
+    public static bool[] subStringAtPos;
 
-    internal static Dictionary<string, long[]>[] statesForPos = Array.Empty<Dictionary<string, long[]>>();
+    public static Dictionary<string, long[]>[] statesForPos = Array.Empty<Dictionary<string, long[]>>();
 
-    private static bool boilerPlateDumped;
+    public static bool boilerPlateDumped;
 
 
     public RStringLiteral(Token t, string str)

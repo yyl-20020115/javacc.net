@@ -3,20 +3,19 @@ using System.Collections.Generic;
 
 public class ASTProduction : JJTreeNode
 {
-    internal string Name = "";
-    internal List<string> ThrowsList = new();
-    private Dictionary<NodeScope, int> Scopes = new();
-    private int nextNodeScopeNumber = 0;
+    public string Name { get; protected internal set; } = "";
+    public readonly List<string> ThrowsList = new();
+    public readonly Dictionary<NodeScope, int> Scopes = new();
+    public int NextNodeScopeNumber { get; protected internal set; } = 0;
+    public ASTProduction(int id) : base(id) { }
 
-    internal ASTProduction(int id) : base(id) { }
-
-    internal virtual int GetNodeScopeNumber(NodeScope scope)
+    public virtual int GetNodeScopeNumber(NodeScope scope)
     {
-        if (!Scopes.TryGetValue(scope, out var integer))
+        if (!Scopes.TryGetValue(scope, out var i))
         {
-            integer = nextNodeScopeNumber++;
-            Scopes.Add(scope, integer);
+            i = NextNodeScopeNumber++;
+            Scopes.Add(scope, i);
         }
-        return integer;
+        return i;
     }
 }

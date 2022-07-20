@@ -29,7 +29,7 @@ public class RCharacterList : RegularExpression
             int ch;
             if (descriptors[i] is SingleCharacter character)
             {
-                ch = character.ch;
+                ch = character.CH;
                 if (ch != char.ToLower((char)ch))
                 {
                     descriptors.Add(new SingleCharacter(char.ToLower((char)ch)));
@@ -135,9 +135,9 @@ public class RCharacterList : RegularExpression
                     {
                         if (vector[num2] is SingleCharacter)
                         {
-                            if (((SingleCharacter)vector[num2]).ch <= singleCharacter.ch)
+                            if (((SingleCharacter)vector[num2]).CH <= singleCharacter.CH)
                             {
-                                if (((SingleCharacter)vector[num2]).ch == singleCharacter.ch)
+                                if (((SingleCharacter)vector[num2]).CH == singleCharacter.CH)
                                 {
                                     break;
                                 }
@@ -147,11 +147,11 @@ public class RCharacterList : RegularExpression
                         else
                         {
                             int left = ((CharacterRange)vector[num2]).Left;
-                            if (InRange(singleCharacter.ch, (CharacterRange)vector[num2]))
+                            if (InRange(singleCharacter.CH, (CharacterRange)vector[num2]))
                             {
                                 break;
                             }
-                            if (left <= singleCharacter.ch)
+                            if (left <= singleCharacter.CH)
                             {
                                 goto IL_00e5;
                             }
@@ -173,13 +173,13 @@ public class RCharacterList : RegularExpression
                 {
                     if (vector[num2] is SingleCharacter)
                     {
-                        if (InRange(((SingleCharacter)vector[num2]).ch, characterRange))
+                        if (InRange(((SingleCharacter)vector[num2]).CH, characterRange))
                         {
                             vector.RemoveAt(num2--);
                             num += -1;
                             goto IL_0268;
                         }
-                        if (((SingleCharacter)vector[num2]).ch <= characterRange.Right)
+                        if (((SingleCharacter)vector[num2]).CH <= characterRange.Right)
                         {
                             goto IL_0268;
                         }
@@ -236,7 +236,7 @@ public class RCharacterList : RegularExpression
             int ch;
             if (descriptors[i] is SingleCharacter)
             {
-                ch = ((SingleCharacter)descriptors[i]).ch;
+                ch = ((SingleCharacter)descriptors[i]).CH;
                 if (ch >= 0 && ch <= num + 1)
                 {
                     num = ch;
@@ -314,7 +314,7 @@ public class RCharacterList : RegularExpression
         {
             if (descriptors[i] is SingleCharacter)
             {
-                start.AddChar(((SingleCharacter)descriptors[i]).ch);
+                start.AddChar(((SingleCharacter)descriptors[i]).CH);
                 continue;
             }
             CharacterRange characterRange = (CharacterRange)descriptors[i];

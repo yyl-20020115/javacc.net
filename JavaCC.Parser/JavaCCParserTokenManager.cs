@@ -405,7 +405,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
                                 if ((jjtoToken[jjmatchedKind >> 6] & (1L << jjmatchedKind)) != 0)
                                 {
                                     token2 = jjFillToken();
-                                    token2.specialToken = token;
+                                    token2.SpecialToken = token;
                                     TokenLexicalActions(token2);
                                     if (___003C_003EjjnewLexState[jjmatchedKind] != -1)
                                     {
@@ -424,11 +424,11 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
                                         }
                                         else
                                         {
-                                            token2.specialToken = token;
+                                            token2.SpecialToken = token;
                                             Token token3 = token;
                                             Token token4 = token2;
                                             Token token5 = token3;
-                                            token5.next = token4;
+                                            token5.Next = token4;
                                             token = token4;
                                         }
                                         SkipLexicalActions(token2);
@@ -518,7 +518,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
 
         jjmatchedKind = 0;
         token2 = jjFillToken();
-        token2.specialToken = token;
+        token2.SpecialToken = token;
         return token2;
     }
 
@@ -3010,9 +3010,9 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         int endColumn = input_stream.EndColumn;
         Token token = Token.NewToken(jjmatchedKind, str);
         token.BeginLine = num;
-        token.endLine = endLine;
+        token.EndLine = endLine;
         token.BeginColumn = beginColumn;
-        token.endColumn = endColumn;
+        token.EndColumn = endColumn;
         return token;
     }
 
@@ -3391,10 +3391,10 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
                     image = new StringBuilder();
                 }
                 image.Append(___003C_003EjjstrLiteralImages[130]);
-                P_0.kind = 132;
-                ((Token.GTToken)P_0).realKind = 130;
+                P_0.Kind = 132;
+                ((Token.GTToken)P_0).RealKind = 130;
                 input_stream.Backup(2);
-                P_0.image = ">";
+                P_0.Image = ">";
                 break;
             case 131:
                 if (image == null)
@@ -3402,10 +3402,10 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
                     image = new StringBuilder();
                 }
                 image.Append(___003C_003EjjstrLiteralImages[131]);
-                P_0.kind = 132;
-                ((Token.GTToken)P_0).realKind = 131;
+                P_0.Kind = 132;
+                ((Token.GTToken)P_0).RealKind = 131;
                 input_stream.Backup(1);
-                P_0.image = ">";
+                P_0.Image = ">";
                 break;
         }
     }

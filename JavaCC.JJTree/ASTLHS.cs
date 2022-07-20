@@ -1,7 +1,7 @@
 namespace JavaCC.JJTree;
 public class ASTLHS : JJTreeNode
 {
-    internal ASTLHS(int id) : base(id) { }
+    public ASTLHS(int id) : base(id) { }
     public override void Write(IO io)
     {
         var ens = NodeScope.GetEnclosingNodeScope(this);

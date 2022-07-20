@@ -4,8 +4,8 @@ using JavaCC.Parser;
 
 public class JJDocGlobals : JavaCCGlobals
 {
-    public static string InputFile;
-    public static string OutputFile;
+    public static string InputFile = "";
+    public static string OutputFile = "";
     protected static Generator generator;
 
     public static Generator Generator

@@ -2,13 +2,13 @@ namespace JavaCC.Parser;
 
 public class RZeroOrMore : RegularExpression
 {
-    public RegularExpression regexpr;
+    public RegularExpression Regexpr;
 
     public RZeroOrMore(Token t, RegularExpression re)
     {
         Line = t.BeginLine;
         Column = t.BeginColumn;
-        regexpr = re;
+        Regexpr = re;
     }
 
     public RZeroOrMore() { }
@@ -18,7 +18,7 @@ public class RZeroOrMore : RegularExpression
         var nfa = new Nfa();
         var start = nfa.Start;
         var end = nfa.End;
-        var nfa2 = regexpr.GenerateNfa(b);
+        var nfa2 = Regexpr.GenerateNfa(b);
         start.AddMove(nfa2.Start);
         start.AddMove(end);
         nfa2.End.AddMove(end);

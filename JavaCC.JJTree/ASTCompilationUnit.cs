@@ -1,7 +1,7 @@
 namespace JavaCC.JJTree;
 public class ASTCompilationUnit : JJTreeNode
 {
-    internal ASTCompilationUnit(int id) : base(id) { }
+    public ASTCompilationUnit(int id) : base(id) { }
     public override void Write(IO io)
     {
         var token = FirstToken;
@@ -19,15 +19,15 @@ public class ASTCompilationUnit : JJTreeNode
                 if (string.Equals(token.Image, "implements"))
                 {
                     Write(token, io);
-                    JJTreeNode.OpenJJTreeComment(io, null);
+                    OpenJJTreeComment(io);
                     io.Out.Write((" ") + (NodeFiles.NodeConstants) + (", "));
-                    JJTreeNode.CloseJJTreeComment(io);
+                    CloseJJTreeComment(io);
                 }
                 else
                 {
-                    JJTreeNode.OpenJJTreeComment(io, null);
+                    OpenJJTreeComment(io);
                     io.Out.Write(("implements ") + (NodeFiles.NodeConstants));
-                    JJTreeNode.CloseJJTreeComment(io);
+                    CloseJJTreeComment(io);
                     Write(token, io);
                 }
             }
@@ -37,9 +37,9 @@ public class ASTCompilationUnit : JJTreeNode
             }
             if (token == JJTreeGlobals.ParserClassBodyStart)
             {
-                JJTreeNode.OpenJJTreeComment(io, null);
+                OpenJJTreeComment(io);
                 JJTreeState.InsertParserMembers(io);
-                JJTreeNode.CloseJJTreeComment(io);
+                CloseJJTreeComment(io);
             }
             if (token == LastToken) break;
             token = token.Next;

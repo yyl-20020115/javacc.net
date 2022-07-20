@@ -98,9 +98,9 @@ public class JJTreeNode : SimpleNode
         }
     }
 
-    internal virtual string TranslateImage(Token token) => token.Image;
+    public virtual string TranslateImage(Token token) => token.Image;
 
-    internal virtual string GetIndentation(JJTreeNode node, int idx)
+    public virtual string GetIndentation(JJTreeNode node, int idx)
     {
         var text = "";
         for (int i = idx + 1; i < node.FirstToken.BeginColumn; i++)
@@ -144,7 +144,7 @@ public class JJTreeNode : SimpleNode
     }
 
 
-    internal static void OpenJJTreeComment(IO io, string comment)
+    internal static void OpenJJTreeComment(IO io, string comment = null)
     {
         if (comment != null)
         {

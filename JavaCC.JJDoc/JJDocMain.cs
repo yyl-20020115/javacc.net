@@ -6,33 +6,28 @@ using JavaCC.Parser;
 
 public class JJDocMain : JJDocGlobals
 {
-    public static int Main(string[] args) => MainProgram(args);
-
-    public static int MainProgram(string[] args)
+    public static int Main(string[] args)
     {
-        //Discarded unreachable code: IL_02fd
         EntryPoint.ReInitAll();
         JJDocOptions.Init();
-        JavaCCGlobals.BannerLine("Documentation Generator", "0.1.4");
+        BannerLine("Documentation Generator", "0.1.4");
 
         if (args.Length == 0)
         {
             HelpMessage();
             return 1;
         }
-        JJDocGlobals.Info("(type \"jjdoc\" with no arguments for help)");
+        Info("(type \"jjdoc\" with no arguments for help)");
         if (Options.IsOption(args[args.Length - 1]))
         {
-            JJDocGlobals.Error(("Last argument \"") + (args[args.Length - 1]) + ("\" is not a filename or \"-\".  ")
-                );
+            Error(("Last argument \"") + (args[args.Length - 1]) + ("\" is not a filename or \"-\".  "));
             return 1;
         }
         for (int i = 0; i < args.Length - 1; i++)
         {
             if (!Options.IsOption(args[i]))
             {
-                JJDocGlobals.Error(("Argument \"") + (args[i]) + ("\" must be an option setting.  ")
-                    );
+                Error(("Argument \"") + (args[i]) + ("\" must be an option setting.  "));
                 return 1;
             }
             Options.setCmdLineOption(args[i]);
@@ -40,110 +35,93 @@ public class JJDocMain : JJDocGlobals
         JavaCCParser javaCCParser;
         if (string.Equals(args[args.Length - 1], "-"))
         {
-            JJDocGlobals.Info("Reading from standard input . . .");
+            Info("Reading from standard input . . .");
             javaCCParser = new JavaCCParser(Console.In);
-            JJDocGlobals.InputFile = "standard input";
-            JJDocGlobals.OutputFile = "standard output";
+            InputFile = "standard input";
+            OutputFile = "standard output";
         }
         else
         {
-            JJDocGlobals.Info(("Reading from file ") + (args[args.Length - 1]) + (" . . .")
-                );
+            Info(("Reading from file ") + (args[args.Length - 1]) + (" . . ."));
             try
             {
                 try
                 {
                     //
                     var path = args[args.Length - 1];
-                    FileInfo file = new FileInfo(path);
+                    var file = new FileInfo(path);
                     if (!file.Exists)
                     {
-                        JJDocGlobals.Error(("File ") + (args[args.Length - 1]) + (" not found.")
-                            );
+                        Error(("File ") + (args[args.Length - 1]) + (" not found."));
                         return 1;
                     }
                     if (new DirectoryInfo(path).Exists)
                     {
-                        JJDocGlobals.Error((args[args.Length - 1]) + (" is a directory. Please use a valid file name."));
+                        Error((args[args.Length - 1]) + (" is a directory. Please use a valid file name."));
                         return 1;
                     }
-                    JJDocGlobals.InputFile = file.Name;
+                    InputFile = file.Name;
                     javaCCParser = new JavaCCParser(new StreamReader(args[args.Length - 1]));
                 }
                 catch
                 {
-                    goto IL_01dd;
+
+                    Error(("Security violation while trying to open ") + (args[args.Length - 1]));
+                    return 1;
                 }
             }
             catch (FileNotFoundException)
             {
-                goto IL_01e0;
+                Error(("File ") + (args[args.Length - 1]) + (" not found."));
+                return 1;
             }
         }
-        MetaParseException ex3;
-        ParseException ex4;
         try
         {
             try
             {
-                javaCCParser.javacc_input();
+                javaCCParser.JavaCC_Input();
                 JJDoc.Start();
                 if (JavaCCErrors._Error_Count == 0)
                 {
                     if (JavaCCErrors._Warning_Count == 0)
                     {
-                        JJDocGlobals.Info(("Grammar documentation generated successfully in ") + (JJDocGlobals.OutputFile));
+                        Info(("Grammar documentation generated successfully in ") + (JJDocGlobals.OutputFile));
                     }
                     else
                     {
-                        JJDocGlobals.Info(("Grammar documentation generated with 0 errors and ") + (JavaCCErrors._Warning_Count) + (" warnings.")
-                            );
+                        Info(("Grammar documentation generated with 0 errors and ") + (JavaCCErrors._Warning_Count) + (" warnings."));
                     }
                     return 0;
                 }
-                JJDocGlobals.Error(("Detected ") + (JavaCCErrors._Error_Count) + (" errors and ")
+                Error(("Detected ") + (JavaCCErrors._Error_Count) + (" errors and ")
                     + (JavaCCErrors._Warning_Count)
                     + (" warnings.")
                     );
                 return (JavaCCErrors._Error_Count != 0) ? 1 : 0;
             }
-            catch (MetaParseException x)
+            catch (MetaParseException e1)
             {
-                ex3 = x;
+                Error((e1.Message));
+                Error(("Detected ") + (JavaCCErrors._Error_Count) + (" errors and ")
+                    + (JavaCCErrors._Warning_Count)
+                    + (" warnings.")
+                    );
+                return 1;
             }
         }
-        catch (ParseException x2)
+        catch (ParseException e2)
         {
-            ex4 = x2;
-            goto IL_031e;
+            Error((e2.Message));
+            Error(("Detected ") + (JavaCCErrors._Error_Count + 1) + (" errors and ")
+                + (JavaCCErrors._Warning_Count)
+                + (" warnings.")
+                );
+            return 1;
         }
-        MetaParseException @this = ex3;
-        JJDocGlobals.Error((@this.Message));
-        JJDocGlobals.Error(("Detected ") + (JavaCCErrors._Error_Count) + (" errors and ")
-            + (JavaCCErrors._Warning_Count)
-            + (" warnings.")
-            );
-        return 1;
-    IL_031e:
-        ParseException this2 = ex4;
-        JJDocGlobals.Error((this2.Message));
-        JJDocGlobals.Error(("Detected ") + (JavaCCErrors._Error_Count + 1) + (" errors and ")
-            + (JavaCCErrors._Warning_Count)
-            + (" warnings.")
-            );
-        return 1;
-    IL_01e0:
-
-        JJDocGlobals.Error(("File ") + (args[args.Length - 1]) + (" not found.")
-            );
-        return 1;
-    IL_01dd:
-
-        JJDocGlobals.Error(("Security violation while trying to open ") + (args[args.Length - 1]));
-        return 1;
     }
 
-    internal static void HelpMessage()
+    public static void HelpMessage()
     {
         JJDocGlobals.Info("");
         JJDocGlobals.Info("    jjdoc option-settings - (to read from standard input)");

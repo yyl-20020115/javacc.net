@@ -38,11 +38,11 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			JavaCCGlobals.ccol = 1;
 			foreach(var _token in JavaCCGlobals.Cu_to_insertion_point_1)
 			{
-				if (_token.kind == 51)
+				if (_token.Kind == 51)
 				{
 					num = 1;
 				}
-				else if (_token.kind == 35)
+				else if (_token.Kind == 35)
 				{
 					num = 0;
 				}

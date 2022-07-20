@@ -95,7 +95,7 @@ public sealed class LookaheadWalk
             ZeroOrMore zeroOrMore = (ZeroOrMore)e;
             while (true)
             {
-                vector2 = GenFirstSet(vector2, zeroOrMore.expansion);
+                vector2 = GenFirstSet(vector2, zeroOrMore.Expansion);
                 if (vector2.Count == 0)
                 {
                     break;
@@ -108,12 +108,12 @@ public sealed class LookaheadWalk
         {
             vector = new ();
             VectorAppend(vector, v);
-            VectorAppend(vector, GenFirstSet(v, ((ZeroOrOne)e).expansion));
+            VectorAppend(vector, GenFirstSet(v, ((ZeroOrOne)e).Expansion));
             return vector;
         }
         if (e is TryBlock)
         {
-            return GenFirstSet(v, ((TryBlock)e).exp);
+            return GenFirstSet(v, ((TryBlock)e).Expression);
         }
         if (considerSemanticLA && e is Lookahead && ((Lookahead)e).action_tokens.Count != 0)
         {

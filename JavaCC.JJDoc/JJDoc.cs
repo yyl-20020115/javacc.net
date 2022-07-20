@@ -41,7 +41,7 @@ public class JJDoc : JJDocGlobals
                     text += (EmitRE(regExprSpec.rexp));
                     if (regExprSpec.nsTok != null)
                     {
-                        text += (" : ") + (regExprSpec.nsTok.image)
+                        text += (" : ") + (regExprSpec.nsTok.Image)
                             ;
                     }
                     text += ("\n");
@@ -99,9 +99,9 @@ public class JJDoc : JJDocGlobals
     private static Token GetPrecedingSpecialToken(Token token)
     {
         var other = token;
-        while (other.specialToken != null)
+        while (other.SpecialToken != null)
         {
-            other = other.specialToken;
+            other = other.SpecialToken;
         }
         return (other == token) ? null : other;
     }
@@ -122,7 +122,7 @@ public class JJDoc : JJDocGlobals
             while (token != null)
             {
                 text += (JavaCCGlobals.PrintTokenOnly(token));
-                token = token.next;
+                token = token.Next;
             }
         }
         if (!string.Equals(text, ""))
@@ -137,31 +137,30 @@ public class JJDoc : JJDocGlobals
         bool first = true;
 
         string text = "";
-        int num = ((!string.Equals(re.label, "")) ? 1 : 0);
-        int num2 = ((re is RJustName) ? 1 : 0);
-        int num3 = ((re is REndOfFile) ? 1 : 0);
-        int num4 = ((re is RStringLiteral) ? 1 : 0);
-        int num5 = ((re.tpContext != null) ? 1 : 0);
-        int num6 = ((num2 != 0 || num3 != 0 || num != 0 || (num4 == 0 && num5 != 0)) ? 1 : 0);
-        if (num6 != 0)
+        bool f1 = ((!string.Equals(re.label, "")));
+        bool f2 = ((re is RJustName));
+        bool f3 = ((re is REndOfFile));
+        bool f4 = ((re is RStringLiteral));
+        bool f5 = ((re.tpContext != null));
+        bool f6 = ((f2 || f3 || f1 || (!f4 && f5 )));
+        if (f6)
         {
             text += ("<");
-            if (num2 == 0)
+            if (!f2)
             {
                 if (re.private_rexp)
                 {
                     text += ("#");
                 }
-                if (num != 0)
+                if (f1)
                 {
                     text += (re.label);
                     text += (": ");
                 }
             }
         }
-        if (re is RCharacterList)
+        if (re is RCharacterList rCharacterList)
         {
-            RCharacterList rCharacterList = (RCharacterList)re;
             if (rCharacterList.negated_list)
             {
                 text += ("~");
@@ -172,7 +171,7 @@ public class JJDoc : JJDocGlobals
                 if (obj is SingleCharacter character)
                 {
                     text += ("\"");
-                    char[] value = new char[1] { character.ch };
+                    char[] value = new char[1] { character.CH };
                     text += (JavaCCGlobals.AddEscapes(new string(value)));
                     text += ("\"");
                 }
@@ -214,14 +213,12 @@ public class JJDoc : JJDocGlobals
         {
             text += ("EOF");
         }
-        else if (re is RJustName)
+        else if (re is RJustName rJustName)
         {
-            RJustName rJustName = (RJustName)re;
             text += (rJustName.label);
         }
-        else if (re is ROneOrMore)
+        else if (re is ROneOrMore rOneOrMore)
         {
-            ROneOrMore rOneOrMore = (ROneOrMore)re;
             text += ("(");
             text += (EmitRE(rOneOrMore.RegExpr));
             text += (")+");
@@ -230,17 +227,17 @@ public class JJDoc : JJDocGlobals
         {
             foreach (var regularExpression in rSequence.Units)
             {
-                int num7 = 0;
+                bool flag = false;
                 if (regularExpression is RChoice)
                 {
-                    num7 = 1;
+                    flag = true;
                 }
-                if (num7 != 0)
+                if (flag)
                 {
                     text += ("(");
                 }
                 text += (EmitRE(regularExpression));
-                if (num7 != 0)
+                if (flag)
                 {
                     text += (")");
                 }
@@ -251,23 +248,20 @@ public class JJDoc : JJDocGlobals
                 first = false;
             }
         }
-        else if (re is RStringLiteral)
+        else if (re is RStringLiteral rStringLiteral)
         {
-            RStringLiteral rStringLiteral = (RStringLiteral)re;
             text += ("\"") + (JavaCCGlobals.AddEscapes(rStringLiteral.image))
                 + ("\"")
                 ;
         }
-        else if (re is RZeroOrMore)
+        else if (re is RZeroOrMore rZeroOrMore)
         {
-            RZeroOrMore rZeroOrMore = (RZeroOrMore)re;
             text += ("(");
-            text += (EmitRE(rZeroOrMore.regexpr));
+            text += (EmitRE(rZeroOrMore.Regexpr));
             text += (")*");
         }
-        else if (re is RZeroOrOne)
+        else if (re is RZeroOrOne rZeroOrOne)
         {
-            RZeroOrOne rZeroOrOne = (RZeroOrOne)re;
             text += ("(");
             text += (EmitRE(rZeroOrOne.regexpr));
             text += (")?");
@@ -276,7 +270,7 @@ public class JJDoc : JJDocGlobals
         {
             JJDocGlobals.Error("Oops: Unknown regular expression type.");
         }
-        if (num6 != 0)
+        if (f6)
         {
             text += (">");
         }
@@ -413,12 +407,12 @@ public class JJDoc : JJDocGlobals
 
     private static void EmitExpansionTryBlock(TryBlock b, Generator generator)
     {
-        int num = ((b.exp is Choice) ? 1 : 0);
+        int num = ((b.Expression is Choice) ? 1 : 0);
         if (num != 0)
         {
             generator.Text("( ");
         }
-        EmitExpansionTree(b.exp, generator);
+        EmitExpansionTree(b.Expression, generator);
         if (num != 0)
         {
             generator.Text(" )");
@@ -429,7 +423,7 @@ public class JJDoc : JJDocGlobals
     private static void EmitExpansionZeroOrMore(ZeroOrMore z, Generator generator)
     {
         generator.Text("( ");
-        EmitExpansionTree(z.expansion, generator);
+        EmitExpansionTree(z.Expansion, generator);
         generator.Text(" )*");
     }
 
@@ -437,7 +431,7 @@ public class JJDoc : JJDocGlobals
     private static void EmitExpansionZeroOrOne(ZeroOrOne o, Generator generator)
     {
         generator.Text("( ");
-        EmitExpansionTree(o.expansion, generator);
+        EmitExpansionTree(o.Expansion, generator);
         generator.Text(" )?");
     }
 

@@ -3,69 +3,55 @@ using System.Collections.Generic;
 
 public class ASTNodeDescriptor : JJTreeNode
 {
-    private bool Faked = false;
-    internal static List<string> nodeIds = new();
-    internal static List<string> nodeNames = new();
-    internal static Dictionary<string, string> nodeSeen = new();
-    internal string Name = "";
-    internal bool isGT = false;
-    internal ASTNodeDescriptorExpression expression;
+    protected bool Faked = false;
+    protected static readonly List<string> _NodeIds = new();
+    protected static readonly List<string> _NodeNames = new();
+    protected static readonly Dictionary<string, string> _NodeSeen = new();
+    public string Name { get; protected internal set; }
+    public bool IsGT { get; protected internal set; } = false;
+    public ASTNodeDescriptorExpression Expression { get; protected internal set; }
 
-    internal virtual string Descriptor
-    {
-        get
-        {
-            if (expression == null)
-            {
-                return Name;
-            }
-            string result = ("#") + (Name) + ("(")
-                + ((!isGT) ? "" : ">")
+    public virtual string Descriptor => Expression == null ? Name : ("#") + (Name) + ("(")
+                + ((!IsGT) ? "" : ">")
                 + (ExpressionText())
                 + (")")
                 ;
 
-            return result;
-        }
-    }
-
-    internal ASTNodeDescriptor(int id)
+    public ASTNodeDescriptor(int id)
         : base(id) { }
 
-
-    internal virtual void SetNodeId()
+    public virtual void SetNodeId()
     {
         var nodeId = GetNodeId();
-        if (!nodeSeen.ContainsKey(nodeId))
+        if (!_NodeSeen.ContainsKey(nodeId))
         {
-            nodeSeen.Add(nodeId, nodeId);
-            nodeNames.Add(Name);
-            nodeIds.Add(nodeId);
+            _NodeSeen.Add(nodeId, nodeId);
+            _NodeNames.Add(Name);
+            _NodeIds.Add(nodeId);
         }
     }
 
+    public virtual string GetNodeId() => $"JJT{Name.ToUpper().Replace('.', '_')}";
 
-    internal virtual string GetNodeId() => $"JJT{Name.ToUpper().Replace('.', '_')}";
-
-    private string ExpressionText()
+    public string ExpressionText()
     {
-        if (string.Equals(expression.FirstToken.Image, ")") && string.Equals(expression.LastToken.Image, "("))
+        if (string.Equals(Expression.FirstToken.Image, ")") && string.Equals(Expression.LastToken.Image, "("))
         {
             return "true";
         }
         var text = "";
-        var token = expression.FirstToken;
+        var token = Expression.FirstToken;
         while (true)
         {
             text += (" ") + (token.Image);
-            if (token == expression.LastToken) break;
+            if (token == Expression.LastToken) break;
             token = token.Next;
         }
         return text;
     }
 
 
-    internal static ASTNodeDescriptor Indefinite(string name)
+    public static ASTNodeDescriptor Indefinite(string name)
     {
         var aSTNodeDescriptor = new ASTNodeDescriptor(39)
         {
@@ -76,23 +62,18 @@ public class ASTNodeDescriptor : JJTreeNode
         return aSTNodeDescriptor;
     }
 
-    internal static List<string> NodeIds => nodeIds;
-    internal static List<string> NodeNames => nodeNames;
-    internal virtual bool IsVoid => string.Equals(Name, "void");
+    public static List<string> NodeIds => _NodeIds;
+    public static List<string> NodeNames => _NodeNames;
+    public virtual bool IsVoid => string.Equals(Name, "void");
     public override string ToString() => Faked ? "(faked) " + Name : base.ToString() + ": " + Name;
+    public virtual string NodeType => JJTreeOptions.Multi ? JJTreeOptions.NodePrefix + Name : "SimpleNode";
+    public virtual string NodeName => Name;
+    public virtual string OpenNode(string name) => "jjtree.openNodeScope(" + (name) + (");");
 
-    internal virtual string NodeType => JJTreeOptions.Multi ? JJTreeOptions.NodePrefix + Name : "SimpleNode";
-
-    internal virtual string NodeName => Name;
-
-
-    internal virtual string OpenNode(string name) => "jjtree.openNodeScope(" + (name) + (");");
-
-
-    internal virtual string CloseNode(string name) => expression switch
+    public virtual string CloseNode(string name) => Expression switch
     {
         null => "jjtree.closeNodeScope(" + name + ", true);",
-        _ => isGT
+        _ => IsGT
                             ? "jjtree.closeNodeScope(" + name + ", jjtree.nodeArity() >"
                                 + ExpressionText()
                                 + ");"
@@ -102,5 +83,5 @@ public class ASTNodeDescriptor : JJTreeNode
     };
 
 
-    internal override string TranslateImage(Token token) => WhiteOut(token);
+    public override string TranslateImage(Token token) => WhiteOut(token);
 }

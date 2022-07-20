@@ -2,8 +2,8 @@ namespace JavaCC.JJTree;
 
 public class ASTBNF : ASTProduction
 {
-    internal Token DeclBeginLoc;
-    internal ASTBNF(int id) : base(id)
+    public Token DeclBeginLoc { get; protected internal set; }
+    public ASTBNF(int id) : base(id)
     {
         this.ThrowsList.Add("ParseException");
         this.ThrowsList.Add("RuntimeException");

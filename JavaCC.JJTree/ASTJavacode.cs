@@ -1,6 +1,6 @@
 namespace JavaCC.JJTree;
 public class ASTJavacode : ASTProduction
 {
-    internal Token StmBeginLoc;
-    internal ASTJavacode(int id) : base(id) { }
+    public Token StmBeginLoc { get; protected internal set; }
+    public ASTJavacode(int id) : base(id) { }
 }

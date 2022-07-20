@@ -62,25 +62,25 @@ public class JavaCharStream
     public virtual char ReadChar()
     {
         //Discarded unreachable code: IL_0132
-        int num;
+        int s;
         JavaCharStream javaCharStream;
         if (inBuf > 0)
         {
             inBuf--;
-            num = BufPos + 1;
+            s = BufPos + 1;
             javaCharStream = this;
-            int num2 = num;
-            javaCharStream.BufPos = num;
+            int num2 = s;
+            javaCharStream.BufPos = s;
             if (num2 == BufSize)
             {
                 BufPos = 0;
             }
             return buffer[BufPos];
         }
-        num = BufPos + 1;
+        s = BufPos + 1;
         javaCharStream = this;
-        int num3 = num;
-        javaCharStream.BufPos = num;
+        int num3 = s;
+        javaCharStream.BufPos = s;
         if (num3 == Available)
         {
             AdjustBuffSize();
@@ -88,21 +88,21 @@ public class JavaCharStream
         char[] array = buffer;
         int num4 = BufPos;
         int num5;
-        num = (num5 = ReadByte());
+        s = (num5 = ReadByte());
         int num6 = num4;
         char[] array2 = array;
-        int num7 = num;
-        array2[num6] = (char)num;
+        int num7 = s;
+        array2[num6] = (char)s;
         if (num7 == 92)
         {
             UpdateLineColumn((char)num5);
             int num8 = 1;
             while (true)
             {
-                num = BufPos + 1;
+                s = BufPos + 1;
                 javaCharStream = this;
-                int num9 = num;
-                javaCharStream.BufPos = num;
+                int num9 = s;
+                javaCharStream.BufPos = s;
                 if (num9 == Available)
                 {
                     AdjustBuffSize();
@@ -111,20 +111,20 @@ public class JavaCharStream
                 {
                     char[] array3 = buffer;
                     int num10 = BufPos;
-                    num = (num5 = ReadByte());
+                    s = (num5 = ReadByte());
                     num6 = num10;
                     array2 = array3;
-                    int num11 = num;
-                    array2[num6] = (char)num;
+                    int num11 = s;
+                    array2[num6] = (char)s;
                     if (num11 != 92)
                     {
                         UpdateLineColumn((char)num5);
                         if (num5 == 117 && (num8 & 1) == 1)
                         {
-                            num = BufPos - 1;
+                            s = BufPos - 1;
                             javaCharStream = this;
-                            int num12 = num;
-                            javaCharStream.BufPos = num;
+                            int num12 = s;
+                            javaCharStream.BufPos = s;
                             if (num12 < 0)
                             {
                                 BufPos = BufSize - 1;

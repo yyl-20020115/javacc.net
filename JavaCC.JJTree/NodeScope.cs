@@ -16,18 +16,18 @@ public class NodeScope
     {
         if (_node is ASTBNFDeclaration n)
         {
-            return n.nodeScope;
+            return n.NodeScope;
         }
         for (var node = _node.JJTGetParent(); node != null; node = node.JJTGetParent())
         {
             switch (node)
             {
                 case ASTBNFDeclaration a:
-                    return a.nodeScope;
+                    return a.NodeScope;
                 case ASTBNFNodeScope b:
-                    return b.nodeScope;
+                    return b.NodeScope;
                 case ASTExpansionNodeScope c:
-                    return c.nodeScope;
+                    return c.NodeScope;
             }
         }
         return null;
@@ -117,7 +117,7 @@ public class NodeScope
         io.WriteLine((pre) + ("try {"));
         JJTreeNode.CloseJJTreeComment(io);
         node.Write(io);
-        JJTreeNode.OpenJJTreeComment(io, null);
+        JJTreeNode.OpenJJTreeComment(io);
         io.WriteLine();
         var dict = new Dictionary<string, string>();
         FindThrown(dict, node);
@@ -152,7 +152,7 @@ public class NodeScope
         {
             TokenUtils.Write(token, io, "jjtThis", NodeVar);
         }
-        JJTreeNode.OpenJJTreeComment(io, null);
+        JJTreeNode.OpenJJTreeComment(io);
         io.WriteLine();
 
         InsertCatchBlocks(io, Production.ThrowsList, text);

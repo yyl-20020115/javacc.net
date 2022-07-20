@@ -4,23 +4,23 @@ using System.Text;
 
 public class TryBlock : Expansion
 {
-    public Expansion exp;
-    public List<List<Token>> types = new();
-    public List<Token> ids = new();
-    public List<List<Token>> catchblks = new();
-    public List<Token> finallyblk = new();
+    public Expansion Expression;
+    public List<List<Token>> Types = new();
+    public List<Token> Ids = new();
+    public List<List<Token>> CatchBlocks = new();
+    public List<Token> FinallyBlock = new();
 
     public TryBlock() { }
 
     public override StringBuilder Dump(int i, HashSet<Expansion> s)
     {
-        var stringBuilder = base.Dump(i, s);
+        var builder = base.Dump(i, s);
         if (s.Contains(this))
         {
-            return stringBuilder;
+            return builder;
         }
         s.Add(this);
-        stringBuilder.Append(Expansion.EOL).Append(exp.Dump(i + 1, s));
-        return stringBuilder;
+        builder.Append(Expansion.EOL).Append(Expression.Dump(i + 1, s));
+        return builder;
     }
 }

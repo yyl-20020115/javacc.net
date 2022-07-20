@@ -66,7 +66,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
         do
         {
             add_cu_token_here.Add(first_cu_token);
-            first_cu_token = first_cu_token.next;
+            first_cu_token = first_cu_token.Next;
         }
         while (first_cu_token != t);
         if (i == 1)
@@ -95,7 +95,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
         while (first_cu_token != t)
         {
             add_cu_token_here.Add(first_cu_token);
-            first_cu_token = first_cu_token.next;
+            first_cu_token = first_cu_token.Next;
         }
         if (!insertionpoint1set || !insertionpoint2set)
         {
@@ -359,14 +359,14 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
         {
             Line = t.BeginLine,
             Column = t.BeginColumn,
-            exp = c2.member as Expansion,
-            types = v1,
-            ids = v2,
-            catchblks = v3,
-            finallyblk = v4
+            Expression = c2.member as Expansion,
+            Types = v1,
+            Ids = v2,
+            CatchBlocks = v3,
+            FinallyBlock = v4
         };
-        tryBlock.exp.parent = tryBlock;
-        tryBlock.exp.ordinal = 0;
+        tryBlock.Expression.parent = tryBlock;
+        tryBlock.Expression.ordinal = 0;
         c1.member = tryBlock;
     }
 

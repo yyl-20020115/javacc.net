@@ -2,14 +2,14 @@ namespace JavaCC.Parser;
 
 public class SingleCharacter
 {
-    internal int line = 1;
-    internal int column = 1;
-    public char ch = '\0';
+    public int Line { get; protected internal set; } = 1;
+    public int Column { get; protected internal set; } = 1;
+    public char CH { get; protected internal set; } = '\0';
 
-    internal SingleCharacter() { }
+    public SingleCharacter() { }
 
-    internal SingleCharacter(char ch)
+    public SingleCharacter(char ch)
     {
-        this.ch = ch;
+        this.CH = ch;
     }
 }

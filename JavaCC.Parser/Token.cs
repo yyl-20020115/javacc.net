@@ -4,26 +4,25 @@ public class Token
 {
     public class GTToken : Token
     {
-        internal int realKind;
+        public int RealKind { get; protected internal set; }
         public GTToken(int i, string str)
             : base(i, str)
         {
-            realKind = 132;
+            RealKind = 132;
         }
     }
 
-    public int kind;
+    public int Kind;
     public int BeginLine;
     public int BeginColumn;
-    public int endLine;
-    public int endColumn;
-    public string image;
-    public Token next;
-    public Token specialToken;
+    public int EndLine;
+    public int EndColumn;
+    public string Image;
+    public Token Next;
+    public Token SpecialToken;
 
     public Token() { }
-
-    public static Token NewToken(int i, string str)
+    public static Token NewToken(int i, string str = null)
     {
         switch (i)
         {
@@ -41,19 +40,14 @@ public class Token
     }
 
 
-    public Token(int i, string str)
+    public Token(int i, string str = null)
     {
-        kind = i;
-        image = str;
+        Kind = i;
+        Image = str;
     }
 
-    public virtual object Value() => null;
+    public virtual object Value => null;
 
+    public override string ToString() => Image;
 
-    public Token(int i)
-        : this(i, null) { }
-
-    public override string ToString() => image;
-
-    public static Token NewToken(int i) => NewToken(i, null);
 }

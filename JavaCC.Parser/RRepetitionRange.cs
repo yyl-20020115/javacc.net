@@ -30,7 +30,7 @@ public class RRepetitionRange : RegularExpression
         if (hasMax && max == -1)
         {
             RZeroOrMore rZeroOrMore = new RZeroOrMore();
-            rZeroOrMore.regexpr = regexpr;
+            rZeroOrMore.Regexpr = regexpr;
             vector.Add(rZeroOrMore);
         }
         while (true)

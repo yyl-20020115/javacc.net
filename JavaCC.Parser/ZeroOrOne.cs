@@ -4,13 +4,13 @@ using System.Text;
 
 public class ZeroOrOne : Expansion
 {
-    public Expansion expansion;
+    public Expansion Expansion;
 
     public ZeroOrOne(Token t, Expansion e)
     {
         Line = t.BeginLine;
         Column = t.BeginColumn;
-        expansion = e;
+        Expansion = e;
         e.parent = this;
     }
 
@@ -23,7 +23,7 @@ public class ZeroOrOne : Expansion
             return stringBuilder;
         }
         s.Add(this);
-        stringBuilder.Append(Expansion.EOL).Append(expansion.Dump(i + 1, s));
+        stringBuilder.Append(Expansion.EOL).Append(Expansion.Dump(i + 1, s));
         return stringBuilder;
     }
 

@@ -1,12 +1,12 @@
 namespace JavaCC.JJTree;
 public class ASTJavacodeBody : JJTreeNode
 {
-    internal NodeScope nodeScope;
-    internal ASTJavacodeBody(int id) : base(id) { }
+    public NodeScope NodeScope { get; protected internal set; }
+    public ASTJavacodeBody(int id) : base(id) { }
 
     public override void Write(IO io)
     {
-        if (nodeScope.IsVoid)
+        if (NodeScope.IsVoid)
         {
             base.Write(io);
             return;
@@ -17,9 +17,9 @@ public class ASTJavacodeBody : JJTreeNode
         {
             text += " ";
         }
-        JJTreeNode.OpenJJTreeComment(io, nodeScope.NodeDescriptorText);
+        OpenJJTreeComment(io, NodeScope.NodeDescriptorText);
         io.WriteLine();
-        nodeScope.InsertOpenNodeCode(io, text);
-        nodeScope.TryTokenSequence(io, text, firstToken, LastToken);
+        NodeScope.InsertOpenNodeCode(io, text);
+        NodeScope.TryTokenSequence(io, text, firstToken, LastToken);
     }
 }

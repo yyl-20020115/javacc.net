@@ -4,10 +4,9 @@ using System.Collections.Generic;
 
 public class Semanticize : JavaCCGlobals
 {
-    internal class EmptyChecker : JavaCCGlobals, TreeWalkerOp
+    public class EmptyChecker : JavaCCGlobals, TreeWalkerOp
     {
-
-        internal EmptyChecker()
+        public EmptyChecker()
         {
         }
 
@@ -25,12 +24,12 @@ public class Semanticize : JavaCCGlobals
             }
             else if (exp is ZeroOrMore z)
             {
-                if (EmptyExpansionExists(z.expansion))
+                if (EmptyExpansionExists(z.Expansion))
                 {
                     JavaCCErrors.Semantic_Error(exp, "Expansion within \"(...)*\" can be matched by empty string.");
                 }
             }
-            else if (exp is ZeroOrOne t && EmptyExpansionExists(t.expansion))
+            else if (exp is ZeroOrOne t && EmptyExpansionExists(t.Expansion))
             {
                 JavaCCErrors.Semantic_Error(exp, "Expansion within \"(...)?\" can be matched by empty string.");
             }
@@ -38,18 +37,15 @@ public class Semanticize : JavaCCGlobals
     }
 
 
-    internal class FixRJustNames : JavaCCGlobals, TreeWalkerOp
+    public class FixRJustNames : JavaCCGlobals, TreeWalkerOp
     {
-        public RegularExpression root;
+        public RegularExpression Root;
 
         internal FixRJustNames()
         {
         }
 
-        public virtual bool GoDeeper(Expansion exp)
-        {
-            return true;
-        }
+        public virtual bool GoDeeper(Expansion exp) => true;
 
 
         public virtual void Action(Expansion exp)
@@ -62,14 +58,14 @@ public class Semanticize : JavaCCGlobals
                         );
                     return;
                 }
-                if (rJustName == root && !rJustName.tpContext.isExplicit && regularExpression.private_rexp)
+                if (rJustName == Root && !rJustName.tpContext.isExplicit && regularExpression.private_rexp)
                 {
                     JavaCCErrors.Semantic_Error(exp, ("Token name \"") + (rJustName.label) + ("\" refers to a private ")
                         + ("(with a #) regular expression.")
                         );
                     return;
                 }
-                if (rJustName == root && !rJustName.tpContext.isExplicit && regularExpression.tpContext.Kind != 0)
+                if (rJustName == Root && !rJustName.tpContext.isExplicit && regularExpression.tpContext.Kind != 0)
                 {
                     JavaCCErrors.Semantic_Error(exp, ("Token name \"") + (rJustName.label) + ("\" refers to a non-token ")
                         + ("(SKIP, MORE, IGNORE_IN_BNF) regular expression.")
@@ -84,37 +80,24 @@ public class Semanticize : JavaCCGlobals
     }
 
 
-    internal class LookaheadChecker : JavaCCGlobals, TreeWalkerOp
+    public class LookaheadChecker : JavaCCGlobals, TreeWalkerOp
     {
 
-        internal LookaheadChecker()
+        public LookaheadChecker()
         {
         }
 
 
-        internal static bool ImplicitLA(Expansion exp)
-        {
-            if (exp is not Sequence)
-            {
-                return true;
-            }
-            Sequence sequence = (Sequence)exp;
-            object obj = sequence.Units[0];
-            if (obj is not Lookahead)
-            {
-                return true;
-            }
-            Lookahead lookahead = (Lookahead)obj;
-            return (!lookahead.isExplicit) ? true : false;
-        }
+        internal static bool ImplicitLA(Expansion exp) 
+            => exp is not Sequence sequence || sequence.Units[0] is not Lookahead lookahead || !lookahead.IsExplicit;
 
-        public virtual bool GoDeeper(Expansion P_0)
+        public virtual bool GoDeeper(Expansion exp)
         {
-            if (P_0 is RegularExpression)
+            if (exp is RegularExpression)
             {
                 return false;
             }
-            if (P_0 is Lookahead)
+            if (exp is Lookahead)
             {
                 return false;
             }
@@ -140,35 +123,27 @@ public class Semanticize : JavaCCGlobals
             }
             else if (exp is ZeroOrMore zeroOrMore)
             {
-                if (Options.ForceLaCheck || (ImplicitLA(zeroOrMore.expansion) && Options.Lookahead == 1))
+                if (Options.ForceLaCheck || (ImplicitLA(zeroOrMore.Expansion) && Options.Lookahead == 1))
                 {
-                    LookaheadCalc.EBNFCalc(zeroOrMore, zeroOrMore.expansion);
+                    LookaheadCalc.EBNFCalc(zeroOrMore, zeroOrMore.Expansion);
                 }
             }
             else if (exp is ZeroOrOne)
             {
                 ZeroOrOne zeroOrOne = (ZeroOrOne)exp;
-                if (Options.ForceLaCheck || (ImplicitLA(zeroOrOne.expansion) && Options.Lookahead == 1))
+                if (Options.ForceLaCheck || (ImplicitLA(zeroOrOne.Expansion) && Options.Lookahead == 1))
                 {
-                    LookaheadCalc.EBNFCalc(zeroOrOne, zeroOrOne.expansion);
+                    LookaheadCalc.EBNFCalc(zeroOrOne, zeroOrOne.Expansion);
                 }
             }
         }
 
-
-        static LookaheadChecker()
-        {
-
-        }
     }
 
 
-    internal class LookaheadFixer : JavaCCGlobals, TreeWalkerOp
+    public class LookaheadFixer : JavaCCGlobals, TreeWalkerOp
     {
-
-
-
-        internal LookaheadFixer()
+        public LookaheadFixer()
         {
         }
 
@@ -183,7 +158,7 @@ public class Semanticize : JavaCCGlobals
             }
             Sequence sequence = (Sequence)exp;
             Lookahead lookahead = (Lookahead)sequence.Units[0];
-            if (!lookahead.isExplicit)
+            if (!lookahead.IsExplicit)
             {
                 return;
             }
@@ -220,11 +195,13 @@ public class Semanticize : JavaCCGlobals
                     JavaCCErrors.Warning(lookahead, "Encountered LOOKAHEAD(...) at a non-choice location.  This will be ignored.");
                 }
             }
-            Lookahead lookahead2 = new();
-            lookahead2.isExplicit = false;
-            lookahead2.Line = lookahead.Line;
-            lookahead2.Column = lookahead.Column;
-            lookahead2.parent = sequence;
+            Lookahead lookahead2 = new()
+            {
+                IsExplicit = false,
+                Line = lookahead.Line,
+                Column = lookahead.Column,
+                parent = sequence
+            };
             lookahead.la_expansion = new REndOfFile();
             lookahead2.la_expansion = new REndOfFile();
             sequence.Units[0] = lookahead2;
@@ -282,9 +259,9 @@ public class Semanticize : JavaCCGlobals
         }
     }
 
-    internal static List<List<RegExprSpec>> removeList = new();
+    public static List<List<RegExprSpec>> removeList = new();
 
-    internal static List<RegExprSpec> itemList = new();
+    public static List<RegExprSpec> itemList = new();
 
     public static RegularExpression other;
 
@@ -343,7 +320,7 @@ public class Semanticize : JavaCCGlobals
         }
         if (e is TryBlock b)
         {
-            return EmptyExpansionExists(b.exp);
+            return EmptyExpansionExists(b.Expression);
         }
         return false;
     }
@@ -616,7 +593,7 @@ public class Semanticize : JavaCCGlobals
                 var respecs2 = tokenProduction2.Respecs;
                 foreach(var regExprSpec2 in respecs2)
                 {
-                    fixRJustNames.root = regExprSpec2.rexp;
+                    fixRJustNames.Root = regExprSpec2.rexp;
                     ExpansionTreeWalker.PreOrderWalk(regExprSpec2.rexp, fixRJustNames);
                     if (regExprSpec2.rexp is RJustName)
                     {
@@ -825,11 +802,11 @@ public class Semanticize : JavaCCGlobals
         }
         else if (npright is ZeroOrMore)
         {
-            AddLeftMost(npleft, ((ZeroOrMore)npright).expansion);
+            AddLeftMost(npleft, ((ZeroOrMore)npright).Expansion);
         }
         else if (npright is ZeroOrOne)
         {
-            AddLeftMost(npleft, ((ZeroOrOne)npright).expansion);
+            AddLeftMost(npleft, ((ZeroOrOne)npright).Expansion);
         }
         else if (npright is Choice pc)
         {
@@ -851,7 +828,7 @@ public class Semanticize : JavaCCGlobals
         }
         else if (npright is TryBlock)
         {
-            AddLeftMost(npleft, ((TryBlock)npright).exp);
+            AddLeftMost(npleft, ((TryBlock)npright).Expression);
         }
     }
 
@@ -960,7 +937,7 @@ public class Semanticize : JavaCCGlobals
             }
             if (exp is RZeroOrMore more1)
             {
-                return RExpWalk(more1.regexpr);
+                return RExpWalk(more1.Regexpr);
             }
             if (exp is RZeroOrOne one)
             {
@@ -977,12 +954,5 @@ public class Semanticize : JavaCCGlobals
 
     public Semanticize()
     {
-    }
-
-    static Semanticize()
-    {
-
-        removeList = new();
-        itemList = new();
     }
 }

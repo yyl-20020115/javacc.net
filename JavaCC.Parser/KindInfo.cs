@@ -1,13 +1,13 @@
 namespace JavaCC.Parser;
 
-internal class KindInfo
+public class KindInfo
 {
-    internal long[] validKinds;
-    internal long[] finalKinds;
-    internal int validKindCnt;
-    internal int finalKindCnt;
+    public long[] validKinds;
+    public long[] finalKinds;
+    public int validKindCnt;
+    public int finalKindCnt;
 
-    internal KindInfo(int length)
+    public KindInfo(int length)
     {
         validKindCnt = 0;
         finalKindCnt = 0;

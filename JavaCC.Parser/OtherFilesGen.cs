@@ -49,11 +49,11 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 		vector.Add("JavaCC");
 		ostr.WriteLine(("/* ")+(JavaCCGlobals.GetIdStringList(vector, (JavaCCGlobals.Cu_name)+("Constants.java")))+(" */")
 			);
-		if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).kind == 60)
+		if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
 		{
 			for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
 			{
-				if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).kind == 97)
+				if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
 				{
 					JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]);
 					for (int j = 0; j <= i; j++)

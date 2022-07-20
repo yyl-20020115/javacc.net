@@ -2,5 +2,5 @@ namespace JavaCC;
 
 public class Version
 {
-    public const string version = "4.1d1";
+    public const string Text = "4.1d1";
 }

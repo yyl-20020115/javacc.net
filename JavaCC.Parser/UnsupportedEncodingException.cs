@@ -1,7 +1,7 @@
 ﻿namespace JavaCC.Parser;
 using System;
 
-internal class UnsupportedEncodingException : Exception
+public class UnsupportedEncodingException : Exception
 {
     public UnsupportedEncodingException()
     {

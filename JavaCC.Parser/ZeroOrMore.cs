@@ -4,14 +4,14 @@ using System.Text;
 
 public class ZeroOrMore : Expansion
 {
-    public Expansion expansion;
+    public Expansion Expansion;
 
     public ZeroOrMore(Token t, Expansion e)
     {
         Line = t.BeginLine;
         Column = t.BeginColumn;
-        expansion = e;
-        expansion.parent = this;
+        Expansion = e;
+        Expansion.parent = this;
     }
 
     public ZeroOrMore() { }
@@ -24,7 +24,7 @@ public class ZeroOrMore : Expansion
             return stringBuilder;
         }
         s.Add(this);
-        stringBuilder.Append(Expansion.EOL).Append(expansion.Dump(i + 1, s));
+        stringBuilder.Append(Expansion.EOL).Append(Expansion.Dump(i + 1, s));
         return stringBuilder;
     }
 

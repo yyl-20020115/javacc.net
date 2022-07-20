@@ -114,28 +114,28 @@ public class ParseException : System.Exception
 				stringBuilder.Append(eol).Append("    ");
 			}
 			string str = "Encountered \"";
-			Token next = currentToken.next;
+			Token next = currentToken.Next;
 			for (int k = 0; k < num; k++)
 			{
 				if (k != 0)
 				{
 					str = (str)+(" ");
 				}
-				if (next.kind == 0)
+				if (next.Kind == 0)
 				{
 					str = (str)+(tokenImage[0]);
 					break;
 				}
-				str = (str)+(" ")+(tokenImage[next.kind])
+				str = (str)+(" ")+(tokenImage[next.Kind])
 					;
 				str = (str)+(" \"");
-				str = (str)+(add_escapes(next.image));
+				str = (str)+(add_escapes(next.Image));
 				str = (str)+(" \"");
-				next = next.next;
+				next = next.Next;
 			}
-			str = (str)+("\" at line ")+(currentToken.next.BeginLine)
+			str = (str)+("\" at line ")+(currentToken.Next.BeginLine)
 				+(", column ")
-				+(currentToken.next.BeginColumn)
+				+(currentToken.Next.BeginColumn)
 				;
 			str = (str)+(".")+(eol)
 				;

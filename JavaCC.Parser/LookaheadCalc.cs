@@ -79,7 +79,7 @@ public class LookaheadCalc : JavaCCGlobals
         if (P_0 is Sequence sequence)
         {
             var obj = sequence.Units[0];
-            return obj is Lookahead lookahead && lookahead.isExplicit;
+            return obj is Lookahead lookahead && lookahead.IsExplicit;
         }
         return false;
     }

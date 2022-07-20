@@ -5,17 +5,17 @@ using System.Collections.Generic;
 
 public class HTMLGenerator : TextGenerator, Generator
 {
-    private Dictionary<string, string> idmap = new();
-    private int id = 1;
+    public readonly Dictionary<string, string> IdMap = new();
+    public int Id { get; protected internal set; } = 1;
 
     public override void Write(string str)
     {
-        writer.Write(str);
+        Writer.Write(str);
     }
 
     private void WriteLine(string str)
     {
-        writer.WriteLine(str);
+        Writer.WriteLine(str);
     }
 
     public override void ProductionStart(NormalProduction np)
@@ -27,7 +27,7 @@ public class HTMLGenerator : TextGenerator, Generator
             WriteLine(("<CAPTION><STRONG>") + (np.lhs) + ("</STRONG></CAPTION>"));
         }
         WriteLine("<TR>");
-        WriteLine(("<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME=\"") + (get_id(np.lhs)) + ("\">")
+        WriteLine(("<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME=\"") + (GetId(np.lhs)) + ("\">")
             + (np.lhs)
             + ("</A></TD>")
             );
@@ -45,12 +45,12 @@ public class HTMLGenerator : TextGenerator, Generator
         }
     }
 
-    protected internal virtual string get_id(string str)
+    protected internal virtual string GetId(string str)
     {
-        if (this.idmap.TryGetValue(str, out var text))
+        if (this.IdMap.TryGetValue(str, out var text))
         {
-            text = ("prod" + id++);
-            idmap.Add(str, text);
+            text = "prod" + Id++;
+            IdMap.Add(str, text);
         }
         return text;
     }
@@ -75,7 +75,7 @@ public class HTMLGenerator : TextGenerator, Generator
 
     public override void DocumentStart()
     {
-        writer = CreateOutputStream();
+        Writer = CreateOutputStream();
         WriteLine("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2//EN\">");
         WriteLine("<HTML>");
         WriteLine("<HEAD>");
@@ -113,7 +113,7 @@ public class HTMLGenerator : TextGenerator, Generator
     {
         WriteLine("</BODY>");
         WriteLine("</HTML>");
-        this.writer.Close();
+        this.Writer.Close();
     }
 
 
@@ -202,7 +202,7 @@ public class HTMLGenerator : TextGenerator, Generator
     {
         Write(
             ("<A HREF=\"#")
-            + (get_id(nt.name))
+            + (GetId(nt.name))
             + ("\">")
             );
     }

@@ -195,11 +195,11 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 return;
             }
             TextWriter printWriter = outputFile.PrintWriter;
-            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).kind == 60)
+            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
             {
                 for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
                 {
-                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).kind == 97)
+                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
                     {
                         JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginLine;
                         JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginColumn;
@@ -971,11 +971,11 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 return;
             }
             var printWriter = outputFile.PrintWriter;
-            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).kind == 60)
+            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
             {
                 for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
                 {
-                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).kind == 97)
+                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
                     {
                         JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginLine;
                         JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginColumn;
@@ -1575,11 +1575,11 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 return;
             }
             TextWriter printWriter = outputFile.PrintWriter;
-            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).kind == 60)
+            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
             {
                 for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
                 {
-                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).kind == 97)
+                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
                     {
                         JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginLine;
                         JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginColumn;
@@ -1729,11 +1729,11 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 return;
             }
             TextWriter printWriter = outputFile.PrintWriter;
-            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).kind == 60)
+            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
             {
                 for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
                 {
-                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).kind == 97)
+                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
                     {
                         JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginLine;
                         JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginColumn;
@@ -1971,11 +1971,11 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 return;
             }
             TextWriter printWriter = outputFile.PrintWriter;
-            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).kind == 60)
+            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
             {
                 for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
                 {
-                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).kind == 97)
+                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
                     {
                         JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginLine;
                         JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginColumn;
@@ -2157,11 +2157,11 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 return;
             }
             TextWriter printWriter = outputFile.PrintWriter;
-            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).kind == 60)
+            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
             {
                 for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
                 {
-                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).kind == 97)
+                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
                     {
                         JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginLine;
                         JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginColumn;
@@ -2334,11 +2334,11 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 return;
             }
             TextWriter printWriter = outputFile.PrintWriter;
-            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).kind == 60)
+            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
             {
                 for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
                 {
-                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).kind == 97)
+                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
                     {
                         JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginLine;
                         JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginColumn;

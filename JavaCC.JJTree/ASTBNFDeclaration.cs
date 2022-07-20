@@ -1,12 +1,12 @@
 namespace JavaCC.JJTree;
 public class ASTBNFDeclaration : JJTreeNode
 {
-    internal NodeScope nodeScope;
-    internal ASTBNFDeclaration(int id)
+    public NodeScope NodeScope;
+    public ASTBNFDeclaration(int id)
         : base(id) { }
     public override void Write(IO io)
     {
-        if (!nodeScope.IsVoid)
+        if (!NodeScope.IsVoid)
         {
             var text = "";
             if (TokenUtils.HasTokens(this))
@@ -20,10 +20,10 @@ public class ASTBNFDeclaration : JJTreeNode
             {
                 text = "  ";
             }
-            JJTreeNode.OpenJJTreeComment(io, nodeScope.NodeDescriptorText);
+            OpenJJTreeComment(io, NodeScope.NodeDescriptorText);
             io.WriteLine();
-            nodeScope.InsertOpenNodeCode(io, text);
-            JJTreeNode.CloseJJTreeComment(io);
+            NodeScope.InsertOpenNodeCode(io, text);
+            CloseJJTreeComment(io);
         }
         base.Write(io);
     }

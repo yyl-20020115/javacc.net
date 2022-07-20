@@ -230,7 +230,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     }
 
 
-    public void javacc_input()
+    public void JavaCC_Input()
     {
         JavaCCParserInternals.Initialize();
         javacc_options();
@@ -265,15 +265,15 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         Token token = ((!lookingAhead) ? this.token : jj_scanpos);
         for (int j = 0; j < i; j++)
         {
-            if (token.next != null)
+            if (token.Next != null)
             {
-                token = token.next;
+                token = token.Next;
                 continue;
             }
             Token obj = token;
             Token nextToken = token_source.getNextToken();
             Token token2 = obj;
-            token2.next = nextToken;
+            token2.Next = nextToken;
             token = nextToken;
         }
         return token;
@@ -282,7 +282,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
     public void javacc_options()
     {
-        if (string.Equals(getToken(1).image, "options"))
+        if (string.Equals(getToken(1).Image, "options"))
         {
             jj_consume_token(140);
             jj_consume_token(93);
@@ -305,20 +305,20 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     private Token jj_consume_token(int P_0)
     {
         Token token;
-        if ((token = this.token).next != null)
+        if ((token = this.token).Next != null)
         {
-            this.token = this.token.next;
+            this.token = this.token.Next;
         }
         else
         {
             Token obj = this.token;
             Token nextToken = token_source.getNextToken();
             Token token2 = obj;
-            token2.next = nextToken;
+            token2.Next = nextToken;
             this.token = nextToken;
         }
         this.m_jj_ntk = -1;
-        if (this.token.kind == P_0)
+        if (this.token.Kind == P_0)
         {
             jj_gen++;
             int num = jj_gc + 1;
@@ -348,7 +348,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     public string identifier()
     {
         Token token = jj_consume_token(140);
-        return token.image;
+        return token.Image;
     }
 
 
@@ -420,7 +420,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
     private int jj_ntk()
     {
-        Token next = this.token.next;
+        Token next = this.token.Next;
         Token obj = next;
         jj_nt = next;
         int kind;
@@ -430,13 +430,13 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             next = token_source.getNextToken();
             Token token = obj2;
             Token obj3 = next;
-            token.next = next;
-            kind = obj3.kind;
+            token.Next = next;
+            kind = obj3.Kind;
             int result = kind;
             this.m_jj_ntk = kind;
             return result;
         }
-        kind = jj_nt.kind;
+        kind = jj_nt.Kind;
         int result2 = kind;
         this.m_jj_ntk = kind;
         return result2;
@@ -466,7 +466,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
                 throw new ParseException();
         }
-        string image = token.image;
+        string image = token.Image;
         jj_consume_token(100);
         switch ((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk())
         {
@@ -505,7 +505,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         jj_consume_token(80);
         try
         {
-            return int.TryParse(token.image, out var v) ? v : 0;
+            return int.TryParse(token.Image, out var v) ? v : 0;
         }
         catch
         {
@@ -538,7 +538,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     public string StringLiteral()
     {
         Token token = jj_consume_token(90);
-        string result = JavaCCParserInternals.RemoveEscapesAndQuotes(token, token.image);
+        string result = JavaCCParserInternals.RemoveEscapesAndQuotes(token, token.Image);
 
         return result;
     }
@@ -615,12 +615,12 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 jj_consume_token(101);
                 List<string> vector = new ();
                 token2 = jj_consume_token(140);
-                vector.Add(token2.image);
+                vector.Add(token2.Image);
                 while (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 98)
                 {
                     jj_consume_token(98);
                     token2 = jj_consume_token(140);
-                    vector.Add(token2.image);
+                    vector.Add(token2.Image);
                 }
                 jj_la1[11] = jj_gen;
                 jj_consume_token(132);
@@ -757,7 +757,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         }
         if (token != null)
         {
-            np.accessMod = token.image;
+            np.accessMod = token.Image;
         }
     }
 
@@ -796,7 +796,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             {
                 break;
             }
-            token3 = token3.next;
+            token3 = token3.Next;
         }
     }
 
@@ -822,7 +822,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         }
         Token token2 = getToken(0);
         jj_consume_token(92);
-        if (token2.next == token)
+        if (token2.Next == token)
         {
             return;
         }
@@ -834,7 +834,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             {
                 break;
             }
-            token3 = token3.next;
+            token3 = token3.Next;
         }
     }
 
@@ -857,7 +857,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             {
                 break;
             }
-            token3 = token3.next;
+            token3 = token3.Next;
         }
     }
 
@@ -875,7 +875,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                         jj_la1[142] = jj_gen;
                         Token token2 = getToken(0);
                         jj_consume_token(94);
-                        if (token2.next == token)
+                        if (token2.Next == token)
                         {
                             return;
                         }
@@ -887,7 +887,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                             {
                                 break;
                             }
-                            token3 = token3.next;
+                            token3 = token3.Next;
                         }
                         return;
                     }
@@ -1087,7 +1087,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             jj_consume_token(105);
             token = jj_consume_token(140);
-            regExprSpec.nextState = token.image;
+            regExprSpec.nextState = token.Image;
             if (regExprSpec.rexp.private_rexp)
             {
                 JavaCCErrors.Parse_Error(token, "Lexical state changes are not permitted after private (#) regular expressions.");
@@ -1116,7 +1116,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                         jj_la1[69] = jj_gen;
                         Token token2 = getToken(0);
                         jj_consume_token(94);
-                        if (token2.next == token)
+                        if (token2.Next == token)
                         {
                             return;
                         }
@@ -1128,7 +1128,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                             {
                                 break;
                             }
-                            token3 = token3.next;
+                            token3 = token3.Next;
                         }
                         return;
                     }
@@ -1260,7 +1260,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         lookahead.Column = token.BeginColumn;
         lookahead.amount = Options.Lookahead;
         lookahead.la_expansion = null;
-        lookahead.isExplicit = false;
+        lookahead.IsExplicit = false;
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 1)
         {
             token = jj_consume_token(1);
@@ -1296,7 +1296,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     public Lookahead local_lookahead()
     {
         Lookahead lookahead = new Lookahead();
-        lookahead.isExplicit = true;
+        lookahead.IsExplicit = true;
         Token token = getToken(1);
         lookahead.Line = token.BeginLine;
         lookahead.Column = token.BeginColumn;
@@ -1314,19 +1314,19 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             jj_la1[21] = jj_gen;
         }
-        if (num2 == 0 && getToken(1).kind != 92)
+        if (num2 == 0 && getToken(1).Kind != 92)
         {
             jj_consume_token(98);
             num = 1;
         }
-        if (getToken(1).kind != 92 && getToken(1).kind != 93)
+        if (getToken(1).Kind != 92 && getToken(1).Kind != 93)
         {
             expansion_choices(container);
             num2 = 0;
             num = 0;
             lookahead.la_expansion = (Expansion)container.member;
         }
-        if (num2 == 0 && num == 0 && getToken(1).kind != 92)
+        if (num2 == 0 && num == 0 && getToken(1).Kind != 92)
         {
             jj_consume_token(98);
             num = 1;
@@ -1470,7 +1470,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     {
                         break;
                     }
-                    obj = obj.next;
+                    obj = obj.Next;
                 }
             }
             if (jj_2_3(int.MaxValue))
@@ -1554,7 +1554,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     private bool notTailOfExpansionUnit()
     {
         Token token = getToken(1);
-        if (token.kind == 119 || token.kind == 98 || token.kind == 92 || token.kind == 94 || token.kind == 96)
+        if (token.Kind == 119 || token.Kind == 98 || token.Kind == 92 || token.Kind == 94 || token.Kind == 96)
         {
             return false;
         }
@@ -1580,7 +1580,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             {
                 break;
             }
-            token3 = token3.next;
+            token3 = token3.Next;
         }
     }
 
@@ -1764,7 +1764,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         }
         Token token2 = getToken(0);
         jj_consume_token(92);
-        if (token2.next == token)
+        if (token2.Next == token)
         {
             return;
         }
@@ -1776,7 +1776,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             {
                 break;
             }
-            token3 = token3.next;
+            token3 = token3.Next;
         }
     }
 
@@ -2110,10 +2110,12 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         }
         else
         {
-            SingleCharacter singleCharacter = new SingleCharacter();
-            singleCharacter.line = token.BeginLine;
-            singleCharacter.column = token.BeginColumn;
-            singleCharacter.ch = (char)num2;
+            var singleCharacter = new SingleCharacter()
+            {
+                Line = token.BeginLine,
+                Column = token.BeginColumn,
+                CH = (char)num2
+            };
             c.member = singleCharacter;
         }
     }
@@ -2418,7 +2420,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             jj_la1[56] = jj_gen;
         }
-        if (string.Equals(token.image, parser_class_name) && class_nesting == 1 && processing_cu)
+        if (string.Equals(token.Image, parser_class_name) && class_nesting == 1 && processing_cu)
         {
             num = 1;
             JavaCCParserInternals.SetInsertionPoint(getToken(1), 1);
@@ -3993,7 +3995,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 throw new ParseException();
         }
         Token token = getToken(0);
-        token.kind = 140;
+        token.Kind = 140;
         return token;
     }
 
@@ -4424,7 +4426,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
     public void RSIGNEDSHIFT()
     {
-        if (getToken(1).kind != 132 || ((Token.GTToken)getToken(1)).realKind != 131)
+        if (getToken(1).Kind != 132 || ((Token.GTToken)getToken(1)).RealKind != 131)
         {
             jj_consume_token(-1);
 
@@ -4476,7 +4478,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
     public void RUNSIGNEDSHIFT()
     {
-        if (getToken(1).kind != 132 || ((Token.GTToken)getToken(1)).realKind != 130)
+        if (getToken(1).Kind != 132 || ((Token.GTToken)getToken(1)).RealKind != 130)
         {
             jj_consume_token(-1);
 
@@ -6037,7 +6039,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         Token token = jj_consume_token(64);
         if (inAction)
         {
-            token.image = "{if (true) return";
+            token.Image = "{if (true) return";
             jumpPatched = true;
         }
         switch ((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk())
@@ -6089,7 +6091,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         token = jj_consume_token(97);
         if (inAction)
         {
-            token.image = ";}";
+            token.Image = ";}";
         }
     }
 
@@ -6099,14 +6101,14 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         Token token = jj_consume_token(72);
         if (inAction)
         {
-            token.image = "{if (true) throw";
+            token.Image = "{if (true) throw";
             jumpPatched = true;
         }
         Expression(new());
         token = jj_consume_token(97);
         if (inAction)
         {
-            token.image = ";}";
+            token.Image = ";}";
         }
     }
 
@@ -7774,13 +7776,13 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         if (jj_scanpos == jj_lastpos)
         {
             jj_la--;
-            if (jj_scanpos.next == null)
+            if (jj_scanpos.Next == null)
             {
                 Token obj = jj_scanpos;
                 Token nextToken = token_source.getNextToken();
                 Token token = obj;
                 Token obj2 = nextToken;
-                token.next = nextToken;
+                token.Next = nextToken;
                 nextToken = obj2;
                 Token obj3 = nextToken;
                 jj_scanpos = nextToken;
@@ -7788,7 +7790,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             }
             else
             {
-                Token nextToken = jj_scanpos.next;
+                Token nextToken = jj_scanpos.Next;
                 Token obj4 = nextToken;
                 jj_scanpos = nextToken;
                 jj_lastpos = obj4;
@@ -7796,7 +7798,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         }
         else
         {
-            jj_scanpos = jj_scanpos.next;
+            jj_scanpos = jj_scanpos.Next;
         }
         if (jj_rescan)
         {
@@ -7805,14 +7807,14 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             while (next != null && next != jj_scanpos)
             {
                 num++;
-                next = next.next;
+                next = next.Next;
             }
             if (next != null)
             {
                 jj_add_error_token(P_0, num);
             }
         }
-        if (jj_scanpos.kind != P_0)
+        if (jj_scanpos.Kind != P_0)
         {
             return true;
         }
@@ -9118,7 +9120,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     private bool jj_3R_93()
     {
         lookingAhead = true;
-        jj_semLA = ((getToken(1).kind == 132 && ((Token.GTToken)getToken(1)).realKind == 130) ? true : false);
+        jj_semLA = ((getToken(1).Kind == 132 && ((Token.GTToken)getToken(1)).RealKind == 130) ? true : false);
         lookingAhead = false;
         if (!jj_semLA || jj_3R_124())
         {
@@ -9229,7 +9231,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     private bool jj_3R_92()
     {
         lookingAhead = true;
-        jj_semLA = ((getToken(1).kind == 132 && ((Token.GTToken)getToken(1)).realKind == 131) ? true : false);
+        jj_semLA = ((getToken(1).Kind == 132 && ((Token.GTToken)getToken(1)).RealKind == 131) ? true : false);
         lookingAhead = false;
         if (!jj_semLA || jj_3R_123())
         {
@@ -12981,16 +12983,16 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
     public Token getNextToken()
     {
-        if (this.token.next != null)
+        if (this.token.Next != null)
         {
-            this.token = this.token.next;
+            this.token = this.token.Next;
         }
         else
         {
             Token obj = this.token;
             Token nextToken = token_source.getNextToken();
             Token token = obj;
-            token.next = nextToken;
+            token.Next = nextToken;
             this.token = nextToken;
         }
         this.m_jj_ntk = -1;

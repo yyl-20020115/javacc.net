@@ -992,7 +992,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
                                     jjtree.CloseNodeScope(aSTJavacodeBody, b: true);
                                     num2 = 0;
                                     jjtreeCloseNodeScope(aSTJavacodeBody);
-                                    aSTJavacodeBody.nodeScope = new NodeScope(aSTJavacode2, aSTNodeDescriptor);
+                                    aSTJavacodeBody.NodeScope = new NodeScope(aSTJavacode2, aSTNodeDescriptor);
                                     goto end_IL_015f;
                                 case 1:
                                 case 2:
@@ -1534,7 +1534,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
                                     jjtree.CloseNodeScope(aSTBNFDeclaration, b: true);
                                     num2 = 0;
                                     jjtreeCloseNodeScope(aSTBNFDeclaration);
-                                    aSTBNFDeclaration.nodeScope = node_scope;
+                                    aSTBNFDeclaration.NodeScope = node_scope;
                                     goto end_IL_016d;
                                 case 1:
                                 case 2:
@@ -1718,8 +1718,8 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
                         jjtree.CloseNodeScope(aSTBNFNodeScope, b: true);
                         num3 = 0;
                         jjtreeCloseNodeScope(aSTBNFNodeScope);
-                        aSTBNFNodeScope.nodeScope = node_scope;
-                        aSTBNFNodeScope.expUnit = jJTreeNode;
+                        aSTBNFNodeScope.NodeScope = node_scope;
+                        aSTBNFNodeScope.ExpUnit = jJTreeNode;
                     }
                     catch (System.Exception x6)
                     {
@@ -2145,14 +2145,14 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
                     if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 126)
                     {
                         jj_consume_token(126);
-                        aSTNodeDescriptor.isGT = true;
+                        aSTNodeDescriptor.IsGT = true;
                     }
                     else
                     {
                         jj_la1[49] = jj_gen;
                     }
                     node_descriptor_expression();
-                    aSTNodeDescriptor.expression = (ASTNodeDescriptorExpression)jjtree.PeekNode;
+                    aSTNodeDescriptor.Expression = (ASTNodeDescriptorExpression)jjtree.PeekNode;
                     jj_consume_token(86);
                 }
                 else
@@ -3075,8 +3075,8 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
                             jjtreeCloseNodeScope(aSTExpansionNodeScope);
                             if (jjtree.NodeCreated)
                             {
-                                aSTExpansionNodeScope.nodeScope = new NodeScope(astp, aSTNodeDescriptor);
-                                aSTExpansionNodeScope.expUnit = jJTreeNode;
+                                aSTExpansionNodeScope.NodeScope = new NodeScope(astp, aSTNodeDescriptor);
+                                aSTExpansionNodeScope.ExpUnit = jJTreeNode;
                             }
                         }
                         catch (System.Exception x5)

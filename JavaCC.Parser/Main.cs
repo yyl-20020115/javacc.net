@@ -98,7 +98,7 @@ public static class EntryPoint
                 JavaCCGlobals.FileName = (JavaCCGlobals.OrigFileName = strarr[strarr.Length - 1]);
                 JavaCCGlobals.jjtreeGenerated = JavaCCGlobals.IsGeneratedBy("JJTree", strarr[strarr.Length - 1]);
                 JavaCCGlobals.ToolNames = JavaCCGlobals.GetToolNames(strarr[strarr.Length - 1]);
-                javaCCParser.javacc_input();
+                javaCCParser.JavaCC_Input();
                 JavaCCGlobals.CreateOutputDir(Options.OutputDirectory);
                 if (Options.UnicodeInput)
                 {

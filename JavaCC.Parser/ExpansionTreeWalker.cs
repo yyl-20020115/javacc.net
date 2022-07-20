@@ -29,11 +29,11 @@ public sealed class ExpansionTreeWalker
         }
         else if (exp is ZeroOrMore o)
         {
-            PreOrderWalk(o.expansion, tree);
+            PreOrderWalk(o.Expansion, tree);
         }
         else if (exp is ZeroOrOne m)
         {
-            PreOrderWalk(m.expansion, tree);
+            PreOrderWalk(m.Expansion, tree);
         }
         else if (exp is Lookahead l)
         {
@@ -45,7 +45,7 @@ public sealed class ExpansionTreeWalker
         }
         else if (exp is TryBlock b)
         {
-            PreOrderWalk(b.exp, tree);
+            PreOrderWalk(b.Expression, tree);
         }
         else if (exp is RChoice r)
         {
@@ -67,7 +67,7 @@ public sealed class ExpansionTreeWalker
         }
         else if (exp is RZeroOrMore rz)
         {
-            PreOrderWalk(((RZeroOrMore)exp).regexpr, tree);
+            PreOrderWalk(((RZeroOrMore)exp).Regexpr, tree);
         }
         else if (exp is RZeroOrOne rm)
         {
@@ -104,11 +104,11 @@ public sealed class ExpansionTreeWalker
             }
             else if (exp is ZeroOrMore z)
             {
-                postOrderWalk(((ZeroOrMore)exp).expansion, walker);
+                postOrderWalk(((ZeroOrMore)exp).Expansion, walker);
             }
             else if (exp is ZeroOrOne m)
             {
-                postOrderWalk(((ZeroOrOne)exp).expansion, walker);
+                postOrderWalk(((ZeroOrOne)exp).Expansion, walker);
             }
             else if (exp is Lookahead l)
             {
@@ -120,7 +120,7 @@ public sealed class ExpansionTreeWalker
             }
             else if (exp is TryBlock b)
             {
-                postOrderWalk(((TryBlock)exp).exp, walker);
+                postOrderWalk(((TryBlock)exp).Expression, walker);
             }
             else if (exp is RChoice rc)
             {
@@ -142,7 +142,7 @@ public sealed class ExpansionTreeWalker
             }
             else if (exp is RZeroOrMore rz)
             {
-                postOrderWalk(((RZeroOrMore)exp).regexpr, walker);
+                postOrderWalk(((RZeroOrMore)exp).Regexpr, walker);
             }
             else if (exp is RZeroOrOne rm)
             {

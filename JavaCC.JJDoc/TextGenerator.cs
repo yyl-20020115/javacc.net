@@ -6,11 +6,11 @@ using JavaCC.Parser;
 
 public class TextGenerator : Generator
 {
-    protected internal TextWriter writer;
+    public TextWriter Writer { get; protected internal set; }
 
     public virtual void Write(string str)
     {
-        writer.Write(str);
+        Writer.Write(str);
     }
 
     protected internal virtual TextWriter CreateOutputStream()
@@ -21,26 +21,26 @@ public class TextGenerator : Generator
             {
                 return (Console.Out);
             }
-            string text = ".html";
+            var text = ".html";
             if (JJDocOptions.Text)
             {
                 text = ".txt";
             }
-            int num = JJDocGlobals.InputFile.LastIndexOf((char)46);
-            if (num == -1)
+            var i = JJDocGlobals.InputFile.LastIndexOf('.');
+            if (i == -1)
             {
                 JJDocGlobals.OutputFile = (JJDocGlobals.InputFile) + (text);
             }
             else
             {
-                string @this = JJDocGlobals.InputFile.Substring(num);
-                if (string.Equals(@this, text))
+                var s = JJDocGlobals.InputFile.Substring(i);
+                if (string.Equals(s, text))
                 {
                     JJDocGlobals.OutputFile = (JJDocGlobals.InputFile) + (text);
                 }
                 else
                 {
-                    JJDocGlobals.OutputFile = (JJDocGlobals.InputFile.Substring(0, num)) + text;
+                    JJDocGlobals.OutputFile = (JJDocGlobals.InputFile.Substring(0, i)) + text;
                 }
             }
         }
@@ -50,22 +50,16 @@ public class TextGenerator : Generator
         }
         try
         {
-            writer = new StreamWriter(JJDocGlobals.OutputFile);
+            Writer = new StreamWriter(JJDocGlobals.OutputFile);
         }
         catch (IOException)
         {
-            goto IL_00ff;
+            Error(("JJDoc: can't open output stream on file ")
+                + (JJDocGlobals.OutputFile)
+                + (".  Using standard output."));
+            Writer = (Console.Out);
         }
-        goto IL_0148;
-    IL_0148:
-        return writer;
-    IL_00ff:
-
-        Error(("JJDoc: can't open output stream on file ")
-            + (JJDocGlobals.OutputFile)
-            + (".  Using standard output."));
-        writer = (Console.Out);
-        goto IL_0148;
+        return Writer;
     }
 
 
@@ -76,12 +70,12 @@ public class TextGenerator : Generator
 
     public virtual void ProductionStart(NormalProduction np)
     {
-        writer.Write(("\t") + (np.lhs) + ("\t:=\t"));
+        Writer.Write(("\t") + (np.lhs) + ("\t:=\t"));
     }
 
     public virtual void ProductionEnd(NormalProduction np)
     {
-        writer.WriteLine();
+        Writer.WriteLine();
     }
 
     public virtual void Error(string str)
@@ -93,19 +87,19 @@ public class TextGenerator : Generator
 
     public virtual void DocumentStart()
     {
-        writer = CreateOutputStream();
-        writer.Write("\nDOCUMENT START\n");
+        Writer = CreateOutputStream();
+        Writer.Write("\nDOCUMENT START\n");
     }
 
     public virtual void DocumentEnd()
     {
-        writer.Write("\nDOCUMENT END\n");
-        writer.Close();
+        Writer.Write("\nDOCUMENT END\n");
+        Writer.Close();
     }
 
     public virtual void SpecialTokens(string str)
     {
-        writer.Write(str);
+        Writer.Write(str);
     }
 
     public virtual void TokenStart(TokenProduction tp)
@@ -144,7 +138,7 @@ public class TextGenerator : Generator
     {
         if (!b)
         {
-            writer.Write("\n\t\t|\t");
+            Writer.Write("\n\t\t|\t");
         }
     }
 

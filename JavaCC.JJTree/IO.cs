@@ -11,10 +11,10 @@ public class IO
     private TextWriter writer;
     private TextWriter message;
     private TextWriter error;
-    internal virtual void Write(string text) => writer.Write(text);
-    internal virtual void WriteLine() => writer.WriteLine();
-    internal virtual void WriteLine(string text) => writer.WriteLine(text);
-    private string CreateOutputFileName(string _text)
+    public virtual void Write(string text) => writer.Write(text);
+    public virtual void WriteLine() => writer.WriteLine();
+    public virtual void WriteLine(string text) => writer.WriteLine(text);
+    public string CreateOutputFileName(string _text)
     {
         string text = JJTreeOptions.OutputFile;
         if (string.Equals(text, ""))
@@ -24,7 +24,7 @@ public class IO
             {
                 _text = _text.Substring(num + 1);
             }
-            int num2 = (_text.LastIndexOf((char)46));
+            int num2 = (_text.LastIndexOf('.'));
             if (num2 == -1)
             {
                 text += ".jj";
@@ -39,20 +39,20 @@ public class IO
         }
         return text;
     }
-    internal IO()
+    public IO()
     {
         ifn = "<uninitialized input>";
         message = Console.Out;
         error = Console.Error;
     }
 
-    internal virtual TextWriter Out => writer;
-    internal virtual string OutputFileName => ofn;
-    internal virtual string InputFileName => ifn;
-    internal virtual TextReader In => reader;
-    internal virtual TextWriter Msg => message;
-    internal virtual TextWriter Err => error;
-    internal virtual void CloseAll()
+    public virtual TextWriter Out => writer;
+    public virtual string OutputFileName => ofn;
+    public virtual string InputFileName => ifn;
+    public virtual TextReader In => reader;
+    public virtual TextWriter Msg => message;
+    public virtual TextWriter Err => error;
+    public virtual void CloseAll()
     {
         if (writer != null)
         {
@@ -67,7 +67,7 @@ public class IO
             error.Flush();
         }
     }
-    internal virtual void SetInput(string path)
+    public virtual void SetInput(string path)
     {
         NullReferenceException ex2;
         IOException ex5;

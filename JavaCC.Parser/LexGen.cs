@@ -111,14 +111,14 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
             int i = 1;
             while (JavaCCGlobals.Cu_to_insertion_point_1.Count > num)
             {
-                int kind = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[num]).kind;
+                int kind = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[num]).Kind;
                 if (kind != 60 && kind != 52)
                 {
                     break;
                 }
                 for (; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
                 {
-                    kind = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).kind;
+                    kind = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind;
                     if (kind == 97 || kind == 27 || kind == 45 || kind == 63 || kind == 35 || kind == 55)
                     {
                         JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[num]).BeginLine;
@@ -161,9 +161,9 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
             for (int j = 0; j < JavaCCGlobals.token_mgr_decls.Count; j++)
             {
                 Token token = (Token)JavaCCGlobals.token_mgr_decls[j];
-                if (token.kind == 140 && num != 0 && num2 == 0)
+                if (token.Kind == 140 && num != 0 && num2 == 0)
                 {
-                    num2 = (string.Equals(token.image, "CommonTokenAction") ? 1 : 0);
+                    num2 = (string.Equals(token.Image, "CommonTokenAction") ? 1 : 0);
                 }
                 JavaCCGlobals.PrintToken(token, writer);
             }

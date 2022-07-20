@@ -1,23 +1,24 @@
 namespace JavaCC.Parser;
 using JavaCC.NET;
+using System;
 using System.Text;
 
-public class TokenMgrError : System.Exception
+public class TokenMgrError : Exception
 {
-    internal const int LEXICAL_ERROR = 0;
+    public const int LEXICAL_ERROR = 0;
 
-    internal const int STATIC_LEXER_ERROR = 1;
+    public const int STATIC_LEXER_ERROR = 1;
 
-    internal const int INVALID_LEXICAL_STATE = 2;
+    public const int INVALID_LEXICAL_STATE = 2;
 
-    internal const int LOOP_DETECTED = 3;
+    public const int LOOP_DETECTED = 3;
 
-    internal int errorCode;
+    public readonly int ErrorCode;
 
     public TokenMgrError(string str, int i)
         : base(str)
     {
-        errorCode = i;
+        ErrorCode = i;
     }
 
 
@@ -29,57 +30,55 @@ public class TokenMgrError : System.Exception
 
     protected internal static string addEscapes(string str)
     {
-        var stringBuilder = new StringBuilder();
+        var builder = new StringBuilder();
         for (int i = 0; i < str.Length; i++)
         {
             switch (str[i])
             {
                 case '\b':
-                    stringBuilder.Append("\\b");
+                    builder.Append("\\b");
                     continue;
                 case '\t':
-                    stringBuilder.Append("\\t");
+                    builder.Append("\\t");
                     continue;
                 case '\n':
-                    stringBuilder.Append("\\n");
+                    builder.Append("\\n");
                     continue;
                 case '\f':
-                    stringBuilder.Append("\\f");
+                    builder.Append("\\f");
                     continue;
                 case '\r':
-                    stringBuilder.Append("\\r");
+                    builder.Append("\\r");
                     continue;
                 case '"':
-                    stringBuilder.Append("\\\"");
+                    builder.Append("\\\"");
                     continue;
                 case '\'':
-                    stringBuilder.Append("\\'");
+                    builder.Append("\\'");
                     continue;
                 case '\\':
-                    stringBuilder.Append("\\\\");
+                    builder.Append("\\\\");
                     continue;
                 case '\0':
                     continue;
             }
-            int num;
-            if ((num = str[i]) < 32 || num > 126)
+            int ch;
+            if ((ch = str[i]) < 32 || ch > 126)
             {
-                string @this = ("0000") + (Utils.ToString(num, 16));
-                stringBuilder.Append(("\\u") + (
+                var @this = ("0000") + (Utils.ToString(ch, 16));
+                builder.Append(("\\u") + (
                     @this.Substring(@this.Length - 4, @this.Length)));
             }
             else
             {
-                stringBuilder.Append((char)num);
+                builder.Append((char)ch);
             }
         }
-        return stringBuilder.ToString();
+        return builder.ToString();
     }
 
 
-    protected internal static string LexicalError(bool b, int i1, int i2, int i3, string str, char ch)
-    {
-        return ("Lexical error at line ") + (i2) + (", column ")
+    protected internal static string LexicalError(bool b, int i1, int i2, int i3, string str, char ch) => "Lexical error at line " + i2 + ", column "
             + (i3)
             + (".  Encountered: ")
             + ((!b) ? ("\"") + (
@@ -93,7 +92,6 @@ public class TokenMgrError : System.Exception
             + (addEscapes(str))
             + ("\"")
             ;
-    }
 
     public TokenMgrError()
     {

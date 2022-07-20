@@ -80,7 +80,7 @@ public class ParseEngine : JavaCCGlobals
             for (int i = 0; i < sequence.Units.Count; i++)
             {
                 Expansion[] array = (Expansion[])sequence.Units.ToArray();
-                if (array[i] is Lookahead && ((Lookahead)array[i]).isExplicit)
+                if (array[i] is Lookahead && ((Lookahead)array[i]).IsExplicit)
                 {
                     return false;
                 }
@@ -104,19 +104,19 @@ public class ParseEngine : JavaCCGlobals
         if (P_0 is ZeroOrMore)
 		{
 			ZeroOrMore zeroOrMore = (ZeroOrMore)P_0;
-			bool result3 = javaCodeCheck(zeroOrMore.expansion);
+			bool result3 = javaCodeCheck(zeroOrMore.Expansion);
 			
 			return result3;
 		}
         if (P_0 is ZeroOrOne zeroOrOne)
         {
-            bool result4 = javaCodeCheck(zeroOrOne.expansion);
+            bool result4 = javaCodeCheck(zeroOrOne.Expansion);
 
             return result4;
         }
         if (P_0 is TryBlock tryBlock)
         {
-            bool result5 = javaCodeCheck(tryBlock.exp);
+            bool result5 = javaCodeCheck(tryBlock.Expression);
 
             return result5;
         }
@@ -182,17 +182,17 @@ public class ParseEngine : JavaCCGlobals
 		else if (exp is ZeroOrMore)
 		{
 			ZeroOrMore zeroOrMore = (ZeroOrMore)exp;
-			GenFirstSet(zeroOrMore.expansion);
+			GenFirstSet(zeroOrMore.Expansion);
 		}
 		else if (exp is ZeroOrOne)
 		{
 			ZeroOrOne zeroOrOne = (ZeroOrOne)exp;
-			GenFirstSet(zeroOrOne.expansion);
+			GenFirstSet(zeroOrOne.Expansion);
 		}
 		else if (exp is TryBlock)
 		{
 			TryBlock tryBlock = (TryBlock)exp;
-			GenFirstSet(tryBlock.exp);
+			GenFirstSet(tryBlock.Expression);
 		}
 	}
 
@@ -226,7 +226,7 @@ public class ParseEngine : JavaCCGlobals
 				text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
 				text = (text)+(" = ");
 			}
-			string str = ((regularExpression.rhsToken != null) ? (").")+(regularExpression.rhsToken.image)+(";")
+			string str = ((regularExpression.rhsToken != null) ? (").")+(regularExpression.rhsToken.Image)+(";")
 				 : ");");
 			if (string.Equals(regularExpression.label, ""))
 			{
@@ -349,7 +349,7 @@ public class ParseEngine : JavaCCGlobals
 		else if (P_0 is ZeroOrMore)
 		{
 			ZeroOrMore zeroOrMore = (ZeroOrMore)P_0;
-			Expansion expansion = zeroOrMore.expansion;
+			Expansion expansion = zeroOrMore.Expansion;
 			Lookahead lookahead;
 			if (expansion is Sequence)
 			{
@@ -381,7 +381,7 @@ public class ParseEngine : JavaCCGlobals
 		else if (P_0 is ZeroOrOne)
 		{
 			ZeroOrOne zeroOrOne = (ZeroOrOne)P_0;
-			Expansion expansion = zeroOrOne.expansion;
+			Expansion expansion = zeroOrOne.Expansion;
 			Lookahead lookahead;
 			if (expansion is Sequence)
 			{
@@ -403,15 +403,15 @@ public class ParseEngine : JavaCCGlobals
 		}
 		else if (P_0 is TryBlock tryBlock)
         {
-            Expansion expansion = tryBlock.exp;
+            Expansion expansion = tryBlock.Expression;
             text = (text) + ("\n");
             text = (text) + ("try {\u0001");
             text = (text) + (phase1ExpansionGen(expansion));
             text = (text) + ("\u0002\n}");
-            for (int i2 = 0; i2 < tryBlock.catchblks.Count; i2++)
+            for (int i2 = 0; i2 < tryBlock.CatchBlocks.Count; i2++)
             {
                 text = (text) + (" catch (");
-                var vector = tryBlock.types[i2];
+                var vector = tryBlock.Types[i2];
                 if (vector.Count != 0)
                 {
                     JavaCCGlobals.PrintTokenSetup((Token)vector[0]);
@@ -423,12 +423,12 @@ public class ParseEngine : JavaCCGlobals
                     text = (text) + (JavaCCGlobals.PrintTrailingComments(t));
                 }
                 text += " ";
-                t = (Token)tryBlock.ids[i2];
+                t = (Token)tryBlock.Ids[i2];
                 JavaCCGlobals.PrintTokenSetup(t);
                 text = (text) + (JavaCCGlobals.PrintToken(t));
                 text = (text) + (JavaCCGlobals.PrintTrailingComments(t));
                 text = (text) + (") {\u0003\n");
-                vector = tryBlock.catchblks[i2];
+                vector = tryBlock.CatchBlocks[i2];
                 if (vector.Count != 0)
                 {
                     JavaCCGlobals.PrintTokenSetup((Token)vector[0]);
@@ -442,14 +442,14 @@ public class ParseEngine : JavaCCGlobals
                 }
                 text = (text) + ("\u0004\n}");
             }
-            if (tryBlock.finallyblk != null)
+            if (tryBlock.FinallyBlock != null)
             {
                 text = (text) + (" finally {\u0003\n");
-                if (tryBlock.finallyblk.Count != 0)
+                if (tryBlock.FinallyBlock.Count != 0)
                 {
-                    JavaCCGlobals.PrintTokenSetup((Token)tryBlock.finallyblk[0]);
+                    JavaCCGlobals.PrintTokenSetup((Token)tryBlock.FinallyBlock[0]);
                     JavaCCGlobals.ccol = 1;
-                    foreach(var _t in tryBlock.finallyblk)
+                    foreach(var _t in tryBlock.FinallyBlock)
 					{
                         text = (text) + (JavaCCGlobals.PrintToken(_t));
 						t = _t;
@@ -794,7 +794,7 @@ public class ParseEngine : JavaCCGlobals
         else if (exp is TryBlock)
         {
             TryBlock tryBlock = (TryBlock)exp;
-            setupPhase3Builds(new Phase3Data(tryBlock.exp, p3.count));
+            setupPhase3Builds(new Phase3Data(tryBlock.Expression, p3.count));
         }
         else if (exp is OneOrMore)
         {
@@ -804,12 +804,12 @@ public class ParseEngine : JavaCCGlobals
         else if (exp is ZeroOrMore)
         {
             ZeroOrMore zeroOrMore = (ZeroOrMore)exp;
-            generate3R(zeroOrMore.expansion, p3);
+            generate3R(zeroOrMore.Expansion, p3);
         }
         else if (exp is ZeroOrOne)
         {
             ZeroOrOne zeroOrOne = (ZeroOrOne)exp;
-            generate3R(zeroOrOne.expansion, p3);
+            generate3R(zeroOrOne.Expansion, p3);
         }
     }
 
@@ -1003,7 +1003,7 @@ public class ParseEngine : JavaCCGlobals
 		else if (exp is TryBlock)
 		{
 			TryBlock tryBlock = (TryBlock)exp;
-			buildPhase3Routine(new Phase3Data(tryBlock.exp, p3.count), true);
+			buildPhase3Routine(new Phase3Data(tryBlock.Expression, p3.count), true);
 		}
 		else if (exp is OneOrMore)
 		{
@@ -1031,7 +1031,7 @@ public class ParseEngine : JavaCCGlobals
 				ostr.WriteLine("    Token xsp;");
 			}
 			ZeroOrMore zeroOrMore = (ZeroOrMore)exp;
-			Expansion expansion3 = zeroOrMore.expansion;
+			Expansion expansion3 = zeroOrMore.Expansion;
 			ostr.WriteLine("    while (true) {");
 			ostr.WriteLine("      xsp = jj_scanpos;");
 			ostr.WriteLine(("      if (")+(genjj_3Call(expansion3))+(") { jj_scanpos = xsp; break; }")
@@ -1046,7 +1046,7 @@ public class ParseEngine : JavaCCGlobals
 				ostr.WriteLine("    Token xsp;");
 			}
 			ZeroOrOne zeroOrOne = (ZeroOrOne)exp;
-			Expansion expansion3 = zeroOrOne.expansion;
+			Expansion expansion3 = zeroOrOne.Expansion;
 			ostr.WriteLine("    xsp = jj_scanpos;");
 			ostr.WriteLine(("    if (")+(genjj_3Call(expansion3))+(") jj_scanpos = xsp;")
 				);
@@ -1127,7 +1127,7 @@ public class ParseEngine : JavaCCGlobals
 		else if (exp is TryBlock)
 		{
 			TryBlock tryBlock = (TryBlock)exp;
-			result = MinimumSize(tryBlock.exp);
+			result = MinimumSize(tryBlock.Expression);
 		}
 		else if (exp is OneOrMore)
 		{
@@ -1159,7 +1159,7 @@ public class ParseEngine : JavaCCGlobals
 	{
 		Token token = (Token)production.return_type_tokens[0];
 		int num = 0;
-		if (token.kind == 77)
+		if (token.Kind == 77)
 		{
 			num = 1;
 		}
@@ -1197,7 +1197,7 @@ public class ParseEngine : JavaCCGlobals
 			ostr.Write(", ");
 			foreach(var _token in tl)
             {
-				ostr.Write(_token.image);
+				ostr.Write(_token.Image);
 			}
 		}
 		ostr.Write(" {");
@@ -1325,7 +1325,7 @@ public class ParseEngine : JavaCCGlobals
 	
 					foreach(var t in vector)
 					{		
-						ostr.Write(t.image);
+						ostr.Write(t.Image);
 					}
 				} 
 				ostr.Write(" {");
