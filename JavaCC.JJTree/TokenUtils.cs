@@ -5,30 +5,29 @@ using System.Text;
 
 public sealed class TokenUtils
 {
-    internal static string AddUnicodeEscapes(string text)
+    public static string AddUnicodeEscapes(string text)
     {
-        ;
-        var stringBuilder = new StringBuilder(text.Length);
+        var builder = new StringBuilder(text.Length);
         for (int i = 0; i < text.Length; i++)
         {
-            int num = text[i];
-            if ((num < 32 || num > 126) && num != 9 && num != 10 && num != 13 && num != 12)
+            int ch = text[i];
+            if ((ch < 32 || ch > 126) && ch != 9 && ch != 10 && ch != 13 && ch != 12)
             {
-                string @this = ("0000") + (Utils.ToString(num, 16));
-                stringBuilder.Append(("\\u") + (@this.Substring(@this.Length - 4, @this.Length)));
+                var _text = ("0000") + (Utils.ToString(ch, 16));
+                builder.Append(("\\u") + (_text.Substring(_text.Length - 4, _text.Length)));
             }
             else
             {
-                stringBuilder.Append((char)num);
+                builder.Append((char)ch);
             }
         }
-        return stringBuilder.ToString();
+        return builder.ToString();
     }
 
     internal static bool HasTokens(JJTreeNode node) => node.LastToken.Next != node.FirstToken;
 
 
-    internal static void Write(Token _token, IO io, string text1, string text2)
+    public static void Write(Token _token, IO io, string text1, string text2)
     {
         var token = _token.SpecialToken;
         if (token != null)
@@ -43,7 +42,7 @@ public sealed class TokenUtils
                 token = token.Next;
             }
         }
-        string text = _token.Image;
+        var text = _token.Image;
         if (text1 != null && string.Equals(text, text1))
         {
             text = text2;
@@ -52,7 +51,7 @@ public sealed class TokenUtils
     }
 
 
-    internal static string RemoveEscapeAndQuotes(Token token, string _text)
+    public static string RemoveEscapeAndQuotes(Token token, string _text)
     {
         string text = "";
         int num = 1;

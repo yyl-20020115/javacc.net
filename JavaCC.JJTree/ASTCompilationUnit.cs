@@ -11,8 +11,8 @@ public class ASTCompilationUnit : JJTreeNode
                 && !string.Equals(JJTreeGlobals.NodePackageName, "")
                 && !string.Equals(JJTreeGlobals.NodePackageName, JJTreeGlobals.PackageName))
             {
-                io.Out.WriteLine("");
-                io.Out.WriteLine("import " + JJTreeGlobals.NodePackageName + (".*;"));
+                io.Writer.WriteLine("");
+                io.Writer.WriteLine("import " + JJTreeGlobals.NodePackageName + (".*;"));
             }
             if (token == JJTreeGlobals.ParserImplements)
             {
@@ -20,13 +20,13 @@ public class ASTCompilationUnit : JJTreeNode
                 {
                     Write(token, io);
                     OpenJJTreeComment(io);
-                    io.Out.Write((" ") + (NodeFiles.NodeConstants) + (", "));
+                    io.Writer.Write((" ") + (NodeFiles.NodeConstants) + (", "));
                     CloseJJTreeComment(io);
                 }
                 else
                 {
                     OpenJJTreeComment(io);
-                    io.Out.Write(("implements ") + (NodeFiles.NodeConstants));
+                    io.Writer.Write(("implements ") + (NodeFiles.NodeConstants));
                     CloseJJTreeComment(io);
                     Write(token, io);
                 }

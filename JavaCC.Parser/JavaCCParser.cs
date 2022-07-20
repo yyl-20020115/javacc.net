@@ -589,7 +589,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         TokenProduction tokenProduction = new TokenProduction();
         Token token = getToken(1);
         TokenProduction tokenProduction2 = tokenProduction;
-        tokenProduction2.firstToken = token;
+        tokenProduction2.FirstToken = token;
         Token token2 = token;
         tokenProduction.Line = token2.BeginLine;
         tokenProduction.Column = token2.BeginColumn;
@@ -645,7 +645,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             jj_consume_token(95);
             token2 = jj_consume_token(2);
             jj_consume_token(96);
-            tokenProduction.ignoreCase = true;
+            tokenProduction.IgnoreCase = true;
             if (Options.UserTokenManager)
             {
                 JavaCCErrors.Warning(token2, "Ignoring \"IGNORE_CASE\" specification since option USER_TOKEN_MANAGER has been set to true.");
@@ -664,7 +664,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             regexpr_spec(tokenProduction);
         }
         jj_la1[15] = jj_gen;
-        token2 = (tokenProduction.lastToken = jj_consume_token(94));
+        token2 = (tokenProduction.LastToken = jj_consume_token(94));
         JavaCCParserInternals.AddRegexpr(tokenProduction);
     }
 

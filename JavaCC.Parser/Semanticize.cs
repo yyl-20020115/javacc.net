@@ -58,14 +58,14 @@ public class Semanticize : JavaCCGlobals
                         );
                     return;
                 }
-                if (rJustName == Root && !rJustName.tpContext.isExplicit && regularExpression.private_rexp)
+                if (rJustName == Root && !rJustName.tpContext.IsExplicit && regularExpression.private_rexp)
                 {
                     JavaCCErrors.Semantic_Error(exp, ("Token name \"") + (rJustName.label) + ("\" refers to a private ")
                         + ("(with a #) regular expression.")
                         );
                     return;
                 }
-                if (rJustName == Root && !rJustName.tpContext.isExplicit && regularExpression.tpContext.Kind != 0)
+                if (rJustName == Root && !rJustName.tpContext.IsExplicit && regularExpression.tpContext.Kind != 0)
                 {
                     JavaCCErrors.Semantic_Error(exp, ("Token name \"") + (rJustName.label) + ("\" refers to a non-token ")
                         + ("(SKIP, MORE, IGNORE_IN_BNF) regular expression.")
@@ -383,17 +383,17 @@ public class Semanticize : JavaCCGlobals
                     JavaCCGlobals.nextStateForEof = regExprSpec.nextState;
                     PrepareToRemove(tokenProduction.Respecs, regExprSpec);
                 }
-                else if (tokenProduction.isExplicit && Options.UserTokenManager)
+                else if (tokenProduction.IsExplicit && Options.UserTokenManager)
                 {
                     JavaCCErrors.Warning(regExprSpec.rexp, "Ignoring regular expression specification since option USER_TOKEN_MANAGER has been set to true.");
                 }
-                else if (tokenProduction.isExplicit && !Options.UserTokenManager && regExprSpec.rexp is RJustName)
+                else if (tokenProduction.IsExplicit && !Options.UserTokenManager && regExprSpec.rexp is RJustName)
                 {
                     JavaCCErrors.Warning(regExprSpec.rexp, ("Ignoring free-standing regular expression reference.  If you really want this, you must give it a different label as <NEWLABEL:<") + (regExprSpec.rexp.label) + (">>.")
                         );
                     PrepareToRemove(tokenProduction.Respecs, regExprSpec);
                 }
-                else if (!tokenProduction.isExplicit && regExprSpec.rexp.private_rexp)
+                else if (!tokenProduction.IsExplicit && regExprSpec.rexp.private_rexp)
                 {
                     JavaCCErrors.Semantic_Error(regExprSpec.rexp, "Private (#) regular expression cannot be defined within grammar productions.");
                 }
@@ -473,7 +473,7 @@ public class Semanticize : JavaCCGlobals
                         }
                         if (HasIgnoreCase(dict, rStringLiteral.image))
                         {
-                            if (!rStringLiteral.tpContext.isExplicit)
+                            if (!rStringLiteral.tpContext.IsExplicit)
                             {
                                 JavaCCErrors.Semantic_Error(rStringLiteral, ("String \"") + (rStringLiteral.image) + ("\" can never be matched ")
                                     + ("due to presence of more general (IGNORE_CASE) regular expression ")
@@ -492,7 +492,7 @@ public class Semanticize : JavaCCGlobals
                             }
                             continue;
                         }
-                        if (rStringLiteral.tpContext.ignoreCase)
+                        if (rStringLiteral.tpContext.IgnoreCase)
                         {
                             string str = "";
                             int num3 = 0;
@@ -532,7 +532,7 @@ public class Semanticize : JavaCCGlobals
                             }
                             dict.Add(rStringLiteral.image, rStringLiteral);
                         }
-                        else if (tokenProduction.isExplicit)
+                        else if (tokenProduction.IsExplicit)
                         {
                             if (string.Equals(tokenProduction.LexStates[j], "DEFAULT"))
                             {
@@ -756,7 +756,7 @@ public class Semanticize : JavaCCGlobals
 
     public static bool HasIgnoreCase(Dictionary<string, RegularExpression> dict, string str)
     {
-        if (dict.TryGetValue(str,out var regularExpression) && !regularExpression.tpContext.ignoreCase)
+        if (dict.TryGetValue(str,out var regularExpression) && !regularExpression.tpContext.IgnoreCase)
         {
             return false;
         }
@@ -764,7 +764,7 @@ public class Semanticize : JavaCCGlobals
         foreach(var pair in dict)
         {
             regularExpression=pair.Value;
-            if (regularExpression.tpContext.ignoreCase)
+            if (regularExpression.tpContext.IgnoreCase)
             {
                 other = regularExpression;
                 return true;

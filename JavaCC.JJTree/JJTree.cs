@@ -249,7 +249,7 @@ public class JJTree
                 try
                 {
                     aSTGrammar.Generate(io);
-                    io.Out.Close();
+                    io.Writer.Close();
                     NodeFiles.GenerateTreeConstants_java();
                     NodeFiles.GenerateVisitor_java();
                     JJTreeState.GenerateTreeState_java();

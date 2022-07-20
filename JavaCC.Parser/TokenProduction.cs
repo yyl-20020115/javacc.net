@@ -15,10 +15,10 @@ public class TokenProduction
     public string[] LexStates = Array.Empty<string>();
     public int Kind = 0;
     public readonly List<RegExprSpec> Respecs = new();
-    public bool isExplicit = true;
-    public bool ignoreCase = false;
-    public Token firstToken;
-    public Token lastToken;
+    public bool IsExplicit = true;
+    public bool IgnoreCase = false;
+    public Token FirstToken;
+    public Token LastToken;
     public TokenProduction()
     {
     }

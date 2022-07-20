@@ -9,9 +9,9 @@ public class JJDoc : JJDocGlobals
         generator.TokensStart();
         foreach (var tokenProduction in list)
         {
-            EmitTopLevelSpecialTokens(tokenProduction.firstToken, generator);
+            EmitTopLevelSpecialTokens(tokenProduction.FirstToken, generator);
             var text = "";
-            if (tokenProduction.isExplicit)
+            if (tokenProduction.IsExplicit)
             {
                 if (tokenProduction.LexStates == null)
                 {
@@ -31,7 +31,7 @@ public class JJDoc : JJDocGlobals
                     text += ("> ");
                 }
                 text += (TokenProduction.KindImage[tokenProduction.Kind]);
-                if (tokenProduction.ignoreCase)
+                if (tokenProduction.IgnoreCase)
                 {
                     text += (" [IGNORE_CASE]");
                 }

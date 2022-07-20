@@ -17,14 +17,13 @@ public class ZeroOrOne : Expansion
     public ZeroOrOne() { }
     public override StringBuilder Dump(int i, HashSet<Expansion> s)
     {
-        var stringBuilder = base.Dump(i, s);
+        var builder = base.Dump(i, s);
         if (s.Contains(this))
         {
-            return stringBuilder;
+            return builder;
         }
         s.Add(this);
-        stringBuilder.Append(Expansion.EOL).Append(Expansion.Dump(i + 1, s));
-        return stringBuilder;
+        builder.Append(EOL).Append(Expansion.Dump(i + 1, s));
+        return builder;
     }
-
 }

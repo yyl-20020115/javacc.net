@@ -4,15 +4,15 @@ using JavaCC.NET;
 
 public class TokenMgrError : System.Exception
 {
-    internal const int LEXICAL_ERROR = 0;
+    public const int LEXICAL_ERROR = 0;
 
-    internal const int STATIC_LEXER_ERROR = 1;
+    public const int STATIC_LEXER_ERROR = 1;
 
-    internal const int INVALID_LEXICAL_STATE = 2;
+    public const int INVALID_LEXICAL_STATE = 2;
 
-    internal const int LOOP_DETECTED = 3;
+    public const int LOOP_DETECTED = 3;
 
-    internal int errorCode = 1;
+    public readonly int ErrorCode = 1;
 
 
     public TokenMgrError(string str, int i)
@@ -23,34 +23,34 @@ public class TokenMgrError : System.Exception
 
     protected internal static string AddEscapes(string str)
     {
-        var stringBuilder = new StringBuilder();
+        var builder = new StringBuilder();
         for (int i = 0; i < str.Length; i++)
         {
             switch (str[i])
             {
                 case '\b':
-                    stringBuilder.Append("\\b");
+                    builder.Append("\\b");
                     continue;
                 case '\t':
-                    stringBuilder.Append("\\t");
+                    builder.Append("\\t");
                     continue;
                 case '\n':
-                    stringBuilder.Append("\\n");
+                    builder.Append("\\n");
                     continue;
                 case '\f':
-                    stringBuilder.Append("\\f");
+                    builder.Append("\\f");
                     continue;
                 case '\r':
-                    stringBuilder.Append("\\r");
+                    builder.Append("\\r");
                     continue;
                 case '"':
-                    stringBuilder.Append("\\\"");
+                    builder.Append("\\\"");
                     continue;
                 case '\'':
-                    stringBuilder.Append("\\'");
+                    builder.Append("\\'");
                     continue;
                 case '\\':
-                    stringBuilder.Append("\\\\");
+                    builder.Append("\\\\");
                     continue;
                 case '\0':
                     continue;
@@ -59,14 +59,14 @@ public class TokenMgrError : System.Exception
             if ((num = str[i]) < 32 || num > 126)
             {
                 string @this = ("0000") + (Utils.ToString(num, 16));
-                stringBuilder.Append(("\\u") + ((@this.Substring(@this.Length - 4, @this.Length))));
+                builder.Append(("\\u") + ((@this.Substring(@this.Length - 4, @this.Length))));
             }
             else
             {
-                stringBuilder.Append((char)num);
+                builder.Append((char)num);
             }
         }
-        return stringBuilder.ToString();
+        return builder.ToString();
     }
 
 

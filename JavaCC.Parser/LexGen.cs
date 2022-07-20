@@ -1398,7 +1398,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
             {
                 TokenProduction tokenProduction = (TokenProduction)vector2[i];
                 int kind = tokenProduction.Kind;
-                int num2 = (tokenProduction.ignoreCase ? 1 : 0);
+                int num2 = (tokenProduction.IgnoreCase ? 1 : 0);
                 var respecs = tokenProduction.Respecs;
                 if (i == 0)
                 {

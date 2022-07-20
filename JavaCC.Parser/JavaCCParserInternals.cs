@@ -174,7 +174,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
         {
             var tokenProduction = new TokenProduction
             {
-                isExplicit = false,
+                IsExplicit = false,
                 LexStates = new string[1] { "DEFAULT" },
                 Kind = 0
             };
