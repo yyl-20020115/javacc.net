@@ -14,19 +14,19 @@ public sealed class LookaheadWalk
             vector = new ();
             for (int i = 0; i < v.Count; i++)
             {
-                MatchInfo matchInfo = (MatchInfo)v[i];
-                MatchInfo matchInfo2 = new MatchInfo();
-                for (int j = 0; j < matchInfo.firstFreeLoc; j++)
+                var matchInfo = v[i];
+                var matchInfo2 = new MatchInfo();
+                for (int j = 0; j < matchInfo.FirstFreeLoc; j++)
                 {
-                    matchInfo2.match[j] = matchInfo.match[j];
+                    matchInfo2.Match[j] = matchInfo.Match[j];
                 }
-                matchInfo2.firstFreeLoc = matchInfo.firstFreeLoc;
-                int[] match = matchInfo2.match;
-                int firstFreeLoc = matchInfo2.firstFreeLoc;
+                matchInfo2.FirstFreeLoc = matchInfo.FirstFreeLoc;
+                int[] match = matchInfo2.Match;
+                int firstFreeLoc = matchInfo2.FirstFreeLoc;
                 MatchInfo matchInfo3 = matchInfo2;
-                matchInfo3.firstFreeLoc = firstFreeLoc + 1;
-                match[firstFreeLoc] = re.ordinal;
-                if (matchInfo2.firstFreeLoc == MatchInfo.laLimit)
+                matchInfo3.FirstFreeLoc = firstFreeLoc + 1;
+                match[firstFreeLoc] = re.Ordinal;
+                if (matchInfo2.FirstFreeLoc == MatchInfo.LaLimit)
                 {
                     sizeLimitedMatches.Add(matchInfo2);
                 }
@@ -39,31 +39,29 @@ public sealed class LookaheadWalk
         }
         if (e is NonTerminal n)
         {
-            NormalProduction prod = n.prod;
+            var prod = n.prod;
             if (prod is JavaCodeProduction)
             {
                 return new();
             }
             return GenFirstSet(v, prod.Expansion);
         }
-        if (e is Choice)
+        if (e is Choice choice)
         {
             vector = new ();
-            Choice choice = (Choice)e;
             for (int k = 0; k < choice.Choices.Count; k++)
             {
-                var v2 = GenFirstSet(v, (Expansion)choice.Choices[k]);
+                var v2 = GenFirstSet(v, choice.Choices[k]);
                 VectorAppend(vector, v2);
             }
             return vector;
         }
-        if (e is Sequence)
+        if (e is Sequence sequence)
         {
             vector = v;
-            Sequence sequence = (Sequence)e;
             for (int k = 0; k < sequence.Units.Count; k++)
             {
-                vector = GenFirstSet(vector, (Expansion)sequence.Units[k]);
+                vector = GenFirstSet(vector, sequence.Units[k]);
                 if (vector.Count == 0)
                 {
                     break;
@@ -71,14 +69,13 @@ public sealed class LookaheadWalk
             }
             return vector;
         }
-        if (e is OneOrMore)
+        if (e is OneOrMore more)
         {
             vector = new ();
             var vector2 = v;
-            OneOrMore oneOrMore = (OneOrMore)e;
             while (true)
             {
-                vector2 = GenFirstSet(vector2, oneOrMore.expansion);
+                vector2 = GenFirstSet(vector2, more.Expansion);
                 if (vector2.Count == 0)
                 {
                     break;
@@ -87,15 +84,14 @@ public sealed class LookaheadWalk
             }
             return vector;
         }
-        if (e is ZeroOrMore)
+        if (e is ZeroOrMore more1)
         {
             vector = new ();
             VectorAppend(vector, v);
             var vector2 = v;
-            ZeroOrMore zeroOrMore = (ZeroOrMore)e;
             while (true)
             {
-                vector2 = GenFirstSet(vector2, zeroOrMore.Expansion);
+                vector2 = GenFirstSet(vector2, more1.Expansion);
                 if (vector2.Count == 0)
                 {
                     break;
@@ -104,18 +100,18 @@ public sealed class LookaheadWalk
             }
             return vector;
         }
-        if (e is ZeroOrOne)
+        if (e is ZeroOrOne one)
         {
             vector = new ();
             VectorAppend(vector, v);
-            VectorAppend(vector, GenFirstSet(v, ((ZeroOrOne)e).Expansion));
+            VectorAppend(vector, GenFirstSet(v, one.Expansion));
             return vector;
         }
-        if (e is TryBlock)
+        if (e is TryBlock block)
         {
-            return GenFirstSet(v, ((TryBlock)e).Expression);
+            return GenFirstSet(v, block.Expression);
         }
-        if (considerSemanticLA && e is Lookahead && ((Lookahead)e).action_tokens.Count != 0)
+        if (considerSemanticLA && e is Lookahead lookahead && lookahead.ActionTokens.Count != 0)
         {
             return new();
         }
@@ -133,15 +129,15 @@ public sealed class LookaheadWalk
             return new();
         }
         e.myGeneration = l;
-        if (e.parent == null)
+        if (e.Parent == null)
         {
             List<MatchInfo> vector = new ();
             VectorAppend(vector, v);
             return vector;
         }
-        if (e.parent is NormalProduction)
+        if (e.Parent is NormalProduction)
         {
-            var vector = ((NormalProduction)e.parent).parents;
+            var vector = ((NormalProduction)e.Parent).Parents;
             var vector2 = new List<MatchInfo>();
             for (int i = 0; i < vector.Count; i++)
             {
@@ -150,9 +146,9 @@ public sealed class LookaheadWalk
             }
             return vector2;
         }
-        if (e.parent is Sequence)
+        if (e.Parent is Sequence)
         {
-            Sequence sequence = (Sequence)e.parent;
+            Sequence sequence = (Sequence)e.Parent;
             var vector2 = v;
             for (int i = e.ordinal + 1; i < sequence.Units.Count; i++)
             {
@@ -176,7 +172,7 @@ public sealed class LookaheadWalk
             VectorAppend(v2, vector3);
             return v2;
         }
-        if (e.parent is OneOrMore || e.parent is ZeroOrMore)
+        if (e.Parent is OneOrMore || e.Parent is ZeroOrMore)
         {
             List<MatchInfo> vector = new ();
             VectorAppend(vector, v);
@@ -195,16 +191,16 @@ public sealed class LookaheadWalk
             VectorSplit(vector, v, vector3, v2);
             if (vector3.Count != 0)
             {
-                vector3 = GenFollowSet(vector3, (Expansion)e.parent, l);
+                vector3 = GenFollowSet(vector3, (Expansion)e.Parent, l);
             }
             if (v2.Count != 0)
             {
-                v2 = GenFollowSet(v2, (Expansion)e.parent, Expansion.NextGenerationIndex++);
+                v2 = GenFollowSet(v2, (Expansion)e.Parent, Expansion.NextGenerationIndex++);
             }
             VectorAppend(v2, vector3);
             return v2;
         }
-        return GenFollowSet(v, (Expansion)e.parent, l);
+        return GenFollowSet(v, (Expansion)e.Parent, l);
     }
 
 

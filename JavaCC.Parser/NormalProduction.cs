@@ -5,77 +5,62 @@ using System.Text;
 
 public class NormalProduction : Expansion
 {
-    public int line;
+    public List<Expansion> Parents = new();
 
-    public int column;
+    public string AccessMod = "";
 
-    internal List<Expansion> parents = new();
+    public string Lhs="";
 
-    public string accessMod;
+    public readonly List<Token> ReturnTypeToken = new();
 
-    public string lhs;
+    public readonly List<Token> ParameterListTokens = new();
 
-    public List<Token> return_type_tokens = new();
-
-    public List<Token> parameter_list_tokens = new();
-
-    public List<List<Token>> ThrowsList = new();
+    public readonly List<List<Token>> ThrowsList = new();
 
     public Expansion Expansion;
 
-    internal bool emptyPossible;
+    public bool EmptyPossible = false;
 
-    internal NormalProduction[] leftExpansions = Array.Empty<NormalProduction>();
+    public NormalProduction[] LeftExpansions = Array.Empty<NormalProduction>();
 
-    internal int leIndex;
+    public int LeIndex = 0;
 
-    internal int walkStatus;
+    public int WalkStatus = 0;
 
-    public Token firstToken;
+    public Token FirstToken;
 
-    public Token lastToken;
-
-    protected internal string eol;
-
+    public Token LastToken;
 
     protected internal override StringBuilder DumpPrefix(int i)
     {
-        var stringBuilder = new StringBuilder(128);
+        var builder = new StringBuilder(128);
         for (int j = 0; j < i; j++)
         {
-            stringBuilder.Append("  ");
+            builder.Append("  ");
         }
-        return stringBuilder;
+        return builder;
     }
-
 
     public NormalProduction()
     {
-        parents = new();
-        return_type_tokens = new();
-        parameter_list_tokens = new();
-        ThrowsList = new();
-        emptyPossible = false;
-        leftExpansions = new NormalProduction[10];
-        leIndex = 0;
-        walkStatus = 0;
-        eol = Environment.NewLine;// java.lang.System.getProperty("line.separator", "\n");
+        LeftExpansions = new NormalProduction[10];
+        //Eol = Environment.NewLine;// java.lang.System.getProperty("line.separator", "\n");
     }
 
 
     public new virtual StringBuilder Dump(int i, HashSet<Expansion> s)
     {
-        var stringBuilder = DumpPrefix(i).Append((this.GetHashCode())).Append(' ').Append(this.GetType().Name)
+        var builder = DumpPrefix(i).Append((this.GetHashCode())).Append(' ').Append(this.GetType().Name)
             .Append(' ')
-            .Append(lhs);
+            .Append(Lhs);
         if (!s.Contains(this))
         {
             s.Add(this);
             if (Expansion != null)
             {
-                stringBuilder.Append(eol).Append(Expansion.Dump(i + 1, s));
+                builder.Append(Eol).Append(Expansion.Dump(i + 1, s));
             }
         }
-        return stringBuilder;
+        return builder;
     }
 }

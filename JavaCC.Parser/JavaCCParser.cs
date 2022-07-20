@@ -546,19 +546,19 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
     public void javacode_production()
     {
-        JavaCodeProduction javaCodeProduction = new JavaCodeProduction();
+        var javaCodeProduction = new JavaCodeProduction();
         Token token = getToken(1);
-        JavaCodeProduction javaCodeProduction2 = javaCodeProduction;
-        javaCodeProduction2.firstToken = token;
+        var javaCodeProduction2 = javaCodeProduction;
+        javaCodeProduction2.FirstToken = token;
         Token token2 = token;
-        javaCodeProduction.ThrowsList = new();
-        javaCodeProduction.line = token2.BeginLine;
-        javaCodeProduction.column = token2.BeginColumn;
+        javaCodeProduction.ThrowsList.Clear();
+        javaCodeProduction.Line = token2.BeginLine;
+        javaCodeProduction.Column = token2.BeginColumn;
         jj_consume_token(5);
         AccessModifier(javaCodeProduction);
-        ResultType(javaCodeProduction.return_type_tokens);
-        javaCodeProduction.lhs = identifier();
-        FormalParameters(javaCodeProduction.parameter_list_tokens);
+        ResultType(javaCodeProduction.ReturnTypeToken);
+        javaCodeProduction.Lhs = identifier();
+        FormalParameters(javaCodeProduction.ParameterListTokens);
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 73)
         {
             jj_consume_token(73);
@@ -579,7 +579,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             jj_la1[6] = jj_gen;
         }
         Block(javaCodeProduction.CodeTokens);
-        javaCodeProduction.lastToken = getToken(0);
+        javaCodeProduction.LastToken = getToken(0);
         JavaCCParserInternals.AddProduction(javaCodeProduction);
     }
 
@@ -685,16 +685,16 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         Container container = new();
         Token token = getToken(1);
         BNFProduction bNFProduction2 = bNFProduction;
-        bNFProduction2.firstToken = token;
+        bNFProduction2.FirstToken = token;
         Token token2 = token;
-        bNFProduction.ThrowsList = new();
-        bNFProduction.line = token2.BeginLine;
-        bNFProduction.column = token2.BeginColumn;
+        bNFProduction.ThrowsList.Clear();
+        bNFProduction.Line = token2.BeginLine;
+        bNFProduction.Column = token2.BeginColumn;
         jumpPatched = false;
         AccessModifier(bNFProduction);
-        ResultType(bNFProduction.return_type_tokens);
-        bNFProduction.lhs = identifier();
-        FormalParameters(bNFProduction.parameter_list_tokens);
+        ResultType(bNFProduction.ReturnTypeToken);
+        bNFProduction.Lhs = identifier();
+        FormalParameters(bNFProduction.ParameterListTokens);
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 73)
         {
             jj_consume_token(73);
@@ -718,9 +718,9 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         Block(bNFProduction.DeclarationTokens);
         jj_consume_token(93);
         expansion_choices(container);
-        token2 = (bNFProduction.lastToken = jj_consume_token(94));
+        token2 = (bNFProduction.LastToken = jj_consume_token(94));
         bNFProduction.JumpPatched = jumpPatched;
-        JavaCCParserInternals.ProductionAddExpansion(bNFProduction, (Expansion)container.member);
+        JavaCCParserInternals.ProductionAddExpansion(bNFProduction, (Expansion)container.Member);
         JavaCCParserInternals.AddProduction(bNFProduction);
     }
 
@@ -757,7 +757,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         }
         if (token != null)
         {
-            np.accessMod = token.Image;
+            np.AccessMod = token.Image;
         }
     }
 
@@ -971,20 +971,20 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             expansion(container);
             if (num != 0)
             {
-                choice.Choices.Add(container.member as Expansion);
-                ((Expansion)container.member).parent = choice;
+                choice.Choices.Add(container.Member as Expansion);
+                ((Expansion)container.Member).Parent = choice;
                 continue;
             }
             num = 1;
-            choice = new Choice((Expansion)c.member);
-            ((Expansion)c.member).parent = choice;
-            choice.Choices.Add(container.member as Expansion);
-            ((Expansion)container.member).parent = choice;
+            choice = new Choice((Expansion)c.Member);
+            ((Expansion)c.Member).Parent = choice;
+            choice.Choices.Add(container.Member as Expansion);
+            ((Expansion)container.Member).Parent = choice;
         }
         jj_la1[19] = jj_gen;
         if (num != 0)
         {
-            c.member = choice;
+            c.Member = choice;
         }
     }
 
@@ -1064,8 +1064,8 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         Token token = null;
         RegExprSpec regExprSpec = new RegExprSpec();
         regular_expression(container);
-        regExprSpec.rexp = (RegularExpression)container.member;
-        regExprSpec.rexp.tpContext = tp;
+        regExprSpec.Rexp = (RegularExpression)container.Member;
+        regExprSpec.Rexp.TpContext = tp;
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 93)
         {
             token = getToken(1);
@@ -1074,7 +1074,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             {
                 JavaCCErrors.Warning(token, "Ignoring action in regular expression specification since option USER_TOKEN_MANAGER has been set to true.");
             }
-            if (regExprSpec.rexp.private_rexp)
+            if (regExprSpec.Rexp.PrivateRexp)
             {
                 JavaCCErrors.Parse_Error(token, "Actions are not permitted on private (#) regular expressions.");
             }
@@ -1087,8 +1087,8 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             jj_consume_token(105);
             token = jj_consume_token(140);
-            regExprSpec.nextState = token.Image;
-            if (regExprSpec.rexp.private_rexp)
+            regExprSpec.NextState = token.Image;
+            if (regExprSpec.Rexp.PrivateRexp)
             {
                 JavaCCErrors.Parse_Error(token, "Lexical state changes are not permitted after private (#) regular expressions.");
             }
@@ -1097,8 +1097,8 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             jj_la1[18] = jj_gen;
         }
-        regExprSpec.act = action;
-        regExprSpec.nsTok = token;
+        regExprSpec.Action = action;
+        regExprSpec.NsToken = token;
         tp.Respecs.Add(regExprSpec);
     }
 
@@ -1174,7 +1174,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 90)
         {
             string str = StringLiteral();
-            c.member = new RStringLiteral(token, str);
+            c.Member = new RStringLiteral(token, str);
             return;
         }
         jj_la1[32] = jj_gen;
@@ -1204,7 +1204,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             complex_regular_expression_choices(c);
             jj_consume_token(132);
             RegularExpression regularExpression;
-            if (c.member is RJustName rj)
+            if (c.Member is RJustName rj)
             {
                 RSequence rSequence = new RSequence();
                 rSequence.Units.Add(rj);
@@ -1212,20 +1212,20 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             }
             else
             {
-                regularExpression = (RegularExpression)c.member;
+                regularExpression = (RegularExpression)c.Member;
             }
-            regularExpression.label = str;
-            regularExpression.private_rexp = (byte)private_rexp != 0;
+            regularExpression.Label = str;
+            regularExpression.PrivateRexp = (byte)private_rexp != 0;
             regularExpression.Line = token.BeginLine;
             regularExpression.Column = token.BeginColumn;
-            c.member = regularExpression;
+            c.Member = regularExpression;
         }
         else if (jj_2_6(2))
         {
             jj_consume_token(101);
             string str = identifier();
             jj_consume_token(132);
-            c.member = new RJustName(token, str);
+            c.Member = new RJustName(token, str);
         }
         else
         {
@@ -1242,8 +1242,8 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             REndOfFile rEndOfFile = new REndOfFile();
             rEndOfFile.Line = token.BeginLine;
             rEndOfFile.Column = token.BeginColumn;
-            rEndOfFile.ordinal = 0;
-            c.member = rEndOfFile;
+            rEndOfFile.Ordinal = 0;
+            c.Member = rEndOfFile;
         }
     }
 
@@ -1259,7 +1259,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         lookahead.Line = token.BeginLine;
         lookahead.Column = token.BeginColumn;
         lookahead.amount = Options.Lookahead;
-        lookahead.la_expansion = null;
+        lookahead.LaExpansion = null;
         lookahead.IsExplicit = false;
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 1)
         {
@@ -1280,16 +1280,16 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         do
         {
             expansion_unit(container);
-            sequence.Units.Add(container.member as Expansion);
-            ((Expansion)container.member).parent = sequence;
-            ((Expansion)container.member).ordinal = sequence.Units.Count - 1;
+            sequence.Units.Add(container.Member as Expansion);
+            ((Expansion)container.Member).Parent = sequence;
+            ((Expansion)container.Member).ordinal = sequence.Units.Count - 1;
         }
         while (notTailOfExpansionUnit());
-        if (lookahead.la_expansion == null)
+        if (lookahead.LaExpansion == null)
         {
-            lookahead.la_expansion = sequence;
+            lookahead.LaExpansion = sequence;
         }
-        c.member = sequence;
+        c.Member = sequence;
     }
 
 
@@ -1300,7 +1300,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         Token token = getToken(1);
         lookahead.Line = token.BeginLine;
         lookahead.Column = token.BeginColumn;
-        lookahead.la_expansion = null;
+        lookahead.LaExpansion = null;
         Container container = new Container();
         int num = 0;
         int num2 = 1;
@@ -1324,7 +1324,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             expansion_choices(container);
             num2 = 0;
             num = 0;
-            lookahead.la_expansion = (Expansion)container.member;
+            lookahead.LaExpansion = (Expansion)container.Member;
         }
         if (num2 == 0 && num == 0 && getToken(1).Kind != 92)
         {
@@ -1334,7 +1334,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         if (num2 != 0 || num != 0)
         {
             jj_consume_token(93);
-            Expression(lookahead.action_tokens);
+            Expression(lookahead.ActionTokens);
             jj_consume_token(94);
             if (num2 != 0)
             {
@@ -1357,22 +1357,22 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     jj_consume_token(91);
                     Lookahead lookahead = local_lookahead();
                     jj_consume_token(92);
-                    lookahead.la_expansion = new REndOfFile();
+                    lookahead.LaExpansion = new REndOfFile();
                     Choice choice = new Choice(obj);
-                    Sequence sequence = (Sequence)(lookahead.parent = new Sequence(obj, lookahead));
+                    Sequence sequence = (Sequence)(lookahead.Parent = new Sequence(obj, lookahead));
                     lookahead.ordinal = 0;
                     Action action = new Action();
                     action.Line = obj.BeginLine;
                     action.Column = obj.BeginColumn;
                     sequence.Units.Add(action);
-                    action.parent = sequence;
+                    action.Parent = sequence;
                     action.ordinal = 1;
                     choice.Choices.Add(sequence);
-                    sequence.parent = choice;
+                    sequence.Parent = choice;
                     sequence.ordinal = 0;
                     if (lookahead.amount != 0)
                     {
-                        if (lookahead.action_tokens.Count != 0)
+                        if (lookahead.ActionTokens.Count != 0)
                         {
                             JavaCCErrors.Warning(obj, "Encountered LOOKAHEAD(...) at a non-choice location.  Only semantic lookahead will be considered here.");
                         }
@@ -1381,7 +1381,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                             JavaCCErrors.Warning(obj, "Encountered LOOKAHEAD(...) at a non-choice location.  This will be ignored.");
                         }
                     }
-                    c.member = choice;
+                    c.Member = choice;
                     return;
                 }
             case 93:
@@ -1397,7 +1397,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     {
                         JavaCCErrors.Warning(obj, "Action within lookahead specification will be ignored.");
                     }
-                    c.member = action;
+                    c.Member = action;
                     return;
                 }
             case 95:
@@ -1405,7 +1405,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     Token obj = jj_consume_token(95);
                     expansion_choices(c);
                     jj_consume_token(96);
-                    c.member = new ZeroOrOne(obj, (Expansion)c.member);
+                    c.Member = new ZeroOrOne(obj, (Expansion)c.Member);
                     return;
                 }
             case 76:
@@ -1479,24 +1479,25 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 Token obj = getToken(1);
                 nonTerminal.Line = obj.BeginLine;
                 nonTerminal.Column = obj.BeginColumn;
-                nonTerminal.lhsTokens = vector;
+                nonTerminal.LhsTokens.Clear();
+                nonTerminal.LhsTokens.AddRange(vector);
                 string name = identifier();
-                Arguments(nonTerminal.argument_tokens);
-                nonTerminal.name = name;
-                c.member = nonTerminal;
+                Arguments(nonTerminal.ArgumentTokens);
+                nonTerminal.Name = name;
+                c.Member = nonTerminal;
                 return;
             }
             int num = ((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk());
             if (num == 90 || num == 101)
             {
                 regular_expression(c);
-                ((RegularExpression)c.member).lhsTokens = vector;
-                JavaCCParserInternals.AddInlineRegexpr((RegularExpression)c.member);
+                ((RegularExpression)c.Member).LhsTokens = vector;
+                JavaCCParserInternals.AddInlineRegexpr((RegularExpression)c.Member);
                 if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 99)
                 {
                     jj_consume_token(99);
                     Token obj = jj_consume_token(140);
-                    ((RegularExpression)c.member).rhsToken = obj;
+                    ((RegularExpression)c.Member).RhsToken = obj;
                 }
                 else
                 {
@@ -1521,15 +1522,15 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 {
                     case 114:
                         jj_consume_token(114);
-                        c.member = new OneOrMore(obj, (Expansion)c.member);
+                        c.Member = new OneOrMore(obj, (Expansion)c.Member);
                         break;
                     case 116:
                         jj_consume_token(116);
-                        c.member = new ZeroOrMore(obj, (Expansion)c.member);
+                        c.Member = new ZeroOrMore(obj, (Expansion)c.Member);
                         break;
                     case 104:
                         jj_consume_token(104);
-                        c.member = new ZeroOrOne(obj, (Expansion)c.member);
+                        c.Member = new ZeroOrOne(obj, (Expansion)c.Member);
                         break;
                     default:
                         jj_la1[26] = jj_gen;
@@ -1832,20 +1833,20 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             complex_regular_expression(container);
             if (num != 0)
             {
-                rChoice.Choices.Add(container.member as Expansion);
+                rChoice.Choices.Add(container.Member as Expansion);
                 continue;
             }
             num = 1;
             rChoice = new RChoice();
-            rChoice.Line = ((RegularExpression)c.member).Line;
-            rChoice.Column = ((RegularExpression)c.member).Column;
-            rChoice.Choices.Add(c.member as Expansion);
-            rChoice.Choices.Add(container.member as Expansion);
+            rChoice.Line = ((RegularExpression)c.Member).Line;
+            rChoice.Column = ((RegularExpression)c.Member).Column;
+            rChoice.Choices.Add(c.Member as Expansion);
+            rChoice.Choices.Add(container.Member as Expansion);
         }
         jj_la1[34] = jj_gen;
         if (num != 0)
         {
-            c.member = rChoice;
+            c.Member = rChoice;
         }
     }
 
@@ -1901,17 +1902,17 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             switch (num)
             {
                 case 1:
-                    c.member = container.member;
+                    c.Member = container.Member;
                     break;
                 case 2:
                     rSequence = new RSequence();
-                    rSequence.Line = ((RegularExpression)c.member).Line;
-                    rSequence.Column = ((RegularExpression)c.member).Column;
-                    rSequence.Units.Add(c.member as RegularExpression);
-                    rSequence.Units.Add(container.member as RegularExpression);
+                    rSequence.Line = ((RegularExpression)c.Member).Line;
+                    rSequence.Column = ((RegularExpression)c.Member).Column;
+                    rSequence.Units.Add(c.Member as RegularExpression);
+                    rSequence.Units.Add(container.Member as RegularExpression);
                     break;
                 default:
-                    rSequence.Units.Add(container.member as RegularExpression);
+                    rSequence.Units.Add(container.Member as RegularExpression);
                     break;
             }
             switch ((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk())
@@ -1926,7 +1927,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             jj_la1[35] = jj_gen;
             if (num > 1)
             {
-                c.member = rSequence;
+                c.Member = rSequence;
             }
             return;
         }
@@ -1944,7 +1945,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             case 90:
                 {
                     string str = StringLiteral();
-                    c.member = new RStringLiteral(token, str);
+                    c.Member = new RStringLiteral(token, str);
                     break;
                 }
             case 101:
@@ -1952,7 +1953,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     jj_consume_token(101);
                     string str = identifier();
                     jj_consume_token(132);
-                    c.member = new RJustName(token, str);
+                    c.Member = new RJustName(token, str);
                     break;
                 }
             case 95:
@@ -1972,12 +1973,12 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                             case 114:
                                 jj_consume_token(114);
 
-                                c.member = new ROneOrMore(token, (RegularExpression)c.member);
+                                c.Member = new ROneOrMore(token, (RegularExpression)c.Member);
                                 break;
                             case 116:
                                 jj_consume_token(116);
 
-                                c.member = new RZeroOrMore(token, (RegularExpression)c.member);
+                                c.Member = new RZeroOrMore(token, (RegularExpression)c.Member);
                                 break;
                             case 104:
                                 {
@@ -1985,8 +1986,8 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                                     RZeroOrOne rZeroOrOne = new RZeroOrOne();
                                     rZeroOrOne.Line = token.BeginLine;
                                     rZeroOrOne.Column = token.BeginColumn;
-                                    rZeroOrOne.regexpr = (RegularExpression)c.member;
-                                    c.member = rZeroOrOne;
+                                    rZeroOrOne.Regexpr = (RegularExpression)c.Member;
+                                    c.Member = rZeroOrOne;
                                     break;
                                 }
                             case 93:
@@ -2017,8 +2018,8 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                                     rRepetitionRange.min = min;
                                     rRepetitionRange.max = max;
                                     rRepetitionRange.hasMax = (byte)hasMax != 0;
-                                    rRepetitionRange.regexpr = (RegularExpression)c.member;
-                                    c.member = rRepetitionRange;
+                                    rRepetitionRange.regexpr = (RegularExpression)c.Member;
+                                    c.Member = rRepetitionRange;
                                     break;
                                 }
                             default:
@@ -2053,7 +2054,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 103)
         {
             jj_consume_token(103);
-            rCharacterList.negated_list = true;
+            rCharacterList.NegatedList = true;
         }
         else
         {
@@ -2063,12 +2064,12 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 90)
         {
             character_descriptor(container);
-            rCharacterList.descriptors.Add(container.member);
+            rCharacterList.Descriptors.Add(container.Member);
             while (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 98)
             {
                 jj_consume_token(98);
                 character_descriptor(container);
-                rCharacterList.descriptors.Add(container.member);
+                rCharacterList.Descriptors.Add(container.Member);
             }
             jj_la1[42] = jj_gen;
         }
@@ -2077,7 +2078,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             jj_la1[43] = jj_gen;
         }
         jj_consume_token(96);
-        c.member = rCharacterList;
+        c.Member = rCharacterList;
     }
 
 
@@ -2101,12 +2102,14 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         }
         if (num != 0)
         {
-            CharacterRange characterRange = new CharacterRange();
-            characterRange.Line = token.BeginLine;
-            characterRange.Column = token.BeginColumn;
-            characterRange.Left = (char)num2;
-            characterRange.Right = (char)right;
-            c.member = characterRange;
+            var characterRange = new CharacterRange
+            {
+                Line = token.BeginLine,
+                Column = token.BeginColumn,
+                Left = (char)num2,
+                Right = (char)right
+            };
+            c.Member = characterRange;
         }
         else
         {
@@ -2116,7 +2119,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 Column = token.BeginColumn,
                 CH = (char)num2
             };
-            c.member = singleCharacter;
+            c.Member = singleCharacter;
         }
     }
 

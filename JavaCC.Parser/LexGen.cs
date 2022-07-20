@@ -109,28 +109,28 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
                 );
             int num = 0;
             int i = 1;
-            while (JavaCCGlobals.Cu_to_insertion_point_1.Count > num)
+            while (JavaCCGlobals.CuToInsertionPoint1.Count > num)
             {
-                int kind = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[num]).Kind;
+                int kind = ((Token)JavaCCGlobals.CuToInsertionPoint1[num]).Kind;
                 if (kind != 60 && kind != 52)
                 {
                     break;
                 }
-                for (; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
+                for (; i < JavaCCGlobals.CuToInsertionPoint1.Count; i++)
                 {
-                    kind = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind;
+                    kind = ((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind;
                     if (kind == 97 || kind == 27 || kind == 45 || kind == 63 || kind == 35 || kind == 55)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[num]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[num]).BeginColumn;
+                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[num]).BeginLine;
+                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[num]).BeginColumn;
                         int j;
                         for (j = num; j < i; j++)
                         {
-                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.Cu_to_insertion_point_1[j], writer);
+                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], writer);
                         }
                         if (kind == 97)
                         {
-                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.Cu_to_insertion_point_1[j], writer);
+                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], writer);
                         }
                         writer.WriteLine("");
                         break;
@@ -142,7 +142,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
             writer.WriteLine("");
             writer.WriteLine("/** Token Manager. */");
             writer.WriteLine(("public class ") + (tokMgrClassName) + (" implements ")
-                + (JavaCCGlobals.Cu_name)
+                + (JavaCCGlobals.CuName)
                 + ("Constants")
                 );
             writer.WriteLine("{");
@@ -188,11 +188,11 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
         writer.WriteLine("  /** HashSet<object> debug output. */");
         writer.WriteLine(("  public ") + (staticString) + (" void setDebugStream(java.io.TextWriter ds) { debugStream = ds; }")
             );
-        if (Options.TokenManagerUsesParser && !Options.getStatic())
+        if (Options.TokenManagerUsesParser && !Options.Static)
         {
             writer.WriteLine("");
             writer.WriteLine("  /** The parser. */");
-            writer.WriteLine(("  public ") + (JavaCCGlobals.Cu_name) + (" parser = null;")
+            writer.WriteLine(("  public ") + (JavaCCGlobals.CuName) + (" parser = null;")
                 );
         }
         return;
@@ -207,9 +207,9 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 
     internal static void BuildLexStatesTable()
     {
-        string[] array = new string[JavaCCGlobals.lexstate_I2S.Count];
+        string[] array = new string[JavaCCGlobals.Lexstate_I2S.Count];
 
-        foreach (var tokenProduction in JavaCCGlobals.rexprlist)
+        foreach (var tokenProduction in JavaCCGlobals.RexprList)
         {
             var respecs = tokenProduction.Respecs;
             for (int i = 0; i < tokenProduction.LexStates.Length; i++)
@@ -228,9 +228,9 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
             for (int i = 0; i < respecs.Count; i++)
             {
                 RegularExpression rexp;
-                if (maxOrdinal <= (rexp = ((RegExprSpec)respecs[i]).rexp).ordinal)
+                if (maxOrdinal <= (rexp = ((RegExprSpec)respecs[i]).Rexp).Ordinal)
                 {
-                    maxOrdinal = rexp.ordinal + 1;
+                    maxOrdinal = rexp.Ordinal + 1;
                 }
             }
         }
@@ -345,7 +345,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
                 hasLoop = true;
                 if (num == 0)
                 {
-                    JavaCCErrors.Warning(rexprs[initMatch[i]], ("Regular expression") + ((!string.Equals(rexprs[initMatch[i]].label, "")) ? (" for ") + (rexprs[initMatch[i]].label) : "") + (" can be matched by the empty string (\"\") in lexical state ")
+                    JavaCCErrors.Warning(rexprs[initMatch[i]], ("Regular expression") + ((!string.Equals(rexprs[initMatch[i]].Label, "")) ? (" for ") + (rexprs[initMatch[i]].Label) : "") + (" can be matched by the empty string (\"\") in lexical state ")
                         + (lexStateName[i])
                         + (". This can result in an endless loop of ")
                         + ("empty string matches.")
@@ -353,7 +353,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
                 }
                 else
                 {
-                    JavaCCErrors.Warning(rexprs[initMatch[i]], ("Regular expression") + ((!string.Equals(rexprs[initMatch[i]].label, "")) ? (" for ") + (rexprs[initMatch[i]].label) : "") + (" can be matched by the empty string (\"\") in lexical state ")
+                    JavaCCErrors.Warning(rexprs[initMatch[i]], ("Regular expression") + ((!string.Equals(rexprs[initMatch[i]].Label, "")) ? (" for ") + (rexprs[initMatch[i]].Label) : "") + (" can be matched by the empty string (\"\") in lexical state ")
                         + (lexStateName[i])
                         + (". This regular expression along with the ")
                         + ("regular expressions at ")
@@ -478,18 +478,18 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
             );
         if (hasMoreActions || hasSkipActions || hasTokenActions)
         {
-            writer.WriteLine((staticString) + (Options.StringBufOrBuild) + (" image;")
+            writer.WriteLine((staticString) + (Options.StringBuilderName) + (" image;")
                 );
             writer.WriteLine((staticString) + ("int jjimageLen;"));
             writer.WriteLine((staticString) + ("int lengthOfMatch;"));
         }
         writer.WriteLine((staticString) + ("protected char curChar;"));
-        if (Options.TokenManagerUsesParser && !Options.getStatic())
+        if (Options.TokenManagerUsesParser && !Options.Static)
         {
             writer.WriteLine("");
             writer.WriteLine("/** Constructor with parser. */");
             writer.WriteLine(("public ") + (tokMgrClassName) + ("(")
-                + (JavaCCGlobals.Cu_name)
+                + (JavaCCGlobals.CuName)
                 + (" parserArg, ")
                 + (str)
                 + (" stream){")
@@ -504,7 +504,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
                 + (" stream){")
                 );
         }
-        if (Options.getStatic() && !Options.UserCharStream)
+        if (Options.Static && !Options.UserCharStream)
         {
             writer.WriteLine("   if (input_stream != null)");
             writer.WriteLine("      throw new TokenMgrError(\"ERROR: Second call to constructor of static lexer. You must use ReInit() to initialize the static variables.\", TokenMgrError.STATIC_LEXER_ERROR);");
@@ -523,12 +523,12 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
         }
         writer.WriteLine("   input_stream = stream;");
         writer.WriteLine("}");
-        if (Options.TokenManagerUsesParser && !Options.getStatic())
+        if (Options.TokenManagerUsesParser && !Options.Static)
         {
             writer.WriteLine("");
             writer.WriteLine("/** Constructor with parser. */");
             writer.WriteLine(("public ") + (tokMgrClassName) + ("(")
-                + (JavaCCGlobals.Cu_name)
+                + (JavaCCGlobals.CuName)
                 + (" parserArg, ")
                 + (str)
                 + (" stream, int lexState){")
@@ -1148,7 +1148,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
             if ((action = actions[i]) != null && action.ActionTokens.Count != 0)
             {
                 writer.WriteLine("         if (image == null)");
-                writer.WriteLine(("            image = new ") + (Options.StringBufOrBuild) + ("();")
+                writer.WriteLine(("            image = new ") + (Options.StringBuilderName) + ("();")
                     );
                 writer.Write("         image+");
                 if (RStringLiteral.allImages[i] != null)
@@ -1224,7 +1224,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
             if ((action = actions[i]) != null && action.ActionTokens.Count != 0)
             {
                 writer.WriteLine("         if (image == null)");
-                writer.WriteLine(("            image = new ") + (Options.StringBufOrBuild) + ("();")
+                writer.WriteLine(("            image = new ") + (Options.StringBuilderName) + ("();")
                     );
                 writer.Write("         image+");
                 if (RStringLiteral.allImages[i] != null)
@@ -1304,7 +1304,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
                 else
                 {
                     writer.WriteLine("        if (image == null)");
-                    writer.WriteLine(("            image = new ") + (Options.StringBufOrBuild) + ("();")
+                    writer.WriteLine(("            image = new ") + (Options.StringBuilderName) + ("();")
                         );
                     writer.Write("        image+");
                     if (RStringLiteral.allImages[i] != null)
@@ -1373,8 +1373,8 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
         }
         keepLineCol = Options.KeepLineColumn;
         List<RegularExpression> vector = new ();
-        staticString = ((!Options.getStatic()) ? "" : "static ");
-        tokMgrClassName = (JavaCCGlobals.Cu_name) + ("TokenManager");
+        staticString = ((!Options.Static) ? "" : "static ");
+        tokMgrClassName = (JavaCCGlobals.CuName) + ("TokenManager");
         PrintClassHead();
         BuildLexStatesTable();
         foreach (var pair in allTpsForState)
@@ -1407,28 +1407,28 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
                 for (int j = 0; j < respecs.Count; j++)
                 {
                     RegExprSpec regExprSpec = (RegExprSpec)respecs[j];
-                    curRE = regExprSpec.rexp;
-                    rexprs[curKind = curRE.ordinal] = curRE;
-                    lexStates[curRE.ordinal] = lexStateIndex;
-                    ignoreCase[curRE.ordinal] = (byte)num2 != 0;
-                    if (curRE.private_rexp)
+                    curRE = regExprSpec.Rexp;
+                    rexprs[curKind = curRE.Ordinal] = curRE;
+                    lexStates[curRE.Ordinal] = lexStateIndex;
+                    ignoreCase[curRE.Ordinal] = (byte)num2 != 0;
+                    if (curRE.PrivateRexp)
                     {
-                        kinds[curRE.ordinal] = -1;
+                        kinds[curRE.Ordinal] = -1;
                         continue;
                     }
                     if (curRE is RStringLiteral && !string.Equals(((RStringLiteral)curRE).image, ""))
                     {
-                        ((RStringLiteral)curRE).GenerateDfa(writer, curRE.ordinal);
+                        ((RStringLiteral)curRE).GenerateDfa(writer, curRE.Ordinal);
                         if (i != 0 && !mixed[lexStateIndex] && num != num2)
                         {
                             mixed[lexStateIndex] = true;
                         }
                     }
-                    else if (curRE.CanMatchAnyChar())
+                    else if (curRE.CanMatchAnyChar)
                     {
-                        if (canMatchAnyChar[lexStateIndex] == -1 || canMatchAnyChar[lexStateIndex] > curRE.ordinal)
+                        if (canMatchAnyChar[lexStateIndex] == -1 || canMatchAnyChar[lexStateIndex] > curRE.Ordinal)
                         {
-                            canMatchAnyChar[lexStateIndex] = curRE.ordinal;
+                            canMatchAnyChar[lexStateIndex] = curRE.Ordinal;
                         }
                     }
                     else
@@ -1439,81 +1439,81 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
                         }
                         Nfa nfa = curRE.GenerateNfa((byte)num2 != 0);
                         nfa.End.isFinal = true;
-                        nfa.End.kind = curRE.ordinal;
+                        nfa.End.kind = curRE.Ordinal;
                         initialState.AddMove(nfa.Start);
                     }
-                    if (kinds.Length < curRE.ordinal)
+                    if (kinds.Length < curRE.Ordinal)
                     {
-                        int[] dest = new int[curRE.ordinal + 1];
+                        int[] dest = new int[curRE.Ordinal + 1];
                         Array.Copy(kinds, 0, dest, 0, kinds.Length);
                         kinds = dest;
                     }
-                    kinds[curRE.ordinal] = kind;
-                    if (regExprSpec.nextState != null && !string.Equals(regExprSpec.nextState, lexStateName[lexStateIndex]))
+                    kinds[curRE.Ordinal] = kind;
+                    if (regExprSpec.NextState != null && !string.Equals(regExprSpec.NextState, lexStateName[lexStateIndex]))
                     {
-                        newLexState[curRE.ordinal] = regExprSpec.nextState;
+                        newLexState[curRE.Ordinal] = regExprSpec.NextState;
                     }
-                    if (regExprSpec.act != null && regExprSpec.act.ActionTokens != null && regExprSpec.act.ActionTokens.Count > 0)
+                    if (regExprSpec.Action != null && regExprSpec.Action.ActionTokens != null && regExprSpec.Action.ActionTokens.Count > 0)
                     {
-                        actions[curRE.ordinal] = regExprSpec.act;
+                        actions[curRE.Ordinal] = regExprSpec.Action;
                     }
                     switch (kind)
                     {
                         case 3:
                             {
-                                hasSkipActions |= (byte)((actions[curRE.ordinal] != null || newLexState[curRE.ordinal] != null) ? 1 : 0) != 0;
+                                hasSkipActions |= (byte)((actions[curRE.Ordinal] != null || newLexState[curRE.Ordinal] != null) ? 1 : 0) != 0;
                                 hasSpecial = true;
                                 long[] array4 = toSpecial;
-                                num3 = curRE.ordinal / 64;
+                                num3 = curRE.Ordinal / 64;
                                 long[] array2 = array4;
                                 long[] array5 = array2;
                                 int num7 = num3;
                                 long num8 = array2[num3];
                                 long num9 = 1L;
-                                int ordinal2 = curRE.ordinal;
+                                int ordinal2 = curRE.Ordinal;
                                 array5[num7] = num8 | (num9 << ((64 != -1) ? (ordinal2 % 64) : 0));
                                 long[] array6 = toSkip;
-                                num3 = curRE.ordinal / 64;
+                                num3 = curRE.Ordinal / 64;
                                 array2 = array6;
                                 long[] array7 = array2;
                                 int num10 = num3;
                                 long num11 = array2[num3];
                                 long num12 = 1L;
-                                int ordinal3 = curRE.ordinal;
+                                int ordinal3 = curRE.Ordinal;
                                 array7[num10] = num11 | (num12 << ((64 != -1) ? (ordinal3 % 64) : 0));
                                 break;
                             }
                         case 1:
                             {
-                                hasSkipActions |= actions[curRE.ordinal] != null;
+                                hasSkipActions |= actions[curRE.Ordinal] != null;
                                 hasSkip = true;
                                 long[] array10 = toSkip;
-                                num3 = curRE.ordinal / 64;
+                                num3 = curRE.Ordinal / 64;
                                 long[] array2 = array10;
                                 long[] array11 = array2;
                                 int num16 = num3;
                                 long num17 = array2[num3];
                                 long num18 = 1L;
-                                int ordinal5 = curRE.ordinal;
+                                int ordinal5 = curRE.Ordinal;
                                 array11[num16] = num17 | (num18 << ((64 != -1) ? (ordinal5 % 64) : 0));
                                 break;
                             }
                         case 2:
                             {
-                                hasMoreActions |= actions[curRE.ordinal] != null;
+                                hasMoreActions |= actions[curRE.Ordinal] != null;
                                 hasMore = true;
                                 long[] array8 = toMore;
-                                num3 = curRE.ordinal / 64;
+                                num3 = curRE.Ordinal / 64;
                                 long[] array2 = array8;
                                 long[] array9 = array2;
                                 int num13 = num3;
                                 long num14 = array2[num3];
                                 long num15 = 1L;
-                                int ordinal4 = curRE.ordinal;
+                                int ordinal4 = curRE.Ordinal;
                                 array9[num13] = num14 | (num15 << ((64 != -1) ? (ordinal4 % 64) : 0));
-                                if (newLexState[curRE.ordinal] != null)
+                                if (newLexState[curRE.Ordinal] != null)
                                 {
-                                    canReachOnMore[GetIndex(newLexState[curRE.ordinal])] = true;
+                                    canReachOnMore[GetIndex(newLexState[curRE.Ordinal])] = true;
                                 }
                                 else
                                 {
@@ -1523,15 +1523,15 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
                             }
                         case 0:
                             {
-                                hasTokenActions |= actions[curRE.ordinal] != null;
+                                hasTokenActions |= actions[curRE.Ordinal] != null;
                                 long[] array = toToken;
-                                num3 = curRE.ordinal / 64;
+                                num3 = curRE.Ordinal / 64;
                                 long[] array2 = array;
                                 long[] array3 = array2;
                                 int num4 = num3;
                                 long num5 = array2[num3];
                                 long num6 = 1L;
-                                int ordinal = curRE.ordinal;
+                                int ordinal = curRE.Ordinal;
                                 array3[num4] = num5 | (num6 << ((64 != -1) ? (ordinal % 64) : 0));
                                 break;
                             }

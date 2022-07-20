@@ -3,18 +3,18 @@ using System.Collections.Generic;
 
 public abstract class JavaCCParserInternals : JavaCCGlobals
 {
-    private static List<Token> add_cu_token_here;
+    private static List<Token> AddCuTokenHere = new ();
 
-    private static Token first_cu_token;
+    private static Token FirstCuToken;
 
-    private static bool insertionpoint1set;
+    private static bool InsertionPoint1Set = false;
 
-    private static bool insertionpoint2set;
+    private static bool InsertionPoint2Set = false;
 
-    private static int nextFreeLexState;
+    private static int NextFreeLexState = 1;
 
 
-    protected internal static bool Hexchar(char ch) => ch switch
+    protected internal static bool IsHexchar(char ch) => ch switch
     {
         >= '0' and <= '9' => true,
         >= 'A' and <= 'F' => true,
@@ -22,30 +22,23 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
         _ => false
     };
 
-    protected internal static int HexVal(char ch) => ch switch
+    protected internal static int GetHexVal(char ch) => ch switch
     {
         >= '0' and <= '9' => ch - 48,
         >= 'A' and <= 'F' => ch - 65 + 10,
         _ => ch - 97 + 10
     };
 
-
-    public JavaCCParserInternals()
-    {
-    }
-
-
     protected internal static void Initialize()
     {
-        int integer = (0);
-        JavaCCGlobals.lexstate_S2I.Add("DEFAULT", integer);
-        JavaCCGlobals.lexstate_I2S.Add(integer, "DEFAULT");
-        JavaCCGlobals.simple_tokens_table.Add("DEFAULT", new ());
+        Lexstate_S2I.Add("DEFAULT", 0);
+        Lexstate_I2S.Add(0, "DEFAULT");
+        SimpleTokensTable.Add("DEFAULT", new ());
     }
 
     protected internal static void AddCuname(string str)
     {
-        JavaCCGlobals.Cu_name = str;
+        CuName = str;
     }
 
 
@@ -65,39 +58,39 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
     {
         do
         {
-            add_cu_token_here.Add(first_cu_token);
-            first_cu_token = first_cu_token.Next;
+            AddCuTokenHere.Add(FirstCuToken);
+            FirstCuToken = FirstCuToken.Next;
         }
-        while (first_cu_token != t);
+        while (FirstCuToken != t);
         if (i == 1)
         {
-            if (insertionpoint1set)
+            if (InsertionPoint1Set)
             {
                 JavaCCErrors.Parse_Error(t, "Multiple declaration of parser class.");
             }
             else
             {
-                insertionpoint1set = true;
-                add_cu_token_here = JavaCCGlobals.Cu_to_insertion_point_2;
+                InsertionPoint1Set = true;
+                AddCuTokenHere = JavaCCGlobals.Cu_to_insertion_point_2;
             }
         }
         else
         {
-            add_cu_token_here = JavaCCGlobals.Cu_from_insertion_point_2;
-            insertionpoint2set = true;
+            AddCuTokenHere = JavaCCGlobals.Cu_from_insertion_point_2;
+            InsertionPoint2Set = true;
         }
-        first_cu_token = t;
+        FirstCuToken = t;
     }
 
 
     protected internal static void InsertionPointError(Token t)
     {
-        while (first_cu_token != t)
+        while (FirstCuToken != t)
         {
-            add_cu_token_here.Add(first_cu_token);
-            first_cu_token = first_cu_token.Next;
+            AddCuTokenHere.Add(FirstCuToken);
+            FirstCuToken = FirstCuToken.Next;
         }
-        if (!insertionpoint1set || !insertionpoint2set)
+        if (!InsertionPoint1Set || !InsertionPoint2Set)
         {
             JavaCCErrors.Parse_Error(t, "Parser class has not been defined between PARSER_BEGIN and PARSER_END.");
         }
@@ -105,7 +98,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 
     protected internal static void SetInitialCuToken(Token t)
     {
-        first_cu_token = t;
+        FirstCuToken = t;
     }
 
 
@@ -116,14 +109,14 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 
     protected internal static void ProductionAddExpansion(BNFProduction bnfp, Expansion e)
     {
-        e.parent = bnfp;
+        e.Parent = bnfp;
         bnfp.Expansion = e;
     }
 
 
     protected internal static void AddRegexpr(TokenProduction tp)
     {
-        JavaCCGlobals.rexprlist.Add(tp);
+        JavaCCGlobals.RexprList.Add(tp);
         if (Options.UserTokenManager && (tp.LexStates == null || tp.LexStates.Length != 1 || !string.Equals(tp.LexStates[0], "DEFAULT")))
         {
             JavaCCErrors.Warning(tp, "Ignoring lexical state specifications since option USER_TOKEN_MANAGER has been set to true.");
@@ -142,12 +135,12 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
                         );
                 }
             }
-            if (!JavaCCGlobals.lexstate_S2I.TryGetValue(tp.LexStates[i], out var _))
+            if (!JavaCCGlobals.Lexstate_S2I.TryGetValue(tp.LexStates[i], out var _))
             {
-                int integer = (nextFreeLexState++);
-                JavaCCGlobals.lexstate_S2I.Add(tp.LexStates[i], integer);
-                JavaCCGlobals.lexstate_I2S.Add(integer, tp.LexStates[i]);
-                JavaCCGlobals.simple_tokens_table.Add(tp.LexStates[i], new ());
+                int integer = (NextFreeLexState++);
+                JavaCCGlobals.Lexstate_S2I.Add(tp.LexStates[i], integer);
+                JavaCCGlobals.Lexstate_I2S.Add(integer, tp.LexStates[i]);
+                JavaCCGlobals.SimpleTokensTable.Add(tp.LexStates[i], new ());
             }
         }
     }
@@ -180,14 +173,14 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
             };
             var regExprSpec = new RegExprSpec
             {
-                rexp = re,
-                act = new Action(),
-                nextState = null,
-                nsTok = null
+                Rexp = re,
+                Action = new Action(),
+                NextState = null,
+                NsToken = null
             };
-            regExprSpec.rexp.tpContext = tokenProduction;
+            regExprSpec.Rexp.TpContext = tokenProduction;
             tokenProduction.Respecs.Add(regExprSpec);
-            JavaCCGlobals.rexprlist.Add(tokenProduction);
+            JavaCCGlobals.RexprList.Add(tokenProduction);
         }
     }
 
@@ -271,24 +264,24 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
             {
                 num++;
                 num2 = str[num];
-                if (Hexchar((char)num2))
+                if (IsHexchar((char)num2))
                 {
-                    int num3 = HexVal((char)num2);
+                    int num3 = GetHexVal((char)num2);
                     num++;
                     num2 = str[num];
-                    if (Hexchar((char)num2))
+                    if (IsHexchar((char)num2))
                     {
-                        num3 = num3 * 16 + HexVal((char)num2);
+                        num3 = num3 * 16 + GetHexVal((char)num2);
                         num++;
                         num2 = str[num];
-                        if (Hexchar((char)num2))
+                        if (IsHexchar((char)num2))
                         {
-                            num3 = num3 * 16 + HexVal((char)num2);
+                            num3 = num3 * 16 + GetHexVal((char)num2);
                             num++;
                             num2 = str[num];
-                            if (Hexchar((char)num2))
+                            if (IsHexchar((char)num2))
                             {
-                                _ = num3 * 16 + HexVal((char)num2);
+                                _ = num3 * 16 + GetHexVal((char)num2);
                                 num++;
                                 continue;
                             }
@@ -359,31 +352,28 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
         {
             Line = t.BeginLine,
             Column = t.BeginColumn,
-            Expression = c2.member as Expansion,
+            Expression = c2.Member,
             Types = v1,
             Ids = v2,
             CatchBlocks = v3,
             FinallyBlock = v4
         };
-        tryBlock.Expression.parent = tryBlock;
+        tryBlock.Expression.Parent = tryBlock;
         tryBlock.Expression.ordinal = 0;
-        c1.member = tryBlock;
+        c1.Member = tryBlock;
     }
 
     public new static void ReInit()
     {
-        add_cu_token_here = JavaCCGlobals.Cu_to_insertion_point_1;
-        first_cu_token = null;
-        insertionpoint1set = false;
-        insertionpoint2set = false;
-        nextFreeLexState = 1;
+        AddCuTokenHere = JavaCCGlobals.CuToInsertionPoint1;
+        FirstCuToken = null;
+        InsertionPoint1Set = false;
+        InsertionPoint2Set = false;
+        NextFreeLexState = 1;
     }
 
     static JavaCCParserInternals()
     {
-        add_cu_token_here = JavaCCGlobals.Cu_to_insertion_point_1;
-        insertionpoint1set = false;
-        insertionpoint2set = false;
-        nextFreeLexState = 1;
+        AddCuTokenHere = CuToInsertionPoint1;
     }
 }

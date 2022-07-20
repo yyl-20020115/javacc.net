@@ -1,15 +1,13 @@
 namespace JavaCC.Parser;
 
-public class CharacterRange
+public class CharacterRange :Expansion
 {
-    internal int Line = 0;
-    internal int Column = 0;
     public char Left = '\0';
     public char Right = '\0';
 
-    internal CharacterRange() { }
+    public CharacterRange() { }
 
-    internal CharacterRange(char c1, char c2)
+    public CharacterRange(char c1, char c2)
     {
         if (c1 > c2)
         {

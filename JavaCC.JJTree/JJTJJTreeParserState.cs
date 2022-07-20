@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 public class JJTJJTreeParserState
 {
-    private List<INode> Nodes = new();
+    public readonly List<INode> Nodes = new();
 
-    private List<int> Marks = new();
+    public readonly List<int> Marks = new();
 
-    private int SP = 0;
+    public int SP = 0;
 
-    private int MK = 0;
+    public int MK = 0;
 
-    private bool _NodeCreated = false;
+    public bool _NodeCreated = false;
 
 
     public virtual INode PopNode()

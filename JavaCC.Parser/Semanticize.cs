@@ -17,7 +17,7 @@ public class Semanticize : JavaCCGlobals
         {
             if (exp is OneOrMore o)
             {
-                if (EmptyExpansionExists(o.expansion))
+                if (EmptyExpansionExists(o.Expansion))
                 {
                     JavaCCErrors.Semantic_Error(exp, "Expansion within \"(...)+\" can be matched by empty string.");
                 }
@@ -41,7 +41,7 @@ public class Semanticize : JavaCCGlobals
     {
         public RegularExpression Root;
 
-        internal FixRJustNames()
+        public FixRJustNames()
         {
         }
 
@@ -52,28 +52,28 @@ public class Semanticize : JavaCCGlobals
         {
             if (exp is RJustName rJustName)
             {
-                if (!JavaCCGlobals.named_tokens_table.TryGetValue(rJustName.label, out var regularExpression))
+                if (!NamedTokensTable.TryGetValue(rJustName.Label, out var regularExpression))
                 {
-                    JavaCCErrors.Semantic_Error(exp, ("Undefined lexical token name \"") + (rJustName.label) + ("\".")
+                    JavaCCErrors.Semantic_Error(exp, ("Undefined lexical token name \"") + (rJustName.Label) + ("\".")
                         );
                     return;
                 }
-                if (rJustName == Root && !rJustName.tpContext.IsExplicit && regularExpression.private_rexp)
+                if (rJustName == Root && !rJustName.TpContext.IsExplicit && regularExpression.PrivateRexp)
                 {
-                    JavaCCErrors.Semantic_Error(exp, ("Token name \"") + (rJustName.label) + ("\" refers to a private ")
+                    JavaCCErrors.Semantic_Error(exp, ("Token name \"") + (rJustName.Label) + ("\" refers to a private ")
                         + ("(with a #) regular expression.")
                         );
                     return;
                 }
-                if (rJustName == Root && !rJustName.tpContext.IsExplicit && regularExpression.tpContext.Kind != 0)
+                if (rJustName == Root && !rJustName.TpContext.IsExplicit && regularExpression.TpContext.Kind != 0)
                 {
-                    JavaCCErrors.Semantic_Error(exp, ("Token name \"") + (rJustName.label) + ("\" refers to a non-token ")
+                    JavaCCErrors.Semantic_Error(exp, ("Token name \"") + (rJustName.Label) + ("\" refers to a non-token ")
                         + ("(SKIP, MORE, IGNORE_IN_BNF) regular expression.")
                         );
                     return;
                 }
-                rJustName.ordinal = regularExpression.ordinal;
-                rJustName.regexpr = regularExpression;
+                rJustName.Ordinal = regularExpression.Ordinal;
+                rJustName.RegExpr = regularExpression;
             }
         }
 
@@ -116,9 +116,9 @@ public class Semanticize : JavaCCGlobals
             }
             else if (exp is OneOrMore oneOrMore)
             {
-                if (Options.ForceLaCheck || (ImplicitLA(oneOrMore.expansion) && Options.Lookahead == 1))
+                if (Options.ForceLaCheck || (ImplicitLA(oneOrMore.Expansion) && Options.Lookahead == 1))
                 {
-                    LookaheadCalc.EBNFCalc(oneOrMore, oneOrMore.expansion);
+                    LookaheadCalc.EBNFCalc(oneOrMore, oneOrMore.Expansion);
                 }
             }
             else if (exp is ZeroOrMore zeroOrMore)
@@ -128,16 +128,14 @@ public class Semanticize : JavaCCGlobals
                     LookaheadCalc.EBNFCalc(zeroOrMore, zeroOrMore.Expansion);
                 }
             }
-            else if (exp is ZeroOrOne)
+            else if (exp is ZeroOrOne zeroOrOne)
             {
-                ZeroOrOne zeroOrOne = (ZeroOrOne)exp;
                 if (Options.ForceLaCheck || (ImplicitLA(zeroOrOne.Expansion) && Options.Lookahead == 1))
                 {
                     LookaheadCalc.EBNFCalc(zeroOrOne, zeroOrOne.Expansion);
                 }
             }
         }
-
     }
 
 
@@ -152,11 +150,10 @@ public class Semanticize : JavaCCGlobals
 
         public virtual void Action(Expansion exp)
         {
-            if (exp is not Sequence || exp.parent is Choice || exp.parent is ZeroOrMore || exp.parent is OneOrMore || exp.parent is ZeroOrOne)
+            if (exp is not Sequence sequence || exp.Parent is Choice || exp.Parent is ZeroOrMore || exp.Parent is OneOrMore || exp.Parent is ZeroOrOne)
             {
                 return;
             }
-            Sequence sequence = (Sequence)exp;
             Lookahead lookahead = (Lookahead)sequence.Units[0];
             if (!lookahead.IsExplicit)
             {
@@ -166,27 +163,27 @@ public class Semanticize : JavaCCGlobals
             {
                 Line = lookahead.Line,
                 Column = lookahead.Column,
-                parent = sequence
+                Parent = sequence
             };
             Sequence sequence2 = new ()
             {
                 Line = lookahead.Line,
                 Column = lookahead.Column,
-                parent = choice
+                Parent = choice
             };
             sequence2.Units.Add(lookahead);
-            lookahead.parent = sequence2;
+            lookahead.Parent = sequence2;
             Action action = new()
             {
                 Line = lookahead.Line,
                 Column = lookahead.Column,
-                parent = sequence2
+                Parent = sequence2
             };
             sequence2.Units.Add(action);
             choice.Choices.Add(sequence2);
             if (lookahead.amount != 0)
             {
-                if (lookahead.action_tokens.Count != 0)
+                if (lookahead.ActionTokens.Count != 0)
                 {
                     JavaCCErrors.Warning(lookahead, "Encountered LOOKAHEAD(...) at a non-choice location.  Only semantic lookahead will be considered here.");
                 }
@@ -200,79 +197,58 @@ public class Semanticize : JavaCCGlobals
                 IsExplicit = false,
                 Line = lookahead.Line,
                 Column = lookahead.Column,
-                parent = sequence
+                Parent = sequence
             };
-            lookahead.la_expansion = new REndOfFile();
-            lookahead2.la_expansion = new REndOfFile();
+            lookahead.LaExpansion = new REndOfFile();
+            lookahead2.LaExpansion = new REndOfFile();
             sequence.Units[0] = lookahead2;
             sequence.Units.Insert(1, choice);
-        }
-
-
-        static LookaheadFixer()
-        {
-
         }
     }
 
 
-    internal class ProductionDefinedChecker : JavaCCGlobals, TreeWalkerOp
+    public class ProductionDefinedChecker : JavaCCGlobals, TreeWalkerOp
     {
 
 
-        internal ProductionDefinedChecker()
+        public ProductionDefinedChecker()
         {
         }
 
-        public virtual bool GoDeeper(Expansion P_0)
-        {
-            if (P_0 is RegularExpression)
-            {
-                return false;
-            }
-            return true;
-        }
+        public virtual bool GoDeeper(Expansion exp) => exp is not RegularExpression;
 
 
         public virtual void Action(Expansion exp)
         {
-            if (exp is NonTerminal nonTerminal && JavaCCGlobals.Production_table.TryGetValue(nonTerminal.name,out var normalProduction))
+            if (exp is NonTerminal nonTerminal && Production_table.TryGetValue(nonTerminal.Name,out var normalProduction))
             {
-                NonTerminal nonTerminal2 = nonTerminal;
-                nonTerminal2.prod = normalProduction;
+                nonTerminal.prod = normalProduction;
                 if (normalProduction == null)
                 {
-                    JavaCCErrors.Semantic_Error(exp, ("Non-terminal ") + (nonTerminal.name) + (" has not been defined.")
-                        );
+                    JavaCCErrors.Semantic_Error(exp, ("Non-terminal ") + (nonTerminal.Name) + (" has not been defined."));
                 }
                 else
                 {
-                    nonTerminal.prod.parents.Add(nonTerminal);
+                    nonTerminal.prod.Parents.Add(nonTerminal);
                 }
             }
         }
-
-
-        static ProductionDefinedChecker()
-        {
-
-        }
     }
 
-    public static List<List<RegExprSpec>> removeList = new();
+    public static readonly List<List<RegExprSpec>> removeList = new();
 
-    public static List<RegExprSpec> itemList = new();
+    public static readonly List<RegExprSpec> itemList = new();
 
-    public static RegularExpression other;
+    public static RegularExpression other = null;
 
-    private static string loopString;
+    protected static string loopString = null;
 
 
     public static bool EmptyExpansionExists(Expansion e)
     {
         if (e is NonTerminal terminal)
         {
-            return terminal.prod.emptyPossible;
+            return terminal.prod.EmptyPossible;
         }
         if (e is Action)
         {
@@ -284,7 +260,7 @@ public class Semanticize : JavaCCGlobals
         }
         if (e is OneOrMore)
         {
-            bool result = EmptyExpansionExists(((OneOrMore)e).expansion);
+            bool result = EmptyExpansionExists(((OneOrMore)e).Expansion);
 
             return result;
         }
@@ -326,7 +302,7 @@ public class Semanticize : JavaCCGlobals
     }
 
 
-    public static void start()
+    public static void Start()
     {
         if (JavaCCErrors._Error_Count != 0)
         {
@@ -337,111 +313,111 @@ public class Semanticize : JavaCCGlobals
         {
             JavaCCErrors.Warning("Lookahead adequacy checking not being performed since option LOOKAHEAD is more than 1.  HashSet<object> option FORCE_LA_CHECK to true to force checking.");
         }
-        foreach (var b in JavaCCGlobals.BNFProductions)
+        foreach (var b in BNFProductions)
         {
             ExpansionTreeWalker.postOrderWalk(b.Expansion, new LookaheadFixer());
         }
-        foreach(var normalProduction in JavaCCGlobals.BNFProductions)
+        foreach(var normalProduction in BNFProductions)
         {
-            if (JavaCCGlobals.Production_table.ContainsKey(normalProduction.lhs))
+            if (Production_table.ContainsKey(normalProduction.Lhs))
             {
-                JavaCCErrors.Semantic_Error(normalProduction, (normalProduction.lhs) 
+                JavaCCErrors.Semantic_Error(normalProduction, (normalProduction.Lhs) 
                     + (" occurs on the left hand side of more than one production."));
             }
-            JavaCCGlobals.Production_table.Add(normalProduction.lhs, normalProduction);
+            Production_table.Add(normalProduction.Lhs, normalProduction);
         }
-        foreach (var normalProduction in JavaCCGlobals.BNFProductions)
+        foreach (var normalProduction in BNFProductions)
         {
             ExpansionTreeWalker.PreOrderWalk(normalProduction.Expansion, new ProductionDefinedChecker());
         }
-        foreach (var tokenProduction in JavaCCGlobals.rexprlist)
+        foreach (var tokenProduction in RexprList)
         {
             foreach (var regExprSpec in tokenProduction.Respecs)
             {
-                if (regExprSpec.nextState != null && !JavaCCGlobals.lexstate_S2I.TryGetValue(
-                    regExprSpec.nextState,out var _))
+                if (regExprSpec.NextState != null && !Lexstate_S2I.TryGetValue(
+                    regExprSpec.NextState,out var _))
                 {
-                    JavaCCErrors.Semantic_Error(regExprSpec.nsTok, ("Lexical state \"") 
-                        + (regExprSpec.nextState) + ("\" has not been defined.")
+                    JavaCCErrors.Semantic_Error(regExprSpec.NsToken, ("Lexical state \"") 
+                        + (regExprSpec.NextState) + ("\" has not been defined.")
                         );
                 }
-                if (regExprSpec.rexp is REndOfFile)
+                if (regExprSpec.Rexp is REndOfFile)
                 {
                     if (tokenProduction.LexStates != null)
                     {
-                        JavaCCErrors.Semantic_Error(regExprSpec.rexp, "EOF action/state change must be specified for all states, i.e., <*>TOKEN:.");
+                        JavaCCErrors.Semantic_Error(regExprSpec.Rexp, "EOF action/state change must be specified for all states, i.e., <*>TOKEN:.");
                     }
                     if (tokenProduction.Kind != 0)
                     {
-                        JavaCCErrors.Semantic_Error(regExprSpec.rexp, "EOF action/state change can be specified only in a TOKEN specification.");
+                        JavaCCErrors.Semantic_Error(regExprSpec.Rexp, "EOF action/state change can be specified only in a TOKEN specification.");
                     }
-                    if (JavaCCGlobals.nextStateForEof != null || JavaCCGlobals.actForEof != null)
+                    if (nextStateForEof != null || actForEof != null)
                     {
-                        JavaCCErrors.Semantic_Error(regExprSpec.rexp, "Duplicate action/state change specification for <EOF>.");
+                        JavaCCErrors.Semantic_Error(regExprSpec.Rexp, "Duplicate action/state change specification for <EOF>.");
                     }
-                    JavaCCGlobals.actForEof = regExprSpec.act;
-                    JavaCCGlobals.nextStateForEof = regExprSpec.nextState;
+                    actForEof = regExprSpec.Action;
+                    nextStateForEof = regExprSpec.NextState;
                     PrepareToRemove(tokenProduction.Respecs, regExprSpec);
                 }
                 else if (tokenProduction.IsExplicit && Options.UserTokenManager)
                 {
-                    JavaCCErrors.Warning(regExprSpec.rexp, "Ignoring regular expression specification since option USER_TOKEN_MANAGER has been set to true.");
+                    JavaCCErrors.Warning(regExprSpec.Rexp, "Ignoring regular expression specification since option USER_TOKEN_MANAGER has been set to true.");
                 }
-                else if (tokenProduction.IsExplicit && !Options.UserTokenManager && regExprSpec.rexp is RJustName)
+                else if (tokenProduction.IsExplicit && !Options.UserTokenManager && regExprSpec.Rexp is RJustName)
                 {
-                    JavaCCErrors.Warning(regExprSpec.rexp, ("Ignoring free-standing regular expression reference.  If you really want this, you must give it a different label as <NEWLABEL:<") + (regExprSpec.rexp.label) + (">>.")
+                    JavaCCErrors.Warning(regExprSpec.Rexp, ("Ignoring free-standing regular expression reference.  If you really want this, you must give it a different label as <NEWLABEL:<") + (regExprSpec.Rexp.Label) + (">>.")
                         );
                     PrepareToRemove(tokenProduction.Respecs, regExprSpec);
                 }
-                else if (!tokenProduction.IsExplicit && regExprSpec.rexp.private_rexp)
+                else if (!tokenProduction.IsExplicit && regExprSpec.Rexp.PrivateRexp)
                 {
-                    JavaCCErrors.Semantic_Error(regExprSpec.rexp, "Private (#) regular expression cannot be defined within grammar productions.");
+                    JavaCCErrors.Semantic_Error(regExprSpec.Rexp, "Private (#) regular expression cannot be defined within grammar productions.");
                 }
             }
         }
         RemovePreparedItems();
-        foreach(var tokenProduction in JavaCCGlobals.rexprlist)
+        foreach(var tokenProduction in RexprList)
         {
             var respecs = tokenProduction.Respecs;
             foreach(var regExprSpec in respecs)
             {
-                if (regExprSpec.rexp is not RJustName && !string.Equals(regExprSpec.rexp.label, ""))
+                if (regExprSpec.Rexp is not RJustName && !string.Equals(regExprSpec.Rexp.Label, ""))
                 {
-                    string label = regExprSpec.rexp.label;
-                    bool obj = JavaCCGlobals.named_tokens_table.ContainsKey(label);
+                    string label = regExprSpec.Rexp.Label;
+                    bool obj = NamedTokensTable.ContainsKey(label);
                     
-                    JavaCCGlobals.named_tokens_table.Add(label, regExprSpec.rexp);
+                    NamedTokensTable.Add(label, regExprSpec.Rexp);
                     if (obj)
                     {
-                        JavaCCErrors.Semantic_Error(regExprSpec.rexp, ("Multiply defined lexical token name \"") + (label) + ("\".")
+                        JavaCCErrors.Semantic_Error(regExprSpec.Rexp, ("Multiply defined lexical token name \"") + (label) + ("\".")
                             );
                     }
                     else
                     {
-                        JavaCCGlobals.ordered_named_tokens.Add(regExprSpec.rexp);
+                        ordered_named_tokens.Add(regExprSpec.Rexp);
                     }
-                    if (JavaCCGlobals.lexstate_S2I.ContainsKey(label))
+                    if (Lexstate_S2I.ContainsKey(label))
                     {
-                        JavaCCErrors.Semantic_Error(regExprSpec.rexp, ("Lexical token name \"") + (label) + ("\" is the same as ")
+                        JavaCCErrors.Semantic_Error(regExprSpec.Rexp, ("Lexical token name \"") + (label) + ("\" is the same as ")
                             + ("that of a lexical state.")
                             );
                     }
                 }
             }
         }
-        JavaCCGlobals.tokenCount = 1;
+        TokenCount = 1;
 
-        foreach(var tokenProduction in JavaCCGlobals.rexprlist)
+        foreach(var tokenProduction in RexprList)
         {
             var respecs = tokenProduction.Respecs;
 
             if (tokenProduction.LexStates == null)
             {
-                tokenProduction.LexStates = new string[JavaCCGlobals.lexstate_I2S.Count];
+                tokenProduction.LexStates = new string[Lexstate_I2S.Count];
                 int num = 0;
-                foreach(var pair in JavaCCGlobals.lexstate_I2S)
+                foreach(var pair in Lexstate_I2S)
                 {
-                    string[] lexStates = tokenProduction.LexStates;
+                    var lexStates = tokenProduction.LexStates;
                     int num2 = num;
                     num++;
                     lexStates[num2] = (string)pair.Value;
@@ -450,21 +426,21 @@ public class Semanticize : JavaCCGlobals
             var array = new Dictionary<string, Dictionary<string, RegularExpression>>[tokenProduction.LexStates.Length];
             for (int i = 0; i < tokenProduction.LexStates.Length; i++)
             {
-                JavaCCGlobals.simple_tokens_table.TryGetValue(tokenProduction.LexStates[i],out var d);
+                SimpleTokensTable.TryGetValue(tokenProduction.LexStates[i],out var d);
                 array[i] = d;
             }
 
             foreach(var regExprSpec2 in respecs)
             {
-                if (regExprSpec2.rexp is RStringLiteral rStringLiteral)
+                if (regExprSpec2.Rexp is RStringLiteral rStringLiteral)
                 {
                     for (int j = 0; j < array.Length; j++)
                     {
                         if (!array[j].TryGetValue(rStringLiteral.image.ToUpper(),out var dict))
                         {
-                            if (rStringLiteral.ordinal == 0)
+                            if (rStringLiteral.Ordinal == 0)
                             {
-                                rStringLiteral.ordinal = JavaCCGlobals.tokenCount++;
+                                rStringLiteral.Ordinal = TokenCount++;
                             }
                             dict = new();
                             dict.Add(rStringLiteral.image, rStringLiteral);
@@ -473,7 +449,7 @@ public class Semanticize : JavaCCGlobals
                         }
                         if (HasIgnoreCase(dict, rStringLiteral.image))
                         {
-                            if (!rStringLiteral.tpContext.IsExplicit)
+                            if (!rStringLiteral.TpContext.IsExplicit)
                             {
                                 JavaCCErrors.Semantic_Error(rStringLiteral, ("String \"") + (rStringLiteral.image) + ("\" can never be matched ")
                                     + ("due to presence of more general (IGNORE_CASE) regular expression ")
@@ -492,22 +468,22 @@ public class Semanticize : JavaCCGlobals
                             }
                             continue;
                         }
-                        if (rStringLiteral.tpContext.IgnoreCase)
+                        if (rStringLiteral.TpContext.IgnoreCase)
                         {
-                            string str = "";
-                            int num3 = 0;
+                            var str = "";
+                            int n = 0;
                             foreach(var pair in dict)
                             {
                                 RegularExpression regularExpression = pair.Value;
-                                if (num3 != 0)
+                                if (n != 0)
                                 {
                                     str = (str) + (",");
                                 }
                                 str = (str) + (" line ") + (regularExpression.Line)
                                     ;
-                                num3++;
+                                n++;
                             }
-                            if (num3 == 1)
+                            if (n == 1)
                             {
                                 JavaCCErrors.Warning(rStringLiteral, ("String with IGNORE_CASE is partially superceded by string at") + (str) + (".")
                                     );
@@ -517,18 +493,18 @@ public class Semanticize : JavaCCGlobals
                                 JavaCCErrors.Warning(rStringLiteral, ("String with IGNORE_CASE is partially superceded by strings at") + (str) + (".")
                                     );
                             }
-                            if (rStringLiteral.ordinal == 0)
+                            if (rStringLiteral.Ordinal == 0)
                             {
-                                rStringLiteral.ordinal = JavaCCGlobals.tokenCount++;
+                                rStringLiteral.Ordinal = TokenCount++;
                             }
                             dict.Add(rStringLiteral.image, rStringLiteral);
                             continue;
                         }
                         if (!dict.TryGetValue(rStringLiteral.image,out var regularExpression2))
                         {
-                            if (rStringLiteral.ordinal == 0)
+                            if (rStringLiteral.Ordinal == 0)
                             {
-                                rStringLiteral.ordinal = JavaCCGlobals.tokenCount++;
+                                rStringLiteral.Ordinal = TokenCount++;
                             }
                             dict.Add(rStringLiteral.image, rStringLiteral);
                         }
@@ -547,55 +523,51 @@ public class Semanticize : JavaCCGlobals
                                     );
                             }
                         }
-                        else if (regularExpression2.tpContext.Kind != 0)
+                        else if (regularExpression2.TpContext.Kind != 0)
                         {
                             JavaCCErrors.Semantic_Error(rStringLiteral, ("String token \"") + (rStringLiteral.image) + ("\" has been defined as a \"")
-                                + (TokenProduction.KindImage[regularExpression2.tpContext.Kind])
+                                + (TokenProduction.KindImage[regularExpression2.TpContext.Kind])
                                 + ("\" token.")
                                 );
                         }
-                        else if (regularExpression2.private_rexp)
+                        else if (regularExpression2.PrivateRexp)
                         {
                             JavaCCErrors.Semantic_Error(rStringLiteral, ("String token \"") + (rStringLiteral.image) + ("\" has been defined as a private regular expression.")
                                 );
                         }
                         else
                         {
-                            rStringLiteral.ordinal = regularExpression2.ordinal;
+                            rStringLiteral.Ordinal = regularExpression2.Ordinal;
                             PrepareToRemove(respecs, regExprSpec2);
                         }
                     }
                 }
-                else if (!(regExprSpec2.rexp is RJustName))
+                else if (regExprSpec2.Rexp is not RJustName)
                 {
-                    regExprSpec2.rexp.ordinal = JavaCCGlobals.tokenCount++;
+                    regExprSpec2.Rexp.Ordinal = TokenCount++;
                 }
-                if (!(regExprSpec2.rexp is RJustName) && !string.Equals(regExprSpec2.rexp.label, ""))
+                if (regExprSpec2.Rexp is not RJustName && !string.Equals(regExprSpec2.Rexp.Label, ""))
                 {
-                    var dict2 = JavaCCGlobals.names_of_tokens;
-                    ;
-                    dict2.Add((regExprSpec2.rexp.ordinal), regExprSpec2.rexp.label);
+                    NamesOfTokens.Add((regExprSpec2.Rexp.Ordinal), regExprSpec2.Rexp.Label);
                 }
-                if (!(regExprSpec2.rexp is RJustName))
+                if (regExprSpec2.Rexp is not RJustName)
                 {
-                    var dict3 = JavaCCGlobals.rexps_of_tokens;
-                    ;
-                    dict3.Add((regExprSpec2.rexp.ordinal), regExprSpec2.rexp);
+                    RexpsOfTokens.Add((regExprSpec2.Rexp.Ordinal), regExprSpec2.Rexp);
                 }
             }
         }
         RemovePreparedItems();
         if (!Options.UserTokenManager)
         {
-            FixRJustNames fixRJustNames = new FixRJustNames();
-            foreach(var tokenProduction2 in JavaCCGlobals.rexprlist)
+            var fixRJustNames = new FixRJustNames();
+            foreach(var tokenProduction2 in RexprList)
             {
                 var respecs2 = tokenProduction2.Respecs;
                 foreach(var regExprSpec2 in respecs2)
                 {
-                    fixRJustNames.Root = regExprSpec2.rexp;
-                    ExpansionTreeWalker.PreOrderWalk(regExprSpec2.rexp, fixRJustNames);
-                    if (regExprSpec2.rexp is RJustName)
+                    fixRJustNames.Root = regExprSpec2.Rexp;
+                    ExpansionTreeWalker.PreOrderWalk(regExprSpec2.Rexp, fixRJustNames);
+                    if (regExprSpec2.Rexp is RJustName)
                     {
                         PrepareToRemove(respecs2, regExprSpec2);
                     }
@@ -605,24 +577,22 @@ public class Semanticize : JavaCCGlobals
         RemovePreparedItems();
         if (Options.UserTokenManager)
         {
-            foreach(var tokenProduction in JavaCCGlobals.rexprlist)
+            foreach(var tokenProduction in RexprList)
             {
                 foreach(var regExprSpec in tokenProduction.Respecs)
                 {
-                    if (regExprSpec.rexp is RJustName rJustName)
+                    if (regExprSpec.Rexp is RJustName rJustName)
                     {
-                        if (!JavaCCGlobals.named_tokens_table.TryGetValue(rJustName.label, out var regularExpression3))
+                        if (!NamedTokensTable.TryGetValue(rJustName.Label, out var regularExpression3))
                         {
-                            rJustName.ordinal = JavaCCGlobals.tokenCount++;
-                            JavaCCGlobals.named_tokens_table.Add(rJustName.label, rJustName);
-                            JavaCCGlobals.ordered_named_tokens.Add(rJustName);
-                            var dict4 = JavaCCGlobals.names_of_tokens;
-                            ;
-                            dict4.Add((rJustName.ordinal), rJustName.label);
+                            rJustName.Ordinal = TokenCount++;
+                            NamedTokensTable.Add(rJustName.Label, rJustName);
+                            ordered_named_tokens.Add(rJustName);
+                            NamesOfTokens.Add((rJustName.Ordinal), rJustName.Label);
                         }
                         else
                         {
-                            rJustName.ordinal = regularExpression3.ordinal;
+                            rJustName.Ordinal = regularExpression3.Ordinal;
                             PrepareToRemove(tokenProduction.Respecs, regExprSpec);
                         }
                     }
@@ -632,15 +602,15 @@ public class Semanticize : JavaCCGlobals
         RemovePreparedItems();
         if (Options.UserTokenManager)
         {
-            foreach(var tokenProduction in JavaCCGlobals.rexprlist)
+            foreach(var tokenProduction in RexprList)
             {
                 var respecs = tokenProduction.Respecs;
                 foreach(var regExprSpec in respecs)
                 {
-                    int key = (regExprSpec.rexp.ordinal);
-                    if (!JavaCCGlobals.names_of_tokens.ContainsKey(key))
+                    int key = (regExprSpec.Rexp.Ordinal);
+                    if (!NamesOfTokens.ContainsKey(key))
                     {
-                        JavaCCErrors.Warning(regExprSpec.rexp, 
+                        JavaCCErrors.Warning(regExprSpec.Rexp, 
                             "Unlabeled regular expression cannot be referred to by user generated token manager.");
                     }
                 }
@@ -648,71 +618,64 @@ public class Semanticize : JavaCCGlobals
         }
         if (JavaCCErrors._Error_Count != 0)
         {
-
             throw new MetaParseException();
         }
-        int num4 = 1;
-        while (num4 != 0)
+        int c = 1;
+        while (c != 0)
         {
-            num4 = 0;
-            foreach (var normalProduction2 in JavaCCGlobals.BNFProductions)
+            c = 0;
+            foreach (var normalProduction2 in BNFProductions)
             {
-                if (EmptyExpansionExists(normalProduction2.Expansion) && !normalProduction2.emptyPossible)
+                if (EmptyExpansionExists(normalProduction2.Expansion) && !normalProduction2.EmptyPossible)
                 {
-                    NormalProduction normalProduction3 = normalProduction2;
-                    int num5 = 1;
-                    NormalProduction normalProduction4 = normalProduction3;
-                    normalProduction4.emptyPossible = (byte)num5 != 0;
-                    num4 = num5;
+                    normalProduction2.EmptyPossible = true;
+                    c = 1;
                 }
             }
         }
         if (Options.SanityCheck && JavaCCErrors._Error_Count == 0)
         {
-            foreach (var normalProduction2 in JavaCCGlobals.BNFProductions)
+            foreach (var normalProduction2 in BNFProductions)
             {
                 ExpansionTreeWalker.PreOrderWalk(normalProduction2.Expansion, new EmptyChecker());
             }
-            foreach (var normalProduction2 in JavaCCGlobals.BNFProductions)
+            foreach (var normalProduction2 in BNFProductions)
             {
                 AddLeftMost(normalProduction2, normalProduction2.Expansion);
             }
-            foreach(var normalProduction2 in JavaCCGlobals.BNFProductions)
+            foreach(var normalProduction2 in BNFProductions)
             {
-                if (normalProduction2.walkStatus == 0)
+                if (normalProduction2.WalkStatus == 0)
                 {
                     ProdWalk(normalProduction2);
                 }
             }
             if (!Options.UserTokenManager)
             {
-                foreach(var tp in JavaCCGlobals.rexprlist)
+                foreach(var tp in RexprList)
                 {
-                    TokenProduction tokenProduction2 = tp;
-                    var respecs2 = tokenProduction2.Respecs;
-                    foreach(var rp in respecs2)
+                    foreach(var regExprSpec2 in tp.Respecs)
                     {
-                        RegExprSpec regExprSpec2 = rp;
-                        RegularExpression regularExpression3 = regExprSpec2.rexp;
-                        if (regularExpression3.walkStatus == 0)
+                        var reg3 = regExprSpec2.Rexp;
+                        if (reg3.WalkStatus == 0)
                         {
-                            regularExpression3.walkStatus = -1;
-                            if (RExpWalk(regularExpression3))
+                            reg3.WalkStatus = -1;
+                            if (RExpWalk(reg3))
                             {
-                                loopString = ("...") + (regularExpression3.label) + ("... --> ")
+                                loopString = ("...") + (reg3.Label) + ("... --> ")
                                     + (loopString)
                                     ;
-                                JavaCCErrors.Semantic_Error(regularExpression3, ("Loop in regular expression detected: \"") + (loopString) + ("\"")
+                                JavaCCErrors.Semantic_Error(reg3, ("Loop in regular expression detected: \"") + (loopString) + ("\"")
                                     );
                             }
-                            regularExpression3.walkStatus = 1;
+                            reg3.WalkStatus = 1;
                         }
                     }
                 }
             }
             if (JavaCCErrors._Error_Count == 0)
             {
-                foreach(var p in JavaCCGlobals.BNFProductions)
+                foreach(var p in BNFProductions)
                 {
                     ExpansionTreeWalker.PreOrderWalk(p.Expansion, new LookaheadChecker());
                 }
@@ -720,7 +683,6 @@ public class Semanticize : JavaCCGlobals
         }
         if (JavaCCErrors._Error_Count != 0)
         {
-
             throw new MetaParseException();
         }
     }
@@ -728,8 +690,6 @@ public class Semanticize : JavaCCGlobals
 
     public new static void ReInit()
     {
-        removeList = new();
-        itemList = new();
         other = null;
         loopString = null;
     }
@@ -756,7 +716,7 @@ public class Semanticize : JavaCCGlobals
 
     public static bool HasIgnoreCase(Dictionary<string, RegularExpression> dict, string str)
     {
-        if (dict.TryGetValue(str,out var regularExpression) && !regularExpression.tpContext.IgnoreCase)
+        if (dict.TryGetValue(str,out var regularExpression) && !regularExpression.TpContext.IgnoreCase)
         {
             return false;
         }
@@ -764,7 +724,7 @@ public class Semanticize : JavaCCGlobals
         foreach(var pair in dict)
         {
             regularExpression=pair.Value;
-            if (regularExpression.tpContext.IgnoreCase)
+            if (regularExpression.TpContext.IgnoreCase)
             {
                 other = regularExpression;
                 return true;
@@ -778,35 +738,35 @@ public class Semanticize : JavaCCGlobals
     {
         if (npright is NonTerminal)
         {
-            for (int i = 0; i < npleft.leIndex; i++)
+            for (int i = 0; i < npleft.LeIndex; i++)
             {
-                if (npleft.leftExpansions[i] == ((NonTerminal)npright).prod)
+                if (npleft.LeftExpansions[i] == ((NonTerminal)npright).prod)
                 {
                     return;
                 }
             }
-            if (npleft.leIndex == npleft.leftExpansions.Length)
+            if (npleft.LeIndex == npleft.LeftExpansions.Length)
             {
-                NormalProduction[] array = new NormalProduction[npleft.leIndex * 2];
-                Array.Copy(npleft.leftExpansions, 0, array, 0, npleft.leIndex);
-                npleft.leftExpansions = array;
+                var array = new NormalProduction[npleft.LeIndex * 2];
+                Array.Copy(npleft.LeftExpansions, 0, array, 0, npleft.LeIndex);
+                npleft.LeftExpansions = array;
             }
-            NormalProduction[] leftExpansions = npleft.leftExpansions;
-            int leIndex = npleft.leIndex;
-            npleft.leIndex = leIndex + 1;
+            var leftExpansions = npleft.LeftExpansions;
+            int leIndex = npleft.LeIndex;
+            npleft.LeIndex = leIndex + 1;
             leftExpansions[leIndex] = ((NonTerminal)npright).prod;
         }
-        else if (npright is OneOrMore)
+        else if (npright is OneOrMore more2)
         {
-            AddLeftMost(npleft, ((OneOrMore)npright).expansion);
+            AddLeftMost(npleft, more2.Expansion);
         }
-        else if (npright is ZeroOrMore)
+        else if (npright is ZeroOrMore more3)
         {
-            AddLeftMost(npleft, ((ZeroOrMore)npright).Expansion);
+            AddLeftMost(npleft, more3.Expansion);
         }
-        else if (npright is ZeroOrOne)
+        else if (npright is ZeroOrOne one2)
         {
-            AddLeftMost(npleft, ((ZeroOrOne)npright).Expansion);
+            AddLeftMost(npleft, one2.Expansion);
         }
         else if (npright is Choice pc)
         {
@@ -826,50 +786,50 @@ public class Semanticize : JavaCCGlobals
                 }
             }
         }
-        else if (npright is TryBlock)
+        else if (npright is TryBlock block)
         {
-            AddLeftMost(npleft, ((TryBlock)npright).Expression);
+            AddLeftMost(npleft, block.Expression);
         }
     }
 
 
     private static bool ProdWalk(NormalProduction np)
     {
-        np.walkStatus = -1;
-        for (int i = 0; i < np.leIndex; i++)
+        np.WalkStatus = -1;
+        for (int i = 0; i < np.LeIndex; i++)
         {
-            if (np.leftExpansions[i].walkStatus == -1)
+            if (np.LeftExpansions[i].WalkStatus == -1)
             {
-                np.leftExpansions[i].walkStatus = -2;
-                loopString = (np.lhs) + ("... --> ") + (np.leftExpansions[i].lhs)
+                np.LeftExpansions[i].WalkStatus = -2;
+                loopString = (np.Lhs) + ("... --> ") + (np.LeftExpansions[i].Lhs)
                     + ("...")
                     ;
-                if (np.walkStatus == -2)
+                if (np.WalkStatus == -2)
                 {
-                    np.walkStatus = 1;
+                    np.WalkStatus = 1;
                     JavaCCErrors.Semantic_Error(np, ("Left recursion detected: \"") + (loopString) + ("\"")
                         );
                     return false;
                 }
-                np.walkStatus = 1;
+                np.WalkStatus = 1;
                 return true;
             }
-            if (np.leftExpansions[i].walkStatus == 0 && ProdWalk(np.leftExpansions[i]))
+            if (np.LeftExpansions[i].WalkStatus == 0 && ProdWalk(np.LeftExpansions[i]))
             {
-                loopString = (np.lhs) + ("... --> ") + (loopString)
+                loopString = (np.Lhs) + ("... --> ") + (loopString)
                     ;
-                if (np.walkStatus == -2)
+                if (np.WalkStatus == -2)
                 {
-                    np.walkStatus = 1;
+                    np.WalkStatus = 1;
                     JavaCCErrors.Semantic_Error(np, ("Left recursion detected: \"") + (loopString) + ("\"")
                         );
                     return false;
                 }
-                np.walkStatus = 1;
+                np.WalkStatus = 1;
                 return true;
             }
         }
-        np.walkStatus = 1;
+        np.WalkStatus = 1;
         return false;
     }
 
@@ -878,32 +838,32 @@ public class Semanticize : JavaCCGlobals
     {
         if (exp is RJustName rJustName)
         {
-            if (rJustName.regexpr.walkStatus == -1)
+            if (rJustName.RegExpr.WalkStatus == -1)
             {
-                rJustName.regexpr.walkStatus = -2;
-                loopString = ("...") + (rJustName.regexpr.label) + ("...")
+                rJustName.RegExpr.WalkStatus = -2;
+                loopString = ("...") + (rJustName.RegExpr.Label) + ("...")
                     ;
                 return true;
             }
-            if (rJustName.regexpr.walkStatus == 0)
+            if (rJustName.RegExpr.WalkStatus == 0)
             {
-                rJustName.regexpr.walkStatus = -1;
-                if (RExpWalk(rJustName.regexpr))
+                rJustName.RegExpr.WalkStatus = -1;
+                if (RExpWalk(rJustName.RegExpr))
                 {
-                    loopString = ("...") + (rJustName.regexpr.label) + ("... --> ")
+                    loopString = ("...") + (rJustName.RegExpr.Label) + ("... --> ")
                         + (loopString)
                         ;
-                    if (rJustName.regexpr.walkStatus == -2)
+                    if (rJustName.RegExpr.WalkStatus == -2)
                     {
-                        rJustName.regexpr.walkStatus = 1;
-                        JavaCCErrors.Semantic_Error(rJustName.regexpr, ("Loop in regular expression detected: \"") + (loopString) + ("\"")
+                        rJustName.RegExpr.WalkStatus = 1;
+                        JavaCCErrors.Semantic_Error(rJustName.RegExpr, ("Loop in regular expression detected: \"") + (loopString) + ("\"")
                             );
                         return false;
                     }
-                    rJustName.regexpr.walkStatus = 1;
+                    rJustName.RegExpr.WalkStatus = 1;
                     return true;
                 }
-                rJustName.regexpr.walkStatus = 1;
+                rJustName.RegExpr.WalkStatus = 1;
                 return false;
             }
         }
@@ -920,39 +880,30 @@ public class Semanticize : JavaCCGlobals
                 }
                 return false;
             }
-            if (exp is RSequence rs)
+            switch (exp)
             {
-                foreach (var rex in rs.Units)
-                {
-                    if (RExpWalk(rex))
+                case RSequence rs:
                     {
-                        return true;
+                        foreach (var rex in rs.Units)
+                        {
+                            if (RExpWalk(rex))
+                            {
+                                return true;
+                            }
+                        }
+                        return false;
                     }
-                }
-                return false;
-            }
-            if (exp is ROneOrMore more)
-            {
-                return RExpWalk(more.RegExpr);
-            }
-            if (exp is RZeroOrMore more1)
-            {
-                return RExpWalk(more1.Regexpr);
-            }
-            if (exp is RZeroOrOne one)
-            {
-                return RExpWalk(one.regexpr);
-            }
-            if (exp is RRepetitionRange range)
-            {
-                return RExpWalk(range.regexpr);
+
+                case ROneOrMore more:
+                    return RExpWalk(more.RegExpr);
+                case RZeroOrMore more1:
+                    return RExpWalk(more1.Regexpr);
+                case RZeroOrOne one:
+                    return RExpWalk(one.Regexpr);
+                case RRepetitionRange range:
+                    return RExpWalk(range.regexpr);
             }
         }
         return false;
-    }
-
-
-    public Semanticize()
-    {
     }
 }

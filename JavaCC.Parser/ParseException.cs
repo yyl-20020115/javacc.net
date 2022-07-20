@@ -3,17 +3,17 @@ using System;
 using System.Text;
 using JavaCC.NET;
 
-public class ParseException : System.Exception
+public class ParseException : Exception
 {
 	protected internal bool specialConstructor;
-	public Token currentToken;
-	public int[][] expectedTokenSequences;
-	public string[] tokenImage;
-	protected internal string eol;
+	public Token CurrentToken;
+	public int[][] ExpectedTokenSequences;
+	public string[] TokenImage;
+	protected internal string Eol;
 
 	public ParseException()
 	{
-		eol = Environment.NewLine;
+		Eol = Environment.NewLine;
 		specialConstructor = false;
 	}
 
@@ -21,69 +21,69 @@ public class ParseException : System.Exception
 	public ParseException(string str)
 		: base(str)
 	{
-		eol = Environment.NewLine;
+		Eol = Environment.NewLine;
 		specialConstructor = false;
 	}
 
 
-	public ParseException(Token t, int[][] iarr, string[] strarr)
+	public ParseException(Token token, int[][] iarr, string[] strarr)
 		: base("")
 	{
-		eol = Environment.NewLine;
+		Eol = Environment.NewLine;
 		specialConstructor = true;
-		currentToken = t;
-		expectedTokenSequences = iarr;
-		tokenImage = strarr;
+		CurrentToken = token;
+		ExpectedTokenSequences = iarr;
+		TokenImage = strarr;
 	}
 
 
 	protected internal virtual string add_escapes(string str)
 	{
-		var stringBuilder = new StringBuilder();
+		var builder = new StringBuilder();
 		for (int i = 0; i < str.Length; i++)
 		{
 			switch (str[i])
 			{
 				case '\b':
-					stringBuilder.Append("\\b");
+					builder.Append("\\b");
 					continue;
 				case '\t':
-					stringBuilder.Append("\\t");
+					builder.Append("\\t");
 					continue;
 				case '\n':
-					stringBuilder.Append("\\n");
+					builder.Append("\\n");
 					continue;
 				case '\f':
-					stringBuilder.Append("\\f");
+					builder.Append("\\f");
 					continue;
 				case '\r':
-					stringBuilder.Append("\\r");
+					builder.Append("\\r");
 					continue;
 				case '"':
-					stringBuilder.Append("\\\"");
+					builder.Append("\\\"");
 					continue;
 				case '\'':
-					stringBuilder.Append("\\'");
+					builder.Append("\\'");
 					continue;
 				case '\\':
-					stringBuilder.Append("\\\\");
+					builder.Append("\\\\");
 					continue;
 				case '\0':
 					continue;
 			}
-			int num;
-			if ((num = str[i]) < 32 || num > 126)
+			int ch;
+			if ((ch = str[i]) < 32 || ch > 126)
 			{
-				string @this = ("0000")+(Utils.ToString(num, 16));
-				stringBuilder.Append(("\\u")+(
-					(@this.Substring(@this.Length - 4, @this.Length))));
+				var text = ("0000")+(Utils.ToString(ch, 16));
+				builder.Append(("\\u")+(
+					(text.Substring(text.Length - 4, text.Length))));
 			}
 			else
 			{
-				stringBuilder.Append((char)num);
+				builder.Append((char)ch);
 			}
 		}
-		return stringBuilder.ToString();
+		return builder.ToString();
 	}
 
 
@@ -95,27 +95,27 @@ public class ParseException : System.Exception
 			{
 				return base.Message;
 			}
-			var stringBuilder = new StringBuilder();
-			int num = 0;
-			for (int i = 0; i < expectedTokenSequences.Length; i++)
+			var builder = new StringBuilder();
+			int c = 0;
+			for (int i = 0; i < ExpectedTokenSequences.Length; i++)
 			{
-				if (num < expectedTokenSequences[i].Length)
+				if (c < ExpectedTokenSequences[i].Length)
 				{
-					num = expectedTokenSequences[i].Length;
+					c = ExpectedTokenSequences[i].Length;
 				}
-				for (int j = 0; j < expectedTokenSequences[i].Length; j++)
+				for (int j = 0; j < ExpectedTokenSequences[i].Length; j++)
 				{
-					stringBuilder.Append(tokenImage[expectedTokenSequences[i][j]]).Append(' ');
+					builder.Append(TokenImage[ExpectedTokenSequences[i][j]]).Append(' ');
 				}
-				if (expectedTokenSequences[i][expectedTokenSequences[i].Length - 1] != 0)
+				if (ExpectedTokenSequences[i][ExpectedTokenSequences[i].Length - 1] != 0)
 				{
-					stringBuilder.Append("...");
+					builder.Append("...");
 				}
-				stringBuilder.Append(eol).Append("    ");
+				builder.Append(Eol).Append("    ");
 			}
-			string str = "Encountered \"";
-			Token next = currentToken.Next;
-			for (int k = 0; k < num; k++)
+			var str = "Encountered \"";
+			var next = CurrentToken.Next;
+			for (int k = 0; k < c; k++)
 			{
 				if (k != 0)
 				{
@@ -123,29 +123,28 @@ public class ParseException : System.Exception
 				}
 				if (next.Kind == 0)
 				{
-					str = (str)+(tokenImage[0]);
+					str = (str)+(TokenImage[0]);
 					break;
 				}
-				str = (str)+(" ")+(tokenImage[next.Kind])
+				str = (str)+(" ")+(TokenImage[next.Kind])
 					;
 				str = (str)+(" \"");
 				str = (str)+(add_escapes(next.Image));
 				str = (str)+(" \"");
 				next = next.Next;
 			}
-			str = (str)+("\" at line ")+(currentToken.Next.BeginLine)
+			str = (str)+("\" at line ")+(CurrentToken.Next.BeginLine)
 				+(", column ")
-				+(currentToken.Next.BeginColumn)
+				+(CurrentToken.Next.BeginColumn)
 				;
-			str = (str)+(".")+(eol)
+			str = (str)+(".")+(Eol)
 				;
-			str = ((expectedTokenSequences.Length != 1) ? (str)+("Was expecting one of:")+(eol)
+			str = ((ExpectedTokenSequences.Length != 1) ? (str)+("Was expecting one of:")+(Eol)
 				+("    ")
-				 : (str)+("Was expecting:")+(eol)
+				 : (str)+("Was expecting:")+(Eol)
 				+("    ")
 				);
-			return (str)+(stringBuilder.ToString());
+			return (str)+(builder.ToString());
 		}
 	}
-
 }

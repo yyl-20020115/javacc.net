@@ -3419,12 +3419,12 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
             {
                 image = new StringBuilder();
             }
-            StringBuilder stringBuilder = image;
+            StringBuilder builder = image;
             JavaCharStream javaCharStream = input_stream;
             int num = jjimageLen;
             int num2 = jjmatchedPos + 1;
             lengthOfMatch = num2;
-            stringBuilder.Append(javaCharStream.GetSuffix(num + num2));
+            builder.Append(javaCharStream.GetSuffix(num + num2));
             restoreBeginLineCol();
             input_stream.Backup(1);
         }

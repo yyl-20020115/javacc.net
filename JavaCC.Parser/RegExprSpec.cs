@@ -2,10 +2,10 @@ namespace JavaCC.Parser;
 
 public class RegExprSpec
 {
-    public RegularExpression rexp;
-    public Action act;
-    public string nextState;
-    public Token nsTok;
+    public RegularExpression Rexp;
+    public Action Action;
+    public Token NsToken;
+    public string NextState = "";
 
     public RegExprSpec() { }
 }

@@ -24,11 +24,11 @@ public class HTMLGenerator : TextGenerator, Generator
         {
             WriteLine("");
             WriteLine("<TABLE ALIGN=CENTER>");
-            WriteLine(("<CAPTION><STRONG>") + (np.lhs) + ("</STRONG></CAPTION>"));
+            WriteLine(("<CAPTION><STRONG>") + (np.Lhs) + ("</STRONG></CAPTION>"));
         }
         WriteLine("<TR>");
-        WriteLine(("<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME=\"") + (GetId(np.lhs)) + ("\">")
-            + (np.lhs)
+        WriteLine(("<TD ALIGN=RIGHT VALIGN=BASELINE><A NAME=\"") + (GetId(np.Lhs)) + ("\">")
+            + (np.Lhs)
             + ("</A></TD>")
             );
         WriteLine("<TD ALIGN=CENTER VALIGN=BASELINE>::=</TD>");
@@ -57,19 +57,19 @@ public class HTMLGenerator : TextGenerator, Generator
 
     public HTMLGenerator() { }
 
-    public override void Text(string str)
+    public override void Text(string text)
     {
-        var str2 = "";
-        for (int i = 0; i < str.Length; i++)
+        var str = "";
+        for (int i = 0; i < text.Length; i++)
         {
-            str2 = ((str[i] != '<') ? ((str[i] != '>') ? ((str[i] != '&')
-                ? (str2) + (str[i])
-                : (str2) + ("&amp;"))
-                : (str2) + ("&gt;"))
-                : (str2) + ("&lt;"))
+            str = ((text[i] != '<') ? ((text[i] != '>') ? ((text[i] != '&')
+                ? (str) + (text[i])
+                : (str) + ("&amp;"))
+                : (str) + ("&gt;"))
+                : (str) + ("&lt;"))
                 ;
         }
-        Write(str2);
+        Write(str);
     }
 
 
@@ -117,13 +117,13 @@ public class HTMLGenerator : TextGenerator, Generator
     }
 
 
-    public override void SpecialTokens(string str)
+    public override void SpecialTokens(string text)
     {
         WriteLine(" <!-- Special token -->");
         WriteLine(" <TR>");
         WriteLine("  <TD>");
         WriteLine("<PRE>");
-        Write(str);
+        Write(text);
         WriteLine("</PRE>");
         WriteLine("  </TD>");
         WriteLine(" </TR>");
@@ -202,7 +202,7 @@ public class HTMLGenerator : TextGenerator, Generator
     {
         Write(
             ("<A HREF=\"#")
-            + (GetId(nt.name))
+            + (GetId(nt.Name))
             + ("\">")
             );
     }

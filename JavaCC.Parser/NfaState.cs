@@ -120,12 +120,6 @@ public class NfaState
 	internal static int[][][] statesForState;
 
 	
-	
-	public static void ___003Cclinit_003E()
-	{
-	}
-
-	
 	internal virtual void AddChar(char P_0)
 	{
 		onlyChar++;
@@ -334,7 +328,7 @@ public class NfaState
 			FixStateSets();
 		}
 		kinds[LexGen.lexStateIndex] = array;
-		pw.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private int ")+("jjMoveNfa")
+		pw.WriteLine(((!Options.Static) ? "" : "static ")+("private int ")+("jjMoveNfa")
 			+(LexGen.lexStateSuffix)
 			+("(int startState, int curPos)")
 			);
@@ -549,7 +543,7 @@ public class NfaState
 	
 	internal static void PrintBoilerPlate(TextWriter writer)
 	{
-		writer.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAdd(int state)")
+		writer.WriteLine(((!Options.Static) ? "" : "static ")+("private void ")+("jjCheckNAdd(int state)")
 			);
 		writer.WriteLine("{");
 		writer.WriteLine("   if (jjrounds[state] != jjround)");
@@ -558,21 +552,21 @@ public class NfaState
 		writer.WriteLine("      jjrounds[state] = jjround;");
 		writer.WriteLine("   }");
 		writer.WriteLine("}");
-		writer.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjAddStates(int start, int end)")
+		writer.WriteLine(((!Options.Static) ? "" : "static ")+("private void ")+("jjAddStates(int start, int end)")
 			);
 		writer.WriteLine("{");
 		writer.WriteLine("   do {");
 		writer.WriteLine("      jjstateSet[jjnewStateCnt++] = jjnextStates[start];");
 		writer.WriteLine("   } while (start++ != end);");
 		writer.WriteLine("}");
-		writer.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAddTwoStates(int state1, int state2)")
+		writer.WriteLine(((!Options.Static) ? "" : "static ")+("private void ")+("jjCheckNAddTwoStates(int state1, int state2)")
 			);
 		writer.WriteLine("{");
 		writer.WriteLine("   jjCheckNAdd(state1);");
 		writer.WriteLine("   jjCheckNAdd(state2);");
 		writer.WriteLine("}");
 		writer.WriteLine("");
-		writer.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAddStates(int start, int end)")
+		writer.WriteLine(((!Options.Static) ? "" : "static ")+("private void ")+("jjCheckNAddStates(int start, int end)")
 			);
 		writer.WriteLine("{");
 		writer.WriteLine("   do {");
@@ -582,7 +576,7 @@ public class NfaState
 		writer.WriteLine("");
 		if (jjCheckNAddStatesUnaryNeeded)
 		{
-			writer.WriteLine(((!Options.getStatic()) ? "" : "static ")+("private void ")+("jjCheckNAddStates(int start)")
+			writer.WriteLine(((!Options.Static) ? "" : "static ")+("private void ")+("jjCheckNAddStates(int start)")
 				);
 			writer.WriteLine("{");
 			writer.WriteLine("   jjCheckNAdd(jjnextStates[start]);");
@@ -1042,7 +1036,7 @@ public class NfaState
 		if (usefulEpsilonMoves > 0)
 		{
 			epsilonMovesString = "{ ";
-			StringBuilder stringBuilder;
+			StringBuilder builder;
 			for (int i = 0; i < epsilonMoves.Count; i++)
 			{
 				NfaState nfaState;
@@ -1056,8 +1050,8 @@ public class NfaState
 				}
 				indexedAllStates[(nfaState.stateName)].inNextOf++;
 				array[num] = nfaState.stateName;
-				stringBuilder = new StringBuilder();
-				epsilonMovesString = stringBuilder+(epsilonMovesString)+(nfaState.stateName)+(", ")
+				builder = new StringBuilder();
+				epsilonMovesString = builder+(epsilonMovesString)+(nfaState.stateName)+(", ")
 					;
 				int num2 = num;
 				num++;
@@ -1066,13 +1060,13 @@ public class NfaState
 					int num3 = num;
 					if (16 == -1 || num3 % 16 == 0)
 					{
-						stringBuilder = new StringBuilder();
-						epsilonMovesString = stringBuilder+(epsilonMovesString)+("\n");
+						builder = new StringBuilder();
+						epsilonMovesString = builder+(epsilonMovesString)+("\n");
 					}
 				}
 			}
-			stringBuilder = new StringBuilder();
-			epsilonMovesString = stringBuilder+(epsilonMovesString)+("};");
+			builder = new StringBuilder();
+			epsilonMovesString = builder+(epsilonMovesString)+("};");
 		}
 		usefulEpsilonMoves = num;
 		if (epsilonMovesString != null && !allNextStates.TryGetValue(epsilonMovesString,out var s))

@@ -4,15 +4,15 @@ using System.Text;
 
 public class NonTerminal : Expansion
 {
-    public List<Token> lhsTokens = new();
+    public readonly List<Token> LhsTokens = new();
 
-    public string name = "";
+    public string Name = "";
 
-    public List<Token> argument_tokens = new();
+    public readonly List<Token> ArgumentTokens = new();
 
     public NormalProduction prod;
 
     public NonTerminal() { }
 
-    public override StringBuilder Dump(int i, HashSet<Expansion> s) => base.Dump(i, s).Append(' ').Append(name);
+    public override StringBuilder Dump(int i, HashSet<Expansion> s) => base.Dump(i, s).Append(' ').Append(Name);
 }

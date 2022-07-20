@@ -12,13 +12,13 @@ public class JavaCCGlobals
 
     public static string OrigFileName = "";
 
-    public static bool jjtreeGenerated = false;
+    public static bool JJTreeGenerated = false;
 
     public static List<string> ToolNames = new();
 
-    public static string Cu_name = "";
+    public static string CuName = "";
 
-    public static List<Token> Cu_to_insertion_point_1 = new();
+    public static List<Token> CuToInsertionPoint1 = new();
 
     public static List<Token> Cu_to_insertion_point_2 = new();
 
@@ -28,25 +28,25 @@ public class JavaCCGlobals
 
     public static Dictionary<string, NormalProduction> Production_table = new();
 
-    public static Dictionary<string, int> lexstate_S2I = new();
+    public static Dictionary<string, int> Lexstate_S2I = new();
 
-    public static Dictionary<int, string> lexstate_I2S = new();
+    public static Dictionary<int, string> Lexstate_I2S = new();
 
     public static List<Token> token_mgr_decls = new();
 
-    public static List<TokenProduction> rexprlist = new();
+    public static List<TokenProduction> RexprList = new();
 
-    public static int tokenCount = 0;
+    public static int TokenCount = 0;
 
-    public static Dictionary<string, RegularExpression> named_tokens_table = new();
+    public static Dictionary<string, RegularExpression> NamedTokensTable = new();
 
     public static List<RegularExpression> ordered_named_tokens = new();
 
-    public static Dictionary<int, string> names_of_tokens = new();
+    public static Dictionary<int, string> NamesOfTokens = new();
 
-    public static Dictionary<int,RegularExpression> rexps_of_tokens = new();
+    public static Dictionary<int,RegularExpression> RexpsOfTokens = new();
 
-    public static Dictionary<string, Dictionary<string, Dictionary<string, RegularExpression>>> simple_tokens_table = new();
+    public static Dictionary<string, Dictionary<string, Dictionary<string, RegularExpression>>> SimpleTokensTable = new();
 
     protected internal static int maskindex = 0;
 
@@ -446,7 +446,7 @@ public class JavaCCGlobals
 
     public static string StaticOpt()
     {
-        if (Options.getStatic())
+        if (Options.Static)
         {
             return "static ";
         }
@@ -699,24 +699,24 @@ public class JavaCCGlobals
     {
         FileName = null;
         OrigFileName = null;
-        jjtreeGenerated = false;
+        JJTreeGenerated = false;
         ToolNames = null;
-        Cu_name = null;
-        Cu_to_insertion_point_1 = new();
+        CuName = null;
+        CuToInsertionPoint1 = new();
         Cu_to_insertion_point_2 = new();
         Cu_from_insertion_point_2 = new();
         BNFProductions = new();
         Production_table = new();
-        lexstate_S2I = new();
-        lexstate_I2S = new();
+        Lexstate_S2I = new();
+        Lexstate_I2S = new();
         token_mgr_decls = null;
-        rexprlist = new();
-        tokenCount = 0;
-        named_tokens_table = new();
+        RexprList = new();
+        TokenCount = 0;
+        NamedTokensTable = new();
         ordered_named_tokens = new();
-        names_of_tokens = new();
-        rexps_of_tokens = new();
-        simple_tokens_table = new();
+        NamesOfTokens = new();
+        RexpsOfTokens = new();
+        SimpleTokensTable = new();
         maskindex = 0;
         jj2index = 0;
         MaskVals = new();
@@ -728,19 +728,19 @@ public class JavaCCGlobals
 
     static JavaCCGlobals()
     {
-        Cu_to_insertion_point_1 = new();
+        CuToInsertionPoint1 = new();
         Cu_to_insertion_point_2 = new();
         Cu_from_insertion_point_2 = new();
         BNFProductions = new();
         Production_table = new();
-        lexstate_S2I = new();
-        lexstate_I2S = new();
-        rexprlist = new();
-        named_tokens_table = new();
+        Lexstate_S2I = new();
+        Lexstate_I2S = new();
+        RexprList = new();
+        NamedTokensTable = new();
         ordered_named_tokens = new();
-        names_of_tokens = new();
-        rexps_of_tokens = new();
-        simple_tokens_table = new();
+        NamesOfTokens = new();
+        RexpsOfTokens = new();
+        SimpleTokensTable = new();
         maskindex = 0;
         jj2index = 0;
         MaskVals = new();

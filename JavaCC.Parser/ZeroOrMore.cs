@@ -11,7 +11,7 @@ public class ZeroOrMore : Expansion
         Line = token.BeginLine;
         Column = token.BeginColumn;
         Expansion = expansion;
-        Expansion.parent = this;
+        Expansion.Parent = this;
     }
 
     public ZeroOrMore() { }

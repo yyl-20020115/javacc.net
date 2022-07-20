@@ -1,35 +1,37 @@
+using System;
+
 namespace JavaCC.Parser;
 
 public class KindInfo
 {
-    public long[] validKinds;
-    public long[] finalKinds;
-    public int validKindCnt;
-    public int finalKindCnt;
+    public long[] ValidKinds = Array.Empty<long>();
+    public long[] FinalKinds = Array.Empty<long>();
+    public int ValidKindCnt = 0;
+    public int VinalKindCnt = 0;
 
     public KindInfo(int length)
     {
-        validKindCnt = 0;
-        finalKindCnt = 0;
-        validKinds = new long[length / 64 + 1];
-        finalKinds = new long[length / 64 + 1];
+        ValidKindCnt = 0;
+        VinalKindCnt = 0;
+        ValidKinds = new long[length / 64 + 1];
+        FinalKinds = new long[length / 64 + 1];
     }
 
     public virtual void InsertValidKind(int kid)
     {
-        long[] array = validKinds;
+        long[] array = ValidKinds;
         int num = kid / 64;
         long[] array2 = array;
         array2[num] |= 1L << ((64 != -1) ? (kid % 64) : 0);
-        validKindCnt++;
+        ValidKindCnt++;
     }
 
-    public virtual void InsertFinalKind(int P_0)
+    public virtual void InsertFinalKind(int count)
     {
-        long[] array = finalKinds;
-        int num = P_0 / 64;
+        long[] array = FinalKinds;
+        int num = count / 64;
         long[] array2 = array;
-        array2[num] |= 1L << ((64 != -1) ? (P_0 % 64) : 0);
-        finalKindCnt++;
+        array2[num] |= 1L << ((64 != -1) ? (count % 64) : 0);
+        VinalKindCnt++;
     }
 }

@@ -1,14 +1,14 @@
 namespace JavaCC.Parser;
 
-internal class Phase3Data
+public class Phase3Data
 {
-    internal Expansion exp;
+    public Expansion Expansion;
 
-    internal int count;
+    public int Count = 0;
 
     internal Phase3Data(Expansion exp, int count)
     {
-        this.exp = exp;
-        this.count = count;
+        this.Expansion = exp;
+        this.Count = count;
     }
 }

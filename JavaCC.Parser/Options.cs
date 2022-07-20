@@ -7,16 +7,14 @@ using System.Text;
 public class Options
 {
 	protected internal static Dictionary<string,object> OptionValues = new();
-	private static HashSet<string> cmdLineSetting;
-	private static HashSet<string> inputFileSetting;
+	protected static HashSet<string> CmdLineSetting = new();
+	protected static HashSet<string> InputFileSetting = new();
 
-    public static bool getStatic() => BooleanValue("STATIC");
-
+    public static bool Static => BooleanValue("STATIC");
 
     public static bool IsOption(string str) => str != null && str.Length > 1 && str[0] == '-';
 
-
-    public static void setCmdLineOption(string str)
+    public static void SetCmdLineOption(string str)
 	{
 		string @this = ((str[0] != '-') ? str : str.Substring(1));
 		int num = @this.IndexOf((char)61);
@@ -97,38 +95,37 @@ public class Options
 				);
 			return;
 		}
-		if (cmdLineSetting.Contains(text))
+		if (CmdLineSetting.Contains(text))
 		{
 			Console.WriteLine(("Warning: Duplicate option setting \"")+(str)+("\" will be ignored.")
 				);
 			return;
 		}
-		obj = upgradeValue(text, obj);
+		obj = UpgradeValue(text, obj);
 		OptionValues.Add(text, obj);
-		cmdLineSetting.Add(text);
+		CmdLineSetting.Add(text);
 	}
 
 	
-	internal static Type class_0024(string P_0)
-	{
-		//Discarded unreachable code: IL_000d
-		
-		try
-		{
-			return Type.GetType(P_0);
-		}
-		catch
-		{
-		}
-		throw new System.Exception("Type Not Found");
-	}
+	//internal static Type class_0024(string P_0)
+	//{
+	//	//Discarded unreachable code: IL_000d	
+	//	try
+	//	{
+	//		return Type.GetType(P_0);
+	//	}
+	//	catch
+	//	{
+	//	}
+	//	throw new System.Exception("Type Not Found");
+	//}
 
 	
-	public static object upgradeValue(string str, object obj)
+	public static object UpgradeValue(string str, object obj)
 	{
 		if (string.Equals(str, "NODE_FACTORY", StringComparison.OrdinalIgnoreCase))
 		{
-			obj = (!(obj is bool b && b) ? "" : "*");
+            obj = (!(obj is bool b && b) ? "" : "*");
 		}
 		return obj;
 	}
@@ -153,8 +150,8 @@ public class Options
     public static void Init()
 	{
 		OptionValues = new();
-		cmdLineSetting = new();
-		inputFileSetting = new();
+		CmdLineSetting = new();
+		InputFileSetting = new();
 		OptionValues.Add("LOOKAHEAD", (1));
 		OptionValues.Add("CHOICE_AMBIGUITY_CHECK", (2));
 		OptionValues.Add("OTHER_AMBIGUITY_CHECK", (1));
@@ -183,41 +180,40 @@ public class Options
 	}
 
 	
-	public static string getOptionsString(string[] strarr)
+	public static string GetOptionsString(string[] options)
 	{
-		var stringBuilder = new StringBuilder();
-		for (int i = 0; i < strarr.Length; i++)
+		var builder = new StringBuilder();
+		for (int i = 0; i < options.Length; i++)
 		{
-			string text = strarr[i];
-			stringBuilder.Append(text);
-			stringBuilder.Append('=');
+			string text = options[i];
+			builder.Append(text);
+			builder.Append('=');
 			if(OptionValues.TryGetValue(text, out var val))
             {
-				stringBuilder.Append(val);
+				builder.Append(val);
 			}
-			if (i != strarr.Length - 1)
+			if (i != options.Length - 1)
 			{
-				stringBuilder.Append(',');
+				builder.Append(',');
 			}
 		}
-		return stringBuilder.ToString();
+		return builder.ToString();
 	}
 
 	
 	public static void SetInputFileOption(object obj1, object obj2, string str, object obj3)
 	{
-		string text = str.ToUpper();
+		var text = str.ToUpper();
 		if (!OptionValues.ContainsKey(text))
 		{
-			JavaCCErrors.Warning(obj1, ("Bad option name \"")+(str)+("\".  Option setting will be ignored.")
-				);
+			JavaCCErrors.Warning(obj1, ("Bad option name \"")+(str)+("\".  Option setting will be ignored."));
 			return;
 		}
 		if(OptionValues.TryGetValue(text, out var obj4))
         {
 
         }
-		obj3 = upgradeValue(str, obj3);
+		obj3 = UpgradeValue(str, obj3);
 		if (obj4 != null)
 		{
 			if (obj4.GetType() != obj3.GetType() || (obj3 is int && ((int)obj3) <= 0))
@@ -228,13 +224,13 @@ public class Options
 					);
 				return;
 			}
-			if (inputFileSetting.Contains(text))
+			if (InputFileSetting.Contains(text))
 			{
 				JavaCCErrors.Warning(obj1, ("Duplicate option setting for \"")+(str)+("\" will be ignored.")
 					);
 				return;
 			}
-			if (cmdLineSetting.Contains(text))
+			if (CmdLineSetting.Contains(text))
 			{
 				if (!object.ReferenceEquals(obj4, obj3))
 				{
@@ -245,15 +241,14 @@ public class Options
 			}
 		}
 		OptionValues.Add(text, obj3);
-		inputFileSetting.Add(text);
+		InputFileSetting.Add(text);
 	}
-
 	
 	public static void Normalize()
 	{
 		if (DebugLookahead && !DebugParser)
 		{
-			if (cmdLineSetting.Contains("DEBUG_PARSER") || inputFileSetting.Contains("DEBUG_PARSER"))
+			if (CmdLineSetting.Contains("DEBUG_PARSER") || InputFileSetting.Contains("DEBUG_PARSER"))
 			{
 				JavaCCErrors.Warning("True setting of option DEBUG_LOOKAHEAD overrides false setting of option DEBUG_PARSER.");
 			}
@@ -261,69 +256,47 @@ public class Options
 		}
 	}
 
-
     public static int Lookahead => IntValue("LOOKAHEAD");
-
 
     public static int ChoiceAmbiguityCheck => IntValue("CHOICE_AMBIGUITY_CHECK");
 
-
     public static int OtherAmbiguityCheck => IntValue("OTHER_AMBIGUITY_CHECK");
-
 
     public static bool DebugTokenManager => BooleanValue("DEBUG_TOKEN_MANAGER");
 
-
     public static bool ErrorReporting => BooleanValue("ERROR_REPORTING");
-
 
     public static bool JavaUnicodeEscape => BooleanValue("JAVA_UNICODE_ESCAPE");
 
-
     public static bool UnicodeInput => BooleanValue("UNICODE_INPUT");
-
 
     public static bool IgnoreCase => BooleanValue("IGNORE_CASE");
 
-
     public static bool UserTokenManager => BooleanValue("USER_TOKEN_MANAGER");
-
 
     public static bool UserCharStream => BooleanValue("USER_CHAR_STREAM");
 
-
     public static bool BuildParser => BooleanValue("BUILD_PARSER");
-
 
     public static bool BuildTokenManager => BooleanValue("BUILD_TOKEN_MANAGER");
 
-
     public static bool TokenManagerUsesParser => BooleanValue("TOKEN_MANAGER_USES_PARSER");
-
 
     public static bool SanityCheck => BooleanValue("SANITY_CHECK");
 
-
     public static bool ForceLaCheck => BooleanValue("FORCE_LA_CHECK");
-
 
     public static bool CommonTokenAction => BooleanValue("COMMON_TOKEN_ACTION");
 
-
     public static bool CacheTokens => BooleanValue("CACHE_TOKENS");
-
 
     public static bool KeepLineColumn => BooleanValue("KEEP_LINE_COLUMN");
 
-
     public static string TokenExtends => StringValue("TOKEN_EXTENDS");
-
 
     public static string TokenFactory => StringValue("TOKEN_FACTORY");
 
-
     public static FileInfo OutputDirectory => new (StringValue("OUTPUT_DIRECTORY"));
 
-
-    public static string StringBufOrBuild => nameof(StringBuilder);
+    public static string StringBuilderName => nameof(StringBuilder);
 }

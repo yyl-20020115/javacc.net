@@ -8,11 +8,11 @@ public class JavaCharStream
 
     public int bufpos;
 
-    internal int bufsize;
+    public int bufsize;
 
-    internal int available;
+    public int available;
 
-    internal int tokenBegin;
+    public int tokenBegin;
 
     protected internal int[] bufline;
 
@@ -70,8 +70,6 @@ public class JavaCharStream
         int num2 = ((bufpos < tokenBegin) ? (bufsize - tokenBegin + bufpos + 1 + inBuf) : (bufpos - tokenBegin + inBuf + 1));
         int j = 0;
         int num3 = 0;
-        _ = 0;
-        _ = 0;
         int num4 = 0;
         for (; j < num2; j++)
         {

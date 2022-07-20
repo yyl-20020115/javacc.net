@@ -8,9 +8,9 @@ public class TextGenerator : Generator
 {
     public TextWriter Writer { get; protected internal set; }
 
-    public virtual void Write(string str)
+    public virtual void Write(string text)
     {
-        Writer.Write(str);
+        Writer.Write(text);
     }
 
     protected internal virtual TextWriter CreateOutputStream()
@@ -63,14 +63,14 @@ public class TextGenerator : Generator
     }
 
 
-    public virtual void Text(string str)
+    public virtual void Text(string text)
     {
-        Write(str);
+        Write(text);
     }
 
     public virtual void ProductionStart(NormalProduction np)
     {
-        Writer.Write(("\t") + (np.lhs) + ("\t:=\t"));
+        Writer.Write(("\t") + (np.Lhs) + ("\t:=\t"));
     }
 
     public virtual void ProductionEnd(NormalProduction np)
@@ -78,9 +78,9 @@ public class TextGenerator : Generator
         Writer.WriteLine();
     }
 
-    public virtual void Error(string str)
+    public virtual void Error(string text)
     {
-        Console.Error.WriteLine(str);
+        Console.Error.WriteLine(text);
     }
 
     public TextGenerator() { }
@@ -97,9 +97,9 @@ public class TextGenerator : Generator
         Writer.Close();
     }
 
-    public virtual void SpecialTokens(string str)
+    public virtual void SpecialTokens(string text)
     {
-        Writer.Write(str);
+        Writer.Write(text);
     }
 
     public virtual void TokenStart(TokenProduction tp)
@@ -162,18 +162,18 @@ public class TextGenerator : Generator
     {
     }
 
-    public virtual void Debug(string str)
+    public virtual void Debug(string text)
     {
-        Console.Error.WriteLine(str);
+        Console.Error.WriteLine(text);
     }
 
-    public virtual void Info(string str)
+    public virtual void Info(string text)
     {
-        Console.Error.WriteLine(str);
+        Console.Error.WriteLine(text);
     }
 
-    public virtual void Warn(string str)
+    public virtual void Warn(string text)
     {
-        Console.Error.WriteLine(str);
+        Console.Error.WriteLine(text);
     }
 }

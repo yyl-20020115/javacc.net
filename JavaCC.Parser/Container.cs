@@ -1,6 +1,6 @@
 namespace JavaCC.Parser;
 public class Container
 {
-    public object member;
+    public Expansion Member;
     public Container() { }
 }

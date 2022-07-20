@@ -157,7 +157,7 @@ public class JJTree
         IL_0160:
             try
             {
-                Options.setCmdLineOption(strarr[result2]);
+                Options.SetCmdLineOption(strarr[result2]);
                 result2++;
             }
             catch

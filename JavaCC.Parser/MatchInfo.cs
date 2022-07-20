@@ -2,17 +2,17 @@ namespace JavaCC.Parser;
 
 public class MatchInfo
 {
-    public static int laLimit;
-    internal int[] match;
-    internal int firstFreeLoc;
+    public static int LaLimit = 0;
+    public int[] Match;
+    public int FirstFreeLoc = 0;
 
     public MatchInfo()
     {
-        match = new int[laLimit];
+        Match = new int[LaLimit];
     }
 
     public static void ReInit()
     {
-        laLimit = 0;
+        LaLimit = 0;
     }
 }

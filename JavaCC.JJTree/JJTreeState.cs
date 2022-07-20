@@ -6,7 +6,7 @@ internal sealed class JJTreeState
 {
     internal static void InsertParserMembers(IO io)
     {
-        var str = ((!Options.getStatic()) ? "" : "static ");
+        var str = ((!Options.Static) ? "" : "static ");
         io.WriteLine();
         io.WriteLine(("  protected ") + (str) + (NameState())
             + (" jjtree = new ")

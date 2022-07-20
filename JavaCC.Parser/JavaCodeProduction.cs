@@ -3,6 +3,6 @@ using System.Collections.Generic;
 
 public class JavaCodeProduction : NormalProduction
 {
-    public List<Token> CodeTokens = new();
+    public readonly List<Token> CodeTokens = new();
     public JavaCodeProduction() { }
 }

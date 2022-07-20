@@ -4,27 +4,27 @@ using System.Text;
 
 public class OneOrMore : Expansion
 {
-    public Expansion expansion;
+    public Expansion Expansion;
 
-    public OneOrMore(Token t, Expansion e)
+    public OneOrMore(Token token, Expansion expansion)
     {
-        Line = t.BeginLine;
-        Column = t.BeginColumn;
-        expansion = e;
-        expansion.parent = this;
+        Line = token.BeginLine;
+        Column = token.BeginColumn;
+        Expansion = expansion;
+        Expansion.Parent = this;
     }
 
     public OneOrMore() { }
 
-    public override StringBuilder Dump(int i, HashSet<Expansion> s)
+    public override StringBuilder Dump(int i, HashSet<Expansion> set)
     {
-        var stringBuilder = base.Dump(i, s);
-        if (s.Contains(this))
+        var builder = base.Dump(i, set);
+        if (set.Contains(this))
         {
-            return stringBuilder;
+            return builder;
         }
-        s.Add(this);
-        stringBuilder.Append(Expansion.EOL).Append(expansion.Dump(i + 1, s));
-        return stringBuilder;
+        set.Add(this);
+        builder.Append(EOL).Append(Expansion.Dump(i + 1, set));
+        return builder;
     }
 }

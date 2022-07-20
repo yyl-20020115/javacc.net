@@ -42,7 +42,7 @@ public class RRepetitionRange : RegularExpression
                 break;
             }
             RZeroOrOne rZeroOrOne = new RZeroOrOne();
-            rZeroOrOne.regexpr = regexpr;
+            rZeroOrOne.Regexpr = regexpr;
             vector.Add(rZeroOrOne);
         }
         RSequence rSequence = new RSequence(vector);

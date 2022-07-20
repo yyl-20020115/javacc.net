@@ -4,39 +4,39 @@ using System.Text;
 
 public abstract class RegularExpression : Expansion
 {
-    public string label = "";
+    public string Label = "";
 
-    internal new int ordinal = 0;
+    public int Ordinal = 0;
 
-    public List<Token> lhsTokens = new();
+    public List<Token> LhsTokens = new();
 
-    public Token rhsToken;
+    public Token RhsToken;
 
-    public bool private_rexp;
+    public bool PrivateRexp = false;
 
-    public TokenProduction tpContext;
+    public TokenProduction TpContext;
 
-    internal int walkStatus;
+    public int WalkStatus = 0;
 
-    public virtual bool CanMatchAnyChar() => false;
+    public virtual bool CanMatchAnyChar => false;
 
     public abstract Nfa GenerateNfa(bool b);
 
     public RegularExpression()
     {
-        label = "";
-        lhsTokens = new();
-        private_rexp = false;
-        tpContext = null;
-        walkStatus = 0;
+        Label = "";
+        LhsTokens = new();
+        PrivateRexp = false;
+        TpContext = null;
+        WalkStatus = 0;
     }
 
 
     public override StringBuilder Dump(int i, HashSet<Expansion> s)
     {
-        var stringBuilder = base.Dump(i, s);
+        var builder = base.Dump(i, s);
         s.Add(this);
-        stringBuilder.Append(' ').Append(label);
-        return stringBuilder;
+        builder.Append(' ').Append(Label);
+        return builder;
     }
 }

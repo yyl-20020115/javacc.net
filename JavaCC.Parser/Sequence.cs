@@ -9,11 +9,11 @@ public class Sequence : Expansion
     public Sequence() { }
 
 
-    public Sequence(Token t, Lookahead l)
+    public Sequence(Token token, Lookahead lookahead)
     {
-        Line = t.BeginLine;
-        Column = t.BeginColumn;
-        Units.Add(l);
+        Line = token.BeginLine;
+        Column = token.BeginColumn;
+        Units.Add(lookahead);
     }
 
 
@@ -21,21 +21,21 @@ public class Sequence : Expansion
     {
         if (s.Contains(this))
         {
-            //var stringBuilder = base.dump(0, s).insert(0, '[').Append(']');
+            //var builder = base.dump(0, s).insert(0, '[').Append(']');
             //CharSequence s2 = default(CharSequence);
             //object obj = (s2.___003Cref_003E = dumpPrefix(i));
-            //StringBuilder result = stringBuilder.insert(0, s2);
+            //StringBuilder result = builder.insert(0, s2);
 
             return this.DumpPrefix(i).Append("[" + base.Dump(0, s) + "]");
         }
         s.Add(this);
-        var stringBuffer2 = base.Dump(i, s);
+        var builder = base.Dump(i, s);
         //Iterator iterator = units.iterator();
         foreach (var expansion in this.Units)
         {
-            stringBuffer2.Append(Expansion.EOL).Append(expansion.Dump(i + 1, s));
+            builder.Append(EOL).Append(expansion.Dump(i + 1, s));
         }
-        return stringBuffer2;
+        return builder;
     }
 
 }

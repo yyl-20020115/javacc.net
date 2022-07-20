@@ -59,7 +59,7 @@ public class NodeScope
             + (NodeVar)
             + (" = ")
             );
-        string str2 = ((!Options.getStatic()) ? "this" : "null");
+        string str2 = ((!Options.Static) ? "this" : "null");
         string str3 = ((!JJTreeOptions.NodeUsesParser) ? "" : (str2) + (", "));
         if (string.Equals(JJTreeOptions.NodeFactory, "*"))
         {

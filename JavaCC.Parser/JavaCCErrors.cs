@@ -1,11 +1,11 @@
 namespace JavaCC.Parser;
 using System;
 
-public sealed class JavaCCErrors
+public class JavaCCErrors
 {
-    private static int ParseErrorCount = 0;
-    private static int SemanticErrorCount = 0;
-    private static int WarningCount = 0;
+    protected static int ParseErrorCount = 0;
+    protected static int SemanticErrorCount = 0;
+    protected static int WarningCount = 0;
 
 
     public static void Warning(string str)
@@ -59,8 +59,8 @@ public sealed class JavaCCErrors
     {
         if (_loc is NormalProduction normalProduction)
         {
-            Console.Error.Write(("Line ") + (normalProduction.line) + (", Column ")
-                + (normalProduction.column)
+            Console.Error.Write(("Line ") + (normalProduction.Line) + (", Column ")
+                + (normalProduction.Column)
                 + (": ")
                 );
         }
@@ -109,8 +109,4 @@ public sealed class JavaCCErrors
         Console.Error.WriteLine(str);
         ParseErrorCount++;
     }
-
-    public static int _Parse_Error_Count => ParseErrorCount;
-
-    public static int _Semantic_Error_Count => SemanticErrorCount;
 }

@@ -1,118 +1,117 @@
 namespace JavaCC.Parser;
+
+using System;
 using System.Collections.Generic;
 
 public class RCharacterList : RegularExpression
 {
-    public bool negated_list = false;
+    public bool NegatedList = false;
 
-    public List<object> descriptors = new();
+    public List<Expansion> Descriptors = new();
 
+    public static char[] DiffLowerCaseRanges = Array.Empty<char>();
 
-    internal static char[] diffLowerCaseRanges;
+    public static char[] DiffUpperCaseRanges = Array.Empty<char>();
 
+    public bool Transformed = false;
 
-    internal static char[] diffUpperCaseRanges;
-
-    internal bool transformed = false;
-
-
-    internal RCharacterList()
+    public RCharacterList()
     {
     }
 
 
-    internal virtual void ToCaseNeutral()
+    public virtual void ToCaseNeutral()
     {
-        int num = descriptors.Count;
-        for (int i = 0; i < num; i++)
+        int nc = Descriptors.Count;
+        for (int i = 0; i < nc; i++)
         {
             int ch;
-            if (descriptors[i] is SingleCharacter character)
+            if (Descriptors[i] is SingleCharacter character)
             {
                 ch = character.CH;
                 if (ch != char.ToLower((char)ch))
                 {
-                    descriptors.Add(new SingleCharacter(char.ToLower((char)ch)));
+                    Descriptors.Add(new SingleCharacter(char.ToLower((char)ch)));
                 }
                 if (ch != char.ToUpper((char)ch))
                 {
-                    descriptors.Add(new SingleCharacter(char.ToUpper((char)ch)));
+                    Descriptors.Add(new SingleCharacter(char.ToUpper((char)ch)));
                 }
                 continue;
             }
-            ch = ((CharacterRange)descriptors[i]).Left;
-            int right = ((CharacterRange)descriptors[i]).Right;
+            ch = ((CharacterRange)Descriptors[i]).Left;
+            int right = ((CharacterRange)Descriptors[i]).Right;
             int j;
-            for (j = 0; ch > diffLowerCaseRanges[j]; j += 2)
+            for (j = 0; ch > DiffLowerCaseRanges[j]; j += 2)
             {
             }
-            if (ch < diffLowerCaseRanges[j])
+            if (ch < DiffLowerCaseRanges[j])
             {
-                if (right >= diffLowerCaseRanges[j])
+                if (right >= DiffLowerCaseRanges[j])
                 {
-                    if (right > diffLowerCaseRanges[j + 1])
+                    if (right > DiffLowerCaseRanges[j + 1])
                     {
-                        descriptors.Add(new CharacterRange(char.ToLower(diffLowerCaseRanges[j]), char.ToLower(diffLowerCaseRanges[j + 1])));
+                        Descriptors.Add(new CharacterRange(char.ToLower(DiffLowerCaseRanges[j]), char.ToLower(DiffLowerCaseRanges[j + 1])));
                         goto IL_01e9;
                     }
-                    descriptors.Add(new CharacterRange(char.ToLower(diffLowerCaseRanges[j]), (char)(char.ToLower(diffLowerCaseRanges[j]) + right - diffLowerCaseRanges[j])));
+                    Descriptors.Add(new CharacterRange(char.ToLower(DiffLowerCaseRanges[j]), (char)(char.ToLower(DiffLowerCaseRanges[j]) + right - DiffLowerCaseRanges[j])));
                 }
             }
             else
             {
-                if (right > diffLowerCaseRanges[j + 1])
+                if (right > DiffLowerCaseRanges[j + 1])
                 {
-                    descriptors.Add(new CharacterRange((char)(char.ToLower(diffLowerCaseRanges[j]) + ch - diffLowerCaseRanges[j]), char.ToLower(diffLowerCaseRanges[j + 1])));
+                    Descriptors.Add(new CharacterRange((char)(char.ToLower(DiffLowerCaseRanges[j]) + ch - DiffLowerCaseRanges[j]), char.ToLower(DiffLowerCaseRanges[j + 1])));
                     goto IL_01e9;
                 }
-                descriptors.Add(new CharacterRange((char)(char.ToLower(diffLowerCaseRanges[j]) + ch - diffLowerCaseRanges[j]), (char)(char.ToLower(diffLowerCaseRanges[j]) + right - diffLowerCaseRanges[j])));
+                Descriptors.Add(new CharacterRange((char)(char.ToLower(DiffLowerCaseRanges[j]) + ch - DiffLowerCaseRanges[j]), (char)(char.ToLower(DiffLowerCaseRanges[j]) + right - DiffLowerCaseRanges[j])));
             }
             goto IL_0279;
         IL_01e9:
-            for (j += 2; right > diffLowerCaseRanges[j]; j += 2)
+            for (j += 2; right > DiffLowerCaseRanges[j]; j += 2)
             {
-                if (right <= diffLowerCaseRanges[j + 1])
+                if (right <= DiffLowerCaseRanges[j + 1])
                 {
-                    descriptors.Add(new CharacterRange(char.ToLower(diffLowerCaseRanges[j]), (char)(char.ToLower(diffLowerCaseRanges[j]) + right - diffLowerCaseRanges[j])));
+                    Descriptors.Add(new CharacterRange(char.ToLower(DiffLowerCaseRanges[j]), (char)(char.ToLower(DiffLowerCaseRanges[j]) + right - DiffLowerCaseRanges[j])));
                     break;
                 }
-                descriptors.Add(new CharacterRange(char.ToLower(diffLowerCaseRanges[j]), char.ToLower(diffLowerCaseRanges[j + 1])));
+                Descriptors.Add(new CharacterRange(char.ToLower(DiffLowerCaseRanges[j]), char.ToLower(DiffLowerCaseRanges[j + 1])));
             }
             goto IL_0279;
         IL_0279:
-            for (j = 0; ch > diffUpperCaseRanges[j]; j += 2)
+            for (j = 0; ch > DiffUpperCaseRanges[j]; j += 2)
             {
             }
-            if (ch < diffUpperCaseRanges[j])
+            if (ch < DiffUpperCaseRanges[j])
             {
-                if (right < diffUpperCaseRanges[j])
+                if (right < DiffUpperCaseRanges[j])
                 {
                     continue;
                 }
-                if (right <= diffUpperCaseRanges[j + 1])
+                if (right <= DiffUpperCaseRanges[j + 1])
                 {
-                    descriptors.Add(new CharacterRange(char.ToUpper(diffUpperCaseRanges[j]), (char)(char.ToUpper(diffUpperCaseRanges[j]) + right - diffUpperCaseRanges[j])));
+                    Descriptors.Add(new CharacterRange(char.ToUpper(DiffUpperCaseRanges[j]), (char)(char.ToUpper(DiffUpperCaseRanges[j]) + right - DiffUpperCaseRanges[j])));
                     continue;
                 }
-                descriptors.Add(new CharacterRange(char.ToUpper(diffUpperCaseRanges[j]), char.ToUpper(diffUpperCaseRanges[j + 1])));
+                Descriptors.Add(new CharacterRange(char.ToUpper(DiffUpperCaseRanges[j]), char.ToUpper(DiffUpperCaseRanges[j + 1])));
             }
             else
             {
-                if (right <= diffUpperCaseRanges[j + 1])
+                if (right <= DiffUpperCaseRanges[j + 1])
                 {
-                    descriptors.Add(new CharacterRange((char)(char.ToUpper(diffUpperCaseRanges[j]) + ch - diffUpperCaseRanges[j]), (char)(char.ToUpper(diffUpperCaseRanges[j]) + right - diffUpperCaseRanges[j])));
+                    Descriptors.Add(new CharacterRange((char)(char.ToUpper(DiffUpperCaseRanges[j]) + ch - DiffUpperCaseRanges[j]), (char)(char.ToUpper(DiffUpperCaseRanges[j]) + right - DiffUpperCaseRanges[j])));
                     continue;
                 }
-                descriptors.Add(new CharacterRange((char)(char.ToUpper(diffUpperCaseRanges[j]) + ch - diffUpperCaseRanges[j]), char.ToUpper(diffUpperCaseRanges[j + 1])));
+                Descriptors.Add(new CharacterRange((char)(char.ToUpper(DiffUpperCaseRanges[j]) + ch - DiffUpperCaseRanges[j]), char.ToUpper(DiffUpperCaseRanges[j + 1])));
             }
-            for (j += 2; right > diffUpperCaseRanges[j]; j += 2)
+            for (j += 2; right > DiffUpperCaseRanges[j]; j += 2)
             {
-                if (right <= diffUpperCaseRanges[j + 1])
+                if (right <= DiffUpperCaseRanges[j + 1])
                 {
-                    descriptors.Add(new CharacterRange(char.ToUpper(diffUpperCaseRanges[j]), (char)(char.ToUpper(diffUpperCaseRanges[j]) + right - diffUpperCaseRanges[j])));
+                    Descriptors.Add(new CharacterRange(char.ToUpper(DiffUpperCaseRanges[j]), (char)(char.ToUpper(DiffUpperCaseRanges[j]) + right - DiffUpperCaseRanges[j])));
                     break;
                 }
-                descriptors.Add(new CharacterRange(char.ToUpper(diffUpperCaseRanges[j]), char.ToUpper(diffUpperCaseRanges[j + 1])));
+                Descriptors.Add(new CharacterRange(char.ToUpper(DiffUpperCaseRanges[j]), char.ToUpper(DiffUpperCaseRanges[j + 1])));
             }
         }
     }
@@ -120,24 +119,23 @@ public class RCharacterList : RegularExpression
 
     internal virtual void SortDescriptors()
     {
-        List<object> vector = new(descriptors.Count);
+        List<Expansion> vector = new(Descriptors.Count);
         int num = 0;
-        for (int i = 0; i < descriptors.Count; i++)
+        for (int i = 0; i < Descriptors.Count; i++)
         {
-            int num2;
-            if (descriptors[i] is SingleCharacter)
+            int n2;
+            if (Descriptors[i] is SingleCharacter singleCharacter)
             {
-                SingleCharacter singleCharacter = (SingleCharacter)descriptors[i];
-                num2 = 0;
+                n2 = 0;
                 while (true)
                 {
-                    if (num2 < num)
+                    if (n2 < num)
                     {
-                        if (vector[num2] is SingleCharacter)
+                        if (vector[n2] is SingleCharacter character2)
                         {
-                            if (((SingleCharacter)vector[num2]).CH <= singleCharacter.CH)
+                            if (character2.CH <= singleCharacter.CH)
                             {
-                                if (((SingleCharacter)vector[num2]).CH == singleCharacter.CH)
+                                if (character2.CH == singleCharacter.CH)
                                 {
                                     break;
                                 }
@@ -146,8 +144,8 @@ public class RCharacterList : RegularExpression
                         }
                         else
                         {
-                            int left = ((CharacterRange)vector[num2]).Left;
-                            if (InRange(singleCharacter.CH, (CharacterRange)vector[num2]))
+                            int left = ((CharacterRange)vector[n2]).Left;
+                            if (InRange(singleCharacter.CH, (CharacterRange)vector[n2]))
                             {
                                 break;
                             }
@@ -157,58 +155,58 @@ public class RCharacterList : RegularExpression
                             }
                         }
                     }
-                    vector.Insert(num2, singleCharacter);//.insertElementAt(singleCharacter, num2);
+                    vector.Insert(n2, singleCharacter);//.insertElementAt(singleCharacter, num2);
                     num++;
                     break;
                 IL_00e5:
-                    num2++;
+                    n2++;
                 }
                 continue;
             }
-            CharacterRange characterRange = (CharacterRange)descriptors[i];
-            num2 = 0;
+            CharacterRange characterRange = (CharacterRange)Descriptors[i];
+            n2 = 0;
             while (true)
             {
-                if (num2 < num)
+                if (n2 < num)
                 {
-                    if (vector[num2] is SingleCharacter)
+                    if (vector[n2] is SingleCharacter character2)
                     {
-                        if (InRange(((SingleCharacter)vector[num2]).CH, characterRange))
+                        if (InRange(character2.CH, characterRange))
                         {
-                            vector.RemoveAt(num2--);
+                            vector.RemoveAt(n2--);
                             num += -1;
                             goto IL_0268;
                         }
-                        if (((SingleCharacter)vector[num2]).CH <= characterRange.Right)
+                        if (character2.CH <= characterRange.Right)
                         {
                             goto IL_0268;
                         }
                     }
                     else
                     {
-                        if (SubRange(characterRange, (CharacterRange)vector[num2]))
+                        if (SubRange(characterRange, (CharacterRange)vector[n2]))
                         {
                             break;
                         }
-                        if (SubRange((CharacterRange)vector[num2], characterRange))
+                        if (SubRange((CharacterRange)vector[n2], characterRange))
                         {
-                            vector[num2] = (characterRange);
+                            vector[n2] = (characterRange);
                             break;
                         }
-                        if (Overlaps(characterRange, (CharacterRange)vector[num2]))
+                        if (Overlaps(characterRange, (CharacterRange)vector[n2]))
                         {
-                            characterRange.Left = (char)(((CharacterRange)vector[num2]).Right + 1);
+                            characterRange.Left = (char)(((CharacterRange)vector[n2]).Right + 1);
                             goto IL_0268;
                         }
-                        if (Overlaps((CharacterRange)vector[num2], characterRange))
+                        if (Overlaps((CharacterRange)vector[n2], characterRange))
                         {
                             CharacterRange obj = characterRange;
-                            ((CharacterRange)vector[num2]).Right = (char)(characterRange.Left + 1);
-                            characterRange = (CharacterRange)vector[num2];
-                            vector[num2] = obj;//.setElementAt(obj, num2);
+                            ((CharacterRange)vector[n2]).Right = (char)(characterRange.Left + 1);
+                            characterRange = (CharacterRange)vector[n2];
+                            vector[n2] = obj;//.setElementAt(obj, num2);
                             goto IL_0268;
                         }
-                        if (((CharacterRange)vector[num2]).Left <= characterRange.Right)
+                        if (((CharacterRange)vector[n2]).Left <= characterRange.Right)
                         {
                             goto IL_0268;
                         }
@@ -218,86 +216,77 @@ public class RCharacterList : RegularExpression
                 num++;
                 break;
             IL_0268:
-                num2++;
+                n2++;
             }
         }
         vector.TrimExcess();
-        descriptors = vector;
+        Descriptors = vector;
     }
 
 
     internal virtual void RemoveNegation()
     {
         SortDescriptors();
-        List<object> vector = new();
-        int num = -1;
-        for (int i = 0; i < descriptors.Count; i++)
+        List<Expansion> vector = new();
+        int n = -1;
+        for (int i = 0; i < Descriptors.Count; i++)
         {
             int ch;
-            if (descriptors[i] is SingleCharacter)
+            if (Descriptors[i] is SingleCharacter character)
             {
-                ch = ((SingleCharacter)descriptors[i]).CH;
-                if (ch >= 0 && ch <= num + 1)
+                ch = character.CH;
+                if (ch >= 0 && ch <= n + 1)
                 {
-                    num = ch;
+                    n = ch;
                 }
                 else
                 {
-                    vector.Add(new CharacterRange((char)(num + 1), (char)((num = ch) - 1)));
+                    vector.Add(new CharacterRange((char)(n + 1), (char)((n = ch) - 1)));
                 }
                 continue;
             }
-            ch = ((CharacterRange)descriptors[i]).Left;
-            int right = ((CharacterRange)descriptors[i]).Right;
-            if (ch >= 0 && ch <= num + 1)
+            ch = ((CharacterRange)Descriptors[i]).Left;
+            int right = ((CharacterRange)Descriptors[i]).Right;
+            if (ch >= 0 && ch <= n + 1)
             {
-                num = right;
+                n = right;
                 continue;
             }
-            vector.Add(new CharacterRange((char)(num + 1), (char)(ch - 1)));
-            num = right;
+            vector.Add(new CharacterRange((char)(n + 1), (char)(ch - 1)));
+            n = right;
         }
         if (NfaState.unicodeWarningGiven || Options.JavaUnicodeEscape)
         {
-            if (num < 65535)
+            if (n < 65535)
             {
-                vector.Add(new CharacterRange((char)(num + 1), '\uffff'));
+                vector.Add(new CharacterRange((char)(n + 1), '\uffff'));
             }
         }
-        else if (num < 255)
+        else if (n < 255)
         {
-            vector.Add(new CharacterRange((char)(num + 1), 'ÿ'));
+            vector.Add(new CharacterRange((char)(n + 1), 'ÿ'));
         }
-        descriptors = vector;
-        negated_list = false;
+        Descriptors = vector;
+        NegatedList = false;
     }
 
-    internal static bool InRange(char c, CharacterRange r)
-    {
-        return (c >= r.Left && c <= r.Right) ? true : false;
-    }
+    public static bool InRange(char c, CharacterRange r) => (c >= r.Left && c <= r.Right);
 
-    internal static bool SubRange(CharacterRange r1, CharacterRange r2)
-    {
-        return (r1.Left >= r2.Left && r1.Right <= r2.Right) ? true : false;
-    }
+    public static bool SubRange(CharacterRange r1, CharacterRange r2) => (r1.Left >= r2.Left && r1.Right <= r2.Right);
 
-    internal static bool Overlaps(CharacterRange cr1, CharacterRange cr2)
-    {
-        return (cr1.Left <= cr2.Right && cr1.Right > cr2.Right) ? true : false;
-    }
+    public static bool Overlaps(CharacterRange cr1, CharacterRange cr2) => (cr1.Left <= cr2.Right && cr1.Right > cr2.Right);
 
 
     public override Nfa GenerateNfa(bool b)
     {
-        if (!transformed)
+        if (!Transformed)
         {
             if (Options.IgnoreCase || b)
             {
                 ToCaseNeutral();
                 SortDescriptors();
             }
-            if (negated_list)
+            if (NegatedList)
             {
                 RemoveNegation();
             }
@@ -306,18 +295,18 @@ public class RCharacterList : RegularExpression
                 SortDescriptors();
             }
         }
-        transformed = true;
-        Nfa nfa = new Nfa();
-        NfaState start = nfa.Start;
-        NfaState end = nfa.End;
-        for (int i = 0; i < descriptors.Count; i++)
+        Transformed = true;
+        var nfa = new Nfa();
+        var start = nfa.Start;
+        var end = nfa.End;
+        for (int i = 0; i < Descriptors.Count; i++)
         {
-            if (descriptors[i] is SingleCharacter)
+            if (Descriptors[i] is SingleCharacter character)
             {
-                start.AddChar(((SingleCharacter)descriptors[i]).CH);
+                start.AddChar(character.CH);
                 continue;
             }
-            CharacterRange characterRange = (CharacterRange)descriptors[i];
+            var characterRange = (CharacterRange)Descriptors[i];
             if (characterRange.Left == characterRange.Right)
             {
                 start.AddChar(characterRange.Left);
@@ -334,24 +323,23 @@ public class RCharacterList : RegularExpression
 
     internal RCharacterList(char ch)
     {
-        negated_list = false;
-        descriptors = new();
-        transformed = false;
-        descriptors = new();
-        descriptors.Add(new SingleCharacter(ch));
-        negated_list = false;
-        ordinal = int.MaxValue;
+        NegatedList = false;
+        Descriptors = new();
+        Transformed = false;
+        Descriptors = new()
+        {
+            new SingleCharacter(ch)
+        };
+        NegatedList = false;
+        Ordinal = int.MaxValue;
     }
 
 
-    public override bool CanMatchAnyChar()
-    {
-        return (negated_list && (descriptors == null || descriptors.Count == 0)) ? true : false;
-    }
+    public override bool CanMatchAnyChar => (NegatedList && (Descriptors == null || Descriptors.Count == 0)) ? true : false;
 
     static RCharacterList()
     {
-        diffLowerCaseRanges = new char[748]
+        DiffLowerCaseRanges = new char[748]
         {
             'A', 'Z', 'À', 'Ö', 'Ø', 'Þ', 'Ā', 'Ā', 'Ă', 'Ă',
             'Ą', 'Ą', 'Ć', 'Ć', 'Ĉ', 'Ĉ', 'Ċ', 'Ċ', 'Č', 'Č',
@@ -429,7 +417,7 @@ public class RCharacterList : RegularExpression
             'Ῥ', 'Ῥ', 'Ὸ', 'Ό', 'Ὼ', 'Ώ', 'ῼ', 'ῼ', 'Ⅰ', 'Ⅿ',
             'Ⓐ', 'Ⓩ', 'Ａ', 'Ｚ', '［', '\ufffe', '\uffff', '\uffff'
         };
-        diffUpperCaseRanges = new char[758]
+        DiffUpperCaseRanges = new char[758]
         {
             'a', 'z', 'à', 'ö', 'ø', 'þ', 'ÿ', 'ÿ', 'ā', 'ā',
             'ă', 'ă', 'ą', 'ą', 'ć', 'ć', 'ĉ', 'ĉ', 'ċ', 'ċ',

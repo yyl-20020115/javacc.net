@@ -11,7 +11,7 @@ public class ZeroOrOne : Expansion
         Line = t.BeginLine;
         Column = t.BeginColumn;
         Expansion = e;
-        e.parent = this;
+        e.Parent = this;
     }
 
     public ZeroOrOne() { }

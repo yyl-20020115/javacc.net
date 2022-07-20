@@ -3,13 +3,13 @@ using JavaCC.Parser;
 
 public interface Generator
 {
-    void Text(string str);
-    void Write(string str);
+    void Text(string text);
+    void Write(string text);
     void DocumentStart();
     void DocumentEnd();
-    void SpecialTokens(string str);
-    void TokenStart(TokenProduction tp);
-    void TokenEnd(TokenProduction tp);
+    void SpecialTokens(string text);
+    void TokenStart(TokenProduction production);
+    void TokenEnd(TokenProduction production);
     void NonterminalsStart();
     void NonterminalsEnd();
     void TokensStart();
@@ -23,8 +23,8 @@ public interface Generator
     void NonTerminalEnd(NonTerminal nt);
     void ReStart(RegularExpression re);
     void ReEnd(RegularExpression re);
-    void Debug(string str);
-    void Info(string str);
-    void Warn(string str);
-    void Error(string str);
+    void Debug(string text);
+    void Info(string text);
+    void Warn(string text);
+    void Error(string text);
 }

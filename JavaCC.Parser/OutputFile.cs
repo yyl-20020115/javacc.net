@@ -5,36 +5,25 @@ using System.Text;
 
 public class OutputFile
 {
-	internal class NullOutputStream : Stream
+	public class NullOutputStream : Stream
 	{
+		public override bool CanRead => false;
 
-		private NullOutputStream()
-		{
-		}
+        public override bool CanSeek => false;
 
-        public override bool CanRead => throw new NotImplementedException();
+		public override bool CanWrite => false;
 
-        public override bool CanSeek => throw new NotImplementedException();
+		public override long Length => 0;
 
-        public override bool CanWrite => throw new NotImplementedException();
-
-        public override long Length => throw new NotImplementedException();
-
-        public override long Position { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public override long Position { get => 0; set { } }
 
         public override void Flush()
         {
         }
 
-        public override int Read(byte[] buffer, int offset, int count)
-        {
-			return 0;
-        }
+        public override int Read(byte[] buffer, int offset, int count) => 0;
 
-        public override long Seek(long offset, SeekOrigin origin)
-        {
-			return offset;
-        }
+        public override long Seek(long offset, SeekOrigin origin) => offset;
 
         public override void SetLength(long value)
         {
@@ -61,16 +50,17 @@ public class OutputFile
 
 
 
-	internal class TrapClosePrintWriter : TextWriter
+	public class TrapClosePrintWriter : TextWriter
 	{
 
-		private OutputFile this_00240;
+		private OutputFile outputFile;
 
 		public override Encoding Encoding => Encoding.Default;
 
 		public TrapClosePrintWriter(OutputFile output, Stream stream)
 		{
-			this_00240 = output;
+			outputFile = output;
+		
 		}
 
 
@@ -84,14 +74,14 @@ public class OutputFile
 		{
 			try
 			{
-				this_00240.Close();
+				outputFile.Close();
 				return;
 			}
 			catch (IOException)
 			{
 			}
 
-			Console.Error.WriteLine(("Could not close ")+(this_00240.file.FullName));
+			Console.Error.WriteLine(("Could not close ")+(outputFile.file.FullName));
 		}
 	}
 
@@ -101,7 +91,7 @@ public class OutputFile
 
 	internal TrapClosePrintWriter pw;
 
-	internal Stream dos;
+	internal Stream stream;
 
 	internal string toolName;
 
@@ -143,8 +133,8 @@ public class OutputFile
                 //	goto IL_0025;
                 //}
 
-                dos = File.OpenRead(file.FullName);
-                pw = new TrapClosePrintWriter(this, dos);
+                stream = File.OpenRead(file.FullName);
+                pw = new TrapClosePrintWriter(this, stream);
                 string str = ((compatibleVersion != null) ? compatibleVersion : "4.1d1");
                 pw.WriteLine(("/* ") + (JavaCCGlobals.getIdString(toolName, file.Name)) + (" Version ")
                     + (str)
@@ -152,7 +142,7 @@ public class OutputFile
                     );
                 if (options != null)
                 {
-                    pw.WriteLine(("/* JavaCCOptions:") + (Options.getOptionsString(options)) + (" */")
+                    pw.WriteLine(("/* JavaCCOptions:") + (Options.GetOptionsString(options)) + (" */")
                         );
                 }
             }
@@ -238,13 +228,13 @@ public class OutputFile
 
 	private static string ToHexString(byte[] bytes)
 	{
-		var stringBuilder = new StringBuilder(32);
+		var builder = new StringBuilder(32);
 		for (int i = 0; i < bytes.Length; i++)
 		{
 			int num = bytes[i];
-			stringBuilder.Append(HEX_DIGITS[(num & 0xF0) >> 4]).Append(HEX_DIGITS[num & 0xF]);
+			builder.Append(HEX_DIGITS[(num & 0xF0) >> 4]).Append(HEX_DIGITS[num & 0xF]);
 		}
-		return stringBuilder.ToString();
+		return builder.ToString();
 	}
 
 
@@ -308,7 +298,7 @@ public class OutputFile
 				{
 					if (@this.StartsWith( "/* JavaCCOptions:"))
 					{
-						string optionsString = Options.getOptionsString(text);
+						string optionsString = Options.GetOptionsString(text);
 						//object obj = (s.___003Cref_003E = optionsString);
 						if (!(@this.Contains(s)))
 						{

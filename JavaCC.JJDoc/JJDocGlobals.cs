@@ -44,20 +44,20 @@ public class JJDocGlobals : JavaCCGlobals
     {
     }
 
-    public static void Debug(string str)
+    public static void Debug(string text)
     {
-        Generator.Debug(str);
+        Generator.Debug(text);
     }
 
 
-    public static void Info(string str)
+    public static void Info(string text)
     {
-        Generator.Info(str);
+        Generator.Info(text);
     }
 
 
-    public static void Error(string str)
+    public static void Error(string text)
     {
-        Generator.Error(str);
+        Generator.Error(text);
     }
 }

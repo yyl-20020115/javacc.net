@@ -12,7 +12,7 @@ public class RSequence : RegularExpression
 
     internal RSequence(List<RegularExpression> units)
     {
-        ordinal = int.MaxValue;
+        Ordinal = int.MaxValue;
         this.Units = units;
     }
 

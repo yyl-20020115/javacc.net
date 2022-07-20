@@ -5,7 +5,7 @@ using System.Linq;
 
 public class ParseGen : JavaCCParserConstants // JavaCCGlobals, 
 {
-	private static TextWriter writer;
+	protected static TextWriter writer;
 	
 	public static void Start()
 	{
@@ -20,8 +20,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		}
 		try
 		{
-			
-			writer = new StreamWriter(Path.Combine(Options.OutputDirectory.FullName, (JavaCCGlobals.Cu_name)+(".java")));
+			writer = new StreamWriter(Path.Combine(Options.OutputDirectory.FullName, (JavaCCGlobals.CuName)+(".java")));
 		}
 		catch (IOException)
 		{
@@ -29,14 +28,14 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		}
 		var vector = JavaCCGlobals.ToolNames.ToList();
 		vector.Add("JavaCC");
-		writer.WriteLine(("/* ")+(JavaCCGlobals.GetIdStringList(vector, (JavaCCGlobals.Cu_name)+(".java")))+(" */")
+		writer.WriteLine(("/* ")+(JavaCCGlobals.GetIdStringList(vector, (JavaCCGlobals.CuName)+(".java")))+(" */")
 			);
 		int num = 0;
-		if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0)
+		if (JavaCCGlobals.CuToInsertionPoint1.Count != 0)
 		{
-			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]);
+			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.CuToInsertionPoint1[0]);
 			JavaCCGlobals.ccol = 1;
-			foreach(var _token in JavaCCGlobals.Cu_to_insertion_point_1)
+			foreach(var _token in JavaCCGlobals.CuToInsertionPoint1)
 			{
 				if (_token.Kind == 51)
 				{
@@ -57,7 +56,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		{
 			writer.Write(" implements ");
 		}
-		writer.Write((JavaCCGlobals.Cu_name)+("Constants "));
+		writer.Write((JavaCCGlobals.CuName)+("Constants "));
 		if (JavaCCGlobals.Cu_to_insertion_point_2.Count != 0)
 		{
 			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.Cu_to_insertion_point_2[0]);
@@ -70,7 +69,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		writer.WriteLine("");
 		writer.WriteLine("");
 		ParseEngine.build(writer);
-		if (Options.getStatic())
+		if (Options.Static)
 		{
 			writer.WriteLine("  static private boolean jj_initialized_once = false;");
 		}
@@ -84,7 +83,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		{
 			writer.WriteLine("  /** Generated Token Manager. */");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("public ")
-				+(JavaCCGlobals.Cu_name)
+				+(JavaCCGlobals.CuName)
 				+("TokenManager token_source;")
 				);
 			if (!Options.UserCharStream)
@@ -132,7 +131,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				+(JavaCCGlobals.maskindex)
 				+("];")
 				);
-			int num2 = (JavaCCGlobals.tokenCount - 1) / 32 + 1;
+			int num2 = (JavaCCGlobals.TokenCount - 1) / 32 + 1;
 			for (int i = 0; i < num2; i++)
 			{
 				writer.WriteLine(("  static private int[] jj_la1_")+(i)+(";")
@@ -176,9 +175,9 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			if (Options.UserCharStream)
 			{
 				writer.WriteLine("  /** Constructor with user supplied CharStream. */");
-				writer.WriteLine(("  public ")+(JavaCCGlobals.Cu_name)+("(CharStream stream) {")
+				writer.WriteLine(("  public ")+(JavaCCGlobals.CuName)+("(CharStream stream) {")
 					);
-				if (Options.getStatic())
+				if (Options.Static)
 				{
 					writer.WriteLine("    if (jj_initialized_once) {");
 					writer.WriteLine("      System.out.WriteLine(\"ERROR: Second call to constructor of static parser.  \");");
@@ -188,14 +187,14 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 					writer.WriteLine("    }");
 					writer.WriteLine("    jj_initialized_once = true;");
 				}
-				if (Options.TokenManagerUsesParser && !Options.getStatic())
+				if (Options.TokenManagerUsesParser && !Options.Static)
 				{
-					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.Cu_name)+("TokenManager(this, stream);")
+					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.CuName)+("TokenManager(this, stream);")
 						);
 				}
 				else
 				{
-					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.Cu_name)+("TokenManager(stream);")
+					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.CuName)+("TokenManager(stream);")
 						);
 				}
 				writer.WriteLine("    token = new Token();");
@@ -233,7 +232,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 					writer.WriteLine("    jj_ntk = -1;");
 				}
 				writer.WriteLine("    jj_lookingAhead = false;");
-				if (JavaCCGlobals.jjtreeGenerated)
+				if (JavaCCGlobals.JJTreeGenerated)
 				{
 					writer.WriteLine("    jjtree.reset();");
 				}
@@ -252,14 +251,14 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			else
 			{
 				writer.WriteLine("  /** Constructor with Stream. */");
-				writer.WriteLine(("  public ")+(JavaCCGlobals.Cu_name)+("(java.io.Stream stream) {")
+				writer.WriteLine(("  public ")+(JavaCCGlobals.CuName)+("(java.io.Stream stream) {")
 					);
 				writer.WriteLine("     this(stream, null);");
 				writer.WriteLine("  }");
 				writer.WriteLine("  /** Constructor with Stream and supplied encoding */");
-				writer.WriteLine(("  public ")+(JavaCCGlobals.Cu_name)+("(java.io.Stream stream, String encoding) {")
+				writer.WriteLine(("  public ")+(JavaCCGlobals.CuName)+("(java.io.Stream stream, String encoding) {")
 					);
-				if (Options.getStatic())
+				if (Options.Static)
 				{
 					writer.WriteLine("    if (jj_initialized_once) {");
 					writer.WriteLine("      System.out.WriteLine(\"ERROR: Second call to constructor of static parser.  \");");
@@ -288,14 +287,14 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				{
 					writer.WriteLine("    try { jj_input_stream = new SimpleCharStream(stream, encoding, 1, 1); } catch(java.io.UnsupportedEncodingException e) { throw new RuntimeException(e); }");
 				}
-				if (Options.TokenManagerUsesParser && !Options.getStatic())
+				if (Options.TokenManagerUsesParser && !Options.Static)
 				{
-					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.Cu_name)+("TokenManager(this, jj_input_stream);")
+					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.CuName)+("TokenManager(this, jj_input_stream);")
 						);
 				}
 				else
 				{
-					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.Cu_name)+("TokenManager(jj_input_stream);")
+					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.CuName)+("TokenManager(jj_input_stream);")
 						);
 				}
 				writer.WriteLine("    token = new Token();");
@@ -345,7 +344,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				{
 					writer.WriteLine("    jj_ntk = -1;");
 				}
-				if (JavaCCGlobals.jjtreeGenerated)
+				if (JavaCCGlobals.JJTreeGenerated)
 				{
 					writer.WriteLine("    jjtree.reset();");
 				}
@@ -362,9 +361,9 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				writer.WriteLine("  }");
 				writer.WriteLine("");
 				writer.WriteLine("  /** Constructor. */");
-				writer.WriteLine(("  public ")+(JavaCCGlobals.Cu_name)+("(java.io.TextReader stream) {")
+				writer.WriteLine(("  public ")+(JavaCCGlobals.CuName)+("(java.io.TextReader stream) {")
 					);
-				if (Options.getStatic())
+				if (Options.Static)
 				{
 					writer.WriteLine("    if (jj_initialized_once) {");
 					writer.WriteLine("      System.out.WriteLine(\"ERROR: Second call to constructor of static parser. \");");
@@ -382,14 +381,14 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				{
 					writer.WriteLine("    jj_input_stream = new SimpleCharStream(stream, 1, 1);");
 				}
-				if (Options.TokenManagerUsesParser && !Options.getStatic())
+				if (Options.TokenManagerUsesParser && !Options.Static)
 				{
-					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.Cu_name)+("TokenManager(this, jj_input_stream);")
+					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.CuName)+("TokenManager(this, jj_input_stream);")
 						);
 				}
 				else
 				{
-					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.Cu_name)+("TokenManager(jj_input_stream);")
+					writer.WriteLine(("    token_source = new ")+(JavaCCGlobals.CuName)+("TokenManager(jj_input_stream);")
 						);
 				}
 				writer.WriteLine("    token = new Token();");
@@ -434,7 +433,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				{
 					writer.WriteLine("    jj_ntk = -1;");
 				}
-				if (JavaCCGlobals.jjtreeGenerated)
+				if (JavaCCGlobals.JJTreeGenerated)
 				{
 					writer.WriteLine("    jjtree.reset();");
 				}
@@ -455,18 +454,18 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		if (Options.UserTokenManager)
 		{
 			writer.WriteLine("  /** Constructor with user supplied Token Manager. */");
-			writer.WriteLine(("  public ")+(JavaCCGlobals.Cu_name)+("(TokenManager tm) {")
+			writer.WriteLine(("  public ")+(JavaCCGlobals.CuName)+("(TokenManager tm) {")
 				);
 		}
 		else
 		{
 			writer.WriteLine("  /** Constructor with generated Token Manager. */");
-			writer.WriteLine(("  public ")+(JavaCCGlobals.Cu_name)+("(")
-				+(JavaCCGlobals.Cu_name)
+			writer.WriteLine(("  public ")+(JavaCCGlobals.CuName)+("(")
+				+(JavaCCGlobals.CuName)
 				+("TokenManager tm) {")
 				);
 		}
-		if (Options.getStatic())
+		if (Options.Static)
 		{
 			writer.WriteLine("    if (jj_initialized_once) {");
 			writer.WriteLine("      System.out.WriteLine(\"ERROR: Second call to constructor of static parser. \");");
@@ -506,7 +505,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		else
 		{
 			writer.WriteLine("  /** Reinitialise. */");
-			writer.WriteLine(("  public void ReInit(")+(JavaCCGlobals.Cu_name)+("TokenManager tm) {")
+			writer.WriteLine(("  public void ReInit(")+(JavaCCGlobals.CuName)+("TokenManager tm) {")
 				);
 		}
 		writer.WriteLine("    token_source = tm;");
@@ -519,7 +518,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		{
 			writer.WriteLine("    jj_ntk = -1;");
 		}
-		if (JavaCCGlobals.jjtreeGenerated)
+		if (JavaCCGlobals.JJTreeGenerated)
 		{
 			writer.WriteLine("    jjtree.reset();");
 		}
@@ -738,7 +737,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("public ParseException generateParseException() {")
 				);
 			writer.WriteLine("    jj_expentries.Clear();");
-			writer.WriteLine(("    boolean[] la1tokens = new boolean[")+(JavaCCGlobals.tokenCount)+("];")
+			writer.WriteLine(("    boolean[] la1tokens = new boolean[")+(JavaCCGlobals.TokenCount)+("];")
 				);
 			writer.WriteLine("    if (jj_kind >= 0) {");
 			writer.WriteLine("      la1tokens[jj_kind] = true;");
@@ -748,7 +747,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				);
 			writer.WriteLine("      if (jj_la1[i] == jj_gen) {");
 			writer.WriteLine("        for (int j = 0; j < 32; j++) {");
-			for (int num2 = 0; num2 < (JavaCCGlobals.tokenCount - 1) / 32 + 1; num2++)
+			for (int num2 = 0; num2 < (JavaCCGlobals.TokenCount - 1) / 32 + 1; num2++)
 			{
 				writer.WriteLine(("          if ((jj_la1_")+(num2)+("[i] & (1<<j)) != 0) {")
 					);
@@ -763,7 +762,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine("        }");
 			writer.WriteLine("      }");
 			writer.WriteLine("    }");
-			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.tokenCount)+("; i++) {")
+			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.TokenCount)+("; i++) {")
 				);
 			writer.WriteLine("      if (la1tokens[i]) {");
 			writer.WriteLine("        jj_expentry = new int[1];");
@@ -954,20 +953,14 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		return;
 		IL_006c:
 		
-		JavaCCErrors.Semantic_Error(("Could not open file ")+(JavaCCGlobals.Cu_name)+(".java for writing.")
+		JavaCCErrors.Semantic_Error(("Could not open file ")+(JavaCCGlobals.CuName)+(".java for writing.")
 			);
 		
 		throw new System.Exception();
 	}
 
-	public static void reInit()
+	public static void ReInit()
 	{
 		writer = null;
 	}
-
-	
-	public ParseGen()
-	{
-	}
-
 }

@@ -36,34 +36,34 @@ public class ParseException : System.Exception
 
     protected internal virtual string AddEscapes(string str)
     {
-        var stringBuilder = new StringBuilder();
+        var builder = new StringBuilder();
         for (int i = 0; i < str.Length; i++)
         {
             switch (str[i])
             {
                 case '\b':
-                    stringBuilder.Append("\\b");
+                    builder.Append("\\b");
                     continue;
                 case '\t':
-                    stringBuilder.Append("\\t");
+                    builder.Append("\\t");
                     continue;
                 case '\n':
-                    stringBuilder.Append("\\n");
+                    builder.Append("\\n");
                     continue;
                 case '\f':
-                    stringBuilder.Append("\\f");
+                    builder.Append("\\f");
                     continue;
                 case '\r':
-                    stringBuilder.Append("\\r");
+                    builder.Append("\\r");
                     continue;
                 case '"':
-                    stringBuilder.Append("\\\"");
+                    builder.Append("\\\"");
                     continue;
                 case '\'':
-                    stringBuilder.Append("\\'");
+                    builder.Append("\\'");
                     continue;
                 case '\\':
-                    stringBuilder.Append("\\\\");
+                    builder.Append("\\\\");
                     continue;
                 case '\0':
                     continue;
@@ -72,15 +72,15 @@ public class ParseException : System.Exception
             if ((num = str[i]) < 32 || num > 126)
             {
                 string @this = ("0000") + (Utils.ToString(num, 16));
-                stringBuilder.Append(("\\u") + (
+                builder.Append(("\\u") + (
                     @this.Substring(@this.Length - 4, @this.Length)));
             }
             else
             {
-                stringBuilder.Append((char)num);
+                builder.Append((char)num);
             }
         }
-        return stringBuilder.ToString();
+        return builder.ToString();
 
     }
 
@@ -101,7 +101,7 @@ public class ParseException : System.Exception
             {
                 return base.Message;
             }
-            var stringBuilder = new StringBuilder();
+            var builder = new StringBuilder();
             int num = 0;
             for (int i = 0; i < expectedTokenSequences.Length; i++)
             {
@@ -111,13 +111,13 @@ public class ParseException : System.Exception
                 }
                 for (int j = 0; j < expectedTokenSequences[i].Length; j++)
                 {
-                    stringBuilder.Append(tokenImage[expectedTokenSequences[i][j]]).Append(' ');
+                    builder.Append(tokenImage[expectedTokenSequences[i][j]]).Append(' ');
                 }
                 if (expectedTokenSequences[i][expectedTokenSequences[i].Length - 1] != 0)
                 {
-                    stringBuilder.Append("...");
+                    builder.Append("...");
                 }
-                stringBuilder.Append(eol).Append("    ");
+                builder.Append(eol).Append("    ");
             }
             var str = "Encountered \"";
             var next = currentToken.Next;
@@ -148,7 +148,7 @@ public class ParseException : System.Exception
                 : (str) + ("Was expecting:") + (eol)
                 + ("    ")
                 );
-            return str + stringBuilder.ToString();
+            return str + builder.ToString();
         }
     }
 }

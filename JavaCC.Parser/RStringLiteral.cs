@@ -9,17 +9,17 @@ namespace JavaCC.Parser;
 
 public class RStringLiteral : RegularExpression
 {
-    public string image;
+    public string image = "";
 
-    public static int maxStrKind;
+    public static int maxStrKind = 0;
 
-    public static int maxLen;
+    public static int maxLen = 0;
 
-    public static int charCnt;
+    public static int charCnt = 0;
 
-    public static List<Dictionary<string, KindInfo>> charPosKind =new();
+    public static List<Dictionary<string, KindInfo>> CharPosKind =new();
 
-    public static int[] maxLenForActive;
+    public static int[] maxLenForActive = Array.Empty<int>();
 
     public static string[] allImages;
 
@@ -27,7 +27,7 @@ public class RStringLiteral : RegularExpression
 
     public static int[][] intermediateMatchedPos;
 
-    public static int startStateCnt;
+    public static int startStateCnt = 0;
 
     public static bool[] subString;
 
@@ -54,7 +54,7 @@ public class RStringLiteral : RegularExpression
         boilerPlateDumped = false;
         maxStrKind = 0;
         maxLen = 0;
-        charPosKind = new ();
+        CharPosKind = new ();
         maxLenForActive = new int[100];
         intermediateKinds = null;
         intermediateMatchedPos = null;
@@ -67,9 +67,9 @@ public class RStringLiteral : RegularExpression
 
     public virtual void GenerateDfa(TextWriter pw, int i)
     {
-        if (maxStrKind <= ordinal)
+        if (maxStrKind <= Ordinal)
         {
-            maxStrKind = ordinal + 1;
+            maxStrKind = Ordinal + 1;
         }
         int num;
         if ((num = image.Length) > maxLen)
@@ -86,13 +86,13 @@ public class RStringLiteral : RegularExpression
                 JavaCCErrors.Warning(LexGen.curRE, "Non-ASCII characters used in regular expression.Please make sure you use the correct TextReader when you create the parser, one that can handle your character set.");
             }
             Dictionary<string, KindInfo> dict;
-            if (j >= charPosKind.Count)
+            if (j >= CharPosKind.Count)
             {
-                charPosKind.Add(dict = new ());
+                CharPosKind.Add(dict = new ());
             }
             else
             {
-                dict = charPosKind[j];
+                dict = CharPosKind[j];
             }
             KindInfo kindInfo;
             if (!dict.TryGetValue(key, out kindInfo))
@@ -101,22 +101,22 @@ public class RStringLiteral : RegularExpression
             }
             if (j + 1 == num)
             {
-                kindInfo.InsertFinalKind(ordinal);
+                kindInfo.InsertFinalKind(Ordinal);
             }
             else
             {
-                kindInfo.InsertValidKind(ordinal);
+                kindInfo.InsertValidKind(Ordinal);
             }
-            if (!Options.IgnoreCase && LexGen.ignoreCase[ordinal] && num2 != Char.ToLower((char)num2))
+            if (!Options.IgnoreCase && LexGen.ignoreCase[Ordinal] && num2 != Char.ToLower((char)num2))
             {
                 key = char.ToLower(image[j]).ToString();
-                if (j >= charPosKind.Count)
+                if (j >= CharPosKind.Count)
                 {
-                    charPosKind.Add(dict = new ());
+                    CharPosKind.Add(dict = new ());
                 }
                 else
                 {
-                    dict = charPosKind[j];
+                    dict = CharPosKind[j];
                 }
                 if (!dict.TryGetValue(key, out kindInfo))
                 {
@@ -124,23 +124,23 @@ public class RStringLiteral : RegularExpression
                 }
                 if (j + 1 == num)
                 {
-                    kindInfo.InsertFinalKind(ordinal);
+                    kindInfo.InsertFinalKind(Ordinal);
                 }
                 else
                 {
-                    kindInfo.InsertValidKind(ordinal);
+                    kindInfo.InsertValidKind(Ordinal);
                 }
             }
-            if (!Options.IgnoreCase && LexGen.ignoreCase[ordinal] && num2 != char.ToUpper((char)num2))
+            if (!Options.IgnoreCase && LexGen.ignoreCase[Ordinal] && num2 != char.ToUpper((char)num2))
             {
                 key = (("") + (image[j])).ToUpper();
-                if (j >= charPosKind.Count)
+                if (j >= CharPosKind.Count)
                 {
-                    charPosKind.Add(dict = new());
+                    CharPosKind.Add(dict = new());
                 }
                 else
                 {
-                    dict = charPosKind[j];
+                    dict = CharPosKind[j];
                 }
                 if (!dict.TryGetValue(key,out kindInfo))
                 {
@@ -148,16 +148,16 @@ public class RStringLiteral : RegularExpression
                 }
                 if (j + 1 == num)
                 {
-                    kindInfo.InsertFinalKind(ordinal);
+                    kindInfo.InsertFinalKind(Ordinal);
                 }
                 else
                 {
-                    kindInfo.InsertValidKind(ordinal);
+                    kindInfo.InsertValidKind(Ordinal);
                 }
             }
         }
-        maxLenForActive[ordinal / 64] = Math.Max(maxLenForActive[ordinal / 64], num - 1);
-        allImages[ordinal] = image;
+        maxLenForActive[Ordinal / 64] = Math.Max(maxLenForActive[Ordinal / 64], num - 1);
+        allImages[Ordinal] = image;
     }
 
 
@@ -386,7 +386,7 @@ public class RStringLiteral : RegularExpression
         LexGen.maxLongsReqd[LexGen.lexStateIndex] = num;
         if (maxLen == 0)
         {
-            writer.WriteLine(((!Options.getStatic()) ? "" : "static ") + ("private int ") + ("jjMoveStringLiteralDfa0")
+            writer.WriteLine(((!Options.Static) ? "" : "static ") + ("private int ") + ("jjMoveStringLiteralDfa0")
                 + (LexGen.lexStateSuffix)
                 + ("()")
                 );
@@ -406,9 +406,9 @@ public class RStringLiteral : RegularExpression
         {
             int num2 = 0;
             int num3 = 0;
-            var dict = charPosKind[i];
+            var dict = CharPosKind[i];
             string[] array = ReArrange(dict);
-            writer.Write(((!Options.getStatic()) ? "" : "static ") + ("private int ") + ("jjMoveStringLiteralDfa")
+            writer.Write(((!Options.Static) ? "" : "static ") + ("private int ") + ("jjMoveStringLiteralDfa")
                 + (i)
                 + (LexGen.lexStateSuffix)
                 + ("(")
@@ -650,15 +650,15 @@ public class RStringLiteral : RegularExpression
                 int num4 = 0;
                 int num5 = text[0];
                 int num6;
-                if (i == 0 && num5 < 128 && kindInfo.finalKindCnt != 0 && (NfaState.generatedStates == 0 || !NfaState.CanStartNfaUsingAscii((char)num5)))
+                if (i == 0 && num5 < 128 && kindInfo.VinalKindCnt != 0 && (NfaState.generatedStates == 0 || !NfaState.CanStartNfaUsingAscii((char)num5)))
                 {
                     int j;
-                    for (j = 0; j < num && kindInfo.finalKinds[j] == 0; j++)
+                    for (j = 0; j < num && kindInfo.FinalKinds[j] == 0; j++)
                     {
                     }
                     for (int l = 0; l < 64; l++)
                     {
-                        if ((kindInfo.finalKinds[j] & (1L << l)) == 0 || subString[num6 = j * 64 + l])
+                        if ((kindInfo.FinalKinds[j] & (1L << l)) == 0 || subString[num6 = j * 64 + l])
                         {
                             continue;
                         }
@@ -693,12 +693,12 @@ public class RStringLiteral : RegularExpression
                 writer.WriteLine(("      case ") + (num5) + (":")
                     );
                 string str = ((i != 0) ? "            " : "         ");
-                if (kindInfo.finalKindCnt != 0)
+                if (kindInfo.VinalKindCnt != 0)
                 {
                     for (int j = 0; j < num; j++)
                     {
                         long num7;
-                        if ((num7 = kindInfo.finalKinds[j]) == 0)
+                        if ((num7 = kindInfo.FinalKinds[j]) == 0)
                         {
                             continue;
                         }
@@ -800,7 +800,7 @@ public class RStringLiteral : RegularExpression
                         }
                     }
                 }
-                if (kindInfo.validKindCnt != 0)
+                if (kindInfo.ValidKindCnt != 0)
                 {
                     num2 = 0;
                     int j;
@@ -822,7 +822,7 @@ public class RStringLiteral : RegularExpression
                                 {
                                     num2 = 1;
                                 }
-                                writer.Write(("0x") + (Utils.ToHexString(kindInfo.validKinds[j])) + ("L")
+                                writer.Write(("0x") + (Utils.ToHexString(kindInfo.ValidKinds[j])) + ("L")
                                     );
                             }
                         }
@@ -832,7 +832,7 @@ public class RStringLiteral : RegularExpression
                             {
                                 writer.Write(", ");
                             }
-                            writer.Write(("0x") + (Utils.ToHexString(kindInfo.validKinds[j])) + ("L")
+                            writer.Write(("0x") + (Utils.ToHexString(kindInfo.ValidKinds[j])) + ("L")
                                 );
                         }
                         writer.WriteLine(");");
@@ -854,10 +854,10 @@ public class RStringLiteral : RegularExpression
                             {
                                 num2 = 1;
                             }
-                            if (kindInfo.validKinds[j] != 0)
+                            if (kindInfo.ValidKinds[j] != 0)
                             {
                                 writer.Write(("active") + (j) + (", 0x")
-                                    + (Utils.ToHexString(kindInfo.validKinds[j]))
+                                    + (Utils.ToHexString(kindInfo.ValidKinds[j]))
                                     + ("L")
                                     );
                             }
@@ -874,10 +874,10 @@ public class RStringLiteral : RegularExpression
                         {
                             writer.Write(", ");
                         }
-                        if (kindInfo.validKinds[j] != 0)
+                        if (kindInfo.ValidKinds[j] != 0)
                         {
                             writer.Write(("active") + (j) + (", 0x")
-                                + (Utils.ToHexString(kindInfo.validKinds[j]))
+                                + (Utils.ToHexString(kindInfo.ValidKinds[j]))
                                 + ("L")
                                 );
                         }
@@ -1143,7 +1143,7 @@ public class RStringLiteral : RegularExpression
 
     internal static void DumpBoilerPlate(TextWriter writer)
     {
-        writer.WriteLine(((!Options.getStatic()) ? "" : "static ") + ("private int ") + ("jjStopAtPos(int pos, int kind)")
+        writer.WriteLine(((!Options.Static) ? "" : "static ") + ("private int ") + ("jjStopAtPos(int pos, int kind)")
             );
         writer.WriteLine("{");
         writer.WriteLine("   jjmatchedKind = kind;");
@@ -1160,7 +1160,7 @@ public class RStringLiteral : RegularExpression
 
     internal static void DumpStartWithStates(TextWriter writer)
     {
-        writer.WriteLine(((!Options.getStatic()) ? "" : "static ") + ("private int ") + ("jjStartNfaWithStates")
+        writer.WriteLine(((!Options.Static) ? "" : "static ") + ("private int ") + ("jjStartNfaWithStates")
             + (LexGen.lexStateSuffix)
             + ("(int pos, int kind, int state)")
             );
@@ -1234,9 +1234,9 @@ public class RStringLiteral : RegularExpression
 
             return result;
         }
-        if (!string.Equals(regularExpression.label, ""))
+        if (!string.Equals(regularExpression.Label, ""))
         {
-            string result2 = (" <") + (regularExpression.label) + (">")
+            string result2 = (" <") + (regularExpression.Label) + (">")
                 ;
 
             return result2;
@@ -1288,7 +1288,7 @@ public class RStringLiteral : RegularExpression
         int num = maxStrKind / 64 + 1;
         int num2 = 0;
         _ = 0;
-        writer.Write(("private") + ((!Options.getStatic()) ? "" : " static") + (" final int jjStopStringLiteralDfa")
+        writer.Write(("private") + ((!Options.Static) ? "" : " static") + (" final int jjStopStringLiteralDfa")
             + (LexGen.lexStateSuffix)
             + ("(int pos, ")
             );
@@ -1424,7 +1424,7 @@ public class RStringLiteral : RegularExpression
         writer.WriteLine("         return -1;");
         writer.WriteLine("   }");
         writer.WriteLine("}");
-        writer.Write(("private") + ((!Options.getStatic()) ? "" : " static") + (" final int jjStartNfa")
+        writer.Write(("private") + ((!Options.Static) ? "" : " static") + (" final int jjStartNfa")
             + (LexGen.lexStateSuffix)
             + ("(int pos, ")
             );
@@ -1544,7 +1544,7 @@ public class RStringLiteral : RegularExpression
         maxStrKind = 0;
         maxLen = 0;
         charCnt = 0;
-        charPosKind = new ();
+        CharPosKind = new ();
         maxLenForActive = new int[100];
         startStateCnt = 0;
         boilerPlateDumped = false;

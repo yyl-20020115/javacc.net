@@ -4,11 +4,11 @@ public class RZeroOrMore : RegularExpression
 {
     public RegularExpression Regexpr;
 
-    public RZeroOrMore(Token t, RegularExpression re)
+    public RZeroOrMore(Token token, RegularExpression regexpr)
     {
-        Line = t.BeginLine;
-        Column = t.BeginColumn;
-        Regexpr = re;
+        Line = token.BeginLine;
+        Column = token.BeginColumn;
+        Regexpr = regexpr;
     }
 
     public RZeroOrMore() { }

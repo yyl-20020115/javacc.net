@@ -2,7 +2,7 @@ namespace JavaCC.Parser;
 
 public class RZeroOrOne : RegularExpression
 {
-    public RegularExpression regexpr;
+    public RegularExpression Regexpr;
 
     public RZeroOrOne() { }
 
@@ -11,7 +11,7 @@ public class RZeroOrOne : RegularExpression
         var nfa = new Nfa();
         var start = nfa.Start;
         var end = nfa.End;
-        var nfa2 = regexpr.GenerateNfa(b);
+        var nfa2 = Regexpr.GenerateNfa(b);
         start.AddMove(nfa2.Start);
         start.AddMove(end);
         nfa2.End.AddMove(end);

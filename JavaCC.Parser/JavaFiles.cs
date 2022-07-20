@@ -5,18 +5,18 @@ using System.Text;
 
 public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 {
-    internal const string charStreamVersion = "4.1";
+    public const string charStreamVersion = "4.1";
 
-    internal const string tokenManagerVersion = "4.1";
+    public const string tokenManagerVersion = "4.1";
 
-    internal const string tokenVersion = "4.1";
+    public const string tokenVersion = "4.1";
 
-    internal const string parseExceptionVersion = "4.1";
+    public const string parseExceptionVersion = "4.1";
 
-    internal const string tokenMgrErrorVersion = "4.1";
+    public const string tokenMgrErrorVersion = "4.1";
 
 
-    internal static string ReplaceBackslash(string name)
+    public static string ReplaceBackslash(string name)
     {
         int num = 0;
         int num2 = name.Length;
@@ -33,20 +33,20 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
         {
             return name;
         }
-        var stringBuilder = new StringBuilder();
+        var builder = new StringBuilder();
         for (num = 0; num < num2; num++)
         {
             int c;
             if ((c = (name[num])) == 92)
             {
-                stringBuilder.Append("\\\\");
+                builder.Append("\\\\");
             }
             else
             {
-                stringBuilder.Append((char)c);
+                builder.Append((char)c);
             }
         }
-        return stringBuilder.ToString();
+        return builder.ToString();
     }
 
 
@@ -55,7 +55,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
     }
 
 
-    internal static double GetVersion(string name)
+    public static double GetVersion(string name)
     {
         //Discarded unreachable code: IL_006a
         string text = ("/* ") + (JavaCCGlobals.getIdString("JavaCC", name)) + (" Version ")
@@ -195,17 +195,17 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 return;
             }
             TextWriter printWriter = outputFile.PrintWriter;
-            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
+            if (JavaCCGlobals.CuToInsertionPoint1.Count != 0 && ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).Kind == 60)
             {
-                for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
+                for (int i = 1; i < JavaCCGlobals.CuToInsertionPoint1.Count; i++)
                 {
-                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
+                    if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginColumn;
+                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
+                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
                         for (int j = 0; j <= i; j++)
                         {
-                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.Cu_to_insertion_point_1[j], printWriter);
+                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], printWriter);
                         }
                         printWriter.WriteLine("");
                         printWriter.WriteLine("");
@@ -213,7 +213,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                     }
                 }
             }
-            string str = ((!Options.getStatic()) ? "  " : "  static ");
+            string str = ((!Options.Static) ? "  " : "  static ");
             printWriter.WriteLine("/**");
             printWriter.WriteLine(" * An implementation of interface CharStream, where the stream is assumed to");
             printWriter.WriteLine(" * contain only ASCII characters (with java-like unicode escape processing).");
@@ -222,7 +222,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("public class JavaCharStream");
             printWriter.WriteLine("{");
             printWriter.WriteLine("/** Whether parser is static. */");
-            printWriter.WriteLine(("  public static final boolean staticFlag = ") + (Options.getStatic()) + (";")
+            printWriter.WriteLine(("  public static final boolean staticFlag = ") + (Options.Static) + (";")
                 );
             printWriter.WriteLine("  static final int hexval(char c) throws java.io.IOException {");
             printWriter.WriteLine("    switch(c)");
@@ -276,7 +276,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine((str) + ("int bufsize;"));
             printWriter.WriteLine((str) + ("int available;"));
             printWriter.WriteLine((str) + ("int tokenBegin;"));
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine((str) + ("protected int bufline[];"));
                 printWriter.WriteLine((str) + ("protected int bufcolumn[];"));
@@ -303,7 +303,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine((str) + ("protected void ExpandBuff(boolean wrapAround)"));
             printWriter.WriteLine("  {");
             printWriter.WriteLine("     char[] newbuffer = new char[bufsize + 2048];");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     int newbufline[] = new int[bufsize + 2048];");
                 printWriter.WriteLine("     int newbufcolumn[] = new int[bufsize + 2048];");
@@ -317,7 +317,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("           System.arraycopy(buffer, 0, newbuffer,");
             printWriter.WriteLine("                                             bufsize - tokenBegin, bufpos);");
             printWriter.WriteLine("           buffer = newbuffer;");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("");
                 printWriter.WriteLine("           System.arraycopy(bufline, tokenBegin, newbufline, 0, bufsize - tokenBegin);");
@@ -335,7 +335,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("        {");
             printWriter.WriteLine("           System.arraycopy(buffer, tokenBegin, newbuffer, 0, bufsize - tokenBegin);");
             printWriter.WriteLine("           buffer = newbuffer;");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("");
                 printWriter.WriteLine("           System.arraycopy(bufline, tokenBegin, newbufline, 0, bufsize - tokenBegin);");
@@ -380,7 +380,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("           --bufpos;");
             printWriter.WriteLine("           backup(0);");
             printWriter.WriteLine("        }");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("        else");
                 printWriter.WriteLine("        {");
@@ -439,7 +439,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("     else");
             printWriter.WriteLine("        available = tokenBegin;");
             printWriter.WriteLine("  }");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("");
                 printWriter.WriteLine((str) + ("protected void UpdateLineColumn(char c)"));
@@ -503,7 +503,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("");
             printWriter.WriteLine("     if ((buffer[bufpos] = c = ReadByte()) == '\\\\')");
             printWriter.WriteLine("     {");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("        UpdateLineColumn(c);");
             }
@@ -519,7 +519,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("           {");
             printWriter.WriteLine("              if ((buffer[bufpos] = c = ReadByte()) != '\\\\')");
             printWriter.WriteLine("              {");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("                 UpdateLineColumn(c);");
             }
@@ -544,7 +544,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("              return '\\\\';");
             printWriter.WriteLine("           }");
             printWriter.WriteLine("");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("           UpdateLineColumn(c);");
             }
@@ -555,7 +555,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("        try");
             printWriter.WriteLine("        {");
             printWriter.WriteLine("           while ((c = ReadByte()) == 'u')");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("              ++column;");
             }
@@ -569,14 +569,14 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("                                       hexval(ReadByte()) << 4 |");
             printWriter.WriteLine("                                       hexval(ReadByte()));");
             printWriter.WriteLine("");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("           column += 4;");
             }
             printWriter.WriteLine("        }");
             printWriter.WriteLine("        catch(java.io.IOException e)");
             printWriter.WriteLine("        {");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("           throw new System.Exception(\"Invalid escape character at line \" + line +");
                 printWriter.WriteLine("                                         \" column \" + column + \".\");");
@@ -597,7 +597,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("     }");
             printWriter.WriteLine("     else");
             printWriter.WriteLine("     {");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("        UpdateLineColumn(c);");
             }
@@ -611,7 +611,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("   */");
             printWriter.WriteLine("");
             printWriter.WriteLine((str) + ("public int getColumn() {"));
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     return bufcolumn[bufpos];");
             }
@@ -627,7 +627,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("   */");
             printWriter.WriteLine("");
             printWriter.WriteLine((str) + ("public int getLine() {"));
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     return bufline[bufpos];");
             }
@@ -639,7 +639,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("");
             printWriter.WriteLine("/** Get end column. */");
             printWriter.WriteLine((str) + ("public int getEndColumn() {"));
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     return bufcolumn[bufpos];");
             }
@@ -651,7 +651,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("");
             printWriter.WriteLine("/** Get end line. */");
             printWriter.WriteLine((str) + ("public int getEndLine() {"));
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     return bufline[bufpos];");
             }
@@ -663,7 +663,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("");
             printWriter.WriteLine("/** @return column of token start */");
             printWriter.WriteLine((str) + ("public int getBeginColumn() {"));
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     return bufcolumn[tokenBegin];");
             }
@@ -675,7 +675,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("");
             printWriter.WriteLine("/** @return line number of token start */");
             printWriter.WriteLine((str) + ("public int getBeginLine() {"));
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     return bufline[tokenBegin];");
             }
@@ -697,7 +697,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("  public JavaCharStream(java.io.TextReader dstream,");
             printWriter.WriteLine("                 int startline, int startcolumn, int buffersize)");
             printWriter.WriteLine("  {");
-            if (Options.getStatic())
+            if (Options.Static)
             {
                 printWriter.WriteLine("    if (inputStream != null)");
                 printWriter.WriteLine("       throw new System.Exception(\"\\n   ERROR: Second call to the constructor of a static JavaCharStream.\\n\" +");
@@ -705,7 +705,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 printWriter.WriteLine("       \"       during the generation of this class.\");");
             }
             printWriter.WriteLine("    inputStream = dstream;");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("    line = startline;");
                 printWriter.WriteLine("    column = startcolumn - 1;");
@@ -713,7 +713,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("");
             printWriter.WriteLine("    available = bufsize = buffersize;");
             printWriter.WriteLine("    buffer = new char[buffersize];");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("    bufline = new int[buffersize];");
                 printWriter.WriteLine("    bufcolumn = new int[buffersize];");
@@ -738,7 +738,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("                 int startline, int startcolumn, int buffersize)");
             printWriter.WriteLine("  {");
             printWriter.WriteLine("    inputStream = dstream;");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("    line = startline;");
                 printWriter.WriteLine("    column = startcolumn - 1;");
@@ -748,14 +748,14 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("    {");
             printWriter.WriteLine("      available = bufsize = buffersize;");
             printWriter.WriteLine("      buffer = new char[buffersize];");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("      bufline = new int[buffersize];");
                 printWriter.WriteLine("      bufcolumn = new int[buffersize];");
             }
             printWriter.WriteLine("      nextCharBuf = new char[4096];");
             printWriter.WriteLine("    }");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("    prevCharIsLF = prevCharIsCR = false;");
             }
@@ -884,13 +884,13 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("  {");
             printWriter.WriteLine("     nextCharBuf = null;");
             printWriter.WriteLine("     buffer = null;");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     bufline = null;");
                 printWriter.WriteLine("     bufcolumn = null;");
             }
             printWriter.WriteLine("  }");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("");
                 printWriter.WriteLine("  /**");
@@ -971,17 +971,17 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 return;
             }
             var printWriter = outputFile.PrintWriter;
-            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
+            if (JavaCCGlobals.CuToInsertionPoint1.Count != 0 && ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).Kind == 60)
             {
-                for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
+                for (int i = 1; i < JavaCCGlobals.CuToInsertionPoint1.Count; i++)
                 {
-                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
+                    if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginColumn;
+                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
+                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
                         for (int j = 0; j <= i; j++)
                         {
-                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.Cu_to_insertion_point_1[j], printWriter);
+                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], printWriter);
                         }
                         printWriter.WriteLine("");
                         printWriter.WriteLine("");
@@ -989,7 +989,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                     }
                 }
             }
-            string str = ((!Options.getStatic()) ? "  " : "  static ");
+            string str = ((!Options.Static) ? "  " : "  static ");
             printWriter.WriteLine("/**");
             printWriter.WriteLine(" * An implementation of interface CharStream, where the stream is assumed to");
             printWriter.WriteLine(" * contain only ASCII characters (without unicode processing).");
@@ -998,14 +998,14 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("public class SimpleCharStream");
             printWriter.WriteLine("{");
             printWriter.WriteLine("/** Whether parser is static. */");
-            printWriter.WriteLine(("  public static final boolean staticFlag = ") + (Options.getStatic()) + (";")
+            printWriter.WriteLine(("  public static final boolean staticFlag = ") + (Options.Static) + (";")
                 );
             printWriter.WriteLine((str) + ("int bufsize;"));
             printWriter.WriteLine((str) + ("int available;"));
             printWriter.WriteLine((str) + ("int tokenBegin;"));
             printWriter.WriteLine("/** Position in buffer. */");
             printWriter.WriteLine((str) + ("public int bufpos = -1;"));
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine((str) + ("protected int bufline[];"));
                 printWriter.WriteLine((str) + ("protected int bufcolumn[];"));
@@ -1031,7 +1031,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine((str) + ("protected void ExpandBuff(boolean wrapAround)"));
             printWriter.WriteLine("  {");
             printWriter.WriteLine("     char[] newbuffer = new char[bufsize + 2048];");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     int newbufline[] = new int[bufsize + 2048];");
                 printWriter.WriteLine("     int newbufcolumn[] = new int[bufsize + 2048];");
@@ -1045,7 +1045,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("           System.arraycopy(buffer, 0, newbuffer,");
             printWriter.WriteLine("                                             bufsize - tokenBegin, bufpos);");
             printWriter.WriteLine("           buffer = newbuffer;");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("");
                 printWriter.WriteLine("           System.arraycopy(bufline, tokenBegin, newbufline, 0, bufsize - tokenBegin);");
@@ -1063,7 +1063,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("        {");
             printWriter.WriteLine("           System.arraycopy(buffer, tokenBegin, newbuffer, 0, bufsize - tokenBegin);");
             printWriter.WriteLine("           buffer = newbuffer;");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("");
                 printWriter.WriteLine("           System.arraycopy(bufline, tokenBegin, newbufline, 0, bufsize - tokenBegin);");
@@ -1141,7 +1141,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("");
             printWriter.WriteLine("     return c;");
             printWriter.WriteLine("  }");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("");
                 printWriter.WriteLine((str) + ("protected void UpdateLineColumn(char c)"));
@@ -1203,7 +1203,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("");
             printWriter.WriteLine("     char c = buffer[bufpos];");
             printWriter.WriteLine("");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     UpdateLineColumn(c);");
             }
@@ -1216,7 +1216,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("   */");
             printWriter.WriteLine("");
             printWriter.WriteLine((str) + ("public int getColumn() {"));
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     return bufcolumn[bufpos];");
             }
@@ -1232,7 +1232,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("   */");
             printWriter.WriteLine("");
             printWriter.WriteLine((str) + ("public int getLine() {"));
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     return bufline[bufpos];");
             }
@@ -1244,7 +1244,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("");
             printWriter.WriteLine("  /** Get token end column number. */");
             printWriter.WriteLine((str) + ("public int getEndColumn() {"));
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     return bufcolumn[bufpos];");
             }
@@ -1256,7 +1256,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("");
             printWriter.WriteLine("  /** Get token end line number. */");
             printWriter.WriteLine((str) + ("public int getEndLine() {"));
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     return bufline[bufpos];");
             }
@@ -1268,7 +1268,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("");
             printWriter.WriteLine("  /** Get token beginning column number. */");
             printWriter.WriteLine((str) + ("public int getBeginColumn() {"));
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     return bufcolumn[tokenBegin];");
             }
@@ -1280,7 +1280,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("");
             printWriter.WriteLine("  /** Get token beginning line number. */");
             printWriter.WriteLine((str) + ("public int getBeginLine() {"));
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     return bufline[tokenBegin];");
             }
@@ -1302,7 +1302,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("  public SimpleCharStream(java.io.TextReader dstream, int startline,");
             printWriter.WriteLine("  int startcolumn, int buffersize)");
             printWriter.WriteLine("  {");
-            if (Options.getStatic())
+            if (Options.Static)
             {
                 printWriter.WriteLine("    if (inputStream != null)");
                 printWriter.WriteLine("       throw new System.Exception(\"\\n   ERROR: Second call to the constructor of a static SimpleCharStream.\\n\" +");
@@ -1310,7 +1310,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 printWriter.WriteLine("       \"       during the generation of this class.\");");
             }
             printWriter.WriteLine("    inputStream = dstream;");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("    line = startline;");
                 printWriter.WriteLine("    column = startcolumn - 1;");
@@ -1318,7 +1318,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("");
             printWriter.WriteLine("    available = bufsize = buffersize;");
             printWriter.WriteLine("    buffer = new char[buffersize];");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("    bufline = new int[buffersize];");
                 printWriter.WriteLine("    bufcolumn = new int[buffersize];");
@@ -1343,7 +1343,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("  int startcolumn, int buffersize)");
             printWriter.WriteLine("  {");
             printWriter.WriteLine("    inputStream = dstream;");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("    line = startline;");
                 printWriter.WriteLine("    column = startcolumn - 1;");
@@ -1353,13 +1353,13 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("    {");
             printWriter.WriteLine("      available = bufsize = buffersize;");
             printWriter.WriteLine("      buffer = new char[buffersize];");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("      bufline = new int[buffersize];");
                 printWriter.WriteLine("      bufcolumn = new int[buffersize];");
             }
             printWriter.WriteLine("    }");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("    prevCharIsLF = prevCharIsCR = false;");
             }
@@ -1487,13 +1487,13 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine((str) + ("public void Done()"));
             printWriter.WriteLine("  {");
             printWriter.WriteLine("     buffer = null;");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("     bufline = null;");
                 printWriter.WriteLine("     bufcolumn = null;");
             }
             printWriter.WriteLine("  }");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("");
                 printWriter.WriteLine("  /**");
@@ -1575,17 +1575,17 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 return;
             }
             TextWriter printWriter = outputFile.PrintWriter;
-            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
+            if (JavaCCGlobals.CuToInsertionPoint1.Count != 0 && ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).Kind == 60)
             {
-                for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
+                for (int i = 1; i < JavaCCGlobals.CuToInsertionPoint1.Count; i++)
                 {
-                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
+                    if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginColumn;
+                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
+                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
                         for (int j = 0; j <= i; j++)
                         {
-                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.Cu_to_insertion_point_1[j], printWriter);
+                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], printWriter);
                         }
                         printWriter.WriteLine("");
                         printWriter.WriteLine("");
@@ -1729,17 +1729,17 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 return;
             }
             TextWriter printWriter = outputFile.PrintWriter;
-            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
+            if (JavaCCGlobals.CuToInsertionPoint1.Count != 0 && ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).Kind == 60)
             {
-                for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
+                for (int i = 1; i < JavaCCGlobals.CuToInsertionPoint1.Count; i++)
                 {
-                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
+                    if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginColumn;
+                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
+                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
                         for (int j = 0; j <= i; j++)
                         {
-                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.Cu_to_insertion_point_1[j], printWriter);
+                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], printWriter);
                         }
                         printWriter.WriteLine("");
                         printWriter.WriteLine("");
@@ -1873,7 +1873,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("      retval += \" \\\"\";");
             printWriter.WriteLine("      tok = tok.next; ");
             printWriter.WriteLine("    }");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("    retval += \"\\\" at line \" + currentToken.next.beginLine + \", column \" + currentToken.next.beginColumn;");
             }
@@ -1971,17 +1971,17 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 return;
             }
             TextWriter printWriter = outputFile.PrintWriter;
-            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
+            if (JavaCCGlobals.CuToInsertionPoint1.Count != 0 && ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).Kind == 60)
             {
-                for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
+                for (int i = 1; i < JavaCCGlobals.CuToInsertionPoint1.Count; i++)
                 {
-                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
+                    if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginColumn;
+                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
+                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
                         for (int j = 0; j <= i; j++)
                         {
-                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.Cu_to_insertion_point_1[j], printWriter);
+                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], printWriter);
                         }
                         printWriter.WriteLine("");
                         printWriter.WriteLine("");
@@ -2157,17 +2157,17 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 return;
             }
             TextWriter printWriter = outputFile.PrintWriter;
-            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
+            if (JavaCCGlobals.CuToInsertionPoint1.Count != 0 && ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).Kind == 60)
             {
-                for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
+                for (int i = 1; i < JavaCCGlobals.CuToInsertionPoint1.Count; i++)
                 {
-                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
+                    if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginColumn;
+                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
+                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
                         for (int j = 0; j <= i; j++)
                         {
-                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.Cu_to_insertion_point_1[j], printWriter);
+                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], printWriter);
                         }
                         printWriter.WriteLine("");
                         printWriter.WriteLine("");
@@ -2195,7 +2195,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
             printWriter.WriteLine("   * stored in the file ...Constants.java.");
             printWriter.WriteLine("   */");
             printWriter.WriteLine("  public int kind;");
-            if (OtherFilesGen.keepLineCol)
+            if (OtherFilesGen.KeepLineCol)
             {
                 printWriter.WriteLine("");
                 printWriter.WriteLine("  /** The line number of the first character of this Token. */");
@@ -2334,17 +2334,17 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 return;
             }
             TextWriter printWriter = outputFile.PrintWriter;
-            if (JavaCCGlobals.Cu_to_insertion_point_1.Count != 0 && ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).Kind == 60)
+            if (JavaCCGlobals.CuToInsertionPoint1.Count != 0 && ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).Kind == 60)
             {
-                for (int i = 1; i < JavaCCGlobals.Cu_to_insertion_point_1.Count; i++)
+                for (int i = 1; i < JavaCCGlobals.CuToInsertionPoint1.Count; i++)
                 {
-                    if (((Token)JavaCCGlobals.Cu_to_insertion_point_1[i]).Kind == 97)
+                    if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.Cu_to_insertion_point_1[0]).BeginColumn;
+                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
+                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
                         for (int j = 0; j <= i; j++)
                         {
-                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.Cu_to_insertion_point_1[j], printWriter);
+                            JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], printWriter);
                         }
                         printWriter.WriteLine("");
                         printWriter.WriteLine("");

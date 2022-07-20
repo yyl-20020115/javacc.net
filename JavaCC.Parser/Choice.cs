@@ -4,12 +4,12 @@ using System.Text;
 
 public class Choice : Expansion
 {
-    public List<Expansion> Choices = new();
+    public readonly List<Expansion> Choices = new();
     public Choice() { }
-    public Choice(Token t)
+    public Choice(Token token)
     {
-        Line = t.BeginLine;
-        Column = t.BeginColumn;
+        Line = token.BeginLine;
+        Column = token.BeginColumn;
     }
 
     public Choice(Expansion e)
@@ -21,16 +21,16 @@ public class Choice : Expansion
 
     public override StringBuilder Dump(int i, HashSet<Expansion> s)
     {
-        var stringBuilder = base.Dump(i, s);
+        var builder = base.Dump(i, s);
         if (s.Contains(this))
         {
-            return stringBuilder;
+            return builder;
         }
         s.Add(this);
         foreach (var expansion in this.Choices)
         {
-            stringBuilder.Append(Expansion.EOL).Append(expansion.Dump(i + 1, s));
+            builder.Append(Expansion.EOL).Append(expansion.Dump(i + 1, s));
         }
-        return stringBuilder;
+        return builder;
     }
 }

@@ -30,7 +30,7 @@ public class JJDocMain : JJDocGlobals
                 Error(("Argument \"") + (args[i]) + ("\" must be an option setting.  "));
                 return 1;
             }
-            Options.setCmdLineOption(args[i]);
+            Options.SetCmdLineOption(args[i]);
         }
         JavaCCParser javaCCParser;
         if (string.Equals(args[args.Length - 1], "-"))
@@ -86,7 +86,7 @@ public class JJDocMain : JJDocGlobals
                 {
                     if (JavaCCErrors._Warning_Count == 0)
                     {
-                        Info(("Grammar documentation generated successfully in ") + (JJDocGlobals.OutputFile));
+                        Info(("Grammar documentation generated successfully in ") + (OutputFile));
                     }
                     else
                     {
@@ -123,44 +123,44 @@ public class JJDocMain : JJDocGlobals
 
     public static void HelpMessage()
     {
-        JJDocGlobals.Info("");
-        JJDocGlobals.Info("    jjdoc option-settings - (to read from standard input)");
-        JJDocGlobals.Info("OR");
-        JJDocGlobals.Info("    jjdoc option-settings inputfile (to read from a file)");
-        JJDocGlobals.Info("");
-        JJDocGlobals.Info("WHERE");
-        JJDocGlobals.Info("    \"option-settings\" is a sequence of settings separated by spaces.");
-        JJDocGlobals.Info("");
-        JJDocGlobals.Info("Each option setting must be of one of the following forms:");
-        JJDocGlobals.Info("");
-        JJDocGlobals.Info("    -optionname=value (e.g., -TEXT=false)");
-        JJDocGlobals.Info("    -optionname:value (e.g., -TEXT:false)");
-        JJDocGlobals.Info("    -optionname       (equivalent to -optionname=true.  e.g., -TEXT)");
-        JJDocGlobals.Info("    -NOoptionname     (equivalent to -optionname=false. e.g., -NOTEXT)");
-        JJDocGlobals.Info("");
-        JJDocGlobals.Info("Option settings are not case-sensitive, so one can say \"-nOtExT\" instead");
-        JJDocGlobals.Info("of \"-NOTEXT\".  Option values must be appropriate for the corresponding");
-        JJDocGlobals.Info("option, and must be either an integer, boolean or string value.");
-        JJDocGlobals.Info("");
-        JJDocGlobals.Info("The string valued options are:");
-        JJDocGlobals.Info("");
-        JJDocGlobals.Info("    OUTPUT_FILE");
-        JJDocGlobals.Info("    CSS");
-        JJDocGlobals.Info("");
-        JJDocGlobals.Info("The boolean valued options are:");
-        JJDocGlobals.Info("");
-        JJDocGlobals.Info("    ONE_TABLE              (default true)");
-        JJDocGlobals.Info("    TEXT                   (default false)");
-        JJDocGlobals.Info("");
-        JJDocGlobals.Info("");
-        JJDocGlobals.Info("EXAMPLES:");
-        JJDocGlobals.Info("    jjdoc -ONE_TABLE=false mygrammar.jj");
-        JJDocGlobals.Info("    jjdoc - < mygrammar.jj");
-        JJDocGlobals.Info("");
-        JJDocGlobals.Info("ABOUT JJDoc:");
-        JJDocGlobals.Info("    JJDoc generates JavaDoc documentation from JavaCC grammar files.");
-        JJDocGlobals.Info("");
-        JJDocGlobals.Info("    For more information, see the online JJDoc documentation at");
-        JJDocGlobals.Info("    https://javacc.dev.java.net/doc/JJDoc.html");
+        Info("");
+        Info("    jjdoc option-settings - (to read from standard input)");
+        Info("OR");
+        Info("    jjdoc option-settings inputfile (to read from a file)");
+        Info("");
+        Info("WHERE");
+        Info("    \"option-settings\" is a sequence of settings separated by spaces.");
+        Info("");
+        Info("Each option setting must be of one of the following forms:");
+        Info("");
+        Info("    -optionname=value (e.g., -TEXT=false)");
+        Info("    -optionname:value (e.g., -TEXT:false)");
+        Info("    -optionname       (equivalent to -optionname=true.  e.g., -TEXT)");
+        Info("    -NOoptionname     (equivalent to -optionname=false. e.g., -NOTEXT)");
+        Info("");
+        Info("Option settings are not case-sensitive, so one can say \"-nOtExT\" instead");
+        Info("of \"-NOTEXT\".  Option values must be appropriate for the corresponding");
+        Info("option, and must be either an integer, boolean or string value.");
+        Info("");
+        Info("The string valued options are:");
+        Info("");
+        Info("    OUTPUT_FILE");
+        Info("    CSS");
+        Info("");
+        Info("The boolean valued options are:");
+        Info("");
+        Info("    ONE_TABLE              (default true)");
+        Info("    TEXT                   (default false)");
+        Info("");
+        Info("");
+        Info("EXAMPLES:");
+        Info("    jjdoc -ONE_TABLE=false mygrammar.jj");
+        Info("    jjdoc - < mygrammar.jj");
+        Info("");
+        Info("ABOUT JJDoc:");
+        Info("    JJDoc generates JavaDoc documentation from JavaCC grammar files.");
+        Info("");
+        Info("    For more information, see the online JJDoc documentation at");
+        Info("    https://javacc.dev.java.net/doc/JJDoc.html");
     }
 }

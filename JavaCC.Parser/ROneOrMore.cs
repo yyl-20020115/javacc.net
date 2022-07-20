@@ -4,10 +4,10 @@ public class ROneOrMore : RegularExpression
 {
     public RegularExpression RegExpr;
 
-    public ROneOrMore(Token t, RegularExpression re)
+    public ROneOrMore(Token token, RegularExpression re)
     {
-        Line = t.BeginLine;
-        Column = t.BeginColumn;
+        Line = token.BeginLine;
+        Column = token.BeginColumn;
         RegExpr = re;
     }
 
@@ -23,7 +23,4 @@ public class ROneOrMore : RegularExpression
         return nfa;
     }
 
-    public ROneOrMore()
-    {
-    }
 }

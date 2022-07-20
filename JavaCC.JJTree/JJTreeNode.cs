@@ -127,20 +127,20 @@ public class JJTreeNode : SimpleNode
 
     internal virtual string WhiteOut(Token token)
     {
-        var stringBuilder = new StringBuilder(token.Image.Length);
+        var builder = new StringBuilder(token.Image.Length);
         for (int i = 0; i < token.Image.Length; i++)
         {
             int num = token.Image[i];
             if (num != 9 && num != 10 && num != 13 && num != 12)
             {
-                stringBuilder.Append(' ');
+                builder.Append(' ');
             }
             else
             {
-                stringBuilder.Append((char)num);
+                builder.Append((char)num);
             }
         }
-        return stringBuilder.ToString();
+        return builder.ToString();
     }
 
 

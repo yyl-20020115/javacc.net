@@ -6,13 +6,13 @@ using System.Text;
 public class Expansion
 {
     public static long NextGenerationIndex = 1L;
-    internal static string EOL = Environment.NewLine;
-    internal int Line = 0;
-    internal int Column = 0;
-    internal string internal_name = "";
-    internal bool phase3done = false;
-    public object parent = new();
-    internal int ordinal = 0;
+    public static readonly string EOL = Environment.NewLine;
+    public int Line = 1;
+    public int Column = 1;
+    public string internal_name = "";
+    public bool phase3done = false;
+    public object Parent = new();
+    public int ordinal = 0;
     public long myGeneration = 0L;
     public bool inMinimumSize = false;
 
@@ -20,12 +20,12 @@ public class Expansion
 
     protected internal virtual StringBuilder DumpPrefix(int i)
     {
-        var stringBuilder = new StringBuilder(128);
+        var builder = new StringBuilder(128);
         for (int j = 0; j < i; j++)
         {
-            stringBuilder.Append("  ");
+            builder.Append("  ");
         }
-        return stringBuilder;
+        return builder;
     }
 
     public Expansion()

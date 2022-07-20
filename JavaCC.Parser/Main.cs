@@ -4,11 +4,6 @@ using System.IO;
 
 public static class EntryPoint
 {
-    public static int Main(string[] strarr)
-    {
-        return MainProgram(strarr);
-    }
-
     public static void ReInitAll()
     {
         Expansion.ReInit();
@@ -23,40 +18,39 @@ public static class EntryPoint
         MatchInfo.ReInit();
         LookaheadWalk.ReInit();
         Semanticize.ReInit();
-        ParseGen.reInit();
+        ParseGen.ReInit();
         OtherFilesGen.reInit();
         ParseEngine.ReInit();
     }
 
 
-    public static int MainProgram(string[] strarr)
+    public static int Main(string[] args)
     {
-        //Discarded unreachable code: IL_0349
         ReInitAll();
         JavaCCGlobals.BannerLine("Parser Generator", "");
 
-        if (strarr.Length == 0)
+        if (args.Length == 0)
         {
             Console.WriteLine("");
             HelpMessage();
             return 1;
         }
         Console.WriteLine("(type \"javacc\" with no arguments for help)");
-        if (Options.IsOption(strarr[strarr.Length - 1]))
+        if (Options.IsOption(args[args.Length - 1]))
         {
-            Console.WriteLine(("Last argument \"") + (strarr[strarr.Length - 1]) + ("\" is not a filename.")
+            Console.WriteLine(("Last argument \"") + (args[args.Length - 1]) + ("\" is not a filename.")
                 );
             return 1;
         }
-        for (int i = 0; i < strarr.Length - 1; i++)
+        for (int i = 0; i < args.Length - 1; i++)
         {
-            if (!Options.IsOption(strarr[i]))
+            if (!Options.IsOption(args[i]))
             {
-                Console.WriteLine(("Argument \"") + (strarr[i]) + ("\" must be an option setting.")
+                Console.WriteLine(("Argument \"") + (args[i]) + ("\" must be an option setting.")
                     );
                 return 1;
             }
-            Options.setCmdLineOption(strarr[i]);
+            Options.SetCmdLineOption(args[i]);
         }
         JavaCCParser javaCCParser;
         try
@@ -64,20 +58,20 @@ public static class EntryPoint
             try
             {
 
-                FileInfo file = new FileInfo(strarr[strarr.Length - 1]);
+                FileInfo file = new FileInfo(args[args.Length - 1]);
                 if (!file.Exists)
                 {
-                    Console.WriteLine(("File ") + (strarr[strarr.Length - 1]) + (" not found.")
+                    Console.WriteLine(("File ") + (args[args.Length - 1]) + (" not found.")
                         );
                     return 1;
                 }
-                DirectoryInfo di = new DirectoryInfo(strarr[strarr.Length - 1]);
+                DirectoryInfo di = new DirectoryInfo(args[args.Length - 1]);
                 if (di.Exists)
                 {
-                    Console.WriteLine((strarr[strarr.Length - 1]) + (" is a directory. Please use a valid file name."));
+                    Console.WriteLine((args[args.Length - 1]) + (" is a directory. Please use a valid file name."));
                     return 1;
                 }
-                javaCCParser = new JavaCCParser(new StreamReader(strarr[strarr.Length - 1]));
+                javaCCParser = new JavaCCParser(new StreamReader(args[args.Length - 1]));
             }
             catch (Exception)
             {
@@ -93,11 +87,11 @@ public static class EntryPoint
         {
             try
             {
-                Console.WriteLine(("Reading from file ") + (strarr[strarr.Length - 1]) + (" . . .")
+                Console.WriteLine(("Reading from file ") + (args[args.Length - 1]) + (" . . .")
                     );
-                JavaCCGlobals.FileName = (JavaCCGlobals.OrigFileName = strarr[strarr.Length - 1]);
-                JavaCCGlobals.jjtreeGenerated = JavaCCGlobals.IsGeneratedBy("JJTree", strarr[strarr.Length - 1]);
-                JavaCCGlobals.ToolNames = JavaCCGlobals.GetToolNames(strarr[strarr.Length - 1]);
+                JavaCCGlobals.FileName = (JavaCCGlobals.OrigFileName = args[args.Length - 1]);
+                JavaCCGlobals.JJTreeGenerated = JavaCCGlobals.IsGeneratedBy("JJTree", args[args.Length - 1]);
+                JavaCCGlobals.ToolNames = JavaCCGlobals.GetToolNames(args[args.Length - 1]);
                 javaCCParser.JavaCC_Input();
                 JavaCCGlobals.CreateOutputDir(Options.OutputDirectory);
                 if (Options.UnicodeInput)
@@ -105,10 +99,10 @@ public static class EntryPoint
                     NfaState.unicodeWarningGiven = true;
                     Console.WriteLine("Note: UNICODE_INPUT option is specified. Please make sure you create the parser/lexer using a TextReader with the correct character encoding.");
                 }
-                Semanticize.start();
+                Semanticize.Start();
                 ParseGen.Start();
                 LexGen.Start();
-                OtherFilesGen.start();
+                OtherFilesGen.Start();
                 if (JavaCCErrors._Error_Count == 0 && (Options.BuildParser || Options.BuildTokenManager))
                 {
                     if (JavaCCErrors._Warning_Count == 0)
@@ -153,17 +147,17 @@ public static class EntryPoint
         return 1;
     IL_0180:
 
-        Console.WriteLine(("File ") + (strarr[strarr.Length - 1]) + (" not found.")
+        Console.WriteLine(("File ") + (args[args.Length - 1]) + (" not found.")
             );
         return 1;
     IL_017d:
 
-        Console.WriteLine(("Security violation while trying to open ") + (strarr[strarr.Length - 1]));
+        Console.WriteLine(("Security violation while trying to open ") + (args[args.Length - 1]));
         return 1;
     }
 
 
-    internal static void HelpMessage()
+    public static void HelpMessage()
     {
         Console.WriteLine("Usage:");
         Console.WriteLine("    javacc option-settings inputfile");

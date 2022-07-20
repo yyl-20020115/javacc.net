@@ -2,19 +2,19 @@ namespace JavaCC.Parser;
 
 public class RJustName : RegularExpression
 {
-    public RegularExpression regexpr;
+    public RegularExpression RegExpr;
 
-    public RJustName(Token t, string str)
+    public RJustName(Token token, string label)
     {
-        Line = t.BeginLine;
-        Column = t.BeginColumn;
-        label = str;
+        this.Line = token.BeginLine;
+        this.Column = token.BeginColumn;
+        this.Label = label;
     }
 
 
     public override Nfa GenerateNfa(bool b)
     {
-        return regexpr.GenerateNfa(b);
+        return RegExpr.GenerateNfa(b);
     }
     public RJustName()
     {

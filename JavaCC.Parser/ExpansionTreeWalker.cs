@@ -25,7 +25,7 @@ public sealed class ExpansionTreeWalker
         }
         else if (exp is OneOrMore z)
         {
-            PreOrderWalk(z.expansion, tree);
+            PreOrderWalk(z.Expansion, tree);
         }
         else if (exp is ZeroOrMore o)
         {
@@ -37,7 +37,7 @@ public sealed class ExpansionTreeWalker
         }
         else if (exp is Lookahead l)
         {
-            var la_expansion = l.la_expansion;
+            var la_expansion = l.LaExpansion;
             if (!(la_expansion is Sequence) || (Expansion)((Sequence)la_expansion).Units[0] != exp)
             {
                 PreOrderWalk(la_expansion, tree);
@@ -71,7 +71,7 @@ public sealed class ExpansionTreeWalker
         }
         else if (exp is RZeroOrOne rm)
         {
-            PreOrderWalk(((RZeroOrOne)exp).regexpr, tree);
+            PreOrderWalk(((RZeroOrOne)exp).Regexpr, tree);
         }
         else if (exp is RRepetitionRange rr)
         {
@@ -100,7 +100,7 @@ public sealed class ExpansionTreeWalker
             }
             else if (exp is OneOrMore o)
             {
-                postOrderWalk(((OneOrMore)exp).expansion, walker);
+                postOrderWalk(((OneOrMore)exp).Expansion, walker);
             }
             else if (exp is ZeroOrMore z)
             {
@@ -112,7 +112,7 @@ public sealed class ExpansionTreeWalker
             }
             else if (exp is Lookahead l)
             {
-                Expansion la_expansion = ((Lookahead)exp).la_expansion;
+                Expansion la_expansion = ((Lookahead)exp).LaExpansion;
                 if (!(la_expansion is Sequence) || (Expansion)((Sequence)la_expansion).Units[0] != exp)
                 {
                     postOrderWalk(la_expansion, walker);
@@ -146,7 +146,7 @@ public sealed class ExpansionTreeWalker
             }
             else if (exp is RZeroOrOne rm)
             {
-                postOrderWalk(((RZeroOrOne)exp).regexpr, walker);
+                postOrderWalk(((RZeroOrOne)exp).Regexpr, walker);
             }
             else if (exp is RRepetitionRange rr)
             {
