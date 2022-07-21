@@ -50,16 +50,17 @@ public class OutputFile
 
 
 
-	public class TrapClosePrintWriter : TextWriter
+	public class TrapClosePrintWriter : StreamWriter
 	{
 
-		private OutputFile outputFile;
+		private OutputFile OutputFile;
 
 		public override Encoding Encoding => Encoding.Default;
 
 		public TrapClosePrintWriter(OutputFile output, Stream stream)
+			:base(stream)
 		{
-			outputFile = output;
+			OutputFile = output;
 		
 		}
 
@@ -74,14 +75,14 @@ public class OutputFile
 		{
 			try
 			{
-				outputFile.Close();
+				OutputFile.Close();
 				return;
 			}
 			catch (IOException)
 			{
 			}
 
-			Console.Error.WriteLine(("Could not close ")+(outputFile.file.FullName));
+			Console.Error.WriteLine(("Could not close ")+(OutputFile.file.FullName));
 		}
 	}
 
@@ -136,7 +137,7 @@ public class OutputFile
                 stream = File.OpenRead(file.FullName);
                 pw = new TrapClosePrintWriter(this, stream);
                 string str = ((compatibleVersion != null) ? compatibleVersion : "4.1d1");
-                pw.WriteLine(("/* ") + (JavaCCGlobals.getIdString(toolName, file.Name)) + (" Version ")
+                pw.WriteLine(("/* ") + (JavaCCGlobals.GetIdString(toolName, file.Name)) + (" Version ")
                     + (str)
                     + (" */")
                     );
@@ -240,7 +241,7 @@ public class OutputFile
 
 	private void CheckVersion(FileInfo info, string name)
 	{
-		string text = ("/* ")+(JavaCCGlobals.getIdString(toolName, info.Name))+(" Version ")
+		string text = ("/* ")+(JavaCCGlobals.GetIdString(toolName, info.Name))+(" Version ")
 			;
 		try
 		{

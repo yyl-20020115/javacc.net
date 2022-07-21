@@ -378,11 +378,6 @@ public class JavaCCGlobals
     }
 
 
-    public JavaCCGlobals()
-    {
-    }
-
-
     public static void BannerLine(string str1, string str2)
     {
         Console.Write(("Java Compiler Compiler Version 4.1d1 (") + (str1));
@@ -394,13 +389,13 @@ public class JavaCCGlobals
     }
 
 
-    public static string getIdString(string str1, string str2)
+    public static string GetIdString(string str1, string str2)
     {
-        var vector = new List<string>();
-        vector.Add(str1);
-        string idString = GetIdStringList(vector, str2);
-
-        return idString;
+        var vector = new List<string>
+        {
+            str1
+        };
+        return GetIdStringList(vector, str2);
     }
 
 
@@ -639,23 +634,23 @@ public class JavaCCGlobals
     }
 
 
-    protected internal static void PrintLeadingComments(Token t, TextWriter pw)
+    protected internal static void PrintLeadingComments(Token t, TextWriter writer)
     {
         if (t.SpecialToken != null)
         {
-            Token token = t.SpecialToken;
+            var token = t.SpecialToken;
             while (token.SpecialToken != null)
             {
                 token = token.SpecialToken;
             }
             while (token != null)
             {
-                PrintTokenOnly(token, pw);
+                PrintTokenOnly(token, writer);
                 token = token.Next;
             }
             if (CCol != 1 && CLine != t.BeginLine)
             {
-                pw.WriteLine("");
+                writer.WriteLine("");
                 CLine++;
                 CCol = 1;
             }
@@ -675,7 +670,7 @@ public class JavaCCGlobals
     protected internal static string PrintToken(Token token)
     {
         string str = "";
-        Token special = token.SpecialToken;
+        var special = token.SpecialToken;
         if (special != null)
         {
             while (special.SpecialToken != null)

@@ -10,7 +10,7 @@ public class NonTerminal : Expansion
 
     public readonly List<Token> ArgumentTokens = new();
 
-    public NormalProduction prod;
+    public NormalProduction Production;
 
     public NonTerminal() { }
 

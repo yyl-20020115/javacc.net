@@ -5,16 +5,15 @@ public class JavaCCErrors
 {
     protected static int ParseErrorCount = 0;
     protected static int SemanticErrorCount = 0;
-    protected static int WarningCount = 0;
-
+    protected static int _WarningCount = 0;
+    public static int WarningCount => _WarningCount;
     public static string Warning(string text)
     {
         Console.Error.Write("Warning: ");
         Console.Error.WriteLine(text);
-        WarningCount++;
+        _WarningCount++;
         return text; 
     }
-
 
     public static string Semantic_Error(string text)
     {
@@ -24,17 +23,14 @@ public class JavaCCErrors
         return text;
     }
 
-    public static int _Error_Count => ParseErrorCount + SemanticErrorCount;
-
-    public static int _Warning_Count => WarningCount;
-
+    public static int ErrorCount => ParseErrorCount + SemanticErrorCount;
 
     public static string Warning(object info, string text)
     {
         Console.Error.Write("Warning: ");
         PrintLocationInfo(info);
         Console.Error.WriteLine(text);
-        WarningCount++;
+        _WarningCount++;
         return text;
     }
 

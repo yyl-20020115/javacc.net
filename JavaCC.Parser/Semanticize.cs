@@ -212,14 +212,14 @@ public class Semanticize : JavaCCGlobals
         {
             if (exp is NonTerminal nonTerminal && ProductionTable.TryGetValue(nonTerminal.Name,out var normalProduction))
             {
-                nonTerminal.prod = normalProduction;
+                nonTerminal.Production = normalProduction;
                 if (normalProduction == null)
                 {
                     JavaCCErrors.Semantic_Error(exp, ("Non-terminal ") + (nonTerminal.Name) + (" has not been defined."));
                 }
                 else
                 {
-                    nonTerminal.prod.Parents.Add(nonTerminal);
+                    nonTerminal.Production.Parents.Add(nonTerminal);
                 }
             }
         }
@@ -239,7 +239,7 @@ public class Semanticize : JavaCCGlobals
         switch (e)
         {
             case NonTerminal terminal:
-                return terminal.prod.EmptyPossible;
+                return terminal.Production.EmptyPossible;
             case Action:
                 return true;
             case RegularExpression:
@@ -285,7 +285,7 @@ public class Semanticize : JavaCCGlobals
 
     public static void Start()
     {
-        if (JavaCCErrors._Error_Count != 0)
+        if (JavaCCErrors.ErrorCount != 0)
         {
             throw new MetaParseException();
         }
@@ -587,7 +587,7 @@ public class Semanticize : JavaCCGlobals
                 }
             }
         }
-        if (JavaCCErrors._Error_Count != 0)
+        if (JavaCCErrors.ErrorCount != 0)
         {
             throw new MetaParseException();
         }
@@ -604,7 +604,7 @@ public class Semanticize : JavaCCGlobals
                 }
             }
         }
-        if (Options.SanityCheck && JavaCCErrors._Error_Count == 0)
+        if (Options.SanityCheck && JavaCCErrors.ErrorCount == 0)
         {
             foreach (var normalProduction2 in BNFProductions)
             {
@@ -644,7 +644,7 @@ public class Semanticize : JavaCCGlobals
                     }
                 }
             }
-            if (JavaCCErrors._Error_Count == 0)
+            if (JavaCCErrors.ErrorCount == 0)
             {
                 foreach(var p in BNFProductions)
                 {
@@ -652,7 +652,7 @@ public class Semanticize : JavaCCGlobals
                 }
             }
         }
-        if (JavaCCErrors._Error_Count != 0)
+        if (JavaCCErrors.ErrorCount != 0)
         {
             throw new MetaParseException();
         }
@@ -713,7 +713,7 @@ public class Semanticize : JavaCCGlobals
         {
             for (int i = 0; i < npleft.LeIndex; i++)
             {
-                if (npleft.LeftExpansions[i] == ((NonTerminal)npright).prod)
+                if (npleft.LeftExpansions[i] == ((NonTerminal)npright).Production)
                 {
                     return;
                 }
@@ -727,7 +727,7 @@ public class Semanticize : JavaCCGlobals
             var leftExpansions = npleft.LeftExpansions;
             int leIndex = npleft.LeIndex;
             npleft.LeIndex = leIndex + 1;
-            leftExpansions[leIndex] = ((NonTerminal)npright).prod;
+            leftExpansions[leIndex] = ((NonTerminal)npright).Production;
         }
         else if (npright is OneOrMore more2)
         {

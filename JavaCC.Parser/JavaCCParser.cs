@@ -57,70 +57,29 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
         public const int STRICTFP = 4096;
 
+        public virtual bool IsPublic(int i) => ((uint)i & (true ? 1u : 0u)) != 0;
 
-        public ModifierSet()
-        {
-        }
+        public virtual bool IsProtected(int i) => ((uint)i & 2u) != 0;
 
-        public virtual bool IsPublic(int i)
-        {
-            return (((uint)i & (true ? 1u : 0u)) != 0) ? true : false;
-        }
+        public virtual bool IsPrivate(int i) => ((uint)i & 4u) != 0;
 
-        public virtual bool IsProtected(int i)
-        {
-            return (((uint)i & 2u) != 0) ? true : false;
-        }
+        public virtual bool IsStatic(int i) => ((uint)i & 0x10u) != 0;
 
-        public virtual bool IsPrivate(int i)
-        {
-            return (((uint)i & 4u) != 0) ? true : false;
-        }
+        public virtual bool IsAbstract(int i) => ((uint)i & 8u) != 0;
 
-        public virtual bool IsStatic(int i)
-        {
-            return (((uint)i & 0x10u) != 0) ? true : false;
-        }
+        public virtual bool IsFinal(int i) => ((uint)i & 0x20u) != 0;
 
-        public virtual bool isAbstract(int i)
-        {
-            return (((uint)i & 8u) != 0) ? true : false;
-        }
+        public virtual bool IsNative(int i) => ((uint)i & 0x80u) != 0;
 
-        public virtual bool isFinal(int i)
-        {
-            return (((uint)i & 0x20u) != 0) ? true : false;
-        }
+        public virtual bool IsStrictfp(int i) => ((uint)i & 0x1000u) != 0;
 
-        public virtual bool isNative(int i)
-        {
-            return (((uint)i & 0x80u) != 0) ? true : false;
-        }
+        public virtual bool IsSynchronized(int i) => ((uint)i & 0x40u) != 0;
 
-        public virtual bool isStrictfp(int i)
-        {
-            return (((uint)i & 0x1000u) != 0) ? true : false;
-        }
+        public virtual bool IsTransient(int i) => ((uint)i & 0x100u) != 0;
 
-        public virtual bool isSynchronized(int i)
-        {
-            return (((uint)i & 0x40u) != 0) ? true : false;
-        }
+        public virtual bool IsVolatile(int i) => ((uint)i & 0x200u) != 0;
 
-        public virtual bool isTransient(int i)
-        {
-            return (((uint)i & 0x100u) != 0) ? true : false;
-        }
-
-        public virtual bool isVolatile(int i)
-        {
-            return (((uint)i & 0x200u) != 0) ? true : false;
-        }
-
-        internal static int removeModifier(int P_0, int P_1)
-        {
-            return P_0 & (P_1 ^ -1);
-        }
+        internal static int RemoveModifier(int modifier, int mask) => modifier & (mask ^ -1);
     }
 
     internal string parser_class_name;

@@ -251,7 +251,7 @@ public class RCharacterList : RegularExpression
             vector.Add(new CharacterRange((char)(n + 1), (char)(ch - 1)));
             n = right;
         }
-        if (NfaState.unicodeWarningGiven || Options.JavaUnicodeEscape)
+        if (NfaState.UnicodeWarningGiven || Options.JavaUnicodeEscape)
         {
             if (n < 65535)
             {

@@ -5,7 +5,7 @@ using System.Text;
 
 public class NormalProduction : Expansion
 {
-    public List<Expansion> Parents = new();
+    public readonly List<Expansion> Parents = new();
 
     public string AccessMod = "";
 

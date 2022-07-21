@@ -418,7 +418,7 @@ public class JavaCharStream
         catch (Exception ex2)
         {
 
-            throw new Exception(ex2.Message);
+            throw ex2;
         }
         int num = BufSize + 2048;
         BufSize = num;

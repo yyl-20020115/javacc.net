@@ -54,7 +54,7 @@ public class ParseEngine : JavaCCGlobals
                 return false;
             case NonTerminal terminal:
                 {
-                    NormalProduction prod = terminal.prod;
+                    NormalProduction prod = terminal.Production;
                     if (prod is JavaCodeProduction)
                     {
                         return true;
@@ -117,9 +117,9 @@ public class ParseEngine : JavaCCGlobals
 		}
 		else if (exp is NonTerminal terminal)
 		{
-			if (terminal.prod is not JavaCodeProduction)
+			if (terminal.Production is not JavaCodeProduction)
 			{
-				GenFirstSet(((BNFProduction)terminal.prod).Expansion);
+				GenFirstSet(((BNFProduction)terminal.Production).Expansion);
 			}
 		}
 		else if (exp is Choice choice)
@@ -139,7 +139,7 @@ public class ParseEngine : JavaCCGlobals
             for (int j = 0; j < sequence.Units.Count; j++)
             {
                 var expansion = sequence.Units[j];
-                if (expansion is NonTerminal terminal1 && terminal1.prod is JavaCodeProduction)
+                if (expansion is NonTerminal terminal1 && terminal1.Production is JavaCodeProduction)
                 {
                     if (j > 0 && sequence.Units[j - 1] is Lookahead)
                     {
@@ -284,7 +284,7 @@ public class ParseEngine : JavaCCGlobals
         {
             for (int j = 1; j < sequence2.Units.Count; j++)
             {
-                text = (text) + (Phase1ExpansionGen((Expansion)sequence2.Units[j]));
+                text = (text) + (Phase1ExpansionGen(sequence2.Units[j]));
             }
         }
         else if (exp is OneOrMore oneOrMore)
@@ -741,7 +741,7 @@ public class ParseEngine : JavaCCGlobals
         {
             for (int i = 0; i < choice.Choices.Count; i++)
             {
-                Generate3R((Expansion)choice.Choices[i], p3);
+                Generate3R(choice.Choices[i], p3);
             }
         }
         else if (exp is Sequence sequence)
@@ -1037,7 +1037,7 @@ public class ParseEngine : JavaCCGlobals
             int num2 = 0;
             while (n > 1 && num2 < choice.Choices.Count)
             {
-                Expansion expansion2 = (Expansion)choice.Choices[num2];
+                Expansion expansion2 = choice.Choices[num2];
                 int num3 = MinimumSize(expansion2, n);
                 if (n > num3)
                 {
@@ -1052,14 +1052,14 @@ public class ParseEngine : JavaCCGlobals
             int num = 0;
             for (int i = 1; i < sequence.Units.Count; i++)
             {
-                Expansion expansion3 = (Expansion)sequence.Units[i];
-                int num3 = MinimumSize(expansion3);
-                if (num == int.MaxValue || num3 == int.MaxValue)
+                var expansion3 = sequence.Units[i];
+                int n = MinimumSize(expansion3);
+                if (num == int.MaxValue || n == int.MaxValue)
                 {
                     num = int.MaxValue;
                     continue;
                 }
-                num += num3;
+                num += n;
                 if (num > val)
                 {
                     break;
@@ -1202,18 +1202,18 @@ public class ParseEngine : JavaCCGlobals
 		}
 		writer.WriteLine("  }");
 		writer.WriteLine("");
-		Phase3Data phase3Data = new Phase3Data(la_expansion, lookahead.amount);
+		var phase3Data = new Phase3Data(la_expansion, lookahead.amount);
 		Phase3List.Add(phase3Data);
 		Phase3Table.Add(la_expansion, phase3Data);
 	}
 
 	
-	private static void DumpLookaheads(Lookahead[] P_0, string[] P_1)
+	private static void DumpLookaheads(Lookahead[] lookahead, string[] text)
 	{
-		for (int i = 0; i < P_0.Length; i++)
+		for (int i = 0; i < lookahead.Length; i++)
 		{
 			Console.Error.WriteLine(("Lookahead: ")+(i));
-			Console.Error.WriteLine(P_0[i].Dump(0, new()));
+			Console.Error.WriteLine(lookahead[i].Dump(0, new()));
 			Console.Error.WriteLine();
 		}
 	}
@@ -1301,14 +1301,14 @@ public class ParseEngine : JavaCCGlobals
 		int j;
 		for (j = 0; j < Phase2List.Count; j++)
 		{
-			BuildPhase2Routine((Lookahead)Phase2List[j]);
+			BuildPhase2Routine(Phase2List[j]);
 		}
 		j = 0;
 		while (j < Phase3List.Count)
 		{
 			for (; j < Phase3List.Count; j++)
 			{
-				SetupPhase3Builds((Phase3Data)Phase3List[j]);
+				SetupPhase3Builds(Phase3List[j]);
 			}
 		}
 		foreach(var p3 in Phase3Table)

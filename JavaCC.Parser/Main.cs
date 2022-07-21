@@ -58,14 +58,14 @@ public static class EntryPoint
             try
             {
 
-                FileInfo file = new FileInfo(args[args.Length - 1]);
+                var file = new FileInfo(args[args.Length - 1]);
                 if (!file.Exists)
                 {
                     Console.WriteLine(("File ") + (args[args.Length - 1]) + (" not found.")
                         );
                     return 1;
                 }
-                DirectoryInfo di = new DirectoryInfo(args[args.Length - 1]);
+                var di = new DirectoryInfo(args[args.Length - 1]);
                 if (di.Exists)
                 {
                     Console.WriteLine((args[args.Length - 1]) + (" is a directory. Please use a valid file name."));
@@ -75,20 +75,22 @@ public static class EntryPoint
             }
             catch (Exception)
             {
-                goto IL_017d;
+                Console.WriteLine(("Security violation while trying to open ") + (args[args.Length - 1]));
+                return 1;
             }
         }
         catch (FileNotFoundException)
         {
-            goto IL_0180;
+            Console.WriteLine(("File ") + (args[args.Length - 1]) + (" not found.")
+                );
+            return 1;
         }
-        ParseException ex4;
+
         try
         {
             try
             {
-                Console.WriteLine(("Reading from file ") + (args[args.Length - 1]) + (" . . .")
-                    );
+                Console.WriteLine(("Reading from file ") + (args[args.Length - 1]) + (" . . ."));
                 JavaCCGlobals.FileName = (JavaCCGlobals.OrigFileName = args[args.Length - 1]);
                 JavaCCGlobals.JJTreeGenerated = JavaCCGlobals.IsGeneratedBy("JJTree", args[args.Length - 1]);
                 JavaCCGlobals.ToolNames.Clear();
@@ -97,31 +99,31 @@ public static class EntryPoint
                 JavaCCGlobals.CreateOutputDir(Options.OutputDirectory);
                 if (Options.UnicodeInput)
                 {
-                    NfaState.unicodeWarningGiven = true;
+                    NfaState.UnicodeWarningGiven = true;
                     Console.WriteLine("Note: UNICODE_INPUT option is specified. Please make sure you create the parser/lexer using a TextReader with the correct character encoding.");
                 }
                 Semanticize.Start();
                 ParseGen.Start();
                 LexGen.Start();
                 OtherFilesGen.Start();
-                if (JavaCCErrors._Error_Count == 0 && (Options.BuildParser || Options.BuildTokenManager))
+                if (JavaCCErrors.ErrorCount == 0 && (Options.BuildParser || Options.BuildTokenManager))
                 {
-                    if (JavaCCErrors._Warning_Count == 0)
+                    if (JavaCCErrors.WarningCount == 0)
                     {
                         Console.WriteLine("Parser generated successfully.");
                     }
                     else
                     {
-                        Console.WriteLine(("Parser generated with 0 errors and ") + (JavaCCErrors._Warning_Count) + (" warnings.")
+                        Console.WriteLine(("Parser generated with 0 errors and ") + (JavaCCErrors.WarningCount) + (" warnings.")
                             );
                     }
                     return 0;
                 }
-                Console.WriteLine(("Detected ") + (JavaCCErrors._Error_Count) + (" errors and ")
-                    + (JavaCCErrors._Warning_Count)
+                Console.WriteLine(("Detected ") + (JavaCCErrors.ErrorCount) + (" errors and ")
+                    + (JavaCCErrors.WarningCount)
                     + (" warnings.")
                     );
-                return (JavaCCErrors._Error_Count != 0) ? 1 : 0;
+                return (JavaCCErrors.ErrorCount != 0) ? 1 : 0;
             }
             catch (MetaParseException)
             {
@@ -129,32 +131,20 @@ public static class EntryPoint
         }
         catch (ParseException x)
         {
-            ex4 = x;
-            goto IL_0361;
+            Console.WriteLine(x);
+            Console.WriteLine(("Detected ") + (JavaCCErrors.ErrorCount + 1) + (" errors and ")
+                + (JavaCCErrors.WarningCount)
+                + (" warnings.")
+                );
+            return 1;
         }
 
-        Console.WriteLine(("Detected ") + (JavaCCErrors._Error_Count) + (" errors and ")
-            + (JavaCCErrors._Warning_Count)
+        Console.WriteLine(("Detected ") + (JavaCCErrors.ErrorCount) + (" errors and ")
+            + (JavaCCErrors.WarningCount)
             + (" warnings.")
             );
         return 1;
-    IL_0361:
-        ParseException @this = ex4;
-        Console.WriteLine((@this));
-        Console.WriteLine(("Detected ") + (JavaCCErrors._Error_Count + 1) + (" errors and ")
-            + (JavaCCErrors._Warning_Count)
-            + (" warnings.")
-            );
-        return 1;
-    IL_0180:
 
-        Console.WriteLine(("File ") + (args[args.Length - 1]) + (" not found.")
-            );
-        return 1;
-    IL_017d:
-
-        Console.WriteLine(("Security violation while trying to open ") + (args[args.Length - 1]));
-        return 1;
     }
 
 

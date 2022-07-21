@@ -5,39 +5,38 @@ using System.Text;
 
 public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
 {
-    public const string charStreamVersion = "4.1";
+    public const string CharStreamVersion = "4.1";
 
-    public const string tokenManagerVersion = "4.1";
+    public const string TokenManagerVersion = "4.1";
 
-    public const string tokenVersion = "4.1";
+    public const string TokenVersion = "4.1";
 
-    public const string parseExceptionVersion = "4.1";
+    public const string ParseExceptionVersion = "4.1";
 
-    public const string tokenMgrErrorVersion = "4.1";
-
+    public const string TokenMgrErrorVersion = "4.1";
 
     public static string ReplaceBackslash(string name)
     {
-        int num = 0;
-        int num2 = name.Length;
-        while (num < num2)
+        int n = 0;
+        int len = name.Length;
+        while (n < len)
         {
-            int index = num;
-            num++;
+            int index = n;
+            n++;
             if ((name[index]) == '\\')
             {
                 break;
             }
         }
-        if (num == num2)
+        if (n == len)
         {
             return name;
         }
         var builder = new StringBuilder();
-        for (num = 0; num < num2; num++)
+        for (n = 0; n < len; n++)
         {
             int c;
-            if ((c = (name[num])) == 92)
+            if ((c = (name[n])) == 92)
             {
                 builder.Append("\\\\");
             }
@@ -50,15 +49,10 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
     }
 
 
-    public JavaFiles()
-    {
-    }
-
-
     public static double GetVersion(string name)
     {
         //Discarded unreachable code: IL_006a
-        string text = ("/* ") + (JavaCCGlobals.getIdString("JavaCC", name)) + (" Version ")
+        string text = ("/* ") + (GetIdString("JavaCC", name)) + (" Version ")
             ;
 
         var file = new FileInfo(Path.Combine(Options.OutputDirectory.FullName, ReplaceBackslash(name)));

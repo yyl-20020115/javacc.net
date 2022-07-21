@@ -1,10 +1,12 @@
 namespace JavaCC.Parser;
+
+using System;
 using System.IO;
 using System.Linq;
 
 public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals, 
 {
-	public static bool KeepLineCol=false;
+	public static bool KeepLineCol = false;
 
 	private static TextWriter writer;
 	
@@ -12,7 +14,7 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 	{
 		Token token = null;
 		KeepLineCol = Options.KeepLineColumn;
-		if (JavaCCErrors._Error_Count != 0)
+		if (JavaCCErrors.ErrorCount != 0)
 		{
 			throw new MetaParseException();
 		}

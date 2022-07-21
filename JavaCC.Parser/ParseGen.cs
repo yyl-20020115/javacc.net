@@ -10,7 +10,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 	public static void Start()
 	{
 		Token token = null;
-		if (JavaCCErrors._Error_Count != 0)
+		if (JavaCCErrors.ErrorCount != 0)
 		{
 			throw new MetaParseException();
 		}

@@ -82,29 +82,29 @@ public class JJDocMain : JJDocGlobals
             {
                 javaCCParser.JavaCC_Input();
                 JJDoc.Start();
-                if (JavaCCErrors._Error_Count == 0)
+                if (JavaCCErrors.ErrorCount == 0)
                 {
-                    if (JavaCCErrors._Warning_Count == 0)
+                    if (JavaCCErrors.WarningCount == 0)
                     {
                         Info(("Grammar documentation generated successfully in ") + (OutputFile));
                     }
                     else
                     {
-                        Info(("Grammar documentation generated with 0 errors and ") + (JavaCCErrors._Warning_Count) + (" warnings."));
+                        Info(("Grammar documentation generated with 0 errors and ") + (JavaCCErrors.WarningCount) + (" warnings."));
                     }
                     return 0;
                 }
-                Error(("Detected ") + (JavaCCErrors._Error_Count) + (" errors and ")
-                    + (JavaCCErrors._Warning_Count)
+                Error(("Detected ") + (JavaCCErrors.ErrorCount) + (" errors and ")
+                    + (JavaCCErrors.WarningCount)
                     + (" warnings.")
                     );
-                return (JavaCCErrors._Error_Count != 0) ? 1 : 0;
+                return (JavaCCErrors.ErrorCount != 0) ? 1 : 0;
             }
             catch (MetaParseException e1)
             {
                 Error((e1.Message));
-                Error(("Detected ") + (JavaCCErrors._Error_Count) + (" errors and ")
-                    + (JavaCCErrors._Warning_Count)
+                Error(("Detected ") + (JavaCCErrors.ErrorCount) + (" errors and ")
+                    + (JavaCCErrors.WarningCount)
                     + (" warnings.")
                     );
                 return 1;
@@ -113,8 +113,8 @@ public class JJDocMain : JJDocGlobals
         catch (ParseException e2)
         {
             Error((e2.Message));
-            Error(("Detected ") + (JavaCCErrors._Error_Count + 1) + (" errors and ")
-                + (JavaCCErrors._Warning_Count)
+            Error(("Detected ") + (JavaCCErrors.ErrorCount + 1) + (" errors and ")
+                + (JavaCCErrors.WarningCount)
                 + (" warnings.")
                 );
             return 1;

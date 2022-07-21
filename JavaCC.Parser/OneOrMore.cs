@@ -14,8 +14,6 @@ public class OneOrMore : Expansion
         Expansion.Parent = this;
     }
 
-    public OneOrMore() { }
-
     public override StringBuilder Dump(int i, HashSet<Expansion> set)
     {
         var builder = base.Dump(i, set);

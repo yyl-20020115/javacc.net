@@ -38,7 +38,7 @@ public class ExpansionTreeWalker
         else if (exp is Lookahead l)
         {
             var la_expansion = l.LaExpansion;
-            if (la_expansion is not Sequence || (Expansion)((Sequence)la_expansion).Units[0] != exp)
+            if (la_expansion is not Sequence || ((Sequence)la_expansion).Units[0] != exp)
             {
                 PreOrderWalk(la_expansion, tree);
             }
@@ -111,7 +111,7 @@ public class ExpansionTreeWalker
             else if (exp is Lookahead l)
             {
                 Expansion la_expansion = l.LaExpansion;
-                if (la_expansion is not Sequence || (Expansion)((Sequence)la_expansion).Units[0] != exp)
+                if (la_expansion is not Sequence || ((Sequence)la_expansion).Units[0] != exp)
                 {
                     PostOrderWalk(la_expansion, walker);
                 }

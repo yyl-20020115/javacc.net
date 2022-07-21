@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public sealed class LookaheadWalk
 {
-    public static bool considerSemanticLA =false;
-    public static List<MatchInfo> sizeLimitedMatches = new();
+    public static bool ConsiderSemanticLA =false;
+    public static List<MatchInfo> SizeLimitedMatches = new();
 
     public static List<MatchInfo> GenFirstSet(List<MatchInfo> v, Expansion e)
     {
@@ -28,7 +28,7 @@ public sealed class LookaheadWalk
                 match[firstFreeLoc] = re.Ordinal;
                 if (matchInfo2.FirstFreeLoc == MatchInfo.LaLimit)
                 {
-                    sizeLimitedMatches.Add(matchInfo2);
+                    SizeLimitedMatches.Add(matchInfo2);
                 }
                 else
                 {
@@ -39,7 +39,7 @@ public sealed class LookaheadWalk
         }
         if (e is NonTerminal n)
         {
-            var prod = n.prod;
+            var prod = n.Production;
             if (prod is JavaCodeProduction)
             {
                 return new();
@@ -111,7 +111,7 @@ public sealed class LookaheadWalk
         {
             return GenFirstSet(v, block.Expression);
         }
-        if (considerSemanticLA && e is Lookahead lookahead && lookahead.ActionTokens.Count != 0)
+        if (ConsiderSemanticLA && e is Lookahead lookahead && lookahead.ActionTokens.Count != 0)
         {
             return new();
         }
@@ -135,31 +135,30 @@ public sealed class LookaheadWalk
             VectorAppend(vector, v);
             return vector;
         }
-        if (e.Parent is NormalProduction)
+        if (e.Parent is NormalProduction production)
         {
-            var vector = ((NormalProduction)e.Parent).Parents;
+            var vector = production.Parents;
             var vector2 = new List<MatchInfo>();
             for (int i = 0; i < vector.Count; i++)
             {
-                var v2 = GenFollowSet(v, (Expansion)vector[i], l);
+                var v2 = GenFollowSet(v, vector[i], l);
                 VectorAppend(vector2, v2);
             }
             return vector2;
         }
-        if (e.Parent is Sequence)
+        if (e.Parent is Sequence sequence)
         {
-            Sequence sequence = (Sequence)e.Parent;
             var vector2 = v;
             for (int i = e.Ordinal + 1; i < sequence.Units.Count; i++)
             {
-                vector2 = GenFirstSet(vector2, (Expansion)sequence.Units[i]);
+                vector2 = GenFirstSet(vector2, sequence.Units[i]);
                 if (vector2.Count == 0)
                 {
                     return vector2;
                 }
             }
-            List<MatchInfo> vector3 = new ();
-            List<MatchInfo> v2 = new ();
+            List<MatchInfo> vector3 = new();
+            List<MatchInfo> v2 = new();
             VectorSplit(vector2, v, vector3, v2);
             if (vector3.Count != 0)
             {
@@ -191,16 +190,16 @@ public sealed class LookaheadWalk
             VectorSplit(vector, v, vector3, v2);
             if (vector3.Count != 0)
             {
-                vector3 = GenFollowSet(vector3, (Expansion)e.Parent, l);
+                vector3 = GenFollowSet(vector3, e.Parent, l);
             }
             if (v2.Count != 0)
             {
-                v2 = GenFollowSet(v2, (Expansion)e.Parent, Expansion.NextGenerationIndex++);
+                v2 = GenFollowSet(v2, e.Parent, Expansion.NextGenerationIndex++);
             }
             VectorAppend(v2, vector3);
             return v2;
         }
-        return GenFollowSet(v, (Expansion)e.Parent, l);
+        return GenFollowSet(v, e.Parent, l);
     }
 
 
@@ -217,17 +216,17 @@ public sealed class LookaheadWalk
     {
         for (int i = 0; i < v1.Count; i++)
         {
-            int num = 0;
+            int n = 0;
             while (true)
             {
-                if (num < v2.Count)
+                if (n < v2.Count)
                 {
-                    if (v1[i] == v2[num])
+                    if (v1[i] == v2[n])
                     {
                         v3.Add(v1[i]);
                         break;
                     }
-                    num++;
+                    n++;
                     continue;
                 }
                 v4.Add(v1[i]);
@@ -236,14 +235,9 @@ public sealed class LookaheadWalk
         }
     }
 
-
-    private LookaheadWalk()
-    {
-    }
-
     public static void ReInit()
     {
-        considerSemanticLA = false;
-        sizeLimitedMatches = null;
+        ConsiderSemanticLA = false;
+        SizeLimitedMatches = null;
     }
 }

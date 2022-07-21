@@ -9,19 +9,19 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 {
     protected static TextWriter writer;
 
-    protected static string staticString;
+    protected static string staticString = "";
 
-    protected static string tokMgrClassName;
+    protected static string tokMgrClassName = "";
 
     public static Dictionary<string, List<TokenProduction>> allTpsForState = new();
 
-    public static int lexStateIndex;
+    public static int lexStateIndex = 0;
 
     internal static int[] kinds;
 
     public static int maxOrdinal;
 
-    public static string lexStateSuffix;
+    public static string lexStateSuffix = "";
 
     public static string[] newLexState;
 
@@ -91,7 +91,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 
     public static RegularExpression curRE;
 
-    public static bool keepLineCol;
+    public static bool keepLineCol = false;
 
 
     internal static void PrintClassHead()
@@ -1366,7 +1366,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
 
     public static void Start()
     {
-        if (!Options.BuildTokenManager || Options.UserTokenManager || JavaCCErrors._Error_Count > 0)
+        if (!Options.BuildTokenManager || Options.UserTokenManager || JavaCCErrors.ErrorCount > 0)
         {
             return;
         }
@@ -1544,7 +1544,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
             }
             bool[] array12 = hasNfa;
             int num19 = lexStateIndex;
-            num3 = ((NfaState.generatedStates != 0) ? 1 : 0);
+            num3 = ((NfaState.GeneratedStates != 0) ? 1 : 0);
             int num20 = num19;
             bool[] array13 = array12;
             int num21 = num3;
@@ -1588,9 +1588,9 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
             {
                 NfaState.DumpMoveNfa(writer);
             }
-            if (stateSetSize < NfaState.generatedStates)
+            if (stateSetSize < NfaState.GeneratedStates)
             {
-                stateSetSize = NfaState.generatedStates;
+                stateSetSize = NfaState.GeneratedStates;
             }
         }
         for (int i = 0; i < vector.Count; i++)

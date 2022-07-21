@@ -76,9 +76,9 @@ public class RStringLiteral : RegularExpression
         {
             int n2;
             var key = ((!Options.IgnoreCase) ? ("") + ((char)(n2 = Image[j])) : (("") + ((char)(n2 = Image[j]))).ToLower());
-            if (!NfaState.unicodeWarningGiven && n2 > 255 && !Options.JavaUnicodeEscape && !Options.UserCharStream)
+            if (!NfaState.UnicodeWarningGiven && n2 > 255 && !Options.JavaUnicodeEscape && !Options.UserCharStream)
             {
-                NfaState.unicodeWarningGiven = true;
+                NfaState.UnicodeWarningGiven = true;
                 JavaCCErrors.Warning(LexGen.curRE, "Non-ASCII characters used in regular expression.Please make sure you use the correct TextReader when you create the parser, one that can handle your character set.");
             }
             Dictionary<string, KindInfo> dict;
@@ -198,7 +198,7 @@ public class RStringLiteral : RegularExpression
 
     internal static void GenerateNfaStartStates(TextWriter writer, NfaState state)
     {
-        bool[] array = new bool[NfaState.generatedStates];
+        bool[] array = new bool[NfaState.GeneratedStates];
         Dictionary<string,string> dict = new ();
         string text = "";
         int num = MaxStrKind / 64 + 1;
@@ -393,7 +393,7 @@ public class RStringLiteral : RegularExpression
             DumpBoilerPlate(writer);
             BoilerPlateDumped = true;
         }
-        if (!LexGen.mixed[LexGen.lexStateIndex] && NfaState.generatedStates != 0)
+        if (!LexGen.mixed[LexGen.lexStateIndex] && NfaState.GeneratedStates != 0)
         {
             DumpStartWithStates(writer);
         }
@@ -512,7 +512,7 @@ public class RStringLiteral : RegularExpression
                             );
                     }
                     writer.WriteLine(") == 0L)");
-                    if (!LexGen.mixed[LexGen.lexStateIndex] && NfaState.generatedStates != 0)
+                    if (!LexGen.mixed[LexGen.lexStateIndex] && NfaState.GeneratedStates != 0)
                     {
                         writer.Write(("      return jjStartNfa") + (LexGen.lexStateSuffix) + ("(")
                             + (i - 2)
@@ -540,7 +540,7 @@ public class RStringLiteral : RegularExpression
                             writer.WriteLine("0L);");
                         }
                     }
-                    else if (NfaState.generatedStates != 0)
+                    else if (NfaState.GeneratedStates != 0)
                     {
                         writer.WriteLine(("      return jjMoveNfa") + (LexGen.lexStateSuffix) + ("(")
                             + (NfaState.InitStateName())
@@ -576,7 +576,7 @@ public class RStringLiteral : RegularExpression
                 }
                 writer.WriteLine("   try { curChar = input_stream.readChar(); }");
                 writer.WriteLine("   catch(java.io.IOException e) {");
-                if (!LexGen.mixed[LexGen.lexStateIndex] && NfaState.generatedStates != 0)
+                if (!LexGen.mixed[LexGen.lexStateIndex] && NfaState.GeneratedStates != 0)
                 {
                     writer.Write(("      jjStopStringLiteralDfa") + (LexGen.lexStateSuffix) + ("(")
                         + (i - 1)
@@ -613,7 +613,7 @@ public class RStringLiteral : RegularExpression
                     writer.WriteLine(("      return ") + (i) + (";")
                         );
                 }
-                else if (NfaState.generatedStates != 0)
+                else if (NfaState.GeneratedStates != 0)
                 {
                     writer.WriteLine(("   return jjMoveNfa") + (LexGen.lexStateSuffix) + ("(")
                         + (NfaState.InitStateName())
@@ -645,7 +645,7 @@ public class RStringLiteral : RegularExpression
                 int num4 = 0;
                 int num5 = text[0];
                 int num6;
-                if (i == 0 && num5 < 128 && kindInfo.VinalKindCnt != 0 && (NfaState.generatedStates == 0 || !NfaState.CanStartNfaUsingAscii((char)num5)))
+                if (i == 0 && num5 < 128 && kindInfo.VinalKindCnt != 0 && (NfaState.GeneratedStates == 0 || !NfaState.CanStartNfaUsingAscii((char)num5)))
                 {
                     int j;
                     for (j = 0; j < num && kindInfo.FinalKinds[j] == 0; j++)
@@ -886,7 +886,7 @@ public class RStringLiteral : RegularExpression
                 }
                 else if (i == 0 && LexGen.mixed[LexGen.lexStateIndex])
                 {
-                    if (NfaState.generatedStates != 0)
+                    if (NfaState.GeneratedStates != 0)
                     {
                         writer.WriteLine(("         return jjMoveNfa") + (LexGen.lexStateSuffix) + ("(")
                             + (NfaState.InitStateName())
@@ -923,7 +923,7 @@ public class RStringLiteral : RegularExpression
             {
                 writer.WriteLine("      debugStream.WriteLine(\"   No string literal matches possible.\");");
             }
-            if (NfaState.generatedStates != 0)
+            if (NfaState.GeneratedStates != 0)
             {
                 if (i == 0)
                 {
@@ -946,7 +946,7 @@ public class RStringLiteral : RegularExpression
             writer.WriteLine("   }");
             if (i != 0 && num3 != 0)
             {
-                if (!LexGen.mixed[LexGen.lexStateIndex] && NfaState.generatedStates != 0)
+                if (!LexGen.mixed[LexGen.lexStateIndex] && NfaState.GeneratedStates != 0)
                 {
                     writer.Write(("   return jjStartNfa") + (LexGen.lexStateSuffix) + ("(")
                         + (i - 1)
@@ -975,7 +975,7 @@ public class RStringLiteral : RegularExpression
                         writer.WriteLine("0L);");
                     }
                 }
-                else if (NfaState.generatedStates != 0)
+                else if (NfaState.GeneratedStates != 0)
                 {
                     writer.WriteLine(("   return jjMoveNfa") + (LexGen.lexStateSuffix) + ("(")
                         + (NfaState.InitStateName())
@@ -1121,7 +1121,7 @@ public class RStringLiteral : RegularExpression
     internal static void DumpNullStrLiterals(TextWriter writer)
     {
         writer.WriteLine("{");
-        if (NfaState.generatedStates != 0)
+        if (NfaState.GeneratedStates != 0)
         {
             writer.WriteLine(("   return jjMoveNfa") + (LexGen.lexStateSuffix) + ("(")
                 + (NfaState.InitStateName())
@@ -1245,7 +1245,7 @@ public class RStringLiteral : RegularExpression
 
     private static int GetStateSetForKind(int pos, int pos2)
     {
-        if (LexGen.mixed[LexGen.lexStateIndex] || NfaState.generatedStates == 0)
+        if (LexGen.mixed[LexGen.lexStateIndex] || NfaState.GeneratedStates == 0)
         {
             return -1;
         }
@@ -1432,7 +1432,7 @@ public class RStringLiteral : RegularExpression
             );
         if (LexGen.mixed[LexGen.lexStateIndex])
         {
-            if (NfaState.generatedStates != 0)
+            if (NfaState.GeneratedStates != 0)
             {
                 writer.WriteLine(("   return jjMoveNfa") + (LexGen.lexStateSuffix) + ("(")
                     + (NfaState.InitStateName())
