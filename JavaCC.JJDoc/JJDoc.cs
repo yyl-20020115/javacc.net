@@ -117,8 +117,8 @@ public class JJDoc : JJDocGlobals
         var text = "";
         if (token != null)
         {
-            JavaCCGlobals.cline = token.BeginLine;
-            JavaCCGlobals.ccol = token.BeginColumn;
+            JavaCCGlobals.CLine = token.BeginLine;
+            JavaCCGlobals.CCol = token.BeginColumn;
             while (token != null)
             {
                 text += (JavaCCGlobals.PrintTokenOnly(token));
@@ -250,7 +250,7 @@ public class JJDoc : JJDocGlobals
         }
         else if (re is RStringLiteral rStringLiteral)
         {
-            text += ("\"") + (JavaCCGlobals.AddEscapes(rStringLiteral.image))
+            text += ("\"") + (JavaCCGlobals.AddEscapes(rStringLiteral.Image))
                 + ("\"")
                 ;
         }

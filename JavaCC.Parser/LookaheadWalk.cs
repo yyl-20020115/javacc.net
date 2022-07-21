@@ -123,12 +123,12 @@ public sealed class LookaheadWalk
 
     public static List<MatchInfo> GenFollowSet(List<MatchInfo> v, Expansion e, long l)
     {
-        if (e.myGeneration == l)
+        if (e.MyGeneration == l)
         {
            
             return new();
         }
-        e.myGeneration = l;
+        e.MyGeneration = l;
         if (e.Parent == null)
         {
             List<MatchInfo> vector = new ();
@@ -150,7 +150,7 @@ public sealed class LookaheadWalk
         {
             Sequence sequence = (Sequence)e.Parent;
             var vector2 = v;
-            for (int i = e.ordinal + 1; i < sequence.Units.Count; i++)
+            for (int i = e.Ordinal + 1; i < sequence.Units.Count; i++)
             {
                 vector2 = GenFirstSet(vector2, (Expansion)sequence.Units[i]);
                 if (vector2.Count == 0)

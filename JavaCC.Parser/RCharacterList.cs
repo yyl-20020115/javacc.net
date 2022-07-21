@@ -7,18 +7,13 @@ public class RCharacterList : RegularExpression
 {
     public bool NegatedList = false;
 
-    public List<Expansion> Descriptors = new();
-
-    public static char[] DiffLowerCaseRanges = Array.Empty<char>();
-
-    public static char[] DiffUpperCaseRanges = Array.Empty<char>();
+    public readonly List<Expansion> Descriptors = new();
 
     public bool Transformed = false;
 
     public RCharacterList()
     {
     }
-
 
     public virtual void ToCaseNeutral()
     {
@@ -117,7 +112,7 @@ public class RCharacterList : RegularExpression
     }
 
 
-    internal virtual void SortDescriptors()
+    public virtual void SortDescriptors()
     {
         List<Expansion> vector = new(Descriptors.Count);
         int num = 0;
@@ -220,7 +215,8 @@ public class RCharacterList : RegularExpression
             }
         }
         vector.TrimExcess();
-        Descriptors = vector;
+        Descriptors.Clear();
+        Descriptors.AddRange(vector);
     }
 
 
@@ -266,7 +262,8 @@ public class RCharacterList : RegularExpression
         {
             vector.Add(new CharacterRange((char)(n + 1), 'ÿ'));
         }
-        Descriptors = vector;
+        Descriptors.Clear();
+        Descriptors.AddRange(vector);
         NegatedList = false;
     }
 
@@ -275,7 +272,6 @@ public class RCharacterList : RegularExpression
     public static bool SubRange(CharacterRange r1, CharacterRange r2) => (r1.Left >= r2.Left && r1.Right <= r2.Right);
 
     public static bool Overlaps(CharacterRange cr1, CharacterRange cr2) => (cr1.Left <= cr2.Right && cr1.Right > cr2.Right);
-
 
     public override Nfa GenerateNfa(bool b)
     {
@@ -320,12 +316,8 @@ public class RCharacterList : RegularExpression
         return nfa;
     }
 
-
-    internal RCharacterList(char ch)
+    public RCharacterList(char ch)
     {
-        NegatedList = false;
-        Descriptors = new();
-        Transformed = false;
         Descriptors = new()
         {
             new SingleCharacter(ch)
@@ -335,11 +327,8 @@ public class RCharacterList : RegularExpression
     }
 
 
-    public override bool CanMatchAnyChar => (NegatedList && (Descriptors == null || Descriptors.Count == 0)) ? true : false;
-
-    static RCharacterList()
-    {
-        DiffLowerCaseRanges = new char[748]
+    public override bool CanMatchAnyChar => (NegatedList && (Descriptors == null || Descriptors.Count == 0));
+    public static char[] DiffLowerCaseRanges = new char[]
         {
             'A', 'Z', 'À', 'Ö', 'Ø', 'Þ', 'Ā', 'Ā', 'Ă', 'Ă',
             'Ą', 'Ą', 'Ć', 'Ć', 'Ĉ', 'Ĉ', 'Ċ', 'Ċ', 'Č', 'Č',
@@ -417,7 +406,7 @@ public class RCharacterList : RegularExpression
             'Ῥ', 'Ῥ', 'Ὸ', 'Ό', 'Ὼ', 'Ώ', 'ῼ', 'ῼ', 'Ⅰ', 'Ⅿ',
             'Ⓐ', 'Ⓩ', 'Ａ', 'Ｚ', '［', '\ufffe', '\uffff', '\uffff'
         };
-        DiffUpperCaseRanges = new char[758]
+    public static char[] DiffUpperCaseRanges = new char[]
         {
             'a', 'z', 'à', 'ö', 'ø', 'þ', 'ÿ', 'ÿ', 'ā', 'ā',
             'ă', 'ă', 'ą', 'ą', 'ć', 'ć', 'ĉ', 'ĉ', 'ċ', 'ċ',
@@ -496,5 +485,4 @@ public class RCharacterList : RegularExpression
             'ῐ', 'ῑ', 'ῠ', 'ῡ', 'ῥ', 'ῥ', 'ῳ', 'ῳ', 'ⅰ', 'ⅿ',
             'ⓐ', 'ⓩ', 'ａ', 'ｚ', '｛', '\ufffe', '\uffff', '\uffff'
         };
-    }
 }

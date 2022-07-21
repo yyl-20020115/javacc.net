@@ -19,7 +19,7 @@ public static class EntryPoint
         LookaheadWalk.ReInit();
         Semanticize.ReInit();
         ParseGen.ReInit();
-        OtherFilesGen.reInit();
+        OtherFilesGen.ReInit();
         ParseEngine.ReInit();
     }
 
@@ -91,7 +91,8 @@ public static class EntryPoint
                     );
                 JavaCCGlobals.FileName = (JavaCCGlobals.OrigFileName = args[args.Length - 1]);
                 JavaCCGlobals.JJTreeGenerated = JavaCCGlobals.IsGeneratedBy("JJTree", args[args.Length - 1]);
-                JavaCCGlobals.ToolNames = JavaCCGlobals.GetToolNames(args[args.Length - 1]);
+                JavaCCGlobals.ToolNames.Clear();
+                JavaCCGlobals.ToolNames.AddRange(JavaCCGlobals.GetToolNames(args[args.Length - 1]));
                 javaCCParser.JavaCC_Input();
                 JavaCCGlobals.CreateOutputDir(Options.OutputDirectory);
                 if (Options.UnicodeInput)

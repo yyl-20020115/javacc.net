@@ -1,11 +1,11 @@
 namespace JavaCC.JJTree;
 using System.Collections.Generic;
 
-internal class JJTreeGlobals
+public class JJTreeGlobals
 {
-    private static HashSet<string> JJTreeOptions = new();
+    public static readonly HashSet<string> JJTreeOptions = new();
 
-    internal static List<string> ToolList = new();
+    public static readonly List<string> ToolList = new();
 
     public static string ParserName = "";
 
@@ -27,14 +27,12 @@ internal class JJTreeGlobals
 
     internal static void Initialize()
     {
-        ToolList = new();
         ParserName = null;
         PackageName = "";
         ParserImplements = null;
         ParserClassBodyStart = null;
         ParserImports = null;
         Productions = new();
-        JJTreeOptions = new();
         JJTreeOptions.Add("JJTREE_OUTPUT_DIRECTORY");
         JJTreeOptions.Add("MULTI");
         JJTreeOptions.Add("NODE_PREFIX");
@@ -57,9 +55,7 @@ internal class JJTreeGlobals
     static JJTreeGlobals()
     {
         Initialize();
-        ToolList = new();
         PackageName = "";
         NodePackageName = "";
-        Productions = new();
     }
 }

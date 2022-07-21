@@ -6,9 +6,9 @@ public abstract class RegularExpression : Expansion
 {
     public string Label = "";
 
-    public int Ordinal = 0;
+    public new int Ordinal = 0;
 
-    public List<Token> LhsTokens = new();
+    public readonly List<Token> LhsTokens = new();
 
     public Token RhsToken;
 

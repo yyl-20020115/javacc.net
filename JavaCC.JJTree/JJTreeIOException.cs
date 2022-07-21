@@ -1,7 +1,7 @@
 namespace JavaCC.JJTree;
 using System.IO;
 
-internal class JJTreeIOException : IOException
+public class JJTreeIOException : IOException
 {
-    internal JJTreeIOException(string text) : base(text) { }
+    public JJTreeIOException(string text) : base(text) { }
 }

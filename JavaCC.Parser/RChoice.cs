@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class RChoice : RegularExpression
 {
-    public List<Expansion> Choices = new();
+    public readonly List<Expansion> Choices = new();
 
     public RChoice() { }
 
@@ -18,14 +18,12 @@ public class RChoice : RegularExpression
                 if (Label != null)
                 {
                     JavaCCErrors.Warning(this, ("Regular Expression choice : ") + (regularExpression.Label) + (" can never be matched as : ")
-                        + (Label)
-                        );
+                        + (Label));
                 }
                 else
                 {
                     JavaCCErrors.Warning(this, ("Regular Expression choice : ") + (regularExpression.Label) + (" can never be matched as token of kind : ")
-                        + (Ordinal)
-                        );
+                        + (Ordinal));
                 }
             }
             if (!regularExpression.PrivateRexp && regularExpression is RStringLiteral)
@@ -43,15 +41,15 @@ public class RChoice : RegularExpression
         for (int i = 0; i < Choices.Count; i++)
         {
             RegularExpression regularExpression = (RegularExpression)Choices[i];
-            while (regularExpression is RJustName)
+            while (regularExpression is RJustName name)
             {
-                regularExpression = ((RJustName)regularExpression).RegExpr;
+                regularExpression = name.RegExpr;
             }
-            if (regularExpression is RStringLiteral && (((RStringLiteral)regularExpression).image.Length) == 1)
+            if (regularExpression is RStringLiteral && (((RStringLiteral)regularExpression).Image.Length) == 1)
             {
 
                 this.Choices[i] = regularExpression = new RCharacterList(
-                    (((RStringLiteral)regularExpression).image[0]));
+                    (((RStringLiteral)regularExpression).Image[0]));
             }
             if (regularExpression is RCharacterList)
             {

@@ -16,49 +16,50 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 		{
 			throw new MetaParseException();
 		}
-		JavaFiles.gen_TokenMgrError();
-		JavaFiles.gen_ParseException();
-		JavaFiles.gen_Token();
+		JavaFiles.GenTokenMgrError();
+		JavaFiles.GenParseException();
+		JavaFiles.GenToken();
 		if (Options.UserTokenManager)
 		{
-			JavaFiles.gen_TokenManager();
+			JavaFiles.GenTokenManager();
 		}
 		else if (Options.UserCharStream)
 		{
-			JavaFiles.gen_CharStream();
+			JavaFiles.GenCharStream();
 		}
 		else if (Options.JavaUnicodeEscape)
 		{
-			JavaFiles.gen_JavaCharStream();
+			JavaFiles.GenJavaCharStream();
 		}
 		else
 		{
-			JavaFiles.gen_SimpleCharStream();
+			JavaFiles.GenSimpleCharStream();
 		}
 		try
 		{
-			
 			writer = new StreamWriter(
 				Path.Combine(Options.OutputDirectory.FullName, (JavaCCGlobals.CuName)+("Constants.java")));
 		}
 		catch (IOException)
 		{
-			goto IL_00aa;
+			throw new System.Exception(
+				JavaCCErrors.Semantic_Error(("Could not open file ") + (JavaCCGlobals.CuName) + ("Constants.java for writing.")
+				));
 		}
 		var vector = JavaCCGlobals.ToolNames.ToList();
 		vector.Add("JavaCC");
 		writer.WriteLine(("/* ")+(JavaCCGlobals.GetIdStringList(vector, (JavaCCGlobals.CuName)+("Constants.java")))+(" */")
 			);
-		if (JavaCCGlobals.CuToInsertionPoint1.Count != 0 && ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).Kind == 60)
+		if (JavaCCGlobals.CuToInsertionPoint1.Count != 0 && (JavaCCGlobals.CuToInsertionPoint1[0]).Kind == 60)
 		{
 			for (int i = 1; i < JavaCCGlobals.CuToInsertionPoint1.Count; i++)
 			{
-				if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
+				if ((JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
 				{
-					JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.CuToInsertionPoint1[0]);
+					JavaCCGlobals.PrintTokenSetup(JavaCCGlobals.CuToInsertionPoint1[0]);
 					for (int j = 0; j <= i; j++)
 					{
-						token = (Token)JavaCCGlobals.CuToInsertionPoint1[j];
+						token = JavaCCGlobals.CuToInsertionPoint1[j];
 						JavaCCGlobals.PrintToken(token, writer);
 					}
 					JavaCCGlobals.PrintTrailingComments(token, writer);
@@ -108,9 +109,9 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 			foreach(var regExprSpec in tokenProduction.Respecs)
 			{
 				RegularExpression regularExpression = regExprSpec.Rexp;
-				if (regularExpression is RStringLiteral)
+				if (regularExpression is RStringLiteral literal)
 				{
-					writer.WriteLine(("    \"\\\"")+(JavaCCGlobals.AddEscapes(JavaCCGlobals.AddEscapes(((RStringLiteral)regularExpression).image)))+("\\\"\",")
+					writer.WriteLine(("    \"\\\"")+(JavaCCGlobals.AddEscapes(JavaCCGlobals.AddEscapes(literal.Image)))+("\\\"\",")
 						);
 					continue;
 				}
@@ -132,23 +133,11 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 		writer.WriteLine("");
 		writer.WriteLine("}");
 		writer.Close();
-		return;
-		IL_00aa:
 		
-		JavaCCErrors.Semantic_Error(("Could not open file ")+(JavaCCGlobals.CuName)+("Constants.java for writing.")
-			);
-		
-		throw new System.Exception();
 	}
 
-	public static void reInit()
+	public static void ReInit()
 	{
 		writer = null;
 	}
-
-	
-	public OtherFilesGen()
-	{
-	}
-
 }

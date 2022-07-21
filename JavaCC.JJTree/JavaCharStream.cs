@@ -284,7 +284,6 @@ public class JavaCharStream
         {
             ex = x;
         }
-        IOException ex2 = ex;
         if (BufPos != 0)
         {
             BufPos--;
@@ -295,7 +294,7 @@ public class JavaCharStream
             BufLine[BufPos] = line;
             BufColumn[BufPos] = column;
         }
-        throw (ex2);
+        throw (ex);
     }
 
 
@@ -304,7 +303,6 @@ public class JavaCharStream
         char[] dest = new char[BufSize + 2048];
         int[] dest2 = new int[BufSize + 2048];
         int[] dest3 = new int[BufSize + 2048];
-        System.Exception ex;
         try
         {
             if (b)
@@ -331,21 +329,15 @@ public class JavaCharStream
                 BufPos -= TokenBegin;
             }
         }
-        catch (System.Exception x)
+        catch (Exception x)
         {
-            ex = x;
-            goto IL_01ca;
+            throw x;
         }
         int num = BufSize + 2048;
         BufSize = num;
         Available = num;
         TokenBegin = 0;
         return;
-    IL_01ca:
-        System.Exception @this = ex;
-        string message = @this.Message;
-
-        throw new System.Exception(message);
     }
 
 
@@ -595,8 +587,8 @@ public class JavaCharStream
         int num2 = ((BufPos < TokenBegin) ? (BufSize - TokenBegin + BufPos + 1 + inBuf) : (BufPos - TokenBegin + inBuf + 1));
         int j = 0;
         int num3 = 0;
-        _ = 0;
-        _ = 0;
+        
+        
         int num4 = 0;
         for (; j < num2; j++)
         {

@@ -5,408 +5,378 @@ using System.IO;
 
 public class ParseEngine : JavaCCGlobals
 {
-	private static TextWriter writer;
+	protected static TextWriter writer;
 
-	private static int gensymindex;
+	protected static int GenSymindex = 0;
 
-	private static int indentamt;
+	protected static int Indentamt = 0;
 
-	private static bool jj2LA;
+	protected static bool JJ2LA = false;
 
-	private static List<Lookahead> phase2list =new();
+	protected static readonly List<Lookahead> Phase2List =new();
 
-	private static List<Phase3Data> phase3list = new();
+	protected static readonly List<Phase3Data> Phase3List = new();
 
-	private static Dictionary<Expansion,Phase3Data> phase3table =new();
+	protected static readonly Dictionary<Expansion,Phase3Data> Phase3Table =new();
 
-	private static bool[] firstSet;
+	protected static bool[] FirstSet = Array.Empty<bool>();
 
-	internal const int NOOPENSTM = 0;
+	protected internal const int NOOPENSTM = 0;
 
-	internal const int OPENIF = 1;
+	protected internal const int OPENIF = 1;
 
-	internal const int OPENSWITCH = 2;
+	protected internal const int OPENSWITCH = 2;
 
-	private static bool xsp_declared;
+	protected static bool xsp_declared = false;
 
-	internal static Expansion jj3_expansion;
+	protected internal static Expansion jj3_expansion;
 
-	
 	public new static void ReInit()
 	{
 		writer = null;
-		gensymindex = 0;
-		indentamt = 0;
-		jj2LA = false;
-		phase2list = new ();
-		phase3list = new ();
-		phase3table = new ();
-		firstSet = null;
+		GenSymindex = 0;
+		Indentamt = 0;
+		JJ2LA = false;
+		Phase2List.Clear();
+		Phase3List.Clear();
+		Phase3Table.Clear();
+		FirstSet = null;
 		xsp_declared = false;
 		jj3_expansion = null;
 	}
 
 	
-	private static bool javaCodeCheck(Expansion P_0)
+	private static bool JavaCodeCheck(Expansion exp)
 	{
-		if (P_0 is RegularExpression)
-		{
-			return false;
-		}
-		if (P_0 is NonTerminal terminal)
-		{
-			NormalProduction prod = terminal.prod;
-			if (prod is JavaCodeProduction)
-			{
-				return true;
-			}
-			bool result = javaCodeCheck(prod.Expansion);
-			
-			return result;
-		}
-        if (P_0 is Choice choice)
+        switch (exp)
         {
-            for (int i = 0; i < choice.Choices.Count; i++)
-            {
-                if (javaCodeCheck((Expansion)choice.Choices[i]))
+            case RegularExpression:
+                return false;
+            case NonTerminal terminal:
                 {
-                    return true;
+                    NormalProduction prod = terminal.prod;
+                    if (prod is JavaCodeProduction)
+                    {
+                        return true;
+                    }
+                    return JavaCodeCheck(prod.Expansion);
                 }
-            }
-            return false;
-        }
-        if (P_0 is Sequence sequence)
-        {
-            for (int i = 0; i < sequence.Units.Count; i++)
-            {
-                Expansion[] array = (Expansion[])sequence.Units.ToArray();
-                if (array[i] is Lookahead && ((Lookahead)array[i]).IsExplicit)
+
+            case Choice choice:
                 {
+                    for (int i = 0; i < choice.Choices.Count; i++)
+                    {
+                        if (JavaCodeCheck(choice.Choices[i]))
+                        {
+                            return true;
+                        }
+                    }
                     return false;
                 }
-                if (javaCodeCheck(array[i]))
+
+            case Sequence sequence:
                 {
-                    return true;
-                }
-                if (!Semanticize.EmptyExpansionExists(array[i]))
-                {
+                    for (int i = 0; i < sequence.Units.Count; i++)
+                    {
+                        var array = sequence.Units.ToArray();
+                        if (array[i] is Lookahead lookahead && lookahead.IsExplicit)
+                        {
+                            return false;
+                        }
+                        else if (JavaCodeCheck(array[i]))
+                        {
+                            return true;
+                        }
+                        else if (!Semanticize.EmptyExpansionExists(array[i]))
+                        {
+                            return false;
+                        }
+                    }
                     return false;
                 }
-            }
-            return false;
-        }
-        if (P_0 is OneOrMore oneOrMore)
-        {
-            bool result2 = javaCodeCheck(oneOrMore.Expansion);
 
-            return result2;
+            case OneOrMore oneOrMore:
+                return JavaCodeCheck(oneOrMore.Expansion);
+            case ZeroOrMore zeroOrMore:
+                return JavaCodeCheck(zeroOrMore.Expansion);
+            case ZeroOrOne zeroOrOne:
+                return JavaCodeCheck(zeroOrOne.Expansion);
+            case TryBlock tryBlock:
+                return JavaCodeCheck(tryBlock.Expression);
+            default:
+                return false;
         }
-        if (P_0 is ZeroOrMore)
-		{
-			ZeroOrMore zeroOrMore = (ZeroOrMore)P_0;
-			bool result3 = javaCodeCheck(zeroOrMore.Expansion);
-			
-			return result3;
-		}
-        if (P_0 is ZeroOrOne zeroOrOne)
-        {
-            bool result4 = javaCodeCheck(zeroOrOne.Expansion);
-
-            return result4;
-        }
-        if (P_0 is TryBlock tryBlock)
-        {
-            bool result5 = javaCodeCheck(tryBlock.Expression);
-
-            return result5;
-        }
-        return false;
-	}
+    }
 
 	
 	private static void GenFirstSet(Expansion exp)
 	{
-		if (exp is RegularExpression)
+		if (exp is RegularExpression expression)
 		{
-			firstSet[((RegularExpression)exp).Ordinal] = true;
+			FirstSet[expression.Ordinal] = true;
 		}
-		else if (exp is NonTerminal)
+		else if (exp is NonTerminal terminal)
 		{
-			if (!(((NonTerminal)exp).prod is JavaCodeProduction))
+			if (terminal.prod is not JavaCodeProduction)
 			{
-				GenFirstSet(((BNFProduction)((NonTerminal)exp).prod).Expansion);
+				GenFirstSet(((BNFProduction)terminal.prod).Expansion);
 			}
 		}
-		else if (exp is Choice)
-		{
-			Choice choice = (Choice)exp;
-			for (int i = 0; i < choice.Choices.Count; i++)
-			{
-				GenFirstSet((Expansion)choice.Choices[i]);
-			}
-		}
-		else if (exp is Sequence)
-		{
-			Sequence sequence = (Sequence)exp;
-			object obj = sequence.Units[0];
-			if (obj is Lookahead && ((Lookahead)obj).ActionTokens.Count != 0)
-			{
-				jj2LA = true;
-			}
-			for (int j = 0; j < sequence.Units.Count; j++)
-			{
-				Expansion expansion = (Expansion)sequence.Units[j];
-				if (expansion is NonTerminal && ((NonTerminal)expansion).prod is JavaCodeProduction)
-				{
-					if (j > 0 && sequence.Units[j-1] is Lookahead)
-					{
-						Lookahead lookahead = (Lookahead)sequence.Units[j-1];
-						GenFirstSet(lookahead.LaExpansion);
-					}
-				}
-				else
-				{
-					GenFirstSet((Expansion)sequence.Units[j]);
-				}
-				if (!Semanticize.EmptyExpansionExists((Expansion)sequence.Units[j]))
-				{
-					break;
-				}
-			}
-		}
-		else if (exp is OneOrMore)
-		{
-			OneOrMore oneOrMore = (OneOrMore)exp;
-			GenFirstSet(oneOrMore.Expansion);
-		}
-		else if (exp is ZeroOrMore)
-		{
-			ZeroOrMore zeroOrMore = (ZeroOrMore)exp;
-			GenFirstSet(zeroOrMore.Expansion);
-		}
-		else if (exp is ZeroOrOne)
-		{
-			ZeroOrOne zeroOrOne = (ZeroOrOne)exp;
-			GenFirstSet(zeroOrOne.Expansion);
-		}
-		else if (exp is TryBlock)
-		{
-			TryBlock tryBlock = (TryBlock)exp;
-			GenFirstSet(tryBlock.Expression);
-		}
-	}
+		else if (exp is Choice choice)
+        {
+            for (int i = 0; i < choice.Choices.Count; i++)
+            {
+                GenFirstSet(choice.Choices[i]);
+            }
+        }
+        else if (exp is Sequence sequence)
+        {
+            var u = sequence.Units[0];
+            if (u is Lookahead lookahead && lookahead.ActionTokens.Count != 0)
+            {
+                JJ2LA = true;
+            }
+            for (int j = 0; j < sequence.Units.Count; j++)
+            {
+                var expansion = sequence.Units[j];
+                if (expansion is NonTerminal terminal1 && terminal1.prod is JavaCodeProduction)
+                {
+                    if (j > 0 && sequence.Units[j - 1] is Lookahead)
+                    {
+                        Lookahead lookahead2 = (Lookahead)sequence.Units[j - 1];
+                        GenFirstSet(lookahead2.LaExpansion);
+                    }
+                }
+                else
+                {
+                    GenFirstSet(sequence.Units[j]);
+                }
+                if (!Semanticize.EmptyExpansionExists(sequence.Units[j]))
+                {
+                    break;
+                }
+            }
+        }
+        else if (exp is OneOrMore oneOrMore)
+        {
+            GenFirstSet(oneOrMore.Expansion);
+        }
+        else if (exp is ZeroOrMore zeroOrMore)
+        {
+            GenFirstSet(zeroOrMore.Expansion);
+        }
+        else if (exp is ZeroOrOne zeroOrOne)
+        {
+            GenFirstSet(zeroOrOne.Expansion);
+        }
+        else if (exp is TryBlock tryBlock)
+        {
+            GenFirstSet(tryBlock.Expression);
+        }
+    }
 
 	
-	internal static void Phase1NewLine()
+	public static void Phase1NewLine()
 	{
 		writer.WriteLine("");
-		for (int i = 0; i < indentamt; i++)
+		for (int i = 0; i < Indentamt; i++)
 		{
 			writer.Write(" ");
 		}
 	}
 
-	
-	internal static string phase1ExpansionGen(Expansion P_0)
+
+	public static string Phase1ExpansionGen(Expansion exp)
 	{
 		string text = "";
 		Token t = null;
-		if (P_0 is RegularExpression)
-		{
-			RegularExpression regularExpression = (RegularExpression)P_0;
-			text = (text)+("\n");
-			if (regularExpression.LhsTokens.Count != 0)
-			{
-				JavaCCGlobals.PrintTokenSetup((Token)regularExpression.LhsTokens[0]);
-				foreach(var _t in regularExpression.LhsTokens)
-				{
-					text = (text)+(JavaCCGlobals.PrintToken(_t));
-					t = _t;
-				}
-				text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
-				text = (text)+(" = ");
-			}
-			string str = ((regularExpression.RhsToken != null) ? (").")+(regularExpression.RhsToken.Image)+(";")
-				 : ");");
-			if (string.Equals(regularExpression.Label, ""))
-			{
-				var dict = JavaCCGlobals.NamesOfTokens;
-				;
-				var obj = dict.ContainsKey((regularExpression.Ordinal));
-				text = ((obj) ? (text)+("jj_consume_token(")+(regularExpression.Ordinal)
-					+(str)
-					 : (text)+("jj_consume_token(")+(dict[regularExpression.Ordinal])
-					+ (str)
-					);
-			}
-			else
-			{
-				text = (text)+("jj_consume_token(")+(regularExpression.Label)
-					+(str)
-					;
-			}
-		}
-		else if (P_0 is NonTerminal)
-		{
-			NonTerminal nonTerminal = (NonTerminal)P_0;
-			text = (text)+("\n");
-			if (nonTerminal.LhsTokens.Count != 0)
-			{
-				foreach(Token _t in nonTerminal.LhsTokens)
-				{
-					text = (text)+(JavaCCGlobals.PrintToken(_t));
-					t = _t;
-				}
-				text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
-				text = (text)+(" = ");
-			}
-			text = (text)+(nonTerminal.Name)+("(")
-				;
-			if (nonTerminal.ArgumentTokens.Count != 0)
-			{
-				Token t2 = nonTerminal.ArgumentTokens[0];
-				JavaCCGlobals.PrintTokenSetup(t2);
-				foreach (var token in nonTerminal.ArgumentTokens) 
-				{
-					text = (text)+(JavaCCGlobals.PrintToken(token));
-					t = token;
-				}
-				text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
-			}
-			text = (text)+(");");
-		}
-		else if (P_0 is Action)
-		{
-			Action action = (Action)P_0;
-			text = (text)+("\u0003\n");
-			if (action.ActionTokens.Count != 0)
-			{
-				JavaCCGlobals.PrintTokenSetup((Token)action.ActionTokens[0]);
-				JavaCCGlobals.ccol = 1;
-				foreach(var _t in action.ActionTokens)
-				{
-					text = (text)+(JavaCCGlobals.PrintToken(_t));
-					t = _t;
-				}
-				text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
-			}
-			text = (text)+("\u0004");
-		}
-		else if (P_0 is Choice)
-		{
-			Choice choice = (Choice)P_0;
-			Lookahead[] array = new Lookahead[choice.Choices.Count];
-			string[] array2 = new string[choice.Choices.Count + 1];
-			array2[choice.Choices.Count] = "\njj_consume_token(-1);\nthrow new ParseException();";
-			for (int i = 0; i < choice.Choices.Count; i++)
-			{
-				Sequence sequence = (Sequence)choice.Choices[i];
-				array2[i] = phase1ExpansionGen(sequence);
-				array[i] = (Lookahead)sequence.Units[0];
-			}
-			text = buildLookaheadChecker(array, array2);
-		}
-		else if (P_0 is Sequence)
-		{
-			Sequence sequence2 = (Sequence)P_0;
-			for (int j = 1; j < sequence2.Units.Count; j++)
-			{
-				text = (text)+(phase1ExpansionGen((Expansion)sequence2.Units[j]));
-			}
-		}
-		else if (P_0 is OneOrMore)
-		{
-			OneOrMore oneOrMore = (OneOrMore)P_0;
-			Expansion expansion = oneOrMore.Expansion;
-			Lookahead lookahead;
-			if (expansion is Sequence)
-			{
-				lookahead = (Lookahead)((Sequence)expansion).Units[0];
-			}
-			else
-			{
-				lookahead = new Lookahead();
-				lookahead.amount = Options.Lookahead;
-				lookahead.LaExpansion = expansion;
-			}
-			text = (text)+("\n");
-			int i2 = ++gensymindex;
-			text = (text)+("label_")+(i2)
-				+(":\n")
-				;
-			text = (text)+("while (true) {\u0001");
-			text = (text)+(phase1ExpansionGen(expansion));
-			Lookahead[] array = new Lookahead[1] { lookahead };
-			string[] array2 = new string[2]
-			{
-				"\n;",
-				("\nbreak label_")+(i2)+(";")
-					
-			};
-			text = (text)+(buildLookaheadChecker(array, array2));
-			text = (text)+("\u0002\n}");
-		}
-		else if (P_0 is ZeroOrMore)
-		{
-			ZeroOrMore zeroOrMore = (ZeroOrMore)P_0;
-			Expansion expansion = zeroOrMore.Expansion;
-			Lookahead lookahead;
-			if (expansion is Sequence)
-			{
-				lookahead = (Lookahead)((Sequence)expansion).Units[0];
-			}
-			else
-			{
-				lookahead = new Lookahead();
-				lookahead.amount = Options.Lookahead;
-				lookahead.LaExpansion = expansion;
-			}
-			text = (text)+("\n");
-			int i2 = ++gensymindex;
-			text = (text)+("label_")+(i2)
-				+(":\n")
-				;
-			text = (text)+("while (true) {\u0001");
-			Lookahead[] array = new Lookahead[1] { lookahead };
-			string[] array2 = new string[2]
-			{
-				"\n;",
-				("\nbreak label_")+(i2)+(";")
-					
-			};
-			text = (text)+(buildLookaheadChecker(array, array2));
-			text = (text)+(phase1ExpansionGen(expansion));
-			text = (text)+("\u0002\n}");
-		}
-		else if (P_0 is ZeroOrOne)
-		{
-			ZeroOrOne zeroOrOne = (ZeroOrOne)P_0;
-			Expansion expansion = zeroOrOne.Expansion;
-			Lookahead lookahead;
-			if (expansion is Sequence)
-			{
-				lookahead = (Lookahead)((Sequence)expansion).Units[0];
-			}
-			else
-			{
-				lookahead = new Lookahead();
-				lookahead.amount = Options.Lookahead;
-				lookahead.LaExpansion = expansion;
-			}
-			Lookahead[] array = new Lookahead[1] { lookahead };
-			string[] array2 = new string[2]
-			{
-				phase1ExpansionGen(expansion),
-				"\n;"
-			};
-			text = (text)+(buildLookaheadChecker(array, array2));
-		}
-		else if (P_0 is TryBlock tryBlock)
+        if (exp is RegularExpression regularExpression)
+        {
+            text = (text) + ("\n");
+            if (regularExpression.LhsTokens.Count != 0)
+            {
+                PrintTokenSetup(regularExpression.LhsTokens[0]);
+                foreach (var _t in regularExpression.LhsTokens)
+                {
+                    text = (text) + (PrintToken(_t));
+                    t = _t;
+                }
+                text = (text) + (PrintTrailingComments(t));
+                text = (text) + (" = ");
+            }
+            string str = ((regularExpression.RhsToken != null) ? (").") + (regularExpression.RhsToken.Image) + (";")
+                 : ");");
+            if (string.Equals(regularExpression.Label, ""))
+            {
+                var dict = NamesOfTokens;
+                var obj = dict.ContainsKey((regularExpression.Ordinal));
+                text = ((obj) ? (text) + ("jj_consume_token(") + (regularExpression.Ordinal)
+                    + (str)
+                     : (text) + ("jj_consume_token(") + (dict[regularExpression.Ordinal])
+                    + (str)
+                    );
+            }
+            else
+            {
+                text = (text) + ("jj_consume_token(") + (regularExpression.Label)
+                    + (str)
+                    ;
+            }
+        }
+        else if (exp is NonTerminal nonTerminal)
+        {
+            text = (text) + ("\n");
+            if (nonTerminal.LhsTokens.Count != 0)
+            {
+                foreach (Token _t in nonTerminal.LhsTokens)
+                {
+                    text = (text) + (PrintToken(_t));
+                    t = _t;
+                }
+                text = (text) + (PrintTrailingComments(t));
+                text = (text) + (" = ");
+            }
+            text = (text) + (nonTerminal.Name) + ("(")
+                ;
+            if (nonTerminal.ArgumentTokens.Count != 0)
+            {
+                Token t2 = nonTerminal.ArgumentTokens[0];
+                PrintTokenSetup(t2);
+                foreach (var token in nonTerminal.ArgumentTokens)
+                {
+                    text = (text) + (PrintToken(token));
+                    t = token;
+                }
+                text = (text) + (PrintTrailingComments(t));
+            }
+            text = (text) + (");");
+        }
+        else if (exp is Action action)
+        {
+            text = (text) + ("\u0003\n");
+            if (action.ActionTokens.Count != 0)
+            {
+                PrintTokenSetup(action.ActionTokens[0]);
+                CCol = 1;
+                foreach (var _t in action.ActionTokens)
+                {
+                    text = (text) + (PrintToken(_t));
+                    t = _t;
+                }
+                text = (text) + (PrintTrailingComments(t));
+            }
+            text = (text) + ("\u0004");
+        }
+        else if (exp is Choice choice)
+        {
+            var array = new Lookahead[choice.Choices.Count];
+            var array2 = new string[choice.Choices.Count + 1];
+            array2[choice.Choices.Count] = "\njj_consume_token(-1);\nthrow new ParseException();";
+            for (int i = 0; i < choice.Choices.Count; i++)
+            {
+                Sequence sequence = (Sequence)choice.Choices[i];
+                array2[i] = Phase1ExpansionGen(sequence);
+                array[i] = (Lookahead)sequence.Units[0];
+            }
+            text = BuildLookaheadChecker(array, array2);
+        }
+        else if (exp is Sequence sequence2)
+        {
+            for (int j = 1; j < sequence2.Units.Count; j++)
+            {
+                text = (text) + (Phase1ExpansionGen((Expansion)sequence2.Units[j]));
+            }
+        }
+        else if (exp is OneOrMore oneOrMore)
+        {
+            Expansion expansion = oneOrMore.Expansion;
+            Lookahead lookahead;
+            if (expansion is Sequence sequence)
+            {
+                lookahead = (Lookahead)sequence.Units[0];
+            }
+            else
+            {
+                lookahead = new ();
+                lookahead.amount = Options.Lookahead;
+                lookahead.LaExpansion = expansion;
+            }
+            text = (text) + ("\n");
+            int i2 = ++GenSymindex;
+            text = (text) + ("label_") + (i2)
+                + (":\n")
+                ;
+            text = (text) + ("while (true) {\u0001");
+            text = (text) + (Phase1ExpansionGen(expansion));
+            var array = new Lookahead[1] { lookahead };
+            var array2 = new string[2]
+            {
+                "\n;",
+                ("\nbreak label_")+(i2)+(";")
+
+            };
+            text = (text) + (BuildLookaheadChecker(array, array2));
+            text = (text) + ("\u0002\n}");
+        }
+        else if (exp is ZeroOrMore zeroOrMore)
+        {
+            Expansion expansion = zeroOrMore.Expansion;
+            Lookahead lookahead;
+            if (expansion is Sequence sequence)
+            {
+                lookahead = (Lookahead)sequence.Units[0];
+            }
+            else
+            {
+                lookahead = new ();
+                lookahead.amount = Options.Lookahead;
+                lookahead.LaExpansion = expansion;
+            }
+            text = (text) + ("\n");
+            int i2 = ++GenSymindex;
+            text = (text) + ("label_") + (i2)
+                + (":\n")
+                ;
+            text = (text) + ("while (true) {\u0001");
+            var array = new Lookahead[1] { lookahead };
+            string[] array2 = new string[2]
+            {
+                "\n;",
+                ("\nbreak label_")+(i2)+(";")
+
+            };
+            text = (text) + (BuildLookaheadChecker(array, array2));
+            text = (text) + (Phase1ExpansionGen(expansion));
+            text = (text) + ("\u0002\n}");
+        }
+        else if (exp is ZeroOrOne zeroOrOne)
+        {
+            Expansion expansion = zeroOrOne.Expansion;
+            Lookahead lookahead;
+            if (expansion is Sequence sequence)
+            {
+                lookahead = (Lookahead)sequence.Units[0];
+            }
+            else
+            {
+                lookahead = new ();
+                lookahead.amount = Options.Lookahead;
+                lookahead.LaExpansion = expansion;
+            }
+            Lookahead[] array = new Lookahead[1] { lookahead };
+            string[] array2 = new string[2]
+            {
+                Phase1ExpansionGen(expansion),
+                "\n;"
+            };
+            text = (text) + (BuildLookaheadChecker(array, array2));
+        }
+        else if (exp is TryBlock tryBlock)
         {
             Expansion expansion = tryBlock.Expression;
             text = (text) + ("\n");
             text = (text) + ("try {\u0001");
-            text = (text) + (phase1ExpansionGen(expansion));
+            text = (text) + (Phase1ExpansionGen(expansion));
             text = (text) + ("\u0002\n}");
             for (int i2 = 0; i2 < tryBlock.CatchBlocks.Count; i2++)
             {
@@ -414,31 +384,31 @@ public class ParseEngine : JavaCCGlobals
                 var vector = tryBlock.Types[i2];
                 if (vector.Count != 0)
                 {
-                    JavaCCGlobals.PrintTokenSetup((Token)vector[0]);
-                  
-					foreach(var t2 in vector)
+                    PrintTokenSetup(vector[0]);
+
+                    foreach (var t2 in vector)
                     {
-                        text = (text) + (JavaCCGlobals.PrintToken(t2));
+                        text = (text) + (PrintToken(t2));
                     }
-                    text = (text) + (JavaCCGlobals.PrintTrailingComments(t));
+                    text = (text) + (PrintTrailingComments(t));
                 }
                 text += " ";
-                t = (Token)tryBlock.Ids[i2];
-                JavaCCGlobals.PrintTokenSetup(t);
-                text = (text) + (JavaCCGlobals.PrintToken(t));
-                text = (text) + (JavaCCGlobals.PrintTrailingComments(t));
+                t = tryBlock.Ids[i2];
+                PrintTokenSetup(t);
+                text = (text) + (PrintToken(t));
+                text = (text) + (PrintTrailingComments(t));
                 text = (text) + (") {\u0003\n");
                 vector = tryBlock.CatchBlocks[i2];
                 if (vector.Count != 0)
                 {
-                    JavaCCGlobals.PrintTokenSetup((Token)vector[0]);
-                    JavaCCGlobals.ccol = 1;
-                    foreach(var _t in vector)
+                    PrintTokenSetup(vector[0]);
+                    CCol = 1;
+                    foreach (var _t in vector)
                     {
-                        text = (text) + (JavaCCGlobals.PrintToken(_t));
-						t = _t;
+                        text = (text) + (PrintToken(_t));
+                        t = _t;
                     }
-                    text = (text) + (JavaCCGlobals.PrintTrailingComments(t));
+                    text = (text) + (PrintTrailingComments(t));
                 }
                 text = (text) + ("\u0004\n}");
             }
@@ -447,14 +417,14 @@ public class ParseEngine : JavaCCGlobals
                 text = (text) + (" finally {\u0003\n");
                 if (tryBlock.FinallyBlock.Count != 0)
                 {
-                    JavaCCGlobals.PrintTokenSetup((Token)tryBlock.FinallyBlock[0]);
-                    JavaCCGlobals.ccol = 1;
-                    foreach(var _t in tryBlock.FinallyBlock)
-					{
-                        text = (text) + (JavaCCGlobals.PrintToken(_t));
-						t = _t;
+                    PrintTokenSetup(tryBlock.FinallyBlock[0]);
+                    CCol = 1;
+                    foreach (var _t in tryBlock.FinallyBlock)
+                    {
+                        text = (text) + (PrintToken(_t));
+                        t = _t;
                     }
-                    text = (text) + (JavaCCGlobals.PrintTrailingComments(t));
+                    text = (text) + (PrintTrailingComments(t));
                 }
                 text = (text) + ("\u0004\n}");
             }
@@ -463,14 +433,14 @@ public class ParseEngine : JavaCCGlobals
 	}
 
 	
-	internal static void dumpFormattedString(string P_0)
+	internal static void DumpFormattedString(string text)
 	{
 		int num = 32;
 		int num2 = 1;
-		for (int i = 0; i < P_0.Length; i++)
+		for (int i = 0; i < text.Length; i++)
 		{
 			int num3 = num;
-			num = P_0[i];
+			num = text[i];
 			if (num == 10 && num3 == 13)
 			{
 				continue;
@@ -489,10 +459,10 @@ public class ParseEngine : JavaCCGlobals
 				}
 				break;
 			case 1:
-				indentamt += 2;
+				Indentamt += 2;
 				break;
 			case 2:
-				indentamt -= 2;
+				Indentamt -= 2;
 				break;
 			case 3:
 				num2 = 0;
@@ -508,21 +478,21 @@ public class ParseEngine : JavaCCGlobals
 	}
 
 	
-	internal static string buildLookaheadChecker(Lookahead[] lookaheads, string[] P_1)
+	internal static string BuildLookaheadChecker(Lookahead[] lookaheads, string[] texts)
 	{
 		int num = 0;
 		int num2 = 0;
-		bool[] array = new bool[JavaCCGlobals.TokenCount];
+		bool[] array = new bool[TokenCount];
 		string text = "";
 		Token t = null;
-		int num3 = (JavaCCGlobals.TokenCount - 1) / 32 + 1;
+		int num3 = (TokenCount - 1) / 32 + 1;
 		int[] array2 = null;
 		int num4;
 		for (num4 = 0; num4 < lookaheads.Length; num4++)
 		{
-			Lookahead lookahead = lookaheads[num4];
-			jj2LA = false;
-			if (lookahead.amount == 0 || Semanticize.EmptyExpansionExists(lookahead.LaExpansion) || javaCodeCheck(lookahead.LaExpansion))
+			var lookahead = lookaheads[num4];
+			JJ2LA = false;
+			if (lookahead.amount == 0 || Semanticize.EmptyExpansionExists(lookahead.LaExpansion) || JavaCodeCheck(lookahead.LaExpansion))
 			{
 				if (lookahead.ActionTokens.Count == 0)
 				{
@@ -541,40 +511,40 @@ public class ParseEngine : JavaCCGlobals
 					text = (text)+("\u0002\ndefault:\u0001");
 					if (Options.ErrorReporting)
 					{
-						text = (text)+("\njj_la1[")+(JavaCCGlobals.maskindex)
+						text = (text)+("\njj_la1[")+(maskindex)
 							+("] = jj_gen;")
 							;
-						JavaCCGlobals.maskindex++;
+						maskindex++;
 					}
-					JavaCCGlobals.MaskVals.Add(array2);
+					MaskVals.Add(array2);
 					text = (text)+("\nif (");
 					num2++;
 					break;
 				}
-				JavaCCGlobals.PrintTokenSetup((Token)lookahead.ActionTokens[0]);
+				PrintTokenSetup(lookahead.ActionTokens[0]);
 				
 				foreach(var _t in lookahead.ActionTokens)
 				{
-					text = (text)+(JavaCCGlobals.PrintToken(_t));
+					text = (text)+(PrintToken(_t));
 					t = _t;
 				}
-				text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
-				text = (text)+(") {\u0001")+(P_1[num4])
+				text = (text)+(PrintTrailingComments(t));
+				text = (text)+(") {\u0001")+(texts[num4])
 					;
 				num = 1;
 			}
 			else if (lookahead.amount == 1 && lookahead.ActionTokens.Count == 0)
 			{
-				if (firstSet == null)
+				if (FirstSet == null)
 				{
-					firstSet = new bool[JavaCCGlobals.TokenCount];
+					FirstSet = new bool[TokenCount];
 				}
-				for (int i = 0; i < JavaCCGlobals.TokenCount; i++)
+				for (int i = 0; i < TokenCount; i++)
 				{
-					firstSet[i] = false;
+					FirstSet[i] = false;
 				}
 				GenFirstSet(lookahead.LaExpansion);
-				if (!jj2LA)
+				if (!JJ2LA)
 				{
 					int num5 = num;
 					if (num5 != 0)
@@ -587,7 +557,7 @@ public class ParseEngine : JavaCCGlobals
 					}
 					text = (text)+("\nswitch (");
 					text = ((!Options.CacheTokens) ? (text)+("(jj_ntk==-1)?jj_ntk():jj_ntk) {\u0001") : (text)+("jj_nt.kind) {\u0001"));
-					for (int i = 0; i < JavaCCGlobals.TokenCount; i++)
+					for (int i = 0; i < TokenCount; i++)
 					{
 						array[i] = false;
 					}
@@ -602,13 +572,13 @@ public class ParseEngine : JavaCCGlobals
 			}
 			else
 			{
-				jj2LA = true;
+				JJ2LA = true;
 			}
 			goto IL_0463;
 			IL_0335:
-			for (int i = 0; i < JavaCCGlobals.TokenCount; i++)
+			for (int i = 0; i < TokenCount; i++)
 			{
-				if (firstSet[i] && !array[i])
+				if (FirstSet[i] && !array[i])
 				{
 					array[i] = true;
 					text = (text)+("\u0002\ncase ");
@@ -619,17 +589,17 @@ public class ParseEngine : JavaCCGlobals
 					int num9 = num6;
 					int[] array4 = array3;
 					array4[num9] |= 1 << num8;
-					string text2 = (string)JavaCCGlobals.NamesOfTokens[i];
+					string text2 = (string)NamesOfTokens[i];
 					text = ((text2 != null) ? (text)+(text2) : (text)+(i));
 					text = (text)+(":\u0001");
 				}
 			}
-			text = (text)+(P_1[num4]);
+			text = (text)+(texts[num4]);
 			text = (text)+("\nbreak;");
 			num = 2;
 			goto IL_0463;
 			IL_0463:
-			if (jj2LA)
+			if (JJ2LA)
 			{
 				switch (num)
 				{
@@ -644,20 +614,20 @@ public class ParseEngine : JavaCCGlobals
 					text = (text)+("\u0002\ndefault:\u0001");
 					if (Options.ErrorReporting)
 					{
-						text = (text)+("\njj_la1[")+(JavaCCGlobals.maskindex)
+						text = (text)+("\njj_la1[")+(maskindex)
 							+("] = jj_gen;")
 							;
-						JavaCCGlobals.maskindex++;
+						maskindex++;
 					}
-					JavaCCGlobals.MaskVals.Add(array2);
+					MaskVals.Add(array2);
 					text = (text)+("\nif (");
 					num2++;
 					break;
 				}
-				JavaCCGlobals.jj2index++;
-				lookahead.LaExpansion.internal_name = ("_")+(JavaCCGlobals.jj2index);
-				phase2list.Add(lookahead);
-				text = (text)+("jj_2")+(lookahead.LaExpansion.internal_name)
+				jj2index++;
+				lookahead.LaExpansion.Internal_Name = ("_")+(jj2index);
+				Phase2List.Add(lookahead);
+				text = (text)+("jj_2")+(lookahead.LaExpansion.Internal_Name)
 					+("(")
 					+(lookahead.amount)
 					+(")")
@@ -665,17 +635,17 @@ public class ParseEngine : JavaCCGlobals
 				if (lookahead.ActionTokens.Count != 0)
 				{
 					text = (text)+(" && (");
-					JavaCCGlobals.PrintTokenSetup((Token)lookahead.ActionTokens[0]);
+					PrintTokenSetup(lookahead.ActionTokens[0]);
 					
 					foreach(var _t in lookahead.ActionTokens)
 					{
-						text = (text)+(JavaCCGlobals.PrintToken(t));
+						text = (text)+(PrintToken(t));
 						t = _t;
 					}
-					text = (text)+(JavaCCGlobals.PrintTrailingComments(t));
+					text = (text)+(PrintTrailingComments(t));
 					text = (text)+(")");
 				}
-				text = (text)+(") {\u0001")+(P_1[num4])
+				text = (text)+(") {\u0001")+(texts[num4])
 					;
 				num = 1;
 			}
@@ -683,23 +653,23 @@ public class ParseEngine : JavaCCGlobals
 		switch (num)
 		{
 		case 0:
-			text = (text)+(P_1[num4]);
+			text = (text)+(texts[num4]);
 			break;
 		case 1:
-			text = (text)+("\u0002\n} else {\u0001")+(P_1[num4])
+			text = (text)+("\u0002\n} else {\u0001")+(texts[num4])
 				;
 			break;
 		case 2:
 			text = (text)+("\u0002\ndefault:\u0001");
 			if (Options.ErrorReporting)
 			{
-				text = (text)+("\njj_la1[")+(JavaCCGlobals.maskindex)
+				text = (text)+("\njj_la1[")+(maskindex)
 					+("] = jj_gen;")
 					;
-				JavaCCGlobals.MaskVals.Add(array2);
-				JavaCCGlobals.maskindex++;
+				MaskVals.Add(array2);
+				maskindex++;
 			}
-			text = (text)+(P_1[num4]);
+			text = (text)+(texts[num4]);
 			break;
 		}
 		for (int i = 0; i < num2; i++)
@@ -710,80 +680,77 @@ public class ParseEngine : JavaCCGlobals
 	}
 
 	
-	private static void generate3R(Expansion exp, Phase3Data p3)
+	private static void Generate3R(Expansion exp, Phase3Data p3)
 	{
 		Expansion expansion = exp;
-		if (string.Equals(exp.internal_name, ""))
+		if (string.Equals(exp.Internal_Name, ""))
 		{
 			while (true)
 			{
-				if (expansion is Sequence && ((Sequence)expansion).Units.Count == 2)
+				if (expansion is Sequence sequence && sequence.Units.Count == 2)
 				{
-					expansion = (Expansion)((Sequence)expansion).Units[1];
+					expansion = sequence.Units[1];
 					continue;
 				}
-				if (!(expansion is NonTerminal))
+				if (expansion is not NonTerminal)
 				{
 					break;
 				}
 				NonTerminal nonTerminal = (NonTerminal)expansion;
 
-				if (JavaCCGlobals.Production_table.TryGetValue(nonTerminal.Name,out var normalProduction)&& normalProduction is JavaCodeProduction)
+				if (Production_table.TryGetValue(nonTerminal.Name,out var normalProduction)&& normalProduction is JavaCodeProduction)
 				{
 					break;
 				}
 				expansion = normalProduction.Expansion;
 			}
-			if (expansion is RegularExpression)
+			if (expansion is RegularExpression re)
 			{
-				exp.internal_name = ("jj_scan_token(")+(((RegularExpression)expansion).Ordinal)+(")")
-					;
+				exp.Internal_Name = ("jj_scan_token(")+(re.Ordinal)+(")");
 				return;
 			}
-			gensymindex++;
-			exp.internal_name = ("R_")+(gensymindex);
+			GenSymindex++;
+			exp.Internal_Name = ("R_")+(GenSymindex);
 		}
-		Phase3Data phase3Data = (Phase3Data)phase3table[(exp)];
+		var phase3Data = Phase3Table[(exp)];
 		if (phase3Data == null || phase3Data.Count < p3.Count)
 		{
 			phase3Data = new Phase3Data(exp, p3.Count);
-			phase3list.Add(phase3Data);
-			phase3table.Add(exp, phase3Data);
+			Phase3List.Add(phase3Data);
+			Phase3Table.Add(exp, phase3Data);
 		}
 	}
 
 	
-	internal static void setupPhase3Builds(Phase3Data p3)
+	internal static void SetupPhase3Builds(Phase3Data p3)
 	{
 		Expansion exp = p3.Expansion;
 		if (exp is RegularExpression)
 		{
 			return;
 		}
-		if (exp is NonTerminal)
-		{
-			NonTerminal nonTerminal = (NonTerminal)exp;
-			if (JavaCCGlobals.Production_table.TryGetValue(nonTerminal.Name, out var normalProduction) 
-				&&normalProduction is not JavaCodeProduction)
-			{
-				generate3R(normalProduction.Expansion, p3);
-			}
-		}
-		else if (exp is Choice choice)
+        if (exp is NonTerminal nonTerminal)
+        {
+            if (Production_table.TryGetValue(nonTerminal.Name, out var normalProduction)
+                && normalProduction is not JavaCodeProduction)
+            {
+                Generate3R(normalProduction.Expansion, p3);
+            }
+        }
+        else if (exp is Choice choice)
         {
             for (int i = 0; i < choice.Choices.Count; i++)
             {
-                generate3R((Expansion)choice.Choices[i], p3);
+                Generate3R((Expansion)choice.Choices[i], p3);
             }
         }
-        else if (exp is Sequence)
+        else if (exp is Sequence sequence)
         {
-            Sequence sequence = (Sequence)exp;
             int i = p3.Count;
             for (int j = 1; j < sequence.Units.Count; j++)
             {
-                Expansion expansion = (Expansion)sequence.Units[j];
-                setupPhase3Builds(new Phase3Data(expansion, i));
+                Expansion expansion = sequence.Units[j];
+                SetupPhase3Builds(new Phase3Data(expansion, i));
                 i -= MinimumSize(expansion);
                 if (i <= 0)
                 {
@@ -791,25 +758,21 @@ public class ParseEngine : JavaCCGlobals
                 }
             }
         }
-        else if (exp is TryBlock)
+        else if (exp is TryBlock tryBlock)
         {
-            TryBlock tryBlock = (TryBlock)exp;
-            setupPhase3Builds(new Phase3Data(tryBlock.Expression, p3.Count));
+            SetupPhase3Builds(new Phase3Data(tryBlock.Expression, p3.Count));
         }
-        else if (exp is OneOrMore)
+        else if (exp is OneOrMore oneOrMore)
         {
-            OneOrMore oneOrMore = (OneOrMore)exp;
-            generate3R(oneOrMore.Expansion, p3);
+            Generate3R(oneOrMore.Expansion, p3);
         }
-        else if (exp is ZeroOrMore)
+        else if (exp is ZeroOrMore zeroOrMore)
         {
-            ZeroOrMore zeroOrMore = (ZeroOrMore)exp;
-            generate3R(zeroOrMore.Expansion, p3);
+            Generate3R(zeroOrMore.Expansion, p3);
         }
-        else if (exp is ZeroOrOne)
+        else if (exp is ZeroOrOne zeroOrOne)
         {
-            ZeroOrOne zeroOrOne = (ZeroOrOne)exp;
-            generate3R(zeroOrOne.Expansion, p3);
+            Generate3R(zeroOrOne.Expansion, p3);
         }
     }
 
@@ -820,57 +783,44 @@ public class ParseEngine : JavaCCGlobals
 	}
 
 	
-	internal static string genReturn(bool P_0)
+	internal static string GenReturn(bool val)
 	{
-		string str = ((!P_0) ? "false" : "true");
+		string str = ((!val) ? "false" : "true");
 		if (Options.DebugLookahead && jj3_expansion != null)
 		{
-			string str2 = ("trace_return(\"")+(((NormalProduction)jj3_expansion.Parent).Lhs)+("(LOOKAHEAD ")
-				+((!P_0) ? "SUCCEEDED" : "FAILED")
+			string text = ("trace_return(\"")+(((NormalProduction)jj3_expansion.Parent).Lhs)+("(LOOKAHEAD ")
+				+((!val) ? "SUCCEEDED" : "FAILED")
 				+(")\");")
 				;
 			if (Options.ErrorReporting)
 			{
-				str2 = ("if (!jj_rescan) ")+(str2);
+				text = ("if (!jj_rescan) ")+(text);
 			}
-			string result = ("{ ")+(str2)+(" return ")
+			return ("{ ")+(text)+(" return ")
 				+(str)
 				+("; }")
 				;
-			
-			return result;
 		}
-		string result2 = ("return ")+(str)+(";")
-			;
 		
-		return result2;
+		return ("return ") + (str) + (";");
 	}
 
-	
-	private static string genjj_3Call(Expansion P_0)
-	{
-		if (P_0.internal_name.StartsWith("jj_scan_token"))
-		{
-			return P_0.internal_name;
-		}
-		string result = ("jj_3")+(P_0.internal_name)+("()")
-			;
-		return result;
-	}
 
-	
-	internal static void buildPhase3Routine(Phase3Data p3, bool P_1)
+    private static string Genjj_3Call(Expansion exp) => exp.Internal_Name.StartsWith("jj_scan_token") ? exp.Internal_Name : ("jj_3") + (exp.Internal_Name) + ("()");
+
+
+    internal static void BuildPhase3Routine(Phase3Data p3, bool val)
 	{
 		Expansion exp = p3.Expansion;
 		Token t = null;
-		if (exp.internal_name.StartsWith("jj_scan_token"))
+		if (exp.Internal_Name.StartsWith("jj_scan_token"))
 		{
 			return;
 		}
-		if (!P_1)
+		if (!val)
 		{
-			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private boolean jj_3")
-				+(exp.internal_name)
+			writer.WriteLine(("  ")+(StaticOpt())+("private boolean jj_3")
+				+(exp.Internal_Name)
 				+("() {")
 				);
 			xsp_declared = false;
@@ -890,306 +840,297 @@ public class ParseEngine : JavaCCGlobals
 				jj3_expansion = null;
 			}
 		}
-		if (exp is RegularExpression)
+        if (exp is RegularExpression regularExpression)
+        {
+            if (string.Equals(regularExpression.Label, ""))
+            {
+                var dict = NamesOfTokens;
+                ;
+                var obj = dict.ContainsKey((regularExpression.Ordinal));
+                if (obj)
+                {
+                    writer.WriteLine(("    if (jj_scan_token(") + ((dict[regularExpression.Ordinal]) + (")) ")
+                        + (GenReturn(true))
+                        ));
+                }
+                else
+                {
+                    writer.WriteLine(("    if (jj_scan_token(") + (regularExpression.Ordinal) + (")) ")
+                        + (GenReturn(true))
+                        );
+                }
+            }
+            else
+            {
+                writer.WriteLine(("    if (jj_scan_token(") + (regularExpression.Label) + (")) ")
+                    + (GenReturn(true))
+                    );
+            }
+        }
+        else if (exp is NonTerminal nonTerminal)
+        {
+            if (Production_table.TryGetValue(nonTerminal.Name, out var normalProduction) && normalProduction is JavaCodeProduction)
+            {
+                writer.WriteLine(("    if (true) { jj_la = 0; jj_scanpos = jj_lastpos; ") + (GenReturn(false)) + ("}")
+                    );
+            }
+            else
+            {
+                Expansion expansion = normalProduction.Expansion;
+                writer.WriteLine(("    if (") + (Genjj_3Call(expansion)) + (") ")
+                    + (GenReturn(true))
+                    );
+            }
+        }
+        else if (exp is Choice choice)
+        {
+            if (choice.Choices.Count != 1)
+            {
+                if (!xsp_declared)
+                {
+                    xsp_declared = true;
+                    writer.WriteLine("    Token xsp;");
+                }
+                writer.WriteLine("    xsp = jj_scanpos;");
+            }
+            for (int i = 0; i < choice.Choices.Count; i++)
+            {
+                Sequence sequence = (Sequence)choice.Choices[i];
+                Lookahead lookahead = (Lookahead)sequence.Units[0];
+                if (lookahead.ActionTokens.Count != 0)
+                {
+                    writer.WriteLine("    jj_lookingAhead = true;");
+                    writer.Write("    jj_semLA = ");
+                    PrintTokenSetup(lookahead.ActionTokens[0]);
+                    foreach (var _t in lookahead.ActionTokens)
+                    {
+                        PrintToken(_t, writer);
+                        t = _t;
+                    }
+                    PrintTrailingComments(t, writer);
+                    writer.WriteLine(";");
+                    writer.WriteLine("    jj_lookingAhead = false;");
+                }
+                writer.Write("    if (");
+                if (lookahead.ActionTokens.Count != 0)
+                {
+                    writer.Write("!jj_semLA || ");
+                }
+                if (i != choice.Choices.Count - 1)
+                {
+                    writer.WriteLine((Genjj_3Call(sequence)) + (") {"));
+                    writer.WriteLine("    jj_scanpos = xsp;");
+                }
+                else
+                {
+                    writer.WriteLine((Genjj_3Call(sequence)) + (") ") + (GenReturn(true))
+                        );
+                }
+            }
+            for (int i = 1; i < choice.Choices.Count; i++)
+            {
+                writer.WriteLine("    }");
+            }
+        }
+        else if (exp is Sequence sequence)
+        {
+            int num = p3.Count;
+            for (int i = 1; i < sequence.Units.Count; i++)
+            {
+                Expansion expansion2 = sequence.Units[i];
+                BuildPhase3Routine(new Phase3Data(expansion2, num), true);
+                num -= MinimumSize(expansion2);
+                if (num <= 0)
+                {
+                    break;
+                }
+            }
+        }
+        else if (exp is TryBlock tryBlock)
+        {
+            BuildPhase3Routine(new Phase3Data(tryBlock.Expression, p3.Count), true);
+        }
+        else if (exp is OneOrMore more)
+        {
+            if (!xsp_declared)
+            {
+                xsp_declared = true;
+                writer.WriteLine("    Token xsp;");
+            }
+            OneOrMore oneOrMore = more;
+            Expansion expansion3 = oneOrMore.Expansion;
+            writer.WriteLine(("    if (") + (Genjj_3Call(expansion3)) + (") ")
+                + (GenReturn(true))
+                );
+            writer.WriteLine("    while (true) {");
+            writer.WriteLine("      xsp = jj_scanpos;");
+            writer.WriteLine(("      if (") + (Genjj_3Call(expansion3)) + (") { jj_scanpos = xsp; break; }")
+                );
+            writer.WriteLine("    }");
+        }
+        else if (exp is ZeroOrMore more1)
+        {
+            if (!xsp_declared)
+            {
+                xsp_declared = true;
+                writer.WriteLine("    Token xsp;");
+            }
+            ZeroOrMore zeroOrMore = more1;
+            Expansion expansion3 = zeroOrMore.Expansion;
+            writer.WriteLine("    while (true) {");
+            writer.WriteLine("      xsp = jj_scanpos;");
+            writer.WriteLine(("      if (") + (Genjj_3Call(expansion3)) + (") { jj_scanpos = xsp; break; }")
+                );
+            writer.WriteLine("    }");
+        }
+        else if (exp is ZeroOrOne one)
+        {
+            if (!xsp_declared)
+            {
+                xsp_declared = true;
+                writer.WriteLine("    Token xsp;");
+            }
+            ZeroOrOne zeroOrOne = one;
+            Expansion expansion3 = zeroOrOne.Expansion;
+            writer.WriteLine("    xsp = jj_scanpos;");
+            writer.WriteLine(("    if (") + (Genjj_3Call(expansion3)) + (") jj_scanpos = xsp;")
+                );
+        }
+        if (!val)
 		{
-			RegularExpression regularExpression = (RegularExpression)exp;
-			if (string.Equals(regularExpression.Label, ""))
-			{
-				var dict = JavaCCGlobals.NamesOfTokens;
-				;
-				var obj = dict.ContainsKey((regularExpression.Ordinal));
-				if (obj )
-				{
-					writer.WriteLine(("    if (jj_scan_token(") + ((dict[regularExpression.Ordinal]) +(")) ")
-						+(genReturn(true))
-						));
-				}
-				else
-				{
-					writer.WriteLine(("    if (jj_scan_token(")+(regularExpression.Ordinal)+(")) ")
-						+(genReturn(true))
-						);
-				}
-			}
-			else
-			{
-				writer.WriteLine(("    if (jj_scan_token(")+(regularExpression.Label)+(")) ")
-					+(genReturn(true))
-					);
-			}
-		}
-		else if (exp is NonTerminal)
-		{
-			NonTerminal nonTerminal = (NonTerminal)exp;
-			if (JavaCCGlobals.Production_table.TryGetValue(nonTerminal.Name,out var normalProduction)&& normalProduction is JavaCodeProduction)
-			{
-				writer.WriteLine(("    if (true) { jj_la = 0; jj_scanpos = jj_lastpos; ")+(genReturn(false))+("}")
-					);
-			}
-			else
-			{
-				Expansion expansion = normalProduction.Expansion;
-				writer.WriteLine(("    if (")+(genjj_3Call(expansion))+(") ")
-					+(genReturn(true))
-					);
-			}
-		}
-		else if (exp is Choice)
-		{
-			Choice choice = (Choice)exp;
-			if (choice.Choices.Count != 1)
-			{
-				if (!xsp_declared)
-				{
-					xsp_declared = true;
-					writer.WriteLine("    Token xsp;");
-				}
-				writer.WriteLine("    xsp = jj_scanpos;");
-			}
-			for (int i = 0; i < choice.Choices.Count; i++)
-			{
-				Sequence sequence = (Sequence)choice.Choices[i];
-				Lookahead lookahead = (Lookahead)sequence.Units[0];
-				if (lookahead.ActionTokens.Count != 0)
-				{
-					writer.WriteLine("    jj_lookingAhead = true;");
-					writer.Write("    jj_semLA = ");
-					JavaCCGlobals.PrintTokenSetup((Token)lookahead.ActionTokens[0]);
-					foreach(var _t in lookahead.ActionTokens)
-					{
-						JavaCCGlobals.PrintToken(_t, writer);
-						t = _t;
-					}
-					JavaCCGlobals.PrintTrailingComments(t, writer);
-					writer.WriteLine(";");
-					writer.WriteLine("    jj_lookingAhead = false;");
-				}
-				writer.Write("    if (");
-				if (lookahead.ActionTokens.Count != 0)
-				{
-					writer.Write("!jj_semLA || ");
-				}
-				if (i != choice.Choices.Count - 1)
-				{
-					writer.WriteLine((genjj_3Call(sequence))+(") {"));
-					writer.WriteLine("    jj_scanpos = xsp;");
-				}
-				else
-				{
-					writer.WriteLine((genjj_3Call(sequence))+(") ")+(genReturn(true))
-						);
-				}
-			}
-			for (int i = 1; i < choice.Choices.Count; i++)
-			{
-				writer.WriteLine("    }");
-			}
-		}
-		else if (exp is Sequence)
-		{
-			Sequence sequence = (Sequence)exp;
-			int num = p3.Count;
-			for (int i = 1; i < sequence.Units.Count; i++)
-			{
-				Expansion expansion2 = (Expansion)sequence.Units[i];
-				buildPhase3Routine(new Phase3Data(expansion2, num), true);
-				num -= MinimumSize(expansion2);
-				if (num <= 0)
-				{
-					break;
-				}
-			}
-		}
-		else if (exp is TryBlock)
-		{
-			TryBlock tryBlock = (TryBlock)exp;
-			buildPhase3Routine(new Phase3Data(tryBlock.Expression, p3.Count), true);
-		}
-		else if (exp is OneOrMore)
-		{
-			if (!xsp_declared)
-			{
-				xsp_declared = true;
-				writer.WriteLine("    Token xsp;");
-			}
-			OneOrMore oneOrMore = (OneOrMore)exp;
-			Expansion expansion3 = oneOrMore.Expansion;
-			writer.WriteLine(("    if (")+(genjj_3Call(expansion3))+(") ")
-				+(genReturn(true))
-				);
-			writer.WriteLine("    while (true) {");
-			writer.WriteLine("      xsp = jj_scanpos;");
-			writer.WriteLine(("      if (")+(genjj_3Call(expansion3))+(") { jj_scanpos = xsp; break; }")
-				);
-			writer.WriteLine("    }");
-		}
-		else if (exp is ZeroOrMore)
-		{
-			if (!xsp_declared)
-			{
-				xsp_declared = true;
-				writer.WriteLine("    Token xsp;");
-			}
-			ZeroOrMore zeroOrMore = (ZeroOrMore)exp;
-			Expansion expansion3 = zeroOrMore.Expansion;
-			writer.WriteLine("    while (true) {");
-			writer.WriteLine("      xsp = jj_scanpos;");
-			writer.WriteLine(("      if (")+(genjj_3Call(expansion3))+(") { jj_scanpos = xsp; break; }")
-				);
-			writer.WriteLine("    }");
-		}
-		else if (exp is ZeroOrOne)
-		{
-			if (!xsp_declared)
-			{
-				xsp_declared = true;
-				writer.WriteLine("    Token xsp;");
-			}
-			ZeroOrOne zeroOrOne = (ZeroOrOne)exp;
-			Expansion expansion3 = zeroOrOne.Expansion;
-			writer.WriteLine("    xsp = jj_scanpos;");
-			writer.WriteLine(("    if (")+(genjj_3Call(expansion3))+(") jj_scanpos = xsp;")
-				);
-		}
-		if (!P_1)
-		{
-			writer.WriteLine(("    ")+(genReturn(false)));
+			writer.WriteLine(("    ")+(GenReturn(false)));
 			writer.WriteLine("  }");
 			writer.WriteLine("");
 		}
 	}
 
 	
-	internal static int MinimumSize(Expansion exp, int P_1)
+	internal static int MinimumSize(Expansion exp, int val)
 	{
 		int result = 0;
-		if (exp.inMinimumSize)
+		if (exp.InMinimumSize)
 		{
 			return int.MaxValue;
 		}
-		exp.inMinimumSize = true;
+		exp.InMinimumSize = true;
 		if (exp is RegularExpression)
 		{
 			result = 1;
 		}
-		else if (exp is NonTerminal)
-		{
-			NonTerminal nonTerminal = (NonTerminal)exp;
-			if (JavaCCGlobals.Production_table.TryGetValue(nonTerminal.Name,out var normalProduction)
-				&& normalProduction is JavaCodeProduction)
-			{
-				result = int.MaxValue;
-			}
-			else
-			{
-				Expansion expansion = normalProduction.Expansion;
-				result = MinimumSize(expansion);
-			}
-		}
-		else if (exp is Choice)
-		{
-			int num = P_1;
-			Choice choice = (Choice)exp;
-			int num2 = 0;
-			while (num > 1 && num2 < choice.Choices.Count)
-			{
-				Expansion expansion2 = (Expansion)choice.Choices[num2];
-				int num3 = MinimumSize(expansion2, num);
-				if (num > num3)
-				{
-					num = num3;
-				}
-				num2++;
-			}
-			result = num;
-		}
-		else if (exp is Sequence)
-		{
-			int num = 0;
-			Sequence sequence = (Sequence)exp;
-			for (int i = 1; i < sequence.Units.Count; i++)
-			{
-				Expansion expansion3 = (Expansion)sequence.Units[i];
-				int num3 = MinimumSize(expansion3);
-				if (num == int.MaxValue || num3 == int.MaxValue)
-				{
-					num = int.MaxValue;
-					continue;
-				}
-				num += num3;
-				if (num > P_1)
-				{
-					break;
-				}
-			}
-			result = num;
-		}
-		else if (exp is TryBlock)
-		{
-			TryBlock tryBlock = (TryBlock)exp;
-			result = MinimumSize(tryBlock.Expression);
-		}
-		else if (exp is OneOrMore)
-		{
-			OneOrMore oneOrMore = (OneOrMore)exp;
-			result = MinimumSize(oneOrMore.Expansion);
-		}
-		else if (exp is ZeroOrMore)
-		{
-			result = 0;
-		}
-		else if (exp is ZeroOrOne)
-		{
-			result = 0;
-		}
-		else if (exp is Lookahead)
-		{
-			result = 0;
-		}
-		else if (exp is Action)
-		{
-			result = 0;
-		}
-		exp.inMinimumSize = false;
+		else if (exp is NonTerminal nonTerminal)
+        {
+            if (Production_table.TryGetValue(nonTerminal.Name, out var normalProduction)
+                && normalProduction is JavaCodeProduction)
+            {
+                result = int.MaxValue;
+            }
+            else
+            {
+                Expansion expansion = normalProduction.Expansion;
+                result = MinimumSize(expansion);
+            }
+        }
+        else if (exp is Choice choice1)
+        {
+            int n = val;
+            Choice choice = choice1;
+            int num2 = 0;
+            while (n > 1 && num2 < choice.Choices.Count)
+            {
+                Expansion expansion2 = (Expansion)choice.Choices[num2];
+                int num3 = MinimumSize(expansion2, n);
+                if (n > num3)
+                {
+                    n = num3;
+                }
+                num2++;
+            }
+            result = n;
+        }
+        else if (exp is Sequence sequence)
+        {
+            int num = 0;
+            for (int i = 1; i < sequence.Units.Count; i++)
+            {
+                Expansion expansion3 = (Expansion)sequence.Units[i];
+                int num3 = MinimumSize(expansion3);
+                if (num == int.MaxValue || num3 == int.MaxValue)
+                {
+                    num = int.MaxValue;
+                    continue;
+                }
+                num += num3;
+                if (num > val)
+                {
+                    break;
+                }
+            }
+            result = num;
+        }
+        else if (exp is TryBlock tryBlock)
+        {
+            result = MinimumSize(tryBlock.Expression);
+        }
+        else if (exp is OneOrMore oneOrMore)
+        {
+            result = MinimumSize(oneOrMore.Expansion);
+        }
+        else if (exp is ZeroOrMore)
+        {
+            result = 0;
+        }
+        else if (exp is ZeroOrOne)
+        {
+            result = 0;
+        }
+        else if (exp is Lookahead)
+        {
+            result = 0;
+        }
+        else if (exp is Action)
+        {
+            result = 0;
+        }
+        exp.InMinimumSize = false;
 		return result;
 	}
 
 	
-	internal static void buildPhase1Routine(BNFProduction production)
+	internal static void BuildPhase1Routine(BNFProduction production)
 	{
-		Token token = (Token)production.ReturnTypeToken[0];
+		var token = production.ReturnTypeToken[0];
 		int num = 0;
 		if (token.Kind == 77)
 		{
 			num = 1;
 		}
-		JavaCCGlobals.PrintTokenSetup(token);
-		JavaCCGlobals.ccol = 1;
-		JavaCCGlobals.PrintLeadingComments(token, writer);
-		writer.Write(("  ")+(JavaCCGlobals.StaticOpt())+("final ")
+		PrintTokenSetup(token);
+		CCol = 1;
+		PrintLeadingComments(token, writer);
+		writer.Write(("  ")+(StaticOpt())+("final ")
 			+((production.AccessMod == null) ? "public" : production.AccessMod)
 			+(" ")
 			);
-		JavaCCGlobals.cline = token.BeginLine;
-		JavaCCGlobals.ccol = token.BeginColumn;
-		JavaCCGlobals.PrintTokenOnly(token, writer);
+		CLine = token.BeginLine;
+		CCol = token.BeginColumn;
+		PrintTokenOnly(token, writer);
 		for (int i = 1; i < production.ReturnTypeToken.Count; i++)
 		{
-			token = (Token)production.ReturnTypeToken[i];
-			JavaCCGlobals.PrintToken(token, writer);
+			token = production.ReturnTypeToken[i];
+			PrintToken(token, writer);
 		}
-		JavaCCGlobals.PrintTrailingComments(token, writer);
+		PrintTrailingComments(token, writer);
 		writer.Write((" ")+(production.Lhs)+("(")
 			);
 		
 		if (production.ParameterListTokens.Count != 0)
 		{
-			JavaCCGlobals.PrintTokenSetup((Token)production.ParameterListTokens[0]);
+			PrintTokenSetup(production.ParameterListTokens[0]);
 			foreach(var _t in production.ParameterListTokens)
 			{
-				JavaCCGlobals.PrintToken(token = _t, writer);
+				PrintToken(token = _t, writer);
 			}
-			JavaCCGlobals.PrintTrailingComments(token, writer);
+			PrintTrailingComments(token, writer);
 		}
 		writer.Write(") throws ParseException");
 		foreach(var tl in production.ThrowsList)
@@ -1201,29 +1142,29 @@ public class ParseEngine : JavaCCGlobals
 			}
 		}
 		writer.Write(" {");
-		indentamt = 4;
+		Indentamt = 4;
 		if (Options.DebugParser)
 		{
 			writer.WriteLine("");
 			writer.WriteLine(("    trace_call(\"")+(production.Lhs)+("\");")
 				);
 			writer.Write("    try {");
-			indentamt = 6;
+			Indentamt = 6;
 		}
 		if (production.DeclarationTokens.Count != 0)
 		{
-			JavaCCGlobals.PrintTokenSetup((Token)production.DeclarationTokens[0]);
-			JavaCCGlobals.cline--;
+			PrintTokenSetup(production.DeclarationTokens[0]);
+			CLine--;
 
 			foreach(var _t in production.DeclarationTokens)
 			{
-				JavaCCGlobals.PrintToken(_t, writer);
+				PrintToken(_t, writer);
 				token = _t;
 			}
-			JavaCCGlobals.PrintTrailingComments(token, writer);
+			PrintTrailingComments(token, writer);
 		}
-		string text = phase1ExpansionGen(production.Expansion);
-		dumpFormattedString(text);
+		string text = Phase1ExpansionGen(production.Expansion);
+		DumpFormattedString(text);
 		writer.WriteLine("");
 		if (production.JumpPatched && num == 0)
 		{
@@ -1241,20 +1182,20 @@ public class ParseEngine : JavaCCGlobals
 	}
 
 	
-	internal static void buildPhase2Routine(Lookahead lookahead)
+	internal static void BuildPhase2Routine(Lookahead lookahead)
 	{
-		Expansion la_expansion = lookahead.LaExpansion;
-		writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private boolean jj_2")
-			+(la_expansion.internal_name)
+		var la_expansion = lookahead.LaExpansion;
+		writer.WriteLine(("  ")+(StaticOpt())+("private boolean jj_2")
+			+(la_expansion.Internal_Name)
 			+("(int xla) {")
 			);
 		writer.WriteLine("    jj_la = xla; jj_lastpos = jj_scanpos = token;");
-		writer.WriteLine(("    try { return !jj_3")+(la_expansion.internal_name)+("(); }")
+		writer.WriteLine(("    try { return !jj_3")+(la_expansion.Internal_Name)+("(); }")
 			);
 		writer.WriteLine("    catch(LookaheadSuccess ls) { return true; }");
 		if (Options.ErrorReporting)
 		{
-			int.TryParse((la_expansion.internal_name.Substring(1)), out var x);
+			int.TryParse((la_expansion.Internal_Name.Substring(1)), out var x);
 			writer.WriteLine(("    finally { jj_save(")+(
 				x - 1)+(", xla); }")
 				);
@@ -1262,17 +1203,12 @@ public class ParseEngine : JavaCCGlobals
 		writer.WriteLine("  }");
 		writer.WriteLine("");
 		Phase3Data phase3Data = new Phase3Data(la_expansion, lookahead.amount);
-		phase3list.Add(phase3Data);
-		phase3table.Add(la_expansion, phase3Data);
+		Phase3List.Add(phase3Data);
+		Phase3Table.Add(la_expansion, phase3Data);
 	}
 
 	
-	public ParseEngine()
-	{
-	}
-
-	
-	private static void dumpLookaheads(Lookahead[] P_0, string[] P_1)
+	private static void DumpLookaheads(Lookahead[] P_0, string[] P_1)
 	{
 		for (int i = 0; i < P_0.Length; i++)
 		{
@@ -1283,40 +1219,40 @@ public class ParseEngine : JavaCCGlobals
 	}
 
 	
-	internal static void build(TextWriter P_0)
+	internal static void Build(TextWriter _writer)
 	{
 		
-		writer = P_0;
-		foreach(var normalProduction in JavaCCGlobals.BNFProductions)
+		writer = _writer;
+		foreach(var normalProduction in BNFProductions)
 		{
 			if (normalProduction is JavaCodeProduction javaCodeProduction)
 			{
-				Token token = (Token)javaCodeProduction.ReturnTypeToken[0];
-				JavaCCGlobals.PrintTokenSetup(token);
-				JavaCCGlobals.ccol = 1;
-				JavaCCGlobals.PrintLeadingComments(token, writer);
-				writer.Write(("  ")+(JavaCCGlobals.StaticOpt())+((normalProduction.AccessMod == null) ? "" : (normalProduction.AccessMod)+(" "))
+				Token token = javaCodeProduction.ReturnTypeToken[0];
+				PrintTokenSetup(token);
+				CCol = 1;
+				PrintLeadingComments(token, writer);
+				writer.Write(("  ")+(StaticOpt())+((normalProduction.AccessMod == null) ? "" : (normalProduction.AccessMod)+(" "))
 					);
-				JavaCCGlobals.cline = token.BeginLine;
-				JavaCCGlobals.ccol = token.BeginColumn;
-				JavaCCGlobals.PrintTokenOnly(token, writer);
+				CLine = token.BeginLine;
+				CCol = token.BeginColumn;
+				PrintTokenOnly(token, writer);
 				for (int i = 1; i < javaCodeProduction.ReturnTypeToken.Count; i++)
 				{
-					token = (Token)javaCodeProduction.ReturnTypeToken[i];
-					JavaCCGlobals.PrintToken(token, writer);
+					token = javaCodeProduction.ReturnTypeToken[i];
+					PrintToken(token, writer);
 				}
-				JavaCCGlobals.PrintTrailingComments(token, writer);
+				PrintTrailingComments(token, writer);
 				writer.Write((" ")+(javaCodeProduction.Lhs)+("(")
 					);
 				if (javaCodeProduction.ParameterListTokens.Count != 0)
 				{
-					JavaCCGlobals.PrintTokenSetup((Token)javaCodeProduction.ParameterListTokens[0]);
+					PrintTokenSetup(javaCodeProduction.ParameterListTokens[0]);
 					foreach(var _t in javaCodeProduction.ParameterListTokens)
 					{
-						JavaCCGlobals.PrintToken(_t, writer);
+						PrintToken(_t, writer);
 						token = _t;
 					}
-					JavaCCGlobals.PrintTrailingComments(token, writer);
+					PrintTrailingComments(token, writer);
 				}
 				writer.Write(") throws ParseException");
 				foreach(var vector in javaCodeProduction.ThrowsList)
@@ -1338,13 +1274,13 @@ public class ParseEngine : JavaCCGlobals
 				}
 				if (javaCodeProduction.CodeTokens.Count > 0)
 				{
-					JavaCCGlobals.PrintTokenSetup(javaCodeProduction.CodeTokens[0]);
-					JavaCCGlobals.cline--;
+					PrintTokenSetup(javaCodeProduction.CodeTokens[0]);
+					CLine--;
 					foreach (var t in javaCodeProduction.CodeTokens)
                     {
-						JavaCCGlobals.PrintToken(t, writer);
+						PrintToken(t, writer);
 					}
-					JavaCCGlobals.PrintTrailingComments(token, writer);
+					PrintTrailingComments(token, writer);
 				}
 				writer.WriteLine("");
 				if (Options.DebugParser)
@@ -1359,34 +1295,25 @@ public class ParseEngine : JavaCCGlobals
 			}
 			else
 			{
-				buildPhase1Routine((BNFProduction)normalProduction);
+				BuildPhase1Routine((BNFProduction)normalProduction);
 			}
 		}
 		int j;
-		for (j = 0; j < phase2list.Count; j++)
+		for (j = 0; j < Phase2List.Count; j++)
 		{
-			buildPhase2Routine((Lookahead)phase2list[j]);
+			BuildPhase2Routine((Lookahead)Phase2List[j]);
 		}
 		j = 0;
-		while (j < phase3list.Count)
+		while (j < Phase3List.Count)
 		{
-			for (; j < phase3list.Count; j++)
+			for (; j < Phase3List.Count; j++)
 			{
-				setupPhase3Builds((Phase3Data)phase3list[j]);
+				SetupPhase3Builds((Phase3Data)Phase3List[j]);
 			}
 		}
-		foreach(var p3 in phase3table)
+		foreach(var p3 in Phase3Table)
 		{
-			buildPhase3Routine(p3.Value, false);
+			BuildPhase3Routine(p3.Value, false);
 		}
-	}
-
-	static ParseEngine()
-	{	
-		gensymindex = 0;
-		phase2list = new ();
-		phase3list = new ();
-		phase3table = new ();
-		//generated = new ();
 	}
 }

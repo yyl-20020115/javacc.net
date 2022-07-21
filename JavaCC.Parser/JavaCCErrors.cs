@@ -8,19 +8,21 @@ public class JavaCCErrors
     protected static int WarningCount = 0;
 
 
-    public static void Warning(string str)
+    public static string Warning(string str)
     {
         Console.Error.Write("Warning: ");
         Console.Error.WriteLine(str);
         WarningCount++;
+        return str; 
     }
 
 
-    public static void Semantic_Error(string str)
+    public static string Semantic_Error(string str)
     {
         Console.Error.Write("Error: ");
         Console.Error.WriteLine(str);
         SemanticErrorCount++;
+        return str;
     }
 
     public static int _Error_Count => ParseErrorCount + SemanticErrorCount;
@@ -101,12 +103,10 @@ public class JavaCCErrors
         }
     }
 
-
-
-    public static void Parse_Error(string str)
+    public static void Parse_Error(string text)
     {
         Console.Error.Write("Error: ");
-        Console.Error.WriteLine(str);
+        Console.Error.WriteLine(text);
         ParseErrorCount++;
     }
 }

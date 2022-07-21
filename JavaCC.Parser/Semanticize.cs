@@ -10,7 +10,8 @@ public class Semanticize : JavaCCGlobals
         {
         }
 
-        public virtual bool GoDeeper(Expansion exp) => exp is not RegularExpression;
+        public virtual bool GoDeeper(Expansion exp) 
+            => exp is not RegularExpression;
 
 
         public virtual void Action(Expansion exp)
@@ -82,27 +83,19 @@ public class Semanticize : JavaCCGlobals
 
     public class LookaheadChecker : JavaCCGlobals, TreeWalkerOp
     {
-
         public LookaheadChecker()
         {
         }
 
-
         internal static bool ImplicitLA(Expansion exp) 
             => exp is not Sequence sequence || sequence.Units[0] is not Lookahead lookahead || !lookahead.IsExplicit;
 
-        public virtual bool GoDeeper(Expansion exp)
+        public virtual bool GoDeeper(Expansion exp) => exp switch
         {
-            if (exp is RegularExpression)
-            {
-                return false;
-            }
-            if (exp is Lookahead)
-            {
-                return false;
-            }
-            return true;
-        }
+            RegularExpression => false,
+            Lookahead => false,
+            _ => true
+        };
 
 
         public virtual void Action(Expansion exp)
@@ -209,14 +202,11 @@ public class Semanticize : JavaCCGlobals
 
     public class ProductionDefinedChecker : JavaCCGlobals, TreeWalkerOp
     {
-
-
         public ProductionDefinedChecker()
         {
         }
 
         public virtual bool GoDeeper(Expansion exp) => exp is not RegularExpression;
-
 
         public virtual void Action(Expansion exp)
         {
@@ -246,59 +236,50 @@ public class Semanticize : JavaCCGlobals
 
     public static bool EmptyExpansionExists(Expansion e)
     {
-        if (e is NonTerminal terminal)
+        switch (e)
         {
-            return terminal.prod.EmptyPossible;
-        }
-        if (e is Action)
-        {
-            return true;
-        }
-        if (e is RegularExpression)
-        {
-            return false;
-        }
-        if (e is OneOrMore)
-        {
-            bool result = EmptyExpansionExists(((OneOrMore)e).Expansion);
-
-            return result;
-        }
-        if (e is ZeroOrMore || e is ZeroOrOne)
-        {
-            return true;
-        }
-        if (e is Lookahead)
-        {
-            return true;
-        }
-        if (e is Choice c)
-        {
-            foreach (var d in c.Choices)
-            {
-                if (EmptyExpansionExists(d))
+            case NonTerminal terminal:
+                return terminal.prod.EmptyPossible;
+            case Action:
+                return true;
+            case RegularExpression:
+                return false;
+            case OneOrMore more:
+                return EmptyExpansionExists(more.Expansion);
+            case ZeroOrMore:
+            case ZeroOrOne:
+                return true;
+            case Lookahead:
+                return true;
+            case Choice c:
                 {
-                    return true;
-                }
-            }
-            return false;
-        }
-        if (e is Sequence s)
-        {
-            foreach (var t in s.Units)
-            {
-                if (!EmptyExpansionExists(t))
-                {
+                    foreach (var d in c.Choices)
+                    {
+                        if (EmptyExpansionExists(d))
+                        {
+                            return true;
+                        }
+                    }
                     return false;
                 }
-            }
-            return true;
+
+            case Sequence s:
+                {
+                    foreach (var t in s.Units)
+                    {
+                        if (!EmptyExpansionExists(t))
+                        {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+
+            case TryBlock b:
+                return EmptyExpansionExists(b.Expression);
+            default:
+                return false;
         }
-        if (e is TryBlock b)
-        {
-            return EmptyExpansionExists(b.Expression);
-        }
-        return false;
     }
 
 
@@ -306,7 +287,6 @@ public class Semanticize : JavaCCGlobals
     {
         if (JavaCCErrors._Error_Count != 0)
         {
-
             throw new MetaParseException();
         }
         if (Options.Lookahead > 1 && !Options.ForceLaCheck && Options.SanityCheck)
@@ -315,7 +295,7 @@ public class Semanticize : JavaCCGlobals
         }
         foreach (var b in BNFProductions)
         {
-            ExpansionTreeWalker.postOrderWalk(b.Expansion, new LookaheadFixer());
+            ExpansionTreeWalker.PostOrderWalk(b.Expansion, new LookaheadFixer());
         }
         foreach(var normalProduction in BNFProductions)
         {
@@ -383,14 +363,13 @@ public class Semanticize : JavaCCGlobals
             {
                 if (regExprSpec.Rexp is not RJustName && !string.Equals(regExprSpec.Rexp.Label, ""))
                 {
-                    string label = regExprSpec.Rexp.Label;
-                    bool obj = NamedTokensTable.ContainsKey(label);
+                    var label = regExprSpec.Rexp.Label;
+                    bool b = NamedTokensTable.ContainsKey(label);
                     
                     NamedTokensTable.Add(label, regExprSpec.Rexp);
-                    if (obj)
+                    if (b)
                     {
-                        JavaCCErrors.Semantic_Error(regExprSpec.Rexp, ("Multiply defined lexical token name \"") + (label) + ("\".")
-                            );
+                        JavaCCErrors.Semantic_Error(regExprSpec.Rexp, ("Multiply defined lexical token name \"") + (label) + ("\"."));
                     }
                     else
                     {
@@ -399,8 +378,7 @@ public class Semanticize : JavaCCGlobals
                     if (Lexstate_S2I.ContainsKey(label))
                     {
                         JavaCCErrors.Semantic_Error(regExprSpec.Rexp, ("Lexical token name \"") + (label) + ("\" is the same as ")
-                            + ("that of a lexical state.")
-                            );
+                            + ("that of a lexical state."));
                     }
                 }
             }
@@ -414,13 +392,13 @@ public class Semanticize : JavaCCGlobals
             if (tokenProduction.LexStates == null)
             {
                 tokenProduction.LexStates = new string[Lexstate_I2S.Count];
-                int num = 0;
+                int n = 0;
                 foreach(var pair in Lexstate_I2S)
                 {
                     var lexStates = tokenProduction.LexStates;
-                    int num2 = num;
-                    num++;
-                    lexStates[num2] = (string)pair.Value;
+                    int n2 = n;
+                    n++;
+                    lexStates[n2] = (string)pair.Value;
                 }
             }
             var array = new Dictionary<string, Dictionary<string, RegularExpression>>[tokenProduction.LexStates.Length];
@@ -430,28 +408,28 @@ public class Semanticize : JavaCCGlobals
                 array[i] = d;
             }
 
-            foreach(var regExprSpec2 in respecs)
+            foreach(var r2 in respecs)
             {
-                if (regExprSpec2.Rexp is RStringLiteral rStringLiteral)
+                if (r2.Rexp is RStringLiteral rStringLiteral)
                 {
                     for (int j = 0; j < array.Length; j++)
                     {
-                        if (!array[j].TryGetValue(rStringLiteral.image.ToUpper(),out var dict))
+                        if (!array[j].TryGetValue(rStringLiteral.Image.ToUpper(),out var dict))
                         {
                             if (rStringLiteral.Ordinal == 0)
                             {
                                 rStringLiteral.Ordinal = TokenCount++;
                             }
                             dict = new();
-                            dict.Add(rStringLiteral.image, rStringLiteral);
-                            array[j].Add((rStringLiteral.image).ToUpper(), dict);
+                            dict.Add(rStringLiteral.Image, rStringLiteral);
+                            array[j].Add((rStringLiteral.Image).ToUpper(), dict);
                             continue;
                         }
-                        if (HasIgnoreCase(dict, rStringLiteral.image))
+                        if (HasIgnoreCase(dict, rStringLiteral.Image))
                         {
                             if (!rStringLiteral.TpContext.IsExplicit)
                             {
-                                JavaCCErrors.Semantic_Error(rStringLiteral, ("String \"") + (rStringLiteral.image) + ("\" can never be matched ")
+                                JavaCCErrors.Semantic_Error(rStringLiteral, ("String \"") + (rStringLiteral.Image) + ("\" can never be matched ")
                                     + ("due to presence of more general (IGNORE_CASE) regular expression ")
                                     + ("at line ")
                                     + (other.Line)
@@ -462,7 +440,7 @@ public class Semanticize : JavaCCGlobals
                             }
                             else
                             {
-                                JavaCCErrors.Semantic_Error(rStringLiteral, ("Duplicate definition of string token \"") + (rStringLiteral.image) + ("\" ")
+                                JavaCCErrors.Semantic_Error(rStringLiteral, ("Duplicate definition of string token \"") + (rStringLiteral.Image) + ("\" ")
                                     + ("can never be matched.")
                                     );
                             }
@@ -474,85 +452,78 @@ public class Semanticize : JavaCCGlobals
                             int n = 0;
                             foreach(var pair in dict)
                             {
-                                RegularExpression regularExpression = pair.Value;
+                                var regularExpression = pair.Value;
                                 if (n != 0)
                                 {
                                     str = (str) + (",");
                                 }
-                                str = (str) + (" line ") + (regularExpression.Line)
-                                    ;
+                                str = (str) + (" line ") + (regularExpression.Line);
                                 n++;
                             }
                             if (n == 1)
                             {
-                                JavaCCErrors.Warning(rStringLiteral, ("String with IGNORE_CASE is partially superceded by string at") + (str) + (".")
-                                    );
+                                JavaCCErrors.Warning(rStringLiteral, ("String with IGNORE_CASE is partially superceded by string at") + (str) + ("."));
                             }
                             else
                             {
-                                JavaCCErrors.Warning(rStringLiteral, ("String with IGNORE_CASE is partially superceded by strings at") + (str) + (".")
-                                    );
+                                JavaCCErrors.Warning(rStringLiteral, ("String with IGNORE_CASE is partially superceded by strings at") + (str) + ("."));
                             }
                             if (rStringLiteral.Ordinal == 0)
                             {
                                 rStringLiteral.Ordinal = TokenCount++;
                             }
-                            dict.Add(rStringLiteral.image, rStringLiteral);
+                            dict.Add(rStringLiteral.Image, rStringLiteral);
                             continue;
                         }
-                        if (!dict.TryGetValue(rStringLiteral.image,out var regularExpression2))
+                        if (!dict.TryGetValue(rStringLiteral.Image,out var regularExpression2))
                         {
                             if (rStringLiteral.Ordinal == 0)
                             {
                                 rStringLiteral.Ordinal = TokenCount++;
                             }
-                            dict.Add(rStringLiteral.image, rStringLiteral);
+                            dict.Add(rStringLiteral.Image, rStringLiteral);
                         }
                         else if (tokenProduction.IsExplicit)
                         {
                             if (string.Equals(tokenProduction.LexStates[j], "DEFAULT"))
                             {
-                                JavaCCErrors.Semantic_Error(rStringLiteral, ("Duplicate definition of string token \"") + (rStringLiteral.image) + ("\".")
-                                    );
+                                JavaCCErrors.Semantic_Error(rStringLiteral, ("Duplicate definition of string token \"") + (rStringLiteral.Image) + ("\"."));
                             }
                             else
                             {
-                                JavaCCErrors.Semantic_Error(rStringLiteral, ("Duplicate definition of string token \"") + (rStringLiteral.image) + ("\" in lexical state \"")
+                                JavaCCErrors.Semantic_Error(rStringLiteral, ("Duplicate definition of string token \"") + (rStringLiteral.Image) + ("\" in lexical state \"")
                                     + (tokenProduction.LexStates[j])
-                                    + ("\".")
-                                    );
+                                    + ("\"."));
                             }
                         }
                         else if (regularExpression2.TpContext.Kind != 0)
                         {
-                            JavaCCErrors.Semantic_Error(rStringLiteral, ("String token \"") + (rStringLiteral.image) + ("\" has been defined as a \"")
+                            JavaCCErrors.Semantic_Error(rStringLiteral, ("String token \"") + (rStringLiteral.Image) + ("\" has been defined as a \"")
                                 + (TokenProduction.KindImage[regularExpression2.TpContext.Kind])
-                                + ("\" token.")
-                                );
+                                + ("\" token."));
                         }
                         else if (regularExpression2.PrivateRexp)
                         {
-                            JavaCCErrors.Semantic_Error(rStringLiteral, ("String token \"") + (rStringLiteral.image) + ("\" has been defined as a private regular expression.")
-                                );
+                            JavaCCErrors.Semantic_Error(rStringLiteral, ("String token \"") + (rStringLiteral.Image) + ("\" has been defined as a private regular expression."));
                         }
                         else
                         {
                             rStringLiteral.Ordinal = regularExpression2.Ordinal;
-                            PrepareToRemove(respecs, regExprSpec2);
+                            PrepareToRemove(respecs, r2);
                         }
                     }
                 }
-                else if (regExprSpec2.Rexp is not RJustName)
+                else if (r2.Rexp is not RJustName)
                 {
-                    regExprSpec2.Rexp.Ordinal = TokenCount++;
+                    r2.Rexp.Ordinal = TokenCount++;
                 }
-                if (regExprSpec2.Rexp is not RJustName && !string.Equals(regExprSpec2.Rexp.Label, ""))
+                if (r2.Rexp is not RJustName && !string.Equals(r2.Rexp.Label, ""))
                 {
-                    NamesOfTokens.Add((regExprSpec2.Rexp.Ordinal), regExprSpec2.Rexp.Label);
+                    NamesOfTokens.Add((r2.Rexp.Ordinal), r2.Rexp.Label);
                 }
-                if (regExprSpec2.Rexp is not RJustName)
+                if (r2.Rexp is not RJustName)
                 {
-                    RexpsOfTokens.Add((regExprSpec2.Rexp.Ordinal), regExprSpec2.Rexp);
+                    RexpsOfTokens.Add((r2.Rexp.Ordinal), r2.Rexp);
                 }
             }
         }
@@ -560,16 +531,16 @@ public class Semanticize : JavaCCGlobals
         if (!Options.UserTokenManager)
         {
             var fixRJustNames = new FixRJustNames();
-            foreach(var tokenProduction2 in RexprList)
+            foreach(var t2 in RexprList)
             {
-                var respecs2 = tokenProduction2.Respecs;
-                foreach(var regExprSpec2 in respecs2)
+                var r2 = t2.Respecs;
+                foreach(var regExprSpec2 in r2)
                 {
                     fixRJustNames.Root = regExprSpec2.Rexp;
                     ExpansionTreeWalker.PreOrderWalk(regExprSpec2.Rexp, fixRJustNames);
                     if (regExprSpec2.Rexp is RJustName)
                     {
-                        PrepareToRemove(respecs2, regExprSpec2);
+                        PrepareToRemove(r2, regExprSpec2);
                     }
                 }
             }
@@ -690,6 +661,8 @@ public class Semanticize : JavaCCGlobals
 
     public new static void ReInit()
     {
+        removeList.Clear();
+        itemList.Clear();
         other = null;
         loopString = null;
     }
@@ -807,8 +780,7 @@ public class Semanticize : JavaCCGlobals
                 if (np.WalkStatus == -2)
                 {
                     np.WalkStatus = 1;
-                    JavaCCErrors.Semantic_Error(np, ("Left recursion detected: \"") + (loopString) + ("\"")
-                        );
+                    JavaCCErrors.Semantic_Error(np, ("Left recursion detected: \"") + (loopString) + ("\""));
                     return false;
                 }
                 np.WalkStatus = 1;
@@ -821,8 +793,7 @@ public class Semanticize : JavaCCGlobals
                 if (np.WalkStatus == -2)
                 {
                     np.WalkStatus = 1;
-                    JavaCCErrors.Semantic_Error(np, ("Left recursion detected: \"") + (loopString) + ("\"")
-                        );
+                    JavaCCErrors.Semantic_Error(np, ("Left recursion detected: \"") + (loopString) + ("\""));
                     return false;
                 }
                 np.WalkStatus = 1;
@@ -841,8 +812,7 @@ public class Semanticize : JavaCCGlobals
             if (rJustName.RegExpr.WalkStatus == -1)
             {
                 rJustName.RegExpr.WalkStatus = -2;
-                loopString = ("...") + (rJustName.RegExpr.Label) + ("...")
-                    ;
+                loopString = ("...") + (rJustName.RegExpr.Label) + ("...");
                 return true;
             }
             if (rJustName.RegExpr.WalkStatus == 0)
@@ -851,13 +821,11 @@ public class Semanticize : JavaCCGlobals
                 if (RExpWalk(rJustName.RegExpr))
                 {
                     loopString = ("...") + (rJustName.RegExpr.Label) + ("... --> ")
-                        + (loopString)
-                        ;
+                        + (loopString);
                     if (rJustName.RegExpr.WalkStatus == -2)
                     {
                         rJustName.RegExpr.WalkStatus = 1;
-                        JavaCCErrors.Semantic_Error(rJustName.RegExpr, ("Loop in regular expression detected: \"") + (loopString) + ("\"")
-                            );
+                        JavaCCErrors.Semantic_Error(rJustName.RegExpr, ("Loop in regular expression detected: \"") + (loopString) + ("\""));
                         return false;
                     }
                     rJustName.RegExpr.WalkStatus = 1;
@@ -901,7 +869,7 @@ public class Semanticize : JavaCCGlobals
                 case RZeroOrOne one:
                     return RExpWalk(one.Regexpr);
                 case RRepetitionRange range:
-                    return RExpWalk(range.regexpr);
+                    return RExpWalk(range.Regexpr);
             }
         }
         return false;

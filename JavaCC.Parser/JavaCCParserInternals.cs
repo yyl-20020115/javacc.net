@@ -71,12 +71,12 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
             else
             {
                 InsertionPoint1Set = true;
-                AddCuTokenHere = JavaCCGlobals.Cu_to_insertion_point_2;
+                AddCuTokenHere = Cu_to_insertion_point_2;
             }
         }
         else
         {
-            AddCuTokenHere = JavaCCGlobals.Cu_from_insertion_point_2;
+            AddCuTokenHere = Cu_from_insertion_point_2;
             InsertionPoint2Set = true;
         }
         FirstCuToken = t;
@@ -104,7 +104,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 
     protected internal static void AddProduction(NormalProduction np)
     {
-        JavaCCGlobals.BNFProductions.Add(np);
+        BNFProductions.Add(np);
     }
 
     protected internal static void ProductionAddExpansion(BNFProduction bnfp, Expansion e)
@@ -116,7 +116,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 
     protected internal static void AddRegexpr(TokenProduction tp)
     {
-        JavaCCGlobals.RexprList.Add(tp);
+        RexprList.Add(tp);
         if (Options.UserTokenManager && (tp.LexStates == null || tp.LexStates.Length != 1 || !string.Equals(tp.LexStates[0], "DEFAULT")))
         {
             JavaCCErrors.Warning(tp, "Ignoring lexical state specifications since option USER_TOKEN_MANAGER has been set to true.");
@@ -135,12 +135,12 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
                         );
                 }
             }
-            if (!JavaCCGlobals.Lexstate_S2I.TryGetValue(tp.LexStates[i], out var _))
+            if (!Lexstate_S2I.TryGetValue(tp.LexStates[i], out var _))
             {
                 int integer = (NextFreeLexState++);
-                JavaCCGlobals.Lexstate_S2I.Add(tp.LexStates[i], integer);
-                JavaCCGlobals.Lexstate_I2S.Add(integer, tp.LexStates[i]);
-                JavaCCGlobals.SimpleTokensTable.Add(tp.LexStates[i], new ());
+                Lexstate_S2I.Add(tp.LexStates[i], integer);
+                Lexstate_I2S.Add(integer, tp.LexStates[i]);
+                SimpleTokensTable.Add(tp.LexStates[i], new ());
             }
         }
     }
@@ -148,12 +148,13 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 
     protected internal static void AddTokenManagerDecl(Token t, List<Token> v)
     {
-        if (JavaCCGlobals.token_mgr_decls != null)
+        if (token_mgr_decls != null)
         {
             JavaCCErrors.Parse_Error(t, "Multiple occurrence of \"TOKEN_MGR_DECLS\".");
             return;
         }
-        JavaCCGlobals.token_mgr_decls = v;
+        token_mgr_decls.Clear();
+        token_mgr_decls.AddRange(v);
         if (Options.UserTokenManager)
         {
             JavaCCErrors.Warning(t, "Ignoring declarations in \"TOKEN_MGR_DECLS\" since option USER_TOKEN_MANAGER has been set to true.");
@@ -180,7 +181,7 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
             };
             regExprSpec.Rexp.TpContext = tokenProduction;
             tokenProduction.Respecs.Add(regExprSpec);
-            JavaCCGlobals.RexprList.Add(tokenProduction);
+            RexprList.Add(tokenProduction);
         }
     }
 
@@ -359,13 +360,13 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
             FinallyBlock = v4
         };
         tryBlock.Expression.Parent = tryBlock;
-        tryBlock.Expression.ordinal = 0;
+        tryBlock.Expression.Ordinal = 0;
         c1.Member = tryBlock;
     }
 
     public new static void ReInit()
     {
-        AddCuTokenHere = JavaCCGlobals.CuToInsertionPoint1;
+        AddCuTokenHere = CuToInsertionPoint1;
         FirstCuToken = null;
         InsertionPoint1Set = false;
         InsertionPoint2Set = false;

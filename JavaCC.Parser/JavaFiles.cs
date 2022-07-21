@@ -181,7 +181,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
     }
 
 
-    public static void gen_JavaCharStream()
+    public static void GenJavaCharStream()
     {
         IOException ex;
         try
@@ -201,8 +201,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 {
                     if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
+                        JavaCCGlobals.CLine = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
+                        JavaCCGlobals.CCol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
                         for (int j = 0; j <= i; j++)
                         {
                             JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], printWriter);
@@ -958,7 +958,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
     }
 
 
-    public static void gen_SimpleCharStream()
+    public static void GenSimpleCharStream()
     {
         IOException ex;
         try
@@ -977,8 +977,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 {
                     if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
+                        JavaCCGlobals.CLine = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
+                        JavaCCGlobals.CCol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
                         for (int j = 0; j <= i; j++)
                         {
                             JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], printWriter);
@@ -1561,7 +1561,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
     }
 
 
-    public static void gen_CharStream()
+    public static void GenCharStream()
     {
         IOException ex;
         try
@@ -1581,8 +1581,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 {
                     if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
+                        JavaCCGlobals.CLine = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
+                        JavaCCGlobals.CCol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
                         for (int j = 0; j <= i; j++)
                         {
                             JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], printWriter);
@@ -1715,7 +1715,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
     }
 
 
-    public static void gen_ParseException()
+    public static void GenParseException()
     {
         IOException ex;
         try
@@ -1735,8 +1735,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 {
                     if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
+                        JavaCCGlobals.CLine = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
+                        JavaCCGlobals.CCol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
                         for (int j = 0; j <= i; j++)
                         {
                             JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], printWriter);
@@ -1958,7 +1958,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
     }
 
 
-    public static void gen_TokenMgrError()
+    public static void GenTokenMgrError()
     {
         IOException ex;
         try
@@ -1977,8 +1977,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 {
                     if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
+                        JavaCCGlobals.CLine = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
+                        JavaCCGlobals.CCol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
                         for (int j = 0; j <= i; j++)
                         {
                             JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], printWriter);
@@ -2143,7 +2143,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
     }
 
 
-    public static void gen_Token()
+    public static void GenToken()
     {
         IOException ex;
         try
@@ -2163,8 +2163,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 {
                     if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
+                        JavaCCGlobals.CLine = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
+                        JavaCCGlobals.CCol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
                         for (int j = 0; j <= i; j++)
                         {
                             JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], printWriter);
@@ -2320,7 +2320,7 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
     }
 
 
-    public static void gen_TokenManager()
+    public static void GenTokenManager()
     {
         IOException ex;
         try
@@ -2340,8 +2340,8 @@ public class JavaFiles : JavaCCGlobals //, JavaCCParserConstants
                 {
                     if (((Token)JavaCCGlobals.CuToInsertionPoint1[i]).Kind == 97)
                     {
-                        JavaCCGlobals.cline = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
-                        JavaCCGlobals.ccol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
+                        JavaCCGlobals.CLine = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginLine;
+                        JavaCCGlobals.CCol = ((Token)JavaCCGlobals.CuToInsertionPoint1[0]).BeginColumn;
                         for (int j = 0; j <= i; j++)
                         {
                             JavaCCGlobals.PrintToken((Token)JavaCCGlobals.CuToInsertionPoint1[j], printWriter);

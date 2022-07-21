@@ -14,53 +14,53 @@ public class JavaCCGlobals
 
     public static bool JJTreeGenerated = false;
 
-    public static List<string> ToolNames = new();
+    public static readonly List<string> ToolNames = new();
 
     public static string CuName = "";
 
-    public static List<Token> CuToInsertionPoint1 = new();
+    public static readonly List<Token> CuToInsertionPoint1 = new();
 
-    public static List<Token> Cu_to_insertion_point_2 = new();
+    public static readonly List<Token> Cu_to_insertion_point_2 = new();
 
-    public static List<Token> Cu_from_insertion_point_2 = new();
+    public static readonly List<Token> Cu_from_insertion_point_2 = new();
 
-    public static List<NormalProduction> BNFProductions = new();
+    public static readonly List<NormalProduction> BNFProductions = new();
 
-    public static Dictionary<string, NormalProduction> Production_table = new();
+    public static readonly Dictionary<string, NormalProduction> Production_table = new();
 
-    public static Dictionary<string, int> Lexstate_S2I = new();
+    public static readonly Dictionary<string, int> Lexstate_S2I = new();
 
-    public static Dictionary<int, string> Lexstate_I2S = new();
+    public static readonly Dictionary<int, string> Lexstate_I2S = new();
 
-    public static List<Token> token_mgr_decls = new();
+    public static readonly List<Token> token_mgr_decls = new();
 
-    public static List<TokenProduction> RexprList = new();
+    public static readonly List<TokenProduction> RexprList = new();
 
     public static int TokenCount = 0;
 
-    public static Dictionary<string, RegularExpression> NamedTokensTable = new();
+    public static readonly Dictionary<string, RegularExpression> NamedTokensTable = new();
 
-    public static List<RegularExpression> ordered_named_tokens = new();
+    public static readonly List<RegularExpression> ordered_named_tokens = new();
 
-    public static Dictionary<int, string> NamesOfTokens = new();
+    public static readonly Dictionary<int, string> NamesOfTokens = new();
 
-    public static Dictionary<int,RegularExpression> RexpsOfTokens = new();
+    public static readonly Dictionary<int,RegularExpression> RexpsOfTokens = new();
 
-    public static Dictionary<string, Dictionary<string, Dictionary<string, RegularExpression>>> SimpleTokensTable = new();
+    public static readonly Dictionary<string, Dictionary<string, Dictionary<string, RegularExpression>>> SimpleTokensTable = new();
 
     protected internal static int maskindex = 0;
 
     protected internal static int jj2index = 0;
 
-    protected internal static List<int[]> MaskVals = new();
+    protected internal readonly static List<int[]> MaskVals = new();
 
     internal static Action actForEof = new();
 
     internal static string nextStateForEof = "";
 
-    protected internal static int cline = 0;
+    protected internal static int CLine = 0;
 
-    protected internal static int ccol = 0;
+    protected internal static int CCol = 0;
 
 
     public static string GetIdStringList(List<string> l, string str)
@@ -274,7 +274,7 @@ public class JavaCCGlobals
             return vector;
         }
         @this = @this.Substring(0, (@this.IndexOf((char)58)));
-        _ = 0;
+        
         int num4 = 0;
         int num5;
         while (num4 < @this.Length && ((num5 = @this.IndexOf((char)38, num4)) != -1))
@@ -292,16 +292,16 @@ public class JavaCCGlobals
 
     protected internal static void PrintTokenOnly(Token t, TextWriter pw)
     {
-        while (cline < t.BeginLine)
+        while (CLine < t.BeginLine)
         {
             pw.WriteLine("");
-            ccol = 1;
-            cline++;
+            CCol = 1;
+            CLine++;
         }
-        while (ccol < t.BeginColumn)
+        while (CCol < t.BeginColumn)
         {
             pw.Write(" ");
-            ccol++;
+            CCol++;
         }
         if (t.Kind == 90 || t.Kind == 89)
         {
@@ -311,13 +311,13 @@ public class JavaCCGlobals
         {
             pw.Write(t.Image);
         }
-        cline = t.EndLine;
-        ccol = t.EndColumn + 1;
+        CLine = t.EndLine;
+        CCol = t.EndColumn + 1;
         int num = t.Image[(t.Image.Length) - 1];
         if (num == 10 || num == 13)
         {
-            cline++;
-            ccol = 1;
+            CLine++;
+            CCol = 1;
         }
     }
 
@@ -339,11 +339,11 @@ public class JavaCCGlobals
             text = (text) + (PrintTokenOnly(token));
             token = token.Next;
         }
-        if (ccol != 1 && cline != t.BeginLine)
+        if (CCol != 1 && CLine != t.BeginLine)
         {
             text = (text) + ("\n");
-            cline++;
-            ccol = 1;
+            CLine++;
+            CCol = 1;
         }
         return text;
     }
@@ -352,27 +352,27 @@ public class JavaCCGlobals
     protected internal static string PrintTokenOnly(Token t)
     {
         string str = "";
-        while (cline < t.BeginLine)
+        while (CLine < t.BeginLine)
         {
             str = (str) + ("\n");
-            ccol = 1;
-            cline++;
+            CCol = 1;
+            CLine++;
         }
-        while (ccol < t.BeginColumn)
+        while (CCol < t.BeginColumn)
         {
             str = (str) + (" ");
-            ccol++;
+            CCol++;
         }
         str = ((t.Kind != 90 && t.Kind != 89)
             ? (str) + (t.Image)
             : (str) + (AddUnicodeEscapes(t.Image)));
-        cline = t.EndLine;
-        ccol = t.EndColumn + 1;
+        CLine = t.EndLine;
+        CCol = t.EndColumn + 1;
         int num = t.Image[(t.Image.Length) - 1];
         if (num == 10 || num == 13)
         {
-            cline++;
-            ccol = 1;
+            CLine++;
+            CCol = 1;
         }
         return str;
     }
@@ -615,8 +615,8 @@ public class JavaCCGlobals
         {
             token = token.SpecialToken;
         }
-        cline = token.BeginLine;
-        ccol = token.BeginColumn;
+        CLine = token.BeginLine;
+        CCol = token.BeginColumn;
     }
 
 
@@ -653,11 +653,11 @@ public class JavaCCGlobals
                 PrintTokenOnly(token, pw);
                 token = token.Next;
             }
-            if (ccol != 1 && cline != t.BeginLine)
+            if (CCol != 1 && CLine != t.BeginLine)
             {
                 pw.WriteLine("");
-                cline++;
-                ccol = 1;
+                CLine++;
+                CCol = 1;
             }
         }
     }
@@ -700,28 +700,28 @@ public class JavaCCGlobals
         FileName = null;
         OrigFileName = null;
         JJTreeGenerated = false;
-        ToolNames = null;
+        ToolNames.Clear();
         CuName = null;
-        CuToInsertionPoint1 = new();
-        Cu_to_insertion_point_2 = new();
-        Cu_from_insertion_point_2 = new();
-        BNFProductions = new();
-        Production_table = new();
-        Lexstate_S2I = new();
-        Lexstate_I2S = new();
-        token_mgr_decls = null;
-        RexprList = new();
+        CuToInsertionPoint1.Clear();
+        Cu_to_insertion_point_2.Clear();
+        Cu_from_insertion_point_2.Clear();
+        BNFProductions.Clear();
+        Production_table.Clear();
+        Lexstate_S2I.Clear();
+        Lexstate_I2S.Clear();
+        token_mgr_decls.Clear();
+        RexprList.Clear();
         TokenCount = 0;
-        NamedTokensTable = new();
-        ordered_named_tokens = new();
-        NamesOfTokens = new();
-        RexpsOfTokens = new();
-        SimpleTokensTable = new();
+        NamedTokensTable.Clear();
+        ordered_named_tokens.Clear();
+        NamesOfTokens.Clear();
+        RexpsOfTokens.Clear();
+        SimpleTokensTable.Clear();
         maskindex = 0;
         jj2index = 0;
-        MaskVals = new();
-        cline = 0;
-        ccol = 0;
+        MaskVals.Clear();
+        CLine = 0;
+        CCol = 0;
         actForEof = null;
         nextStateForEof = null;
     }

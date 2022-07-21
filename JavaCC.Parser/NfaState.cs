@@ -498,7 +498,7 @@ public class NfaState
 	{
 		DumpStatesForState(pw);
 		int num = 0;
-		_ = 0;
+		
 		pw.Write("protected static final int[][] kindForState = ");
 		if (kinds == null)
 		{
@@ -712,7 +712,7 @@ public class NfaState
 	
 	private void EpsilonClosure()
 	{
-		_ = 0;
+		
 		if (closureDone || mark[id])
 		{
 			return;
@@ -2325,8 +2325,8 @@ public class NfaState
 	
 	internal virtual void GenerateNonAsciiMoves(TextWriter P_0)
 	{
-		_ = 0;
-		_ = 0;
+		
+		
 		int num = 0;
 		int[] array = new int[2];
 		int num2 = (array[1] = 4);

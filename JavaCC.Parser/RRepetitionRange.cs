@@ -3,19 +3,19 @@ using System.Collections.Generic;
 
 public class RRepetitionRange : RegularExpression
 {
-    public RegularExpression regexpr;
+    public RegularExpression Regexpr;
 
-    public int min;
+    public int Min = 0;
 
-    public int max;
+    public int Max = -1;
 
-    public bool hasMax;
+    public bool HasMax = false;
 
 
     public RRepetitionRange()
     {
-        min = 0;
-        max = -1;
+        Min = 0;
+        Max = -1;
     }
 
 
@@ -23,31 +23,31 @@ public class RRepetitionRange : RegularExpression
     {
         var vector = new List<RegularExpression>();
         int i;
-        for (i = 0; i < min; i++)
+        for (i = 0; i < Min; i++)
         {
-            vector.Add(regexpr);
+            vector.Add(Regexpr);
         }
-        if (hasMax && max == -1)
+        if (HasMax && Max == -1)
         {
-            RZeroOrMore rZeroOrMore = new RZeroOrMore();
-            rZeroOrMore.Regexpr = regexpr;
-            vector.Add(rZeroOrMore);
+            vector.Add(new RZeroOrMore()
+            {
+                Regexpr = Regexpr
+            });
         }
         while (true)
         {
-            int num = i;
+            int n = i;
             i++;
-            if (num >= max)
+            if (n >= Max)
             {
                 break;
             }
-            RZeroOrOne rZeroOrOne = new RZeroOrOne();
-            rZeroOrOne.Regexpr = regexpr;
-            vector.Add(rZeroOrOne);
+            vector.Add(new RZeroOrOne
+            {
+                Regexpr = Regexpr
+            });
         }
-        RSequence rSequence = new RSequence(vector);
-        Nfa result = rSequence.GenerateNfa(b);
-
-        return result;
+        RSequence rSequence = new(vector);
+        return rSequence.GenerateNfa(b);
     }
 }

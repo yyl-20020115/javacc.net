@@ -34,7 +34,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		if (JavaCCGlobals.CuToInsertionPoint1.Count != 0)
 		{
 			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.CuToInsertionPoint1[0]);
-			JavaCCGlobals.ccol = 1;
+			JavaCCGlobals.CCol = 1;
 			foreach(var _token in JavaCCGlobals.CuToInsertionPoint1)
 			{
 				if (_token.Kind == 51)
@@ -68,7 +68,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		}
 		writer.WriteLine("");
 		writer.WriteLine("");
-		ParseEngine.build(writer);
+		ParseEngine.Build(writer);
 		if (Options.Static)
 		{
 			writer.WriteLine("  static private boolean jj_initialized_once = false;");
@@ -940,7 +940,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		if (JavaCCGlobals.Cu_from_insertion_point_2.Count != 0)
 		{
 			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.Cu_from_insertion_point_2[0]);
-			JavaCCGlobals.ccol = 1;
+			JavaCCGlobals.CCol = 1;
 			foreach (var _token in JavaCCGlobals.Cu_from_insertion_point_2)
 			{
 				JavaCCGlobals.PrintToken(token, writer);

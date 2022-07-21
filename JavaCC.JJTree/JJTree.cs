@@ -3,7 +3,7 @@ using JavaCC.Parser;
 
 public class JJTree
 {
-    private IO io;
+    protected IO io;
 
     private void WriteLine(string text)
     {
@@ -194,7 +194,8 @@ public class JJTree
         try
         {
             WriteLine(("Reading from file ") + (io.InputFileName) + (" . . ."));
-            JJTreeGlobals.ToolList = JavaCCGlobals.GetToolNames(text);
+            JJTreeGlobals.ToolList.Clear();
+            JJTreeGlobals.ToolList.AddRange(JavaCCGlobals.GetToolNames(text));
             JJTreeGlobals.ToolList.Add("JJTree");
             try
             {

@@ -3,14 +3,13 @@ using System.Collections.Generic;
 
 public class RSequence : RegularExpression
 {
-    public List<RegularExpression> Units = new();
+    public readonly List<RegularExpression> Units = new();
 
-    internal RSequence()
+    public RSequence()
     {
     }
 
-
-    internal RSequence(List<RegularExpression> units)
+    public RSequence(List<RegularExpression> units)
     {
         Ordinal = int.MaxValue;
         this.Units = units;
@@ -21,13 +20,11 @@ public class RSequence : RegularExpression
     {
         if (Units.Count == 1)
         {
-            Nfa result = Units[0].GenerateNfa(b);
-
-            return result;
+            return Units[0].GenerateNfa(b);
         }
-        Nfa nfa = new Nfa();
-        NfaState start = nfa.Start;
-        NfaState end = nfa.End;
+        var nfa = new Nfa();
+        var start = nfa.Start;
+        var end = nfa.End;
         Nfa nfa2 = null;
         var regularExpression = Units[0];
         var nfa3 = regularExpression.GenerateNfa(b);

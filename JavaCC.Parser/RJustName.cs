@@ -12,11 +12,5 @@ public class RJustName : RegularExpression
     }
 
 
-    public override Nfa GenerateNfa(bool b)
-    {
-        return RegExpr.GenerateNfa(b);
-    }
-    public RJustName()
-    {
-    }
+    public override Nfa GenerateNfa(bool b) => RegExpr.GenerateNfa(b);
 }

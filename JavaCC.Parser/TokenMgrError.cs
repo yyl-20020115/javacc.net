@@ -28,7 +28,7 @@ public class TokenMgrError : Exception
     }
 
 
-    protected internal static string addEscapes(string str)
+    protected internal static string AddEscapes(string str)
     {
         var builder = new StringBuilder();
         for (int i = 0; i < str.Length; i++)
@@ -82,18 +82,14 @@ public class TokenMgrError : Exception
             + (i3)
             + (".  Encountered: ")
             + ((!b) ? ("\"") + (
-                addEscapes(
+                AddEscapes(
                 ch.ToString())) + ("\"")
                 + (" (")
                 + ((int)ch)
                 + ("), ")
                  : "<EOF> ")
             + ("after : \"")
-            + (addEscapes(str))
+            + (AddEscapes(str))
             + ("\"")
             ;
-
-    public TokenMgrError()
-    {
-    }
 }

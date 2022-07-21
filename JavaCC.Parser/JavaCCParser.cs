@@ -1282,7 +1282,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             expansion_unit(container);
             sequence.Units.Add(container.Member as Expansion);
             ((Expansion)container.Member).Parent = sequence;
-            ((Expansion)container.Member).ordinal = sequence.Units.Count - 1;
+            ((Expansion)container.Member).Ordinal = sequence.Units.Count - 1;
         }
         while (notTailOfExpansionUnit());
         if (lookahead.LaExpansion == null)
@@ -1360,16 +1360,16 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     lookahead.LaExpansion = new REndOfFile();
                     Choice choice = new Choice(obj);
                     Sequence sequence = (Sequence)(lookahead.Parent = new Sequence(obj, lookahead));
-                    lookahead.ordinal = 0;
+                    lookahead.Ordinal = 0;
                     Action action = new Action();
                     action.Line = obj.BeginLine;
                     action.Column = obj.BeginColumn;
                     sequence.Units.Add(action);
                     action.Parent = sequence;
-                    action.ordinal = 1;
+                    action.Ordinal = 1;
                     choice.Choices.Add(sequence);
                     sequence.Parent = choice;
-                    sequence.ordinal = 0;
+                    sequence.Ordinal = 0;
                     if (lookahead.amount != 0)
                     {
                         if (lookahead.ActionTokens.Count != 0)
@@ -1491,8 +1491,9 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             if (num == 90 || num == 101)
             {
                 regular_expression(c);
-                ((RegularExpression)c.Member).LhsTokens = vector;
-                JavaCCParserInternals.AddInlineRegexpr((RegularExpression)c.Member);
+                ((RegularExpression)c.Member).LhsTokens.Clear();
+                ((RegularExpression)c.Member).LhsTokens.AddRange(vector);
+                AddInlineRegexpr((RegularExpression)c.Member);
                 if (((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk()) == 99)
                 {
                     jj_consume_token(99);
@@ -1937,7 +1938,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     public void complex_regular_expression_unit(Container c)
     {
         Token token = getToken(1);
-        _ = 0;
+        
         int max = -1;
         int hasMax = 0;
         switch ((this.m_jj_ntk != -1) ? this.m_jj_ntk : jj_ntk())
@@ -2015,10 +2016,10 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                                     RRepetitionRange rRepetitionRange = new RRepetitionRange();
                                     rRepetitionRange.Line = token.BeginLine;
                                     rRepetitionRange.Column = token.BeginColumn;
-                                    rRepetitionRange.min = min;
-                                    rRepetitionRange.max = max;
-                                    rRepetitionRange.hasMax = (byte)hasMax != 0;
-                                    rRepetitionRange.regexpr = (RegularExpression)c.Member;
+                                    rRepetitionRange.Min = min;
+                                    rRepetitionRange.Max = max;
+                                    rRepetitionRange.HasMax = (byte)hasMax != 0;
+                                    rRepetitionRange.Regexpr = (RegularExpression)c.Member;
                                     c.Member = rRepetitionRange;
                                     break;
                                 }

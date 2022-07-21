@@ -19,13 +19,9 @@ public class ZeroOrMore : Expansion
     public override StringBuilder Dump(int i, HashSet<Expansion> s)
     {
         var builder = base.Dump(i, s);
-        if (s.Contains(this))
-        {
-            return builder;
-        }
+        if (s.Contains(this)) return builder;
         s.Add(this);
         builder.Append(EOL).Append(Expansion.Dump(i + 1, s));
         return builder;
     }
-
 }
