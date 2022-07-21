@@ -5,15 +5,15 @@ using System.Text;
 
 public class JavaCCParserTokenManager : JavaCCParserConstants
 {
-    internal int[] beginLine;
+    internal int[] BeginLine;
 
-    internal int[] beginCol;
+    internal int[] BeginCol;
 
-    internal int depth;
+    internal int Depth;
 
-    internal int size;
+    internal int Size;
 
-    public TextWriter debugStream;
+    public TextWriter DebugWriter;
 
 
     internal static long[] jjbitVec0;
@@ -201,11 +201,11 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
 
     internal static int[] jjnextStates;
 
-    internal static string[] ___003C_003EjjstrLiteralImages;
+    internal static string[] _jjstrLiteralImages;
 
-    internal static string[] ___003C_003ElexStateNames;
+    internal static string[] _lexStateNames;
 
-    internal static int[] ___003C_003EjjnewLexState;
+    internal static int[] _jjnewLexState;
 
 
     internal static long[] jjtoToken;
@@ -227,7 +227,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
 
     private int[] jjstateSet;
 
-    internal StringBuilder image;
+    internal StringBuilder _builder;
 
     internal int jjimageLen;
 
@@ -253,7 +253,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
 
         get
         {
-            return ___003C_003EjjstrLiteralImages;
+            return _jjstrLiteralImages;
         }
     }
 
@@ -263,7 +263,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
 
         get
         {
-            return ___003C_003ElexStateNames;
+            return _lexStateNames;
         }
     }
 
@@ -273,24 +273,18 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
 
         get
         {
-            return ___003C_003EjjnewLexState;
+            return _jjnewLexState;
         }
-    }
-
-
-
-    public static void ___003Cclinit_003E()
-    {
     }
 
 
     public JavaCCParserTokenManager(JavaCharStream jcs)
     {
-        beginLine = new int[10];
-        beginCol = new int[10];
-        depth = 0;
-        size = 10;
-        debugStream = Console.Out;
+        BeginLine = new int[10];
+        BeginCol = new int[10];
+        Depth = 0;
+        Size = 10;
+        DebugWriter = Console.Out;
         jjrounds = new int[65];
         jjstateSet = new int[130];
         curLexState = 0;
@@ -310,7 +304,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
     }
 
 
-    public virtual Token getNextToken()
+    public virtual Token GetNextToken()
     {
         Token token = null;
         int num = 0;
@@ -325,7 +319,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
             {
                 break;
             }
-            image = null;
+            _builder = null;
             jjimageLen = 0;
             while (true)
             {
@@ -407,9 +401,9 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
                                     token2 = jjFillToken();
                                     token2.SpecialToken = token;
                                     TokenLexicalActions(token2);
-                                    if (___003C_003EjjnewLexState[jjmatchedKind] != -1)
+                                    if (_jjnewLexState[jjmatchedKind] != -1)
                                     {
-                                        curLexState = ___003C_003EjjnewLexState[jjmatchedKind];
+                                        curLexState = _jjnewLexState[jjmatchedKind];
                                     }
                                     return token2;
                                 }
@@ -437,16 +431,16 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
                                     {
                                         SkipLexicalActions(null);
                                     }
-                                    if (___003C_003EjjnewLexState[jjmatchedKind] != -1)
+                                    if (_jjnewLexState[jjmatchedKind] != -1)
                                     {
-                                        curLexState = ___003C_003EjjnewLexState[jjmatchedKind];
+                                        curLexState = _jjnewLexState[jjmatchedKind];
                                     }
                                     break;
                                 }
                                 MoreLexicalActions();
-                                if (___003C_003EjjnewLexState[jjmatchedKind] != -1)
+                                if (_jjnewLexState[jjmatchedKind] != -1)
                                 {
-                                    curLexState = ___003C_003EjjnewLexState[jjmatchedKind];
+                                    curLexState = _jjnewLexState[jjmatchedKind];
                                 }
                                 num = 0;
                                 jjmatchedKind = int.MaxValue;
@@ -3002,7 +2996,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
 
     protected internal virtual Token jjFillToken()
     {
-        string text = ___003C_003EjjstrLiteralImages[jjmatchedKind];
+        string text = _jjstrLiteralImages[jjmatchedKind];
         string str = ((text != null) ? text : input_stream.GetImage());
         int num = input_stream.BeginLine;
         int beginColumn = input_stream.BeginColumn;
@@ -3386,22 +3380,22 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         switch (jjmatchedKind)
         {
             case 130:
-                if (image == null)
+                if (_builder == null)
                 {
-                    image = new StringBuilder();
+                    _builder = new StringBuilder();
                 }
-                image.Append(___003C_003EjjstrLiteralImages[130]);
+                _builder.Append(_jjstrLiteralImages[130]);
                 P_0.Kind = 132;
                 ((Token.GTToken)P_0).RealKind = 130;
                 input_stream.Backup(2);
                 P_0.Image = ">";
                 break;
             case 131:
-                if (image == null)
+                if (_builder == null)
                 {
-                    image = new StringBuilder();
+                    _builder = new StringBuilder();
                 }
-                image.Append(___003C_003EjjstrLiteralImages[131]);
+                _builder.Append(_jjstrLiteralImages[131]);
                 P_0.Kind = 132;
                 ((Token.GTToken)P_0).RealKind = 131;
                 input_stream.Backup(1);
@@ -3415,11 +3409,11 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
     {
         if (jjmatchedKind == 18)
         {
-            if (image == null)
+            if (_builder == null)
             {
-                image = new StringBuilder();
+                _builder = new StringBuilder();
             }
-            StringBuilder builder = image;
+            StringBuilder builder = _builder;
             JavaCharStream javaCharStream = input_stream;
             int num = jjimageLen;
             int num2 = jjmatchedPos + 1;
@@ -3440,20 +3434,20 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
         switch (jjmatchedKind)
         {
             case 20:
-                if (image == null)
+                if (_builder == null)
                 {
-                    image = new StringBuilder();
+                    _builder = new StringBuilder();
                 }
-                image.Append(input_stream.GetSuffix(jjimageLen));
+                _builder.Append(input_stream.GetSuffix(jjimageLen));
                 jjimageLen = 0;
                 input_stream.Backup(1);
                 break;
             case 22:
-                if (image == null)
+                if (_builder == null)
                 {
-                    image = new StringBuilder();
+                    _builder = new StringBuilder();
                 }
-                image.Append(input_stream.GetSuffix(jjimageLen));
+                _builder.Append(input_stream.GetSuffix(jjimageLen));
                 jjimageLen = 0;
                 saveBeginLineCol(input_stream.BeginLine, input_stream.BeginColumn);
                 break;
@@ -3463,36 +3457,36 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
 
     internal virtual void restoreBeginLineCol()
     {
-        depth--;
-        input_stream.AdjustBeginLineColumn(beginLine[depth], beginCol[depth]);
+        Depth--;
+        input_stream.AdjustBeginLineColumn(BeginLine[Depth], BeginCol[Depth]);
     }
 
     internal virtual void saveBeginLineCol(int P_0, int P_1)
     {
-        if (depth == size)
+        if (Depth == Size)
         {
-            size += 5;
-            int[] array = new int[size];
-            int[] array2 = new int[size];
-            int[] src = beginLine;
+            Size += 5;
+            int[] array = new int[Size];
+            int[] array2 = new int[Size];
+            int[] src = BeginLine;
             int[] array3 = array;
             int[] dest = array3;
-            beginLine = array3;
-            Array.Copy(src, 0, dest, 0, depth);
-            int[] src2 = beginCol;
+            BeginLine = array3;
+            Array.Copy(src, 0, dest, 0, Depth);
+            int[] src2 = BeginCol;
             array3 = array2;
             int[] dest2 = array3;
-            beginCol = array3;
-            Array.Copy(src2, 0, dest2, 0, depth);
+            BeginCol = array3;
+            Array.Copy(src2, 0, dest2, 0, Depth);
         }
-        beginLine[depth] = P_0;
-        beginCol[depth] = P_1;
-        depth++;
+        BeginLine[Depth] = P_0;
+        BeginCol[Depth] = P_1;
+        Depth++;
     }
 
-    public virtual void setDebugStream(TextWriter ps)
+    public virtual void SetDebugWriter(TextWriter writer)
     {
-        debugStream = ps;
+        DebugWriter = writer;
     }
 
 
@@ -3581,7 +3575,7 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
             25, 27, 29, 36, 37, 40, 41, 46, 47, 55,
             56, 57, 58, 63, 64
         };
-        ___003C_003EjjstrLiteralImages = new string[143]
+        _jjstrLiteralImages = new string[143]
         {
             "", "LOOKAHEAD", "IGNORE_CASE", "PARSER_BEGIN", "PARSER_END", "JAVACODE", "TOKEN", "SPECIAL_TOKEN", "MORE", "SKIP",
             "TOKEN_MGR_DECLS", "EOF", null, null, null, null, null, null, null, null,
@@ -3599,8 +3593,8 @@ public class JavaCCParserTokenManager : JavaCCParserConstants
             ">>>", ">>", ">", "#", "...", "<<=", ">>=", ">>>=", "<<", "@",
             null, null, null
         };
-        ___003C_003ElexStateNames = new string[5] { "DEFAULT", "AFTER_EGEN", "IN_SINGLE_LINE_COMMENT", "IN_FORMAL_COMMENT", "IN_MULTI_LINE_COMMENT" };
-        ___003C_003EjjnewLexState = new int[143]
+        _lexStateNames = new string[5] { "DEFAULT", "AFTER_EGEN", "IN_SINGLE_LINE_COMMENT", "IN_FORMAL_COMMENT", "IN_MULTI_LINE_COMMENT" };
+        _jjnewLexState = new int[143]
         {
             -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
             -1, -1, -1, -1, -1, -1, -1, 1, 0, 2,

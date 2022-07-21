@@ -57,11 +57,11 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.Write(" implements ");
 		}
 		writer.Write((JavaCCGlobals.CuName)+("Constants "));
-		if (JavaCCGlobals.Cu_to_insertion_point_2.Count != 0)
+		if (JavaCCGlobals.CuToInsertionPoint2.Count != 0)
 		{
-			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.Cu_to_insertion_point_2[0]);
+			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.CuToInsertionPoint2[0]);
 
-			foreach(var _token in JavaCCGlobals.Cu_to_insertion_point_2)
+			foreach(var _token in JavaCCGlobals.CuToInsertionPoint2)
 			{
 				JavaCCGlobals.PrintToken(_token, writer);
 			}
@@ -111,7 +111,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private int jj_ntk;")
 				);
 		}
-		if (JavaCCGlobals.jj2index != 0)
+		if (JavaCCGlobals.JJ2Index != 0)
 		{
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private Token jj_scanpos, jj_lastpos;")
 				);
@@ -128,7 +128,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private int jj_gen;")
 				);
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("final private int[] jj_la1 = new int[")
-				+(JavaCCGlobals.maskindex)
+				+(JavaCCGlobals.MaskIndex)
 				+("];")
 				);
 			int num2 = (JavaCCGlobals.TokenCount - 1) / 32 + 1;
@@ -158,10 +158,10 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				writer.WriteLine("   }");
 			}
 		}
-		if (JavaCCGlobals.jj2index != 0 && Options.ErrorReporting)
+		if (JavaCCGlobals.JJ2Index != 0 && Options.ErrorReporting)
 		{
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("final private JJCalls[] jj_2_rtns = new JJCalls[")
-				+(JavaCCGlobals.jj2index)
+				+(JavaCCGlobals.JJ2Index)
 				+("];")
 				);
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private boolean jj_rescan = false;")
@@ -209,9 +209,9 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				if (Options.ErrorReporting)
 				{
 					writer.WriteLine("    jj_gen = 0;");
-					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
+					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.MaskIndex)+("; i++) jj_la1[i] = -1;")
 						);
-					if (JavaCCGlobals.jj2index != 0)
+					if (JavaCCGlobals.JJ2Index != 0)
 					{
 						writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
 					}
@@ -239,9 +239,9 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				if (Options.ErrorReporting)
 				{
 					writer.WriteLine("    jj_gen = 0;");
-					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
+					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.MaskIndex)+("; i++) jj_la1[i] = -1;")
 						);
-					if (JavaCCGlobals.jj2index != 0)
+					if (JavaCCGlobals.JJ2Index != 0)
 					{
 						writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
 					}
@@ -309,9 +309,9 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				if (Options.ErrorReporting)
 				{
 					writer.WriteLine("    jj_gen = 0;");
-					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
+					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.MaskIndex)+("; i++) jj_la1[i] = -1;")
 						);
-					if (JavaCCGlobals.jj2index != 0)
+					if (JavaCCGlobals.JJ2Index != 0)
 					{
 						writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
 					}
@@ -351,9 +351,9 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				if (Options.ErrorReporting)
 				{
 					writer.WriteLine("    jj_gen = 0;");
-					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
+					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.MaskIndex)+("; i++) jj_la1[i] = -1;")
 						);
-					if (JavaCCGlobals.jj2index != 0)
+					if (JavaCCGlobals.JJ2Index != 0)
 					{
 						writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
 					}
@@ -403,9 +403,9 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				if (Options.ErrorReporting)
 				{
 					writer.WriteLine("    jj_gen = 0;");
-					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
+					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.MaskIndex)+("; i++) jj_la1[i] = -1;")
 						);
-					if (JavaCCGlobals.jj2index != 0)
+					if (JavaCCGlobals.JJ2Index != 0)
 					{
 						writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
 					}
@@ -440,9 +440,9 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				if (Options.ErrorReporting)
 				{
 					writer.WriteLine("    jj_gen = 0;");
-					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
+					writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.MaskIndex)+("; i++) jj_la1[i] = -1;")
 						);
-					if (JavaCCGlobals.jj2index != 0)
+					if (JavaCCGlobals.JJ2Index != 0)
 					{
 						writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
 					}
@@ -488,9 +488,9 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		if (Options.ErrorReporting)
 		{
 			writer.WriteLine("    jj_gen = 0;");
-			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
+			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.MaskIndex)+("; i++) jj_la1[i] = -1;")
 				);
-			if (JavaCCGlobals.jj2index != 0)
+			if (JavaCCGlobals.JJ2Index != 0)
 			{
 				writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
 			}
@@ -525,9 +525,9 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		if (Options.ErrorReporting)
 		{
 			writer.WriteLine("    jj_gen = 0;");
-			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) jj_la1[i] = -1;")
+			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.MaskIndex)+("; i++) jj_la1[i] = -1;")
 				);
-			if (JavaCCGlobals.jj2index != 0)
+			if (JavaCCGlobals.JJ2Index != 0)
 			{
 				writer.WriteLine("    for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();");
 			}
@@ -553,7 +553,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		if (Options.ErrorReporting)
 		{
 			writer.WriteLine("      jj_gen++;");
-			if (JavaCCGlobals.jj2index != 0)
+			if (JavaCCGlobals.JJ2Index != 0)
 			{
 				writer.WriteLine("      if (++jj_gc > 100) {");
 				writer.WriteLine("        jj_gc = 0;");
@@ -585,7 +585,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		writer.WriteLine("    throw generateParseException();");
 		writer.WriteLine("  }");
 		writer.WriteLine("");
-		if (JavaCCGlobals.jj2index != 0)
+		if (JavaCCGlobals.JJ2Index != 0)
 		{
 			writer.WriteLine("  static private final class LookaheadSuccess extends java.lang.Error { }");
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("final private LookaheadSuccess jj_ls = new LookaheadSuccess();")
@@ -654,7 +654,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 		writer.WriteLine("/** Get the specific Token. */");
 		writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("final public Token getToken(int index) {")
 			);
-		if (JavaCCGlobals.jj2index != 0)
+		if (JavaCCGlobals.JJ2Index != 0)
 		{
 			writer.WriteLine("    Token t = jj_lookingAhead ? jj_scanpos : token;");
 		}
@@ -696,7 +696,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 				);
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private int jj_kind = -1;")
 				);
-			if (JavaCCGlobals.jj2index != 0)
+			if (JavaCCGlobals.JJ2Index != 0)
 			{
 				writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private int[] jj_lasttokens = new int[100];")
 					);
@@ -743,7 +743,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine("      la1tokens[jj_kind] = true;");
 			writer.WriteLine("      jj_kind = -1;");
 			writer.WriteLine("    }");
-			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.maskindex)+("; i++) {")
+			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.MaskIndex)+("; i++) {")
 				);
 			writer.WriteLine("      if (jj_la1[i] == jj_gen) {");
 			writer.WriteLine("        for (int j = 0; j < 32; j++) {");
@@ -770,7 +770,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine("        jj_expentries.Add(jj_expentry);");
 			writer.WriteLine("      }");
 			writer.WriteLine("    }");
-			if (JavaCCGlobals.jj2index != 0)
+			if (JavaCCGlobals.JJ2Index != 0)
 			{
 				writer.WriteLine("    jj_endpos = 0;");
 				writer.WriteLine("    jj_rescan_token();");
@@ -887,12 +887,12 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine("  }");
 			writer.WriteLine("");
 		}
-		if (JavaCCGlobals.jj2index != 0 && Options.ErrorReporting)
+		if (JavaCCGlobals.JJ2Index != 0 && Options.ErrorReporting)
 		{
 			writer.WriteLine(("  ")+(JavaCCGlobals.StaticOpt())+("private void jj_rescan_token() {")
 				);
 			writer.WriteLine("    jj_rescan = true;");
-			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.jj2index)+("; i++) {")
+			writer.WriteLine(("    for (int i = 0; i < ")+(JavaCCGlobals.JJ2Index)+("; i++) {")
 				);
 			writer.WriteLine("    try {");
 			writer.WriteLine("      JJCalls p = jj_2_rtns[i];");
@@ -900,7 +900,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine("        if (p.gen > jj_gen) {");
 			writer.WriteLine("          jj_la = p.arg; jj_lastpos = jj_scanpos = p.first;");
 			writer.WriteLine("          switch (i) {");
-			for (int num2 = 0; num2 < JavaCCGlobals.jj2index; num2++)
+			for (int num2 = 0; num2 < JavaCCGlobals.JJ2Index; num2++)
 			{
 				writer.WriteLine(("            case ")+(num2)+(": jj_3_")
 					+(num2 + 1)
@@ -927,7 +927,7 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine("  }");
 			writer.WriteLine("");
 		}
-		if (JavaCCGlobals.jj2index != 0 && Options.ErrorReporting)
+		if (JavaCCGlobals.JJ2Index != 0 && Options.ErrorReporting)
 		{
 			writer.WriteLine("  static final class JJCalls {");
 			writer.WriteLine("    int gen;");
@@ -937,11 +937,11 @@ public class ParseGen : JavaCCParserConstants // JavaCCGlobals,
 			writer.WriteLine("  }");
 			writer.WriteLine("");
 		}
-		if (JavaCCGlobals.Cu_from_insertion_point_2.Count != 0)
+		if (JavaCCGlobals.CuFromInsertionPoint2.Count != 0)
 		{
-			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.Cu_from_insertion_point_2[0]);
+			JavaCCGlobals.PrintTokenSetup((Token)JavaCCGlobals.CuFromInsertionPoint2[0]);
 			JavaCCGlobals.CCol = 1;
-			foreach (var _token in JavaCCGlobals.Cu_from_insertion_point_2)
+			foreach (var _token in JavaCCGlobals.CuFromInsertionPoint2)
 			{
 				JavaCCGlobals.PrintToken(token, writer);
 				token = _token;

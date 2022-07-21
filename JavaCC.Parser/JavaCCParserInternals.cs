@@ -71,12 +71,12 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
             else
             {
                 InsertionPoint1Set = true;
-                AddCuTokenHere = Cu_to_insertion_point_2;
+                AddCuTokenHere = CuToInsertionPoint2;
             }
         }
         else
         {
-            AddCuTokenHere = Cu_from_insertion_point_2;
+            AddCuTokenHere = CuFromInsertionPoint2;
             InsertionPoint2Set = true;
         }
         FirstCuToken = t;
@@ -148,13 +148,13 @@ public abstract class JavaCCParserInternals : JavaCCGlobals
 
     protected internal static void AddTokenManagerDecl(Token t, List<Token> v)
     {
-        if (token_mgr_decls != null)
+        if (TokenMgrDecls != null)
         {
             JavaCCErrors.Parse_Error(t, "Multiple occurrence of \"TOKEN_MGR_DECLS\".");
             return;
         }
-        token_mgr_decls.Clear();
-        token_mgr_decls.AddRange(v);
+        TokenMgrDecls.Clear();
+        TokenMgrDecls.AddRange(v);
         if (Options.UserTokenManager)
         {
             JavaCCErrors.Warning(t, "Ignoring declarations in \"TOKEN_MGR_DECLS\" since option USER_TOKEN_MANAGER has been set to true.");

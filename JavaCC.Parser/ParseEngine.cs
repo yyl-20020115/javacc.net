@@ -511,10 +511,10 @@ public class ParseEngine : JavaCCGlobals
 					text = (text)+("\u0002\ndefault:\u0001");
 					if (Options.ErrorReporting)
 					{
-						text = (text)+("\njj_la1[")+(maskindex)
+						text = (text)+("\njj_la1[")+(MaskIndex)
 							+("] = jj_gen;")
 							;
-						maskindex++;
+						MaskIndex++;
 					}
 					MaskVals.Add(array2);
 					text = (text)+("\nif (");
@@ -614,20 +614,20 @@ public class ParseEngine : JavaCCGlobals
 					text = (text)+("\u0002\ndefault:\u0001");
 					if (Options.ErrorReporting)
 					{
-						text = (text)+("\njj_la1[")+(maskindex)
+						text = (text)+("\njj_la1[")+(MaskIndex)
 							+("] = jj_gen;")
 							;
-						maskindex++;
+						MaskIndex++;
 					}
 					MaskVals.Add(array2);
 					text = (text)+("\nif (");
 					num2++;
 					break;
 				}
-				jj2index++;
-				lookahead.LaExpansion.Internal_Name = ("_")+(jj2index);
+				JJ2Index++;
+				lookahead.LaExpansion.InternalName = ("_")+(JJ2Index);
 				Phase2List.Add(lookahead);
-				text = (text)+("jj_2")+(lookahead.LaExpansion.Internal_Name)
+				text = (text)+("jj_2")+(lookahead.LaExpansion.InternalName)
 					+("(")
 					+(lookahead.amount)
 					+(")")
@@ -663,11 +663,11 @@ public class ParseEngine : JavaCCGlobals
 			text = (text)+("\u0002\ndefault:\u0001");
 			if (Options.ErrorReporting)
 			{
-				text = (text)+("\njj_la1[")+(maskindex)
+				text = (text)+("\njj_la1[")+(MaskIndex)
 					+("] = jj_gen;")
 					;
 				MaskVals.Add(array2);
-				maskindex++;
+				MaskIndex++;
 			}
 			text = (text)+(texts[num4]);
 			break;
@@ -683,7 +683,7 @@ public class ParseEngine : JavaCCGlobals
 	private static void Generate3R(Expansion exp, Phase3Data p3)
 	{
 		Expansion expansion = exp;
-		if (string.Equals(exp.Internal_Name, ""))
+		if (string.Equals(exp.InternalName, ""))
 		{
 			while (true)
 			{
@@ -698,7 +698,7 @@ public class ParseEngine : JavaCCGlobals
 				}
 				NonTerminal nonTerminal = (NonTerminal)expansion;
 
-				if (Production_table.TryGetValue(nonTerminal.Name,out var normalProduction)&& normalProduction is JavaCodeProduction)
+				if (ProductionTable.TryGetValue(nonTerminal.Name,out var normalProduction)&& normalProduction is JavaCodeProduction)
 				{
 					break;
 				}
@@ -706,11 +706,11 @@ public class ParseEngine : JavaCCGlobals
 			}
 			if (expansion is RegularExpression re)
 			{
-				exp.Internal_Name = ("jj_scan_token(")+(re.Ordinal)+(")");
+				exp.InternalName = ("jj_scan_token(")+(re.Ordinal)+(")");
 				return;
 			}
 			GenSymindex++;
-			exp.Internal_Name = ("R_")+(GenSymindex);
+			exp.InternalName = ("R_")+(GenSymindex);
 		}
 		var phase3Data = Phase3Table[(exp)];
 		if (phase3Data == null || phase3Data.Count < p3.Count)
@@ -731,7 +731,7 @@ public class ParseEngine : JavaCCGlobals
 		}
         if (exp is NonTerminal nonTerminal)
         {
-            if (Production_table.TryGetValue(nonTerminal.Name, out var normalProduction)
+            if (ProductionTable.TryGetValue(nonTerminal.Name, out var normalProduction)
                 && normalProduction is not JavaCodeProduction)
             {
                 Generate3R(normalProduction.Expansion, p3);
@@ -806,21 +806,21 @@ public class ParseEngine : JavaCCGlobals
 	}
 
 
-    private static string Genjj_3Call(Expansion exp) => exp.Internal_Name.StartsWith("jj_scan_token") ? exp.Internal_Name : ("jj_3") + (exp.Internal_Name) + ("()");
+    private static string Genjj_3Call(Expansion exp) => exp.InternalName.StartsWith("jj_scan_token") ? exp.InternalName : ("jj_3") + (exp.InternalName) + ("()");
 
 
     internal static void BuildPhase3Routine(Phase3Data p3, bool val)
 	{
 		Expansion exp = p3.Expansion;
 		Token t = null;
-		if (exp.Internal_Name.StartsWith("jj_scan_token"))
+		if (exp.InternalName.StartsWith("jj_scan_token"))
 		{
 			return;
 		}
 		if (!val)
 		{
 			writer.WriteLine(("  ")+(StaticOpt())+("private boolean jj_3")
-				+(exp.Internal_Name)
+				+(exp.InternalName)
 				+("() {")
 				);
 			xsp_declared = false;
@@ -869,7 +869,7 @@ public class ParseEngine : JavaCCGlobals
         }
         else if (exp is NonTerminal nonTerminal)
         {
-            if (Production_table.TryGetValue(nonTerminal.Name, out var normalProduction) && normalProduction is JavaCodeProduction)
+            if (ProductionTable.TryGetValue(nonTerminal.Name, out var normalProduction) && normalProduction is JavaCodeProduction)
             {
                 writer.WriteLine(("    if (true) { jj_la = 0; jj_scanpos = jj_lastpos; ") + (GenReturn(false)) + ("}")
                     );
@@ -1019,7 +1019,7 @@ public class ParseEngine : JavaCCGlobals
 		}
 		else if (exp is NonTerminal nonTerminal)
         {
-            if (Production_table.TryGetValue(nonTerminal.Name, out var normalProduction)
+            if (ProductionTable.TryGetValue(nonTerminal.Name, out var normalProduction)
                 && normalProduction is JavaCodeProduction)
             {
                 result = int.MaxValue;
@@ -1186,16 +1186,16 @@ public class ParseEngine : JavaCCGlobals
 	{
 		var la_expansion = lookahead.LaExpansion;
 		writer.WriteLine(("  ")+(StaticOpt())+("private boolean jj_2")
-			+(la_expansion.Internal_Name)
+			+(la_expansion.InternalName)
 			+("(int xla) {")
 			);
 		writer.WriteLine("    jj_la = xla; jj_lastpos = jj_scanpos = token;");
-		writer.WriteLine(("    try { return !jj_3")+(la_expansion.Internal_Name)+("(); }")
+		writer.WriteLine(("    try { return !jj_3")+(la_expansion.InternalName)+("(); }")
 			);
 		writer.WriteLine("    catch(LookaheadSuccess ls) { return true; }");
 		if (Options.ErrorReporting)
 		{
-			int.TryParse((la_expansion.Internal_Name.Substring(1)), out var x);
+			int.TryParse((la_expansion.InternalName.Substring(1)), out var x);
 			writer.WriteLine(("    finally { jj_save(")+(
 				x - 1)+(", xla); }")
 				);

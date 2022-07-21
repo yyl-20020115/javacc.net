@@ -210,7 +210,7 @@ public class Semanticize : JavaCCGlobals
 
         public virtual void Action(Expansion exp)
         {
-            if (exp is NonTerminal nonTerminal && Production_table.TryGetValue(nonTerminal.Name,out var normalProduction))
+            if (exp is NonTerminal nonTerminal && ProductionTable.TryGetValue(nonTerminal.Name,out var normalProduction))
             {
                 nonTerminal.prod = normalProduction;
                 if (normalProduction == null)
@@ -299,12 +299,12 @@ public class Semanticize : JavaCCGlobals
         }
         foreach(var normalProduction in BNFProductions)
         {
-            if (Production_table.ContainsKey(normalProduction.Lhs))
+            if (ProductionTable.ContainsKey(normalProduction.Lhs))
             {
                 JavaCCErrors.Semantic_Error(normalProduction, (normalProduction.Lhs) 
                     + (" occurs on the left hand side of more than one production."));
             }
-            Production_table.Add(normalProduction.Lhs, normalProduction);
+            ProductionTable.Add(normalProduction.Lhs, normalProduction);
         }
         foreach (var normalProduction in BNFProductions)
         {
@@ -331,12 +331,12 @@ public class Semanticize : JavaCCGlobals
                     {
                         JavaCCErrors.Semantic_Error(regExprSpec.Rexp, "EOF action/state change can be specified only in a TOKEN specification.");
                     }
-                    if (nextStateForEof != null || actForEof != null)
+                    if (NextStateForEof != null || ActForEof != null)
                     {
                         JavaCCErrors.Semantic_Error(regExprSpec.Rexp, "Duplicate action/state change specification for <EOF>.");
                     }
-                    actForEof = regExprSpec.Action;
-                    nextStateForEof = regExprSpec.NextState;
+                    ActForEof = regExprSpec.Action;
+                    NextStateForEof = regExprSpec.NextState;
                     PrepareToRemove(tokenProduction.Respecs, regExprSpec);
                 }
                 else if (tokenProduction.IsExplicit && Options.UserTokenManager)
@@ -373,7 +373,7 @@ public class Semanticize : JavaCCGlobals
                     }
                     else
                     {
-                        ordered_named_tokens.Add(regExprSpec.Rexp);
+                        OrderedNamedTokens.Add(regExprSpec.Rexp);
                     }
                     if (Lexstate_S2I.ContainsKey(label))
                     {
@@ -558,7 +558,7 @@ public class Semanticize : JavaCCGlobals
                         {
                             rJustName.Ordinal = TokenCount++;
                             NamedTokensTable.Add(rJustName.Label, rJustName);
-                            ordered_named_tokens.Add(rJustName);
+                            OrderedNamedTokens.Add(rJustName);
                             NamesOfTokens.Add((rJustName.Ordinal), rJustName.Label);
                         }
                         else

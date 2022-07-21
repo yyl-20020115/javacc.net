@@ -9,9 +9,9 @@ public class Expansion
     public static readonly string EOL = Environment.NewLine;
     public int Line = 1;
     public int Column = 1;
-    public string Internal_Name = "";
+    public string InternalName = "";
     public bool Phase3done = false;
-    public object Parent = new();
+    public Expansion Parent;
     public int Ordinal = 0;
     public long MyGeneration = 0L;
     public bool InMinimumSize = false;
@@ -24,15 +24,6 @@ public class Expansion
         }
         return builder;
     }
-
-    public Expansion()
-    {
-        Internal_Name = "";
-        Phase3done = false;
-        MyGeneration = 0L;
-        InMinimumSize = false;
-    }
-
     public override int GetHashCode() => Line + Column;
 
     public static void ReInit()

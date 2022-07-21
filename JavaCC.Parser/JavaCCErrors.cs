@@ -7,22 +7,21 @@ public class JavaCCErrors
     protected static int SemanticErrorCount = 0;
     protected static int WarningCount = 0;
 
-
-    public static string Warning(string str)
+    public static string Warning(string text)
     {
         Console.Error.Write("Warning: ");
-        Console.Error.WriteLine(str);
+        Console.Error.WriteLine(text);
         WarningCount++;
-        return str; 
+        return text; 
     }
 
 
-    public static string Semantic_Error(string str)
+    public static string Semantic_Error(string text)
     {
         Console.Error.Write("Error: ");
-        Console.Error.WriteLine(str);
+        Console.Error.WriteLine(text);
         SemanticErrorCount++;
-        return str;
+        return text;
     }
 
     public static int _Error_Count => ParseErrorCount + SemanticErrorCount;
@@ -30,71 +29,75 @@ public class JavaCCErrors
     public static int _Warning_Count => WarningCount;
 
 
-    public static void Warning(object obj, string str)
+    public static string Warning(object info, string text)
     {
         Console.Error.Write("Warning: ");
-        PrintLocationInfo(obj);
-        Console.Error.WriteLine(str);
+        PrintLocationInfo(info);
+        Console.Error.WriteLine(text);
         WarningCount++;
+        return text;
     }
 
 
-    public static void Parse_Error(object obj, string str)
+    public static string Parse_Error(object info, string text)
     {
         Console.Error.Write("Error: ");
-        PrintLocationInfo(obj);
-        Console.Error.WriteLine(str);
+        PrintLocationInfo(info);
+        Console.Error.WriteLine(text);
         ParseErrorCount++;
+        return text;
     }
 
 
-    public static void Semantic_Error(object obj, string str)
+    public static string Semantic_Error(object info, string text)
     {
         Console.Error.Write("Error: ");
-        PrintLocationInfo(obj);
-        Console.Error.WriteLine(str);
+        PrintLocationInfo(info);
+        Console.Error.WriteLine(text);
         SemanticErrorCount++;
+        return text;
+
     }
 
 
-    private static void PrintLocationInfo(object _loc)
+    private static void PrintLocationInfo(object info)
     {
-        if (_loc is NormalProduction normalProduction)
+        if (info is NormalProduction production)
         {
-            Console.Error.Write(("Line ") + (normalProduction.Line) + (", Column ")
-                + (normalProduction.Column)
+            Console.Error.Write(("Line ") + (production.Line) + (", Column ")
+                + (production.Column)
                 + (": ")
                 );
         }
-        else if (_loc is TokenProduction tokenProduction)
+        else if (info is TokenProduction token_production)
         {
-            Console.Error.Write(("Line ") + (tokenProduction.Line) + (", Column ")
-                + (tokenProduction.Column)
+            Console.Error.Write(("Line ") + (token_production.Line) + (", Column ")
+                + (token_production.Column)
                 + (": "))
                 ;
         }
-        else if (_loc is Expansion loc)
+        else if (info is Expansion expansion)
         {
-            Console.Error.Write(("Line ") + (loc.Line) + (", Column ")
-                + (loc.Column)
+            Console.Error.Write(("Line ") + (expansion.Line) + (", Column ")
+                + (expansion.Column)
                 + (": ")
                 );
         }
-        else if (_loc is CharacterRange locr)
+        else if (info is CharacterRange range)
         {
-            Console.Error.Write(("Line ") + (locr.Line) + (", Column ")
-                + (locr.Column)
+            Console.Error.Write(("Line ") + (range.Line) + (", Column ")
+                + (range.Column)
                 + (": ")
                 );
         }
-        else if (_loc is SingleCharacter locs)
+        else if (info is SingleCharacter schar)
         {
-            Console.Error.Write(("Line ") + (locs.Line) + (", Column ")
-                + (locs.Column)
+            Console.Error.Write(("Line ") + (schar.Line) + (", Column ")
+                + (schar.Column)
                 + (": ")
                 );
         }
-        else if (_loc is Token token)
+        else if (info is Token token)
         {
             Console.Error.Write(("Line ") + (token.BeginLine) + (", Column ")
                 + (token.BeginColumn)
@@ -103,10 +106,11 @@ public class JavaCCErrors
         }
     }
 
-    public static void Parse_Error(string text)
+    public static string Parse_Error(string text)
     {
         Console.Error.Write("Error: ");
         Console.Error.WriteLine(text);
         ParseErrorCount++;
+        return text;
     }
 }

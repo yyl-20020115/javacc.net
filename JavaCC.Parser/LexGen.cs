@@ -150,16 +150,16 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
         {
             goto IL_0277;
         }
-        if (JavaCCGlobals.token_mgr_decls != null && JavaCCGlobals.token_mgr_decls.Count > 0)
+        if (JavaCCGlobals.TokenMgrDecls != null && JavaCCGlobals.TokenMgrDecls.Count > 0)
         {
-            _ = JavaCCGlobals.token_mgr_decls[0];
+            _ = JavaCCGlobals.TokenMgrDecls[0];
             int num2 = 0;
             int num = (Options.CommonTokenAction ? 1 : 0);
-            JavaCCGlobals.PrintTokenSetup(JavaCCGlobals.token_mgr_decls[0]);
+            JavaCCGlobals.PrintTokenSetup(JavaCCGlobals.TokenMgrDecls[0]);
             JavaCCGlobals.CCol = 1;
-            for (int j = 0; j < JavaCCGlobals.token_mgr_decls.Count; j++)
+            for (int j = 0; j < JavaCCGlobals.TokenMgrDecls.Count; j++)
             {
-                Token token = JavaCCGlobals.token_mgr_decls[j];
+                Token token = JavaCCGlobals.TokenMgrDecls[j];
                 if (token.Kind == 140 && num != 0 && num2 == 0)
                 {
                     num2 = (string.Equals(token.Image, "CommonTokenAction") ? 1 : 0);
@@ -200,7 +200,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
         JavaCCErrors.Semantic_Error(("Could not create file : ") + (tokMgrClassName) + (".java\n")
             );
 
-        throw new System.Exception();
+        throw new Exception();
     }
 
 
@@ -240,8 +240,8 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
         toToken = new long[maxOrdinal / 64 + 1];
         toToken[0] = 1L;
         actions = new Action[maxOrdinal];
-        actions[0] = JavaCCGlobals.actForEof;
-        hasTokenActions = JavaCCGlobals.actForEof != null;
+        actions[0] = JavaCCGlobals.ActForEof;
+        hasTokenActions = JavaCCGlobals.ActForEof != null;
         initStates = new();
         canMatchAnyChar = new int[maxLexStates];
         canLoop = new bool[maxLexStates];
@@ -258,7 +258,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
         maxLongsReqd = new int[maxLexStates];
         initMatch = new int[maxLexStates];
         newLexState = new string[maxOrdinal];
-        newLexState[0] = JavaCCGlobals.nextStateForEof;
+        newLexState[0] = JavaCCGlobals.NextStateForEof;
         hasEmptyMatch = false;
         lexStates = new int[maxOrdinal];
         ignoreCase = new bool[maxOrdinal];
@@ -278,7 +278,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
             }
         }
 
-        throw new System.Exception();
+        throw new Exception();
     }
 
 
@@ -715,7 +715,7 @@ public class LexGen : JavaCCParserConstants //JavaCCGlobals,
         {
             writer.WriteLine("      matchedToken.specialToken = specialToken;");
         }
-        if (JavaCCGlobals.nextStateForEof != null || JavaCCGlobals.actForEof != null)
+        if (JavaCCGlobals.NextStateForEof != null || JavaCCGlobals.ActForEof != null)
         {
             writer.WriteLine("      TokenLexicalActions(matchedToken);");
         }

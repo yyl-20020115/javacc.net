@@ -216,7 +216,7 @@ public class OutputFile
 		}
 		return;
 	//IL_0060:
-	//	throw new System.Exception("No MD5 implementation");
+	//	throw new Exception("No MD5 implementation");
 	}
 
 	public virtual void SetToolName(string str)
@@ -278,7 +278,7 @@ public class OutputFile
 		JavaCCErrors.Semantic_Error(("Could not open file ")+(info.Name)+(" for writing.")
 			);
 
-		throw new System.Exception();
+		throw new Exception();
 	IL_00b7:
 		;
 
@@ -322,7 +322,7 @@ public class OutputFile
 		JavaCCErrors.Semantic_Error(("Could not open file ")+(P_0.Name)+(" for writing.")
 			);
 
-		throw new System.Exception();
+		throw new Exception();
 	IL_0082:
 		;
 

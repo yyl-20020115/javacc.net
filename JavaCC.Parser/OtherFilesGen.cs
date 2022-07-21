@@ -42,7 +42,7 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 		}
 		catch (IOException)
 		{
-			throw new System.Exception(
+			throw new Exception(
 				JavaCCErrors.Semantic_Error(("Could not open file ") + (JavaCCGlobals.CuName) + ("Constants.java for writing.")
 				));
 		}
@@ -79,7 +79,7 @@ public class OtherFilesGen : JavaCCParserConstants //JavaCCGlobals,
 		writer.WriteLine("");
 		writer.WriteLine("  /** End of File. */");
 		writer.WriteLine("  int EOF = 0;");
-		foreach(var regularExpression in JavaCCGlobals.ordered_named_tokens)
+		foreach(var regularExpression in JavaCCGlobals.OrderedNamedTokens)
 		{
 			writer.WriteLine("  /** RegularExpression Id. */");
 			writer.WriteLine(("  int ")+(regularExpression.Label)+(" = ")

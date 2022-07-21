@@ -1,7 +1,7 @@
 namespace JavaCC.Parser;
 using System.IO;
 using System.Collections.Generic;
-
+using System;
 
 public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 {
@@ -24,7 +24,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
 
 
 
-    internal class LookaheadSuccess : System.Exception
+    internal class LookaheadSuccess : Exception
     {
 
         public LookaheadSuccess()
@@ -214,7 +214,6 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         jj_kind = -1;
         jj_lasttokens = new int[100];
         jj_input_stream = new JavaCharStream(r, 1, 1);
-        JavaCCParserTokenManager.___003Cclinit_003E();
         token_source = new JavaCCParserTokenManager(jj_input_stream);
         token = new Token();
         this.m_jj_ntk = -1;
@@ -271,7 +270,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 continue;
             }
             Token obj = token;
-            Token nextToken = token_source.getNextToken();
+            Token nextToken = token_source.GetNextToken();
             Token token2 = obj;
             token2.Next = nextToken;
             token = nextToken;
@@ -312,7 +311,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         else
         {
             Token obj = this.token;
-            Token nextToken = token_source.getNextToken();
+            Token nextToken = token_source.GetNextToken();
             Token token2 = obj;
             token2.Next = nextToken;
             this.token = nextToken;
@@ -427,7 +426,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         if (obj == null)
         {
             Token obj2 = this.token;
-            next = token_source.getNextToken();
+            next = token_source.GetNextToken();
             Token token = obj2;
             Token obj3 = next;
             token.Next = next;
@@ -512,7 +511,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         }
 
 
-        throw new System.Exception();
+        throw new Exception();
     }
 
 
@@ -720,7 +719,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         expansion_choices(container);
         token2 = (bNFProduction.LastToken = jj_consume_token(94));
         bNFProduction.JumpPatched = jumpPatched;
-        JavaCCParserInternals.ProductionAddExpansion(bNFProduction, (Expansion)container.Member);
+        JavaCCParserInternals.ProductionAddExpansion(bNFProduction, container.Member);
         JavaCCParserInternals.AddProduction(bNFProduction);
     }
 
@@ -972,14 +971,14 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             if (num != 0)
             {
                 choice.Choices.Add(container.Member as Expansion);
-                ((Expansion)container.Member).Parent = choice;
+                (container.Member).Parent = choice;
                 continue;
             }
             num = 1;
-            choice = new Choice((Expansion)c.Member);
-            ((Expansion)c.Member).Parent = choice;
+            choice = new Choice(c.Member);
+            (c.Member).Parent = choice;
             choice.Choices.Add(container.Member as Expansion);
-            ((Expansion)container.Member).Parent = choice;
+            (container.Member).Parent = choice;
         }
         jj_la1[19] = jj_gen;
         if (num != 0)
@@ -1281,8 +1280,8 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         {
             expansion_unit(container);
             sequence.Units.Add(container.Member as Expansion);
-            ((Expansion)container.Member).Parent = sequence;
-            ((Expansion)container.Member).Ordinal = sequence.Units.Count - 1;
+            (container.Member).Parent = sequence;
+            (container.Member).Ordinal = sequence.Units.Count - 1;
         }
         while (notTailOfExpansionUnit());
         if (lookahead.LaExpansion == null)
@@ -1324,7 +1323,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             expansion_choices(container);
             num2 = 0;
             num = 0;
-            lookahead.LaExpansion = (Expansion)container.Member;
+            lookahead.LaExpansion = container.Member;
         }
         if (num2 == 0 && num == 0 && getToken(1).Kind != 92)
         {
@@ -1405,7 +1404,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                     Token obj = jj_consume_token(95);
                     expansion_choices(c);
                     jj_consume_token(96);
-                    c.Member = new ZeroOrOne(obj, (Expansion)c.Member);
+                    c.Member = new ZeroOrOne(obj, c.Member);
                     return;
                 }
             case 76:
@@ -1523,15 +1522,15 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
                 {
                     case 114:
                         jj_consume_token(114);
-                        c.Member = new OneOrMore(obj, (Expansion)c.Member);
+                        c.Member = new OneOrMore(obj, c.Member);
                         break;
                     case 116:
                         jj_consume_token(116);
-                        c.Member = new ZeroOrMore(obj, (Expansion)c.Member);
+                        c.Member = new ZeroOrMore(obj, c.Member);
                         break;
                     case 104:
                         jj_consume_token(104);
-                        c.Member = new ZeroOrOne(obj, (Expansion)c.Member);
+                        c.Member = new ZeroOrOne(obj, c.Member);
                         break;
                     default:
                         jj_la1[26] = jj_gen;
@@ -7783,7 +7782,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             if (jj_scanpos.Next == null)
             {
                 Token obj = jj_scanpos;
-                Token nextToken = token_source.getNextToken();
+                Token nextToken = token_source.GetNextToken();
                 Token token = obj;
                 Token obj2 = nextToken;
                 token.Next = nextToken;
@@ -12366,7 +12365,6 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
             ex = x;
             goto IL_00a6;
         }
-        JavaCCParserTokenManager.___003Cclinit_003E();
         token_source = new JavaCCParserTokenManager(jj_input_stream);
         token = new Token();
         this.m_jj_ntk = -1;
@@ -12994,7 +12992,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         else
         {
             Token obj = this.token;
-            Token nextToken = token_source.getNextToken();
+            Token nextToken = token_source.GetNextToken();
             Token token = obj;
             token.Next = nextToken;
             this.token = nextToken;
