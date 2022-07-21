@@ -329,9 +329,9 @@ public class JavaCharStream
                 BufPos -= TokenBegin;
             }
         }
-        catch (Exception x)
+        catch
         {
-            throw x;
+
         }
         int num = BufSize + 2048;
         BufSize = num;

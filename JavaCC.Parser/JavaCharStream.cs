@@ -388,7 +388,6 @@ public class JavaCharStream
         char[] dest = new char[BufSize + 2048];
         int[] dest2 = new int[BufSize + 2048];
         int[] dest3 = new int[BufSize + 2048];
-        Exception ex;
         try
         {
             if (b)
