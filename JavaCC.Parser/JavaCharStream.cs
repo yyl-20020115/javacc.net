@@ -626,27 +626,27 @@ public class JavaCharStream
     }
 
 
-    public JavaCharStream(Stream @is, string str, int i1, int i2, int i3)
-    : this((str != null) ? new StreamReader(@is) : new StreamReader(@is), i1, i2, i3)
+    public JavaCharStream(Stream stream, string str, int i1, int i2, int i3)
+    : this((str != null) ? new StreamReader(stream) : new StreamReader(stream), i1, i2, i3)
     {
     }
 
 
-    public JavaCharStream(Stream @is, int i1, int i2, int i3)
-        : this(new StreamReader(@is), i1, i2, 4096)
+    public JavaCharStream(Stream stream, int i1, int i2, int i3)
+        : this(new StreamReader(stream), i1, i2, 4096)
     {
     }
 
 
-    public virtual void ReInit(Stream @is, string str, int i1, int i2, int i3)
+    public virtual void ReInit(Stream stream, string str, int i1, int i2, int i3)
     {
-        ReInit((str != null) ? new StreamReader(@is) : new StreamReader(@is), i1, i2, i3);
+        ReInit((str != null) ? new StreamReader(stream) : new StreamReader(stream), i1, i2, i3);
     }
 
 
-    public virtual void ReInit(Stream @is, int i1, int i2, int i3)
+    public virtual void ReInit(Stream stream, int i1, int i2, int i3)
     {
-        ReInit(new StreamReader(@is), i1, i2, i3);
+        ReInit(new StreamReader(stream), i1, i2, i3);
     }
 
     public JavaCharStream(TextReader r)
@@ -661,39 +661,39 @@ public class JavaCharStream
     }
 
 
-    public JavaCharStream(Stream @is, int i1, int i2)
-        : this(@is, i1, i2, 4096)
+    public JavaCharStream(Stream stream, int i1, int i2)
+        : this(stream, i1, i2, 4096)
     {
     }
 
 
-    public JavaCharStream(Stream @is, string str)
-    : this(@is, str, 1, 1, 4096)
+    public JavaCharStream(Stream stream, string str)
+    : this(stream, str, 1, 1, 4096)
     {
     }
 
 
-    public JavaCharStream(Stream @is)
-        : this(@is, 1, 1, 4096)
+    public JavaCharStream(Stream stream)
+        : this(stream, 1, 1, 4096)
     {
     }
 
 
-    public virtual void ReInit(Stream @is, int i1, int i2)
+    public virtual void ReInit(Stream stream, int i1, int i2)
     {
-        ReInit(@is, i1, i2, 4096);
+        ReInit(stream, i1, i2, 4096);
     }
 
 
-    public virtual void ReInit(Stream @is, string str)
+    public virtual void ReInit(Stream stream, string str)
     {
-        ReInit(@is, str, 1, 1, 4096);
+        ReInit(stream, str, 1, 1, 4096);
     }
 
 
-    public virtual void ReInit(Stream @is)
+    public virtual void ReInit(Stream stream)
     {
-        ReInit(@is, 1, 1, 4096);
+        ReInit(stream, 1, 1, 4096);
     }
 
     public virtual void Done()

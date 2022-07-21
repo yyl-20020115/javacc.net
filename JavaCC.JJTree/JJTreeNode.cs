@@ -146,9 +146,9 @@ public class JJTreeNode : SimpleNode
     }
 
 
-    internal static void OpenJJTreeComment(IO io, string comment = null)
+    internal static void OpenJJTreeComment(IO io, string comment = "")
     {
-        if (comment != null)
+        if (!string.IsNullOrEmpty(comment))
         {
             io.Write(("/*@bgen(jjtree) ") + (comment) + (" */"));
         }

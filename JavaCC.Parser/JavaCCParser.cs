@@ -150,8 +150,8 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     private int jj_endpos;
 
 
-    public JavaCCParser(Stream @is)
-        : this(new StreamReader(@is))
+    public JavaCCParser(Stream stream)
+        : this(new StreamReader(stream))
     {
     }
 
@@ -12298,7 +12298,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     }
 
 
-    public JavaCCParser(Stream @is, string str)
+    public JavaCCParser(Stream stream, string str)
     {
         processing_cu = false;
         class_nesting = 0;
@@ -12317,7 +12317,7 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
         UnsupportedEncodingException ex;
         try
         {
-            jj_input_stream = new JavaCharStream(@is, str, 1, 1);
+            jj_input_stream = new JavaCharStream(stream, str, 1, 1);
         }
         catch (UnsupportedEncodingException x)
         {
@@ -12344,12 +12344,12 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     }
 
 
-    public virtual void ReInit(Stream @is, string str)
+    public virtual void ReInit(Stream stream, string str)
     {
         UnsupportedEncodingException ex;
         try
         {
-            jj_input_stream.ReInit(@is, str, 1, 1);
+            jj_input_stream.ReInit(stream, str, 1, 1);
         }
         catch (UnsupportedEncodingException x)
         {
@@ -12870,9 +12870,9 @@ public class JavaCCParser : JavaCCParserInternals //, JavaCCParserConstants
     }
 
 
-    public virtual void ReInit(Stream @is)
+    public virtual void ReInit(Stream stream)
     {
-        ReInit(@is, null);
+        ReInit(stream, null);
     }
 
 

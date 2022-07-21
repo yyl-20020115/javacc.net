@@ -656,7 +656,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
         }
         this.token = token;
         jj_kind = P_0;
-        throw (generateParseException());
+        throw (GenerateParseException());
     }
 
 
@@ -15194,7 +15194,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
     }
 
 
-    public JJTreeParser(Stream @is, string str)
+    public JJTreeParser(Stream stream, string str)
     {
         jjtree = new();
         lookingAhead = false;
@@ -15209,7 +15209,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
         UnsupportedEncodingException ex;
         try
         {
-            jj_input_stream = new JavaCharStream(@is, str, 1, 1);
+            jj_input_stream = new JavaCharStream(stream, str, 1, 1);
         }
         catch (UnsupportedEncodingException x)
         {
@@ -15235,12 +15235,12 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
     }
 
 
-    public virtual void ReInit(Stream @is, string str)
+    public virtual void ReInit(Stream stream, string str)
     {
         UnsupportedEncodingException ex;
         try
         {
-            jj_input_stream.ReInit(@is, str, 1, 1);
+            jj_input_stream.ReInit(stream, str, 1, 1);
         }
         catch (UnsupportedEncodingException x)
         {
@@ -15266,7 +15266,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
     }
 
 
-    public virtual ParseException generateParseException()
+    public virtual ParseException GenerateParseException()
     {
         jj_expentries.Clear();
         bool[] array = new bool[140];
@@ -15770,15 +15770,15 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
     }
 
 
-    public JJTreeParser(Stream @is)
-        : this(@is, null)
+    public JJTreeParser(Stream stream)
+        : this(stream, null)
     {
     }
 
 
-    public virtual void ReInit(Stream @is)
+    public virtual void ReInit(Stream stream)
     {
-        ReInit(@is, null);
+        ReInit(stream, null);
     }
 
 
@@ -15843,14 +15843,6 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
         {
             jj_2_rtns[i] = new JJCalls();
         }
-    }
-
-    public void enable_tracing()
-    {
-    }
-
-    public void disable_tracing()
-    {
     }
 
     static JJTreeParser()
