@@ -2,6 +2,7 @@ namespace JavaCC.JJTree;
 using JavaCC.Parser;
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
 {
@@ -22,7 +23,7 @@ public class JJTreeParser : JJTreeParserTreeConstants //, JJTreeParserConstants
     }
 
 
-    internal class LookaheadSuccess : System.Exception
+    internal class LookaheadSuccess : Exception
     {
 
 

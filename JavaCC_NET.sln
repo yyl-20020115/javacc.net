@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JavaCC.NET", "JavaCC.NET.csproj", "{78FED555-46B5-4170-A9F5-D52F15F96380}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JavaCC.NET", "JavaCC.Parser\JavaCC.NET.csproj", "{4BCA6F42-9B15-44CF-B769-6F211920CC60}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JJDoc.NET", "JavaCC.JJDoc\JJDoc.NET.csproj", "{6604A9DC-C8AC-44AC-A40B-223BFEF87E1F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JJTree", "JavaCC.JJTree\JJTree.csproj", "{FF76D13E-EC88-445C-ACC0-7CC120318BD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{78FED555-46B5-4170-A9F5-D52F15F96380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78FED555-46B5-4170-A9F5-D52F15F96380}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78FED555-46B5-4170-A9F5-D52F15F96380}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78FED555-46B5-4170-A9F5-D52F15F96380}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BCA6F42-9B15-44CF-B769-6F211920CC60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BCA6F42-9B15-44CF-B769-6F211920CC60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BCA6F42-9B15-44CF-B769-6F211920CC60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BCA6F42-9B15-44CF-B769-6F211920CC60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6604A9DC-C8AC-44AC-A40B-223BFEF87E1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6604A9DC-C8AC-44AC-A40B-223BFEF87E1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6604A9DC-C8AC-44AC-A40B-223BFEF87E1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6604A9DC-C8AC-44AC-A40B-223BFEF87E1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FF76D13E-EC88-445C-ACC0-7CC120318BD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF76D13E-EC88-445C-ACC0-7CC120318BD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF76D13E-EC88-445C-ACC0-7CC120318BD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF76D13E-EC88-445C-ACC0-7CC120318BD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

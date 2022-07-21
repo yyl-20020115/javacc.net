@@ -199,9 +199,9 @@ public class JJDoc : JJDocGlobals
         }
         else if (re is RChoice rChoice)
         {
-            foreach (var regularExpression in rChoice.Choices)
+            foreach (RegularExpression regularExpression in rChoice.Choices)
             {
-                text += (EmitRE(regularExpression as RegularExpression));
+                text += EmitRE(regularExpression);
                 if (!first)
                 {
                     text += (" | ");

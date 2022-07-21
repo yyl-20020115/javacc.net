@@ -10,6 +10,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <RootNamespace />
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="javacc.jar" />

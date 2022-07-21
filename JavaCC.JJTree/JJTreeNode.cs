@@ -74,8 +74,10 @@ public class JJTreeNode : SimpleNode
             return;
         }
         var firstToken = FirstToken;
-        var token = new Token();
-        token.Next = firstToken;
+        var token = new Token
+        {
+            Next = firstToken
+        };
         for (int i = 0; i < JJTGetNumChildren(); i++)
         {
             var jJTreeNode = (JJTreeNode)JJTGetChild(i);
@@ -130,14 +132,14 @@ public class JJTreeNode : SimpleNode
         var builder = new StringBuilder(token.Image.Length);
         for (int i = 0; i < token.Image.Length; i++)
         {
-            int num = token.Image[i];
-            if (num != 9 && num != 10 && num != 13 && num != 12)
+            char ch = token.Image[i];
+            if (ch != 9 && ch != 10 && ch != 13 && ch != 12)
             {
                 builder.Append(' ');
             }
             else
             {
-                builder.Append((char)num);
+                builder.Append(ch);
             }
         }
         return builder.ToString();
@@ -156,9 +158,7 @@ public class JJTreeNode : SimpleNode
         }
     }
 
-
     internal static void CloseJJTreeComment(IO io) => io.Write("/*@egen*/");
-
 
     internal virtual string GetIndentation(JJTreeNode node) => GetIndentation(node, 0);
 }
